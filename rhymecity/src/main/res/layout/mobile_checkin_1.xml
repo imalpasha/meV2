@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="@drawable/grey_with_white_gradient">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/shape_stroke">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:background="@color/black">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/mobile_checkin"
+                            android:gravity="center"
+                            android:textSize="@dimen/font21sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:id="@+id/mobileCheckInPNRLayout"
+                        android:visibility="gone">
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:background="@drawable/drawable_login_bottom_border">
+
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Confirmation Number:"
+                                    android:id="@+id/textView16"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp">
+
+                                    <EditText
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:textSize="15dp"
+                                        android:hint="PNR Code"
+                                        android:id="@+id/editPnr"
+                                        android:background="@null" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:background="@drawable/drawable_login_bottom_border" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Departing:"
+                                    android:textSize="17dp"
+                                    android:id="@+id/textView18"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp" >
+
+                                    <TextView
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:hint="Select Departure Airport"
+                                        android:textSize="15dp"
+                                        android:id="@+id/txtDeparture" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp"
+                                android:background="@drawable/drawable_login_bottom_border"  >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Arriving"
+                                    android:textSize="17dp"
+                                    android:id="@+id/textView20"
+                                    android:textStyle="bold"/>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="5dp" >
+
+
+                                    <TextView
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:textSize="15dp"
+                                        android:hint="Select Arrival Airport"
+                                        android:id="@+id/txtArrive" />
+
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <ListView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/listView" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:weightSum="1"
+            android:layout_marginBottom="5dp" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.05"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.9"
+                android:layout_height="wrap_content" >
+
+                <Button
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Continue"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:id="@+id/mobileCheckInNext1"
+                    android:background="@drawable/login_login_button_clicked" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.05"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

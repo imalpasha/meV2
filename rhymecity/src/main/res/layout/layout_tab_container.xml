@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff6a4d"
+    android:baselineAligned="false"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/tabContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:id="@+id/tabMySearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/tab_search"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vrsm__ic_search" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:text="@string/search"
+                android:textColor="@android:color/white"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabMyWishList"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+             android:background="@drawable/tab_wishlist"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vrsm__ic_wishlist" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:text="@string/wishlist_lbl"
+                android:textColor="@android:color/white"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabMyHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           android:background="@drawable/tab_home"
+            
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vrsm__ic_home" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:text="@string/home_lbl"
+                android:textColor="@android:color/white"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabMyCart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           android:background="@drawable/tab_cart"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vrsm__ic_cart" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:text="@string/cart"
+                android:textColor="@android:color/white"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tabMyProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+           android:background="@drawable/tab_profile"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="3dp" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/vrsm__ic_myprofile" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:text="@string/myProfile"
+                android:textColor="@android:color/white"
+                android:textSize="11dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

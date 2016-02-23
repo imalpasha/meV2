@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:padding="1dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.04"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:background="@color/test1">
+
+           <!-- <com.commit451.inkpageindicator.InkPageIndicator
+                android:id="@+id/ink_pager_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:dotDiameter="8dp"
+                app:dotGap="8dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                app:animationDuration="200"
+                app:pageIndicatorColor="@color/actionBarColour_default_theme"
+                app:currentPageIndicatorColor="@color/black"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"/> -->
+
+            <me.relex.circleindicator.CircleIndicator
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:id="@+id/indicator"
+                android:padding="5dp"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.81">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff" >
+            </android.support.v4.view.ViewPager>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

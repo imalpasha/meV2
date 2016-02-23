@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vrsm__drawer_item_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+<!-- style="@style/Sherlock.__TextAppearance.Small"-->
+    <TextView
+        android:id="@+id/text1"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+        android:paddingRight="?android:attr/listPreferredItemPaddingRight"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="#ffffff" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/txtCloseBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:text="@string/x_lbl"
+        android:layout_marginRight="10dp"
+        android:textSize="23dp"
+        android:textColor="#ffffff" 
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <WebView android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/mainWebView">
+            </WebView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ScrollView>

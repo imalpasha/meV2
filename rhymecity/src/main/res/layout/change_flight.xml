@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="@drawable/grey_with_white_gradient">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/shape_stroke">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:background="@color/black">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="CHANGE FLIGHT"
+                            android:id="@+id/txt_loginpssword"
+                            android:gravity="center"
+                            android:textSize="@dimen/font20sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:background="@color/actionBarColour_default_theme" >
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="GOING FLIGHT"
+                            android:id="@+id/checkGoing"
+                            android:textSize="18dp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:scaleX="1.1"
+                            android:scaleY="1.1"
+                            android:buttonTint="@color/white"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnDepartureFlight"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:background="@drawable/drawable_login_bottom_border">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.25"
+                            android:layout_height="wrap_content"
+                            android:paddingRight="15dp"
+                            android:gravity="center|right"
+                            >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="45dp"
+                                android:src="@drawable/departure_icon"
+                                android:scaleType="fitCenter"
+                                android:adjustViewBounds="true"
+                                />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.75"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/book_flight_departure_airport"
+                                android:id="@+id/txtDepartureFlight"
+                                android:textSize="17dp"
+                                android:textStyle="bold"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btnArrivalFlight"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="5dp"
+                        android:background="@drawable/drawable_black_bottom_border">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.25"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:paddingRight="15dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="45dp"
+                                android:id="@+id/imageView10"
+                                android:src="@drawable/arrival_icon"
+                                android:scaleType="fitXY"
+                                android:adjustViewBounds="true" />
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.75"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/book_flight_arrival_airport"
+                                android:id="@+id/txtArrivalFlight"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/departureDateBlock"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:paddingBottom="5dp"  >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.25"
+                            android:layout_height="match_parent"
+                            android:gravity="center|right"
+                            android:paddingRight="15dp" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="45dp"
+                                android:id="@+id/imageView25"
+                                android:src="@drawable/datepicker_icon"
+                                android:scaleType="fitCenter"
+                                android:adjustViewBounds="true" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.75"
+                            android:layout_height="match_parent"
+                            android:gravity="center|left" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceMedium"
+                                android:text="@string/book_flight_departure_date"
+                                android:textSize="17dp"
+                                android:id="@+id/txtDepartureDate"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/returnLayout"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="RETURN FLIGHT"
+                                android:id="@+id/checkReturn"
+                                android:textSize="18dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:scaleX="1.1"
+                                android:scaleY="1.1"
+                                android:buttonTint="@color/white"/>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:background="@drawable/drawable_login_bottom_border" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="match_parent"
+                                android:gravity="center|right"
+                                android:paddingRight="15dp" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:id="@+id/imageView24"
+                                    android:src="@drawable/arrival_icon"
+                                    android:scaleType="fitXY"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/book_flight_arrival_airport"
+                                    android:id="@+id/txtReturnDeparture"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout30"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp"
+                            android:background="@drawable/drawable_black_bottom_border">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="15dp"
+                                android:gravity="center|right" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:src="@drawable/departure_icon"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/book_flight_departure_airport"
+                                    android:id="@+id/txtReturnArrival"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/returnDateBlock"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:paddingBottom="5dp">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="match_parent"
+                                android:gravity="center|right"
+                                android:paddingRight="15dp" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:id="@+id/imageView26"
+                                    android:src="@drawable/datepicker_icon"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="@string/book_flight_departure_date"
+                                    android:textSize="17dp"
+                                    android:id="@+id/txtReturnDepartureDate"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginBottom="10dp">
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_continue_button"
+                        android:background="@drawable/login_login_button_clicked"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/btnSearchFlight" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

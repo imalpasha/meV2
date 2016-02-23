@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="@drawable/grey_with_white_gradient">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/shape_stroke">
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:background="@color/black">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/title_terms"
+                            android:gravity="center"
+                            android:textSize="@dimen/font21sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="1" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="1dp" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="t1"
+                                android:id="@+id/terms1"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="t1_body"
+                                    android:id="@+id/terms_1"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme"
+                            android:layout_gravity="center_horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="t2"
+                                android:id="@+id/terms2"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"
+                                android:gravity="center_horizontal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="t2_body"
+                                    android:id="@+id/terms_2"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="t3"
+                                android:id="@+id/terms3"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:gravity="center_horizontal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="The provision of in-flight products is subject to availability."
+                                    android:id="@+id/terms_3"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Prepaid Change Fee"
+                                android:id="@+id/terms4"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Passenger”, “you”, “your” and “yourself” means any person purchasing the Prepaid Change Fee through www.fireflyz.com.my"
+                                    android:id="@+id/terms_4"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Donation for the Connecting Communities Programme"
+                                android:id="@+id/terms5"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:gravity="center_horizontal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Introduction\r\na\tThank you for contributing to the Programme (“Donation”). Your Donation shall be made to the Malaysian Aids Foundation (MAF).\r\nb\tThe Donation period is from 4 February 2014 until 7 May 2014 (the “Donation Period”)\r\nc\tThis Donation is open to customers of FlyFirefly Sdn Bhd (“FY”) who purchase FY flight ticket(s) via www.fireflyz.com.my during the Donation Period."
+                                    android:id="@+id/terms_5"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center|center_horizontal"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Peugeot Lounge Online Booking Service"
+                                android:id="@+id/terms6"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="BY MAKING A BOOKING FOR THE ENTRY AND USE OF PEUGEOT LOUNGE FACILITIES, YOU AGREE TO BE BOUND BY THE FOLLOWING TERMS AND CONDITIONS. PLEASE READ THEM CAREFULLY BEFORE YOU PROCEED WITH YOUR BOOKING"
+                                    android:id="@+id/terms_6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Terms and Conditions For Meal Purchase"
+                                android:id="@+id/terms7"
+                                android:textSize="@dimen/font15sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:gravity="center_horizontal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="15dp"
+                                android:paddingBottom="15dp" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="These terms and conditions (“Terms and Conditions”), as may be amended from time to time, apply to our meal booking service made available online, through any mobile device, by email or by telephone. By accessing, browsing and using our website or any of our applications through whatever platform and/or by completing a booking, you acknowledge that you have read, understood and hereby agree to the Terms and Conditions as set out below.\r\n\r\n“Passenger”, “you”, “your” and “yourself” means any person, booking/purchasing the meal through www.fireflyz.com.my.\r\n“We”, “our”, “ourselves”, and “us” means FlyFirefly Sdn Bhd."
+                                    android:id="@+id/terms_7"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:layout_marginBottom="10dp">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ScrollView>

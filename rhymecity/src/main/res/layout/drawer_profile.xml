@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/myProfileLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:background="#ffffff"
+            android:orientation="horizontal"
+            android:padding="2dp" >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:id="@+id/drawerProfilePic"
+                    android:layout_width="105dp"
+                    android:layout_height="105dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+
+                    android:layout_marginTop="10dp"/>
+
+                <ProgressBar
+                    android:id="@+id/profileImgLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:ellipsize="end"
+                    android:id="@+id/txtUserFullName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#7A7A7A"
+                    android:textSize="16dp"
+                    android:text="IMAL PASHA BIN ZAINAL"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtUserRegisterDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7A7A7A"
+                    android:text="20391023"
+                    android:textSize="14dp" />
+
+                <TextView
+                    android:id="@+id/txtUserLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#7A7A7A"
+                    android:text="klang"
+                    android:textSize="14dp" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.fly.firefly">
+
+    <uses-sdk android:targetSdkVersion="16" android:minSdkVersion="2"
+        tools:overrideLibrary="dmax.dialog"/>
+
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+
+
+
+
+    <!-- GCM requires a Google account. -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.fly.firefly.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.fly.firefly.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+
+    <application
+        android:name=".FireFlyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/icon"
+        android:label="@string/app_name"
+        android:theme="@style/MyCustomTheme"
+        tools:replace="android:icon"
+        android:vmSafeMode="true">
+
+        <!-- android:theme="@style/Theme1" -->
+        <!-- android:name="com.fly.firefly.ui.activity.MainActivity" -->
+        <activity android:name=".ui.activity.Homepage.HomeActivity">
+
+        </activity>
+        <activity android:name=".ui.activity.PushNotification.PushNotificationActivity" />
+        <activity android:name=".ui.activity.PushNotification.RegisterActivity" />
+        <activity android:name=".ui.activity.PushNotification.MainActivity" />
+
+        <activity android:name=".ui.activity.BeaconV2.BoardingGateActivity" />
+
+        <activity android:name=".ui.activity.SlidePage.NearKioskActivity" />
+        <activity android:name=".ui.activity.BeaconV2.PushNotificationV1" />
+        <activity android:name=".ui.activity.BeaconV2.ArriveEntranceActivity" />
+        <activity android:name=".ui.activity.BeaconV2.BoardingGateActivityV2" />
+
+
+
+        <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" />
+        <activity android:name=".ui.activity.Login.LoginActivity" />
+        <activity android:name=".ui.activity.Register.RegisterActivity" />
+        <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
+        <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
+        <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
+        <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" >
+
+        </activity>
+       <!-- <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity2" /> -->
+
+        <activity android:name=".ui.activity.BookingFlight.FlightSummaryActivity2">
+
+        </activity>
+
+
+        <activity android:name=".ui.activity.BookingFlight.ItinenaryActivity" />
+        <activity android:name=".ui.activity.BookingFlight.PaymentFlightActivity" >
+
+        </activity>
+        <activity android:name=".ui.activity.BookingFlight.PaymentWebViewActivity" >
+
+        </activity>
+
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity1" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity2"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity3" />
+        <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity4" />
+
+        <activity android:name=".ui.activity.ManageFlight.ManageFlightActivity" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlightActionActivity" />
+        <activity android:name=".ui.activity.ManageFlight.ManageFlight_ChangeContact" />
+        <activity android:name=".ui.activity.ManageFlight.MF_EditPassengerActivity" />
+        <activity android:name=".ui.activity.ManageFlight.MF_ChangeFlightActivity" />
+        <activity android:name=".ui.activity.ManageFlight.MF_SeatSelectionActivity" >
+
+        </activity>
+        <activity android:name=".ui.activity.ManageFlight.MF_SentItineraryActivity" />
+        <activity android:name=".ui.activity.UpdateProfile.UpdateProfileActivity" />
+        <activity android:name=".ui.activity.ManageFlight.CommitChangeActivity" />
+
+        <!-- Boarding PASS -->
+        <activity android:name=".ui.activity.BoardingPass.BoardingPassActivity" />
+        <activity android:name=".ui.activity.BoardingPass.BoardingPassDisplayActivity" />
+
+        <!-- DEMO -->
+        <activity android:name=".ui.activity.Gate.CurrentGateActivity" />
+        <activity android:name=".ui.activity.Beacon.BeaconRanging" />
+        <activity android:name=".ui.activity.Beacon.RangingActivity" />
+        <activity android:name=".ui.activity.Map.IndoorMapActivity" />
+        <activity android:name=".ui.activity.Sensor.SensorActivity" />
+        <activity android:name=".ui.activity.Sensor.Compass" />
+
+        <activity android:name=".ui.activity.GeoFencing.GenFencingActivity" />
+
+
+        <activity android:name=".ui.activity.GeoFencing.GeofenceTransitionReceiver$switchButtonListener" />
+
+        <!-- LocalNotification -->
+        <receiver android:name=".AlarmReceiver" ></receiver>
+
+
+        <!-- SPLASH SCREEN -->
+        <activity android:name=".ui.activity.SplashScreen.SplashScreenActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.activity.PasswordExpired.ChangePasswordActivity"
+            android:label="@string/title_activity_password_expired" />
+
+        <!--
+          Optionally, register AnalyticsReceiver and AnalyticsService to support background
+          dispatching on non-Google Play devices
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.fly.firefly.ui.activity.GeoFencing.GeofenceTransitionReceiver"
+            android:enabled="true"
+            android:exported="false" >
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <!--
+             Optionally, register CampaignTrackingReceiver and CampaignTrackingService to enable
+             installation campaign reporting
+        -->
+        <receiver
+            android:name="com.google.android.gms.analytics.CampaignTrackingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.fly.firefly" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GCMIntentService" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <!-- <receiver android:name="com.fly.firefly.ui.activity.GeoFencing.GeofenceTransitionReceiver$switchButtonListener" />-->
+
+        <service android:name="com.google.android.gms.analytics.CampaignTrackingService" />
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="6f38953bcf07d7c4f8dd57baf34092f3e0c08720" />
+
+        <activity
+            android:name=".ui.activity.Terms.Terms"
+            android:label="@string/title_activity_terms"></activity>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyB0QRtXyjzYCW0PhkHnAkVr_pifTVuphKg" />
+
+
+    </application>
+
+</manifest>

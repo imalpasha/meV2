@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1"
+                android:layout_marginTop="15dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flight Date"
+                        android:id="@+id/textView77"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Flight Number"
+                        android:id="@+id/textView79"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Station Code"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/textView80"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="Departure Time"
+                        android:id="@+id/textView81"
+                        android:textStyle="bold"
+                        android:textSize="16dp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.5"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20 August 2015"
+                        android:id="@+id/flightdate"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FY221"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/flightnumber"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PEN-SZB"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/stationcode"
+                        android:textSize="16dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10.00PM"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/departuretime"
+                        android:textSize="16dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.6"
+            android:layout_height="wrap_content"
+            android:text="Passenger Name"
+            android:textStyle="bold"
+            android:id="@+id/textView88"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.15"
+            android:layout_height="wrap_content"
+            android:text="Seat"
+            android:textStyle="bold"
+            android:id="@+id/textView89"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="0.25"
+            android:layout_height="wrap_content"
+            android:text="Check In"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:id="@+id/textView90"
+            android:textSize="16dp"/>
+    </LinearLayout>
+
+</LinearLayout>

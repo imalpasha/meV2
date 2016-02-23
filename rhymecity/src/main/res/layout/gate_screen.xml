@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BF000000">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Wednesday"
+                android:id="@+id/textView92"
+                android:textSize="30dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22 July"
+                android:id="@+id/textView93"
+                android:textSize="28dp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="08.30 AM"
+                android:id="@+id/textView94"
+                android:textSize="22dp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Boarding Time"
+                android:id="@+id/textView95"
+                android:textSize="28dp"
+                android:textColor="@color/white"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:weightSum="1"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="match_parent"
+                    android:gravity="right">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="09.00 AM"
+                        android:id="@+id/textView96"
+                        android:textSize="28dp"
+                        android:textStyle="bold"
+                        android:gravity="top|right"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.3"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="On Time"
+                        android:id="@+id/textView107"
+                        android:gravity="left|top"
+                        android:textSize="12dp"
+                        android:textColor="@color/theme1_tab_bg_5_click"
+                        />
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="AOR"
+                        android:id="@+id/textView97"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alor Setar"
+                        android:textSize="14dp"
+                        android:id="@+id/textView105"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="80dp"
+                    android:id="@+id/imageView18"
+                    android:src="@drawable/departure_icon"
+                    android:scaleType="centerCrop"
+                    android:padding="10dp"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"/>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SZB"
+                        android:id="@+id/textView100"
+                        android:textSize="20dp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Subang"
+                        android:textSize="14dp"
+                        android:id="@+id/textView106"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.33"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Flight Number"
+                    android:id="@+id/textView98"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="FY226"
+                    android:id="@+id/textView99"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.33"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Terminal Gate"
+                    android:id="@+id/textView101"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="18A"
+                    android:id="@+id/textView102"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.33"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Seat No"
+                    android:id="@+id/textView103"
+                    android:textSize="15dp"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7A"
+                    android:id="@+id/textView104"
+                    android:textSize="15dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left|top"
+            android:paddingLeft="20dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check-In Status : Not Check-in yet"
+                android:id="@+id/textView108"
+                android:textSize="16dp"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Navigate"
+                android:textSize="16dp"
+                android:id="@+id/registerBtn"
+                android:textColor="@color/orange_firefly"
+                android:textStyle="bold"
+                android:background="@drawable/login_register_button_clicked"/>
+
+            <Button
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Range"
+                android:textSize="16dp"
+                android:id="@+id/rangeBtn"
+                android:textColor="@color/orange_firefly"
+                android:textStyle="bold"
+                android:background="@drawable/login_register_button_clicked" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <Button
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Explore KLIA2"
+                android:textSize="16dp"
+                android:id="@+id/btnExplore"
+                android:textColor="@color/orange_firefly"
+                android:textStyle="bold"
+                android:background="@drawable/login_register_button_clicked" />
+
+            <Button
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Notify : Off"
+                android:textSize="16dp"
+                android:id="@+id/btnNotify"
+                android:textColor="@color/orange_firefly"
+                android:textStyle="bold"
+                android:background="@drawable/login_register_button_clicked" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/imageView17"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:src="@drawable/skypark_airport"
+        android:alpha=".15"/>
+
+
+</RelativeLayout>

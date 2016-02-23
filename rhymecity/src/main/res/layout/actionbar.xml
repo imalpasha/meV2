@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
+
+
+    <RelativeLayout
+        android:id="@+id/leftPart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/backbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/backbutton"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/menubutton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:clickable="true"
+            android:onClick="menubutton"
+            android:src="@drawable/menu_button"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/tabBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="55dp"
+            android:clickable="true"
+            android:background="@null"
+            android:src="@drawable/backbutton"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/centerPart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.6"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:text="@string/app_name"
+            android:textColor="#000000"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/globalSearchBoxTablet"
+        android:layout_width="0dp"
+        android:layout_weight="0.95"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:background="@drawable/tab_search"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_weight="0.1"
+            android:background="@drawable/tab_search"
+            android:orientation="horizontal"
+            android:padding="8dp" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|left"
+                android:layout_weight="0.2"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ImageButton
+                    android:id="@+id/global_searchIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:padding="5dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/search_icon"
+                    android:onClick="globalSearchTablet"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center|left"
+                android:layout_weight="0.8"
+                android:gravity="center|left"
+                android:orientation="vertical" >
+
+                <EditText
+                    android:id="@+id/txtGlobalSearch"
+                    android:layout_width="fill_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:hint="@string/searchBoxHint"
+                    android:imeOptions="actionGo"
+                    android:singleLine="true"
+                    android:textColorHint="#ffffff" >
+
+                </EditText>
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rightPart"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/btnLogOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:onClick="homePage"
+            android:singleLine="true"
+            android:text="@string/log_out_lbl"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btnAR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:onClick="AR"
+            android:singleLine="true"
+            android:text="@string/ar_lbl"
+            android:textColor="#ffffff"
+            android:textSize="17dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btnAddRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:onClick="addRequest"
+            android:singleLine="true"
+            android:text="@string/plus"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/tabContainerTablet"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/tabMySearch1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:background="@drawable/tab_search"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="tabSearch"
+                    android:padding="2dp"
+                    android:src="@drawable/vrsm__ic_search" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tabMyWishList"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_wishlist"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="tabWish"
+                    android:padding="2dp"
+                    android:src="@drawable/vrsm__ic_wishlist" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tabMyCart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/tab_cart"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="tabCart"
+                    android:padding="2dp"
+                    android:src="@drawable/vrsm__ic_cart" />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

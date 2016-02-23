@@ -1,0 +1,876 @@
+<resources>
+
+
+    <string name="retrieve_rhymes_failed">The network is slow or unavailable</string>
+    <string name="no_rhymes_found_error">Couldn\'t find anything that rhymes with %s</string>
+
+    <string name="search_hint">Retrofit - Test On api.github.com</string>
+    <string name="rhyme_caps">Search User</string>
+    <string name="retry_caps">RETRY</string>
+
+    <string name="rhymes_with">Rhymes with %s</string>
+
+
+    <!-- Soap Setting -->
+    <string name="soapURL">http://192.168.0.120:9766/vrsm/generalHTTP/1.1</string>
+
+    <!-- End Soap Setting -->
+    <string name="module_package_name">com.silverlake.ifb.module</string>
+
+    <!-- Unable To Connect Layout -->
+    <string name="utc">Unable to connect to server</string>
+
+    <!-- Internet not available -->
+    <string name="internetNA">Internet connection not available </string>
+
+    <!-- Login Page -->
+    <string name="loginUserNameHint">Username</string>
+    <string name="loginUserPasswordHint">Password</string>
+    <string name="loginBtnLogin">Login</string>
+    <string name="loginBtnSignUp">Sign Up</string>
+    <string name="loginTxtFYP">Forgot your password?</string>
+
+    <!-- End Login Page -->
+
+
+    <!-- Login Page -->
+    <string name="promotionLabel">Promotions</string>
+
+    <!-- Contact Us Description Page -->
+    <string name="contactUsDescription">VRSM provides merchants with unsurpassed store-front features and functionalities that deliver personalize mobile shopping experience.
+	It is built from customer perspective that is easy to understand, protects customer data and customizable layout tailored to individual need.The velocity at which mobile devices increase its computing power to support complex multimedia rich applications makes VRSM an ideal landscape to bring online shopping experience to the mobile devices.
+</string>
+
+    <!-- Register Page -->
+    <string name="registerLabel">Fill Up \nand \nLets Shop!</string>
+    <string name="registerHintUserID">User ID*</string>
+    <string name="registerHintUserPassword">Password*</string>
+    <string name="registerHintUserConfirmPassword">Confirm Password*</string>
+    <string name="registerHintUserEmail">Email*</string>
+    <string name="registerHintUserName">Name*</string>
+    <string name="registerHintUserGender">Gender*</string>
+    <string name="registerHintUserYear">Year*</string>
+    <string name="registerHintUserMonth">Month*</string>
+    <string name="registerHintUserDay">Day*</string>
+    <string name="registerHintUserPhone">Phone*</string>
+    <string name="registerHintUserAddAddress">Add Addres</string>
+    <string name="registerHintUserAddressName">Address Name*</string>
+    <string name="registerHintUserStreet1">Street 1*</string>
+    <string name="registerHintUserStreet2">Street 2</string>
+    <string name="registerHintUserStreet3">Street 3</string>
+    <string name="registerHintUserCity">City*</string>
+    <string name="registerHintUserPostCode">Post Code*</string>
+    <string name="registerHintUserCountry">Country*</string>
+    <string name="registerHintUserState">State*</string>
+    <string name="registerTC">I agree with Terms &amp; Condition</string>
+    <string name="registerRP">Return Policy</string>
+    <string name="register">Register</string>
+    <string name="tc">Terms &amp; Condition</string>
+
+    <!-- Error Text -->
+    <string name="errorPleaseFillUpEmptyField">Please fill up the highlighted field</string>
+    <string name="errorUserNamePassword">Invalid Username / Password</string>
+    <string name="loginErrorEmptyField">Forgot You Passoword</string>
+
+    <!-- General -->
+    <string name="action_settings">FIREFLY</string>
+    <string name="department_section1">Ladies</string>
+    <string name="department_section2">Men</string>
+    <string name="department_section3">Books</string>
+    <string name="department_section4">Toys &amp; Games</string>
+    <string name="department_section5">Electronics </string>
+    <string name="department_section6">Kids &amp; Babies </string>
+    <string name="department_section7">Sport &amp; Outdoors</string>
+    <string name="department_section8">Gadgets</string>
+    <string name="more_section1">Newsletter</string>
+    <string name="more_section2">Augmented Reality</string>
+    <string name="more_section3">Partners</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="VRSM_webservices_url">http://localhost:9766/vrsm/VrsmWS/</string>
+    <string name="TRY">Try again</string>
+    <string name="internet_NA_with_retry">Unable to connect to server. Check your internet connection and try again</string>
+    <string name="connection_error">Connection error</string>
+    <string name="promotion">Promotion</string>
+    <string name="pna">Product not available or no longer sold by the merchant</string>
+
+
+    <!-- Sliding Menu -->
+    <string name="newsletter">Newsletter</string>
+    <string name="newsletter_mine">My Newsletter</string>
+    <string name="augmented_reality">Augmented Reality</string>
+    <string name="social_media_wall">Social Media Wall</string>
+    <string name="merchant">Merchant</string>
+    <string name="badges">Badges</string>
+    <string name="contactUS">Contact Us</string>
+    <string name="tnc">Term &amp; Condition </string>
+    <string name="more_about_vrsm">More about VRSM</string>
+    <string name="faq">FAQ</string>
+    <string name="return_policy">Return Policy</string>
+
+    <!-- DropDown Value -->
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="travel_doc">
+        <item>Malaysia IC-NRIC</item>
+        <item>Passport-P</item>
+        <item>Visa-V</item>
+    </string-array>
+
+    <!-- Travel Purpose -->
+    <string-array name="purpose">
+        <item>Leisure</item>
+        <item>Business</item>
+    </string-array>
+
+    <!-- Month -->
+    <string-array name="month">
+        <item>Jan</item>
+        <item>Feb</item>
+        <item>Mar </item>
+        <item>Apr</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>Jul</item>
+        <item>Aug</item>
+        <item>Sep</item>
+        <item>Oct</item>
+        <item>Nov</item>
+        <item>Dec</item>
+    </string-array>
+
+    <string-array name="full_month">
+        <item>January</item>
+        <item>February</item>
+        <item>March </item>
+        <item>April</item>
+        <item>May</item>
+        <item>Jun</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
+    <string-array name="requestType">
+        <item>Please select</item>
+        <item>Return</item>
+        <item>Refund</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="itemCondition">
+        <item>Please select</item>
+        <item>Opened</item>
+        <item>Unopened</item>
+    </string-array>
+
+    <!-- Filter Code -->
+    <string-array name="filter_review">
+        <item>SHR,Highest Rate</item>
+        <item>SLR,Lowest Rate</item>
+        <item>SNF,Newest First</item>
+        <item>SOF,Oldest First</item>
+    </string-array>
+    <string-array name="filter_code">
+        <item>SAZ,A to Z</item>
+        <item>SZA,Z to A</item>
+        <item>SOS,On Sale </item>
+        <item>SLP,Lowest Price</item>
+        <item>SHP,Highest Price</item>
+        <item>SHR,Highest Rating</item>
+    </string-array>
+    <string-array name="filter">
+        <item>A to Z</item>
+        <item>Z to A</item>
+        <item>On Sale</item>
+        <item>Lowest Price</item>
+        <item>Highest Price</item>
+        <item>Highest Rating</item>
+    </string-array>
+
+    <!-- Global Search -->
+    <string-array name="search_code">
+        <item>STB,Brand,shopbybrand.ShopByBrandListView</item>
+        <item>STM,Merchant,merchant.MerchantDetailView</item>
+        <item>STD,Department,department.DepartmentView</item>
+        <item>STP,Product,productprofile.ProductProfileView</item>
+        <item>STD_LVL1,Department,department.
+            View</item>
+        <item>STD_LVL2,Department,department.DepartmentView</item>
+        <item>STD_LVL3,Department,department.DepartmentView</item>
+        <item>STD_LVL4,Department,department.DepartmentView</item>
+    </string-array>
+
+    <!-- Unable to connect to server -->
+    <string name="UTC">Unable to connect to server</string>
+
+    <!-- Augmented Reality -->
+    <string name="compass_accuracy_low">Please re-calibrate compass by waving your device in a figure 8 motion.</string>
+    <string name="location_fetching">Trying to find out where you are</string>
+    <string name="location_fetching2">Still trying to find out where you are. Please wait a little bit more.</string>
+    <string name="google_map_api_key"><![CDATA[AIzaSyCK7VCGJomx5--fAPlvJZYGRsq4jyVyev0]]></string>
+    <string name="imal_google_map_api_key"><![CDATA[AIzaSyBPg4DVdsfxlhmo_OT2_9iNVHSKK3OPBEA]]></string>
+
+
+    <string name="faizal_google_map_api_key"><![CDATA[AIzaSyCrMUgb-rRMIcSNwt9fEmoomirDaCoDniU]]></string>
+
+    <!-- Wish List -->
+    <string name="wishlist_add_all_cart">Add All to Cart</string>
+    <string name="wishlist_create_new">Add New Wish List</string>
+    <string name="wishlist_add_to">Add to Wish List</string>
+    <string name="wishlist_view">View Wish Lists</string>
+    <string name="wishlist_continue_shopping">Continue Shopping</string>
+    <string name="wishlist_login">Login</string>
+    <string name="wishlist_login_message">Please login to add products to your wish list</string>
+    <string name="wishlist_no_folder">There is no folder in your wish list</string>
+    <string name="wishlist_success_added">This Product has been successfully added to your wish list</string>
+    <string name="wishlist_confirm_delete">Are you sure to delete this Wish List?</string>
+    <string name="wishlist_confirm_delete_item">Are you sure to delete this item?</string>
+    <string name="wishlist_button_delete">Delete</string>
+    <string name="button_cancel_lbl">Cancel</string>
+    <string name="wishlist_title">My Wish List</string>
+    <string name="wishlist_my_stuff">My Stuff</string>
+    <string name="wishlist_insert_title">Please insert wishlist title</string>
+    <string name="wishlist_select_color">Please select wishlist colors and icons</string>
+
+    <!-- Customer Review -->
+    <string name="review_no_input">Please fill in the blank</string>
+    <string name="review_confirm_delete">Mark as spam?</string>
+    <string name="review_button_delete">Yes</string>
+    <string name="review_button_cancel">Cancel</string>
+    <string name="review_rate">Rate this product:</string>
+
+    <!-- Badges -->
+    <string name="badge_title">Badges</string>
+    <string name="badge_mine_title">My Badges</string>
+    <string name="badge_congrate">Congratulations!</string>
+    <string name="badge_you_earned">You\'ve earned the following badge</string>
+    <string name="badge_no_badge">You don\'t have any badge</string>
+    <string name="badge_awarded_list">You\'ve been rewarded the following badges</string>
+    <string name="badge_member_since">"Member since: "</string>
+    <string name="badge_location">"Location: "</string>
+
+    <!-- Order History -->
+    <string name="orderhistory_no_order">No orders have been made</string>
+    <string name="orderhistory_number">Order Number :</string>
+    <string name="orderhistory_date">Date :</string>
+    <string name="orderhistory_status">Order Status :</string>
+    <string name="orderhistory_payment_method">Payment Method</string>
+    <string name="billing_address_lbl">Billing Address</string>
+    <string name="orderhistory_shipping_address">Shipping Address</string>
+    <string name="orderhistory_shipping">Shipping</string>
+    <string name="orderhistory_total">Total</string>
+    <string name="orderhistory_product_details">Product Details</string>
+    <string name="orderhistory_product_view">View</string>
+    <string name="orderhistory_product_return">Return</string>
+
+    <!-- Gallery -->
+    <string name="gallery">Gallery</string>
+
+    <!-- Carts -->
+    <string name="NA">Not Available</string>
+    <string name="product_deleted">Product Deleted</string>
+
+    <!-- Contact US -->
+    <string name="call">Call</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Search -->
+    <string name="searchBoxHint">Search Here</string>
+    <string name="noResult">No result</string>
+
+    <!-- Newsletter -->
+    <string name="newsletterTitle">Title</string>
+    <string name="newsletterSave">Successfully saved</string>
+    <string name="newsletterFailLoadPdf">Failed to load Pdf saved</string>
+    <string name="newsletterNoItem">No saved newsletter available</string>
+
+    <!-- Merchant -->
+    <string name="merchantSuccessUnSubscribe">Successfully Unsubscribe</string>
+    <string name="merchantSubscribeBtn">Subscribe to Newsletter</string>
+    <string name="merchantUnsubscribeBtn">Unsubscribe to Newsletter</string>
+    <string name="merchantCallNo">Call</string>
+    <string name="merchantQtyProduct">Product</string>
+    <string name="merchantWebsite">Visit Website</string>
+    <string name="location_lbl">Location</string>
+
+    <!-- ForgotPassword -->
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="ForgotPasswordEmailSent">Your password reset has been confirmed. \nThe link to reset your password has been sent to the \nemail registered to</string>
+    <string name="forgotPasswordNextBtn">Next</string>
+    <string name="forgotPasswordUserID">User ID</string>
+    <string name="forgotPasswordTxt">Forgot \nPassword</string>
+    <string name="forgotPasswordExpired">PASSWORD EXPIRED</string>
+    <string name="forgotPasswordCurrent">Current Password</string>
+    <string name="forgotPasswordNew">New Password</string>
+    <string name="forgotPasswordConfirm">Confirm Password</string>
+
+    <!-- Product Profile -->
+    <string name="productAddToCartLoading">Loading...</string>
+    <string name="productEnterQuantity">Please enter quantity</string>
+    <string name="productSelectColourSize">Please select colour &amp; size</string>
+    <string name="productVideoProblem">Problem occur while playing the video</string>
+    <string name="productQtyLeft"> quantity left</string>
+    <string name="productSuccessAddToCart">Successfully added to cart</string>
+    <string name="productAddToCart">Add to cart</string>
+    <string name="productCartReachLimit">Unable to add. Cart reach limit</string>
+    <string name="productSelectSize">Select Size</string>
+    <string name="productQTY"> quantity</string>
+    <string name="selectColourFirst">Please select colour</string>
+
+
+    <!-- My Profile -->
+    <string name="myProfile">My Profile</string>
+    <string name="myProfileCompleteAction">Complete action using</string>
+    <string name="myProfileImageUpdated">Profile image updated</string>
+    <string name="myProfileTheme">Theme</string>
+    <string name="myProfileShipping">Shipping Address</string>
+    <string name="myProfileShippingLoading">Loading ...</string>
+    <string name="myProfileShippingSuccess">Your details have been saved and your profile has been updated</string>
+    <string name="myProfileShippingController">Please fill up the highlighted field</string>
+    <string name="myProfileEditState">State Code</string>
+    <string name="myProfileChangeShippingAddress">Change Shipping Address</string>
+    <string name="myProfileAddressName">Name</string>
+    <string name="myProfileAddressNameEt">Name*</string>
+    <string name="myProfileAddress">Address</string>
+    <string name="myProfileAddressStreet1">  Street 1*</string>
+    <string name="myProfileAddressStreet2">  Street 2</string>
+    <string name="myProfileAddressStreet3">  Street 3</string>
+    <string name="citytown">City/Town</string>
+    <string name="citytownHINT"> City/Town*</string>
+    <string name="state">State</string>
+    <string name="mobile">Mobile</string>
+    <string name="mobilehint"> Mobile*</string>
+    <string name="postcode">Post code</string>
+    <string name="postcodehint">  Post code*</string>
+    <string name="country">Country</string>
+    <string name="saveAddress">Save Address</string>
+    <string name="orderHistory">Order History</string>
+    <string name="wishList">Wish List</string>
+    <string name="cart">Cart</string>
+    <string name="details">Details</string>
+    <string name="name">Name: </string>
+    <string name="userid">User ID: </string>
+    <string name="userid_">User ID </string>
+    <string name="dob">DOB: </string>
+    <string name="dob_">DOB</string>
+    <string name="changepassword">Change Password</string>
+    <string name="logOutOtherDevices">Log out of other devices?</string>
+    <string name="mobile_">Mobile: </string>
+    <string name="email">Email: </string>
+    <string name="addressName">Address Name: </string>
+    <string name="shipping">Shipping: </string>
+    <string name="address">Address: </string>
+    <string name="mobile__">Mobile	 :</string>
+    <string name="theme">Theme</string>
+    <string name="editmyprofile">Edit My Profile</string>
+    <string name="emailhint">  Email*</string>
+    <string name="addressNamehint">  Address Name*</string>
+    <string name="saveDetail">Save Details</string>
+    <string name="name_">Name</string>
+    <string name="username"> Username*</string>
+    <string name="countryhint"> Country*</string>
+    <string name="day">Day</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+
+    <!-- My Profile - Add Request-->
+    <string name="addRequestProduct">Product</string>
+    <string name="addRequestType">Request Type*</string>
+    <string name="addRequestQuantityReturn">Quantity Return*</string>
+    <string name="addRequestReason">Reason*</string>
+    <string name="addRequestItemCondition">Item Condition</string>
+    <string name="addRequestComment">Comment</string>
+    <string name="addRequestPleaseSelect">Please select</string>
+    <string name="addRequestComment..">Comment...</string>
+
+    <!--My Profile - Add New Request-->
+    <string name="addNewRequestOrderNumber">Order Number</string>
+    <string name="addNewRequestRequestItem">Request item</string>
+    <string name="addNewRequestItems">Items</string>
+    <string name="addNewRequestQty">Qty</string>
+    <string name="addNewRequestType">Type</string>
+    <string name="addNewRequestTapOnReturnItem">Tap on return item</string>
+
+    <!-- Check Out -->
+    <string name="checkOut">Check-Out</string>
+    <string name="pleaseSelectMethod">Please select  the method you prefer on how you would like to receive your purchased products</string>
+    <string name="selfpickup">Self Pick-Up</string>
+    <string name="shipping_">Shipping</string>
+    <string name="checkout_nav">Check Out</string>
+    <string name="payment_nav">Payment</string>
+    <string name="confirmation_nav">Confirmation</string>
+    <string name="billingAddress">Billing Address</string>
+    <string name="shippingName">Shipping Name*</string>
+    <string name="firstname">First Name*</string>
+    <string name="lastname">Last Name*</string>
+    <string name="cellphone">Cell Phone Name*</string>
+    <string name="alternativephone">Alternative Phone*</string>
+    <string name="townandcity">Town/City*</string>
+    <string name="addbilling_cancel">Cancel</string>
+    <string name="addbilling_add">Save Address</string>
+    <string name="addbilling_payment_title">Payment</string>
+    <string name="please_select_billing_add">Please select a billing address to proceed with order</string>
+    <string name="please_delete_billing_add">Please delete a billing address in order to add a new one to the list</string>
+    <string name="billing_add_deleted">Billing Address Deleted</string>
+    <string name="please_select_shipping_add">Please select a shipping address to proceed with payment</string>
+    <string name="please_delete_shipping_add">Please delete a shipping address in order to add a new one to the list</string>
+    <string name="shipping_add_deleted">Shipping Address Deleted</string>
+
+    <!-- Payment -->
+    <string name="payment_title">Payment</string>
+    <string name="pickup_location">Pick-Up Location</string>
+    <string name="please_select_pickup_loc">Please select pickup location for all merchant</string>
+
+
+    <!-- Promotion Landing.Exit -->
+    <string name="confirm_exit_box">Confirm Exit?</string>
+    <string name="cancel_exit">No</string>
+    <string name="confirm_exit">Yes</string>
+
+    <!-- Module Title -->
+    <string name="SBB">Shop By Brand</string>
+    <string name="myCart">My Cart</string>
+    <string name="loginTitle">Login</string>
+    <string name="customerReview">Customer Review</string>
+
+
+    <string name="contactUs">Contact Us</string>
+    <string name="search">Search</string>
+    <string name="log_out_lbl">Log Out</string>
+    <string name="ar_lbl">AR</string>
+    <string name="loading_lbl">Loading</string>
+    <string name="continue_lbl">Continue</string>
+    <string name="add_billing_address_lbl">Add Billing Address</string>
+    <string name="add_shipping_address_lbl">Add Shipping Address</string>
+    <string name="placeholder_large_txt">Large Text</string>
+    <string name="badges_reward_lbl">You\'ve been rewarded the following badges</string>
+    <string name="ok_label">OK</string>
+    <string name="badges_error_message">Badges could not be retrieved or there are no badges uploaded by the admin. Please try again later.</string>
+    <string name="placeholder_badge_name">Novice Shopper</string>
+    <string name="placeholder_badge_des">Congratulations. You purchased your first item on VRSM!</string>
+    <string name="placeholder_name">Brandon Ackerman</string>
+    <string name="placeholder_member_since">Member since: 2014</string>
+    <string name="placeholder_location">Location: Selangor MY</string>
+    <string name="placeholder_reward_message">You\'ve been rewarded the following badges</string>
+    <string name="placeholder_sorry_message">Sorry but you have not been rewarded any badges yet.</string>
+    <string name="no_items_msg">There are no items in your cart</string>
+    <string name="lbl_total">Total:</string>
+    <string name="placeholder_price1">RM550.00</string>
+    <string name="placeholder_price2">RM510.00</string>
+    <string name="continue_shopping_lbl">Continue Shopping</string>
+    <string name="pay_now_lbl">Pay Now</string>
+    <string name="check_out_lbl">Check Out</string>
+    <string name="payment_lbl">Payment</string>
+    <string name="confirmation_lbl">Confirmation</string>
+    <string name="select_payment_msg">Please select your preferred payment method</string>
+    <string name="shipping_add_lbl">Shipping Address</string>
+    <string name="payment_mtd_lbl">Payment Method</string>
+    <string name="placeholder_cc">xxxx-xxxx-xxxx-9021</string>
+    <string name="order_now_lbl">Order Now</string>
+    <string name="your_order_lbl">Your Order</string>
+    <string name="placeholder_product_name">-</string>
+    <string name="placeholder_shop_name">--</string>
+    <string name="quantity_lbl">Quantity: 5</string>
+    <string name="size_lbl">Size: 40D</string>
+    <string name="colour_lbl">Colour: Hitam</string>
+    <string name="pickup_loc_label">Pick-Up Location:</string>
+    <string name="new_message_lbl">New Message</string>
+    <string name="call_lbl">Call</string>
+    <string name="email_lbl">Email</string>
+    <string name="what_do_u_think_lbl">What do you think of?</string>
+    <string name="test_lbl">test</string>
+    <string name="sold_by_lbl">Sold by:</string>
+    <string name="ur_comment_lbl">Your comment</string>
+    <string name="comment_instru">Kindly fill the comment section before you proceed with posting your review</string>
+    <string name="post_ur_rating_lbl">Post your rating</string>
+    <string name="x_lbl">X</string>
+    <string name="forgot_password_lbl">Forgot \nPassword</string>
+    <string name="reset_pwd_lbl">Reset \nPassword</string>
+    <string name="reset_pwd2_lbl">Reset Password</string>
+    <string name="pwd_resetted_instru">Your password has been reset. \nPlease continue to log-in with your new password</string>
+    <string name="got_badge_lbl">Got Badge</string>
+    <string name="log_in_lbl">Log-In</string>
+    <string name="order_history_detail">Order History Detail</string>
+    <string name="pickup_lbl">Pickup</string>
+    <string name="card_info_lbl">Card Info</string>
+    <string name="my_wish_list_lbl">My Wish List</string>
+    <string name="add_wishlist_lbl">Add Wish List</string>
+    <string name="add_product_wishlist_lbl">Add Product to Wish List</string>
+    <string name="augmented_lbl">Augmented</string>
+    <string name="user_confirmation_lbl">User Confirmation</string>
+    <string name="newsletter_lbl">Newsletter</string>
+    <string name="sbb_lbl">SBB</string>
+    <string name="product_review_lbl">Product Review</string>
+    <string name="newsletter_alert_lbl">Newsletter Alert</string>
+    <string name="product_profile_lbl">Product Profile</string>
+    <string name="checkout_lbl">Checkout</string>
+    <string name="english_lbl">English</string>
+    <string name="mandarin_lbl">Mandarin</string>
+    <string name="my_badges_no_lbl">My Badges(no badges)</string>
+    <string name="badges_has_badges_lbl">Badges(has badges)</string>
+    <string name="badges_cant_retrieved_lbl">Badges(can\'t retrieved)</string>
+    <string name="get_country_list_lbl">Get Country List</string>
+    <string name="country_list_instru">Country List Should Display Here</string>
+    <string name="wishlist_lbl">WishList</string>
+    <string name="home_lbl">Home</string>
+    <string name="pick_up_locations_lbl">Pick-Up Locations</string>
+    <string name="three_lbl">(3)</string>
+    <string name="no_folder_lbl">No folder</string>
+    <string name="color_variations_lbl">Color Variations</string>
+    <string name="icons_lbl">Icons</string>
+    <string name="total_lbl">Total</string>
+    <string name="exit_lbl">Exit</string>
+    <string name="profile_photo_lbl">Profile Photo</string>
+    <string name="camera_lbl">Camera</string>
+    <string name="remove_img_lbl">Remove Image</string>
+    <string name="save_password_lbl">Save Password</string>
+    <string name="old_pwd_lbl">Old Password</string>
+    <string name="new_pwd_lbl">New Password</string>
+    <string name="confirm_new_pwd">Confirm New Password</string>
+    <string name="city_town_lbl">City/Town</string>
+    <string name="city_town_lbl2">City/Town*</string>
+    <string name="placeholder_city_town">Bandar Seri Putra</string>
+    <string name="postcode_lbl">Postcode</string>
+    <string name="postcode_lbl2">Postcode*</string>
+    <string name="placeholder_postcode">42700</string>
+    <string name="country_lbl">Country</string>
+    <string name="placeholder_theme_name">Candy Colors</string>
+    <string name="placeholder_theme_name2">The Forest</string>
+    <string name="placeholder_theme_name3">Summer Sandals</string>
+    <string name="placeholder_name2">Name : Brandon Ackermen</string>
+    <string name="placeholder_userId">UserID : Brandon21</string>
+    <string name="placeholder_dob">DOB : 21 August 1980</string>
+    <string name="placeholder_mobile">Mobile : 012-222 2222</string>
+    <string name="placeholder_email">Email : Brandon21@yahoo.com</string>
+    <string name="shipping_lbl">Shipping</string>
+    <string name="address_lbl">Address:</string>
+    <string name="placeholder_add1">Add1</string>
+    <string name="placeholder_mobile2">Mobile : 012 222 2222</string>
+    <string name="deselect_all_lbl">Deselect All</string>
+    <string name="select_all_lbl">Select All</string>
+    <string name="subscribe_selected_partners_lbl">Subscribe to the Selected Partners</string>
+    <string name="unsubscribe_selected_partners_lbl">Unsubscribe to Selected Partners</string>
+    <string name="no_content_lbl">No content provided</string>
+    <string name="highlight_lbl">Highlight</string>
+    <string name="order_no_lbl">Order No</string>
+    <string name="date_lbl">Date</string>
+    <string name="total_amount_lbl">Total Amount</string>
+    <string name="order_status_lbl">Order Status</string>
+    <string name="dismiss_lbl">Dismiss</string>
+    <string name="products_no">107 Products</string>
+    <string name="customer_reviews_lbl">Customer Reviews</string>
+    <string name="five_star_lbl">5 Star</string>
+    <string name="zero_lbl">(0)</string>
+    <string name="four_star_lbl">4 Star</string>
+    <string name="three_star_lbl">3 Star</string>
+    <string name="two_star_lbl">2 Star</string>
+    <string name="one_star_lbl">1 Star</string>
+    <string name="average_customer_reviews_lbl">Average Customer Reviews</string>
+    <string name="x_customer_reviews_lbl">0 Customers Reviews</string>
+    <string name="do_you_want_to_review_lbl">Do you want to review this product?</string>
+    <string name="post_ur_review_lbl">Post your review</string>
+    <string name="sort_review_lbl">Sort the reviews by:</string>
+    <string name="highest_rating_lbl">Highest Rating</string>
+    <string name="product_desc_lbl">Product Description</string>
+    <string name="view_lbl">View</string>
+    <string name="deal_ends_in_lbl">Deal ends in</string>
+    <string name="more_info_lbl">More Info</string>
+    <string name="left_lbl">left</string>
+    <string name="for_chosen_model_lbl">for chosen model</string>
+    <string name="ratings_lbl">Ratings :</string>
+    <string name="share_this_prod_lbl">Share this product</string>
+    <string name="similar_prod_lbl">Similar Product</string>
+    <string name="error_product_has_not_reviewed">This product has not been reviewed yet!</string>
+    <string name="button_placeholder_lbl">Button</string>
+    <string name="textview_placeholder_lbl">TextView</string>
+    <string name="product_desc_placeholder">Lose your belly fat</string>
+    <string name="date_placeholder_lbl">10 Jul 2014</string>
+    <string name="placeholder_product_long_desc">Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitnessHere everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitness</string>
+    <string name="search_product_hint">Search products..</string>
+    <string name="brand_logo_contentDesc">Brand Logo</string>
+    <string name="product_cat_lbl">PRODUCT CATALOGUE</string>
+    <string name="test_rotate_lbl">TEST ROTATE</string>
+    <string name="credit_card_option">Visa, Master:</string>
+    <string name="cvv_instruc">Please enter 3 digit verification codes visible on the back of your credit card</string>
+    <string name="amex_option_lbl">Amex:</string>
+    <string name="amex_verif_instru">Please enter 4 digit verification codes visible on the front of your Amex credit card</string>
+    <string name="login_instru_wishlist">Please login to add products to your wish list</string>
+    <string name="create_wishlist_instru">Please create a wish list to add your product</string>
+    <string name="product_successful_wishlist">This Product has been successfully added to your wish list</string>
+    <string name="add_all_to_cart">Add All to Cart</string>
+
+    <string name="merchantLocation">Merchant Location</string>
+    <string name="searchCountryHint">Search Country</string>
+    <string name="countryListDialogTitle">Please select your country</string>
+
+    <string name="my_request">My Request</string>
+    <string name="add_new_request">Add New Request</string>
+    <string name="plus">+</string>
+    <string name="item_return">Item Returned</string>
+    <string name="date_and_status">Date and Status</string>
+    <string name="items">Items</string>
+    <string name="quantity">Qty</string>
+    <string name="spinner_title">Please select order item</string>
+    <string name="loginTxt">Login to VRSM </string>
+    <string name="rma_number">RMA Number:</string>
+    <string name="date_request">Date Request</string>
+
+    <string name="type">Type</string>
+    <string name="add_request_item">Add Request Item</string>
+    <string name="refund">Refund</string>
+    <string name="other">Other</string>
+    <string name="request_item">Request Item</string>
+    <string name="save">Save</string>
+
+    <!--View Return Item-->
+    <string name="product">Product</string>
+    <string name="request_type">Request Type</string>
+    <string name="quantity_return">Quantity Return</string>
+    <string name="reason">Reason</string>
+    <string name="item_condition">Item Condition</string>
+    <string name="add_new_comment">Add New Comment</string>
+    <string name="add">Add</string>
+    <string name="comment">Comment</string>
+    <string name="date_and_reqStatus">Date and ReqStatus</string>
+
+    <string name="view_return_item">View Return Item</string>
+    <string name="comment_prompt">The comment field is empty.</string>
+    <string name="discount_codes">Discount Codes</string>
+    <string name="discount_codes_description">Enter your discount code if you have any.</string>
+    <string name="apply">Apply</string>
+    <string name="total_discount">Total Discount</string>
+    <string name="grand_total">Grand Total</string>
+
+    <!--Cart-->
+    <string name="size">Size :</string>
+    <string name="color">Color :</string>
+    <string name="qty">Qty :</string>
+    <string name="title_activity_terms_and_condition">TermsAndCondition</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_terms_and_condition_adapter">TermsAndConditionAdapter</string>
+    <string name="error">Error</string>
+    <string name="applied_code">Applied Codes</string>
+    <string name="validate_discount_code">Please enter discount code.</string>
+    <string name="title_activity_dynamic_tn_c">Terms &amp; Conditions</string>
+    <string name="title_activity_tnc_adapter">TncAdapter</string>
+    <string name="title_activity_tn_clist">TnCList</string>
+
+    <!--Login TnC-->
+    <string name="agreement">Agreement</string>
+    <string name="agree">Agree</string>
+
+
+    <!-- HOMEPAGE FIREFLY -->
+
+
+    <!-- State -->
+    <string-array name="state">
+        <item>Selangor-SL</item>
+        <item>Pahang-PHG</item>
+        <item>Johor-JHR</item>
+        <item>Kedah-KDH</item>
+        <item>Penang-PEN</item>
+    </string-array>
+
+    <string name="app_name">Firefly</string>
+    <string name="welcome_to_firefly">Welcome to Firefly</string>
+    <string name="beyond_convenience">Beyond Convenience</string>
+    <string name="home_firefly_desc">access your booking,mobile check-in and manage flight by sign-in the system</string>
+    <string name="home_manage_flight">MANAGE FLIGHT</string>
+    <string name="home_book_flight">BOOK FLIGHT</string>
+    <string name="home_mobile_check_in">MOBILE CHECK-IN</string>
+    <string name="home_sign_in">SIGN-IN</string>
+    <string name="home_boarding">Boarding Pass</string>
+
+    <string name="firefly_stroke">/Firefly</string>
+    <string name="firefly_airlines_stroke">/Firefly Airlines</string>
+
+    <!--LANDSCAPE-->
+
+    <string name="home_book_flight_landscape">Book Flight</string>
+    <string name="home_boarding_pass_landscape">Boarding Pass</string>
+    <string name="home_manage_flight_landscape">Manage Flight</string>
+    <string name="home_mobile_check_in_landscape">Mobile Check-In</string>
+    <string name="home_boarding_pass">BOARDING PASS</string>
+
+
+    <!--END HOMEPAGE FIREFLY-->
+
+    <!-- LOGIN FIREFLY -->
+
+    <string name="login_enter_email">Enter Email :</string>
+    <string name="login_enter_password">Enter Password :</string>
+
+    <string name="login_login_txt">Log in</string>
+    <string name="login_register_txt">Register</string>
+    <string name="login_no_account">Don\'t have account yet?</string>
+    <string name="title_login_and_password">LOGIN AND PASSWORD</string>
+    <string name="login_forgot_password">Forgot Password</string>
+
+
+    <!-- END LOGIN -->
+
+    <!-- REGISTER -->
+
+    <string name="register_continue_button">Continue</string>
+    <string name="register_username">Email </string>
+    <string name="register_password">Password </string>
+    <string name="profile_current_password">Current Password </string>
+    <string name="profile_new_password">New Password </string>
+    <string name="register_confirm_password">Confirm Password </string>
+
+
+    <string name="register_title">Title </string>
+    <string name="register_firstname">First Name </string>
+    <string name="register_lastname">Last Name </string>
+    <string name="register_dob">Date Of Birth </string>
+
+    <string name="register_basic_information">Basic Information</string>
+    <string name="register_personal_information">Personal Information</string>
+    <string name="register_address_information">Address Information</string>
+    <string name="register_contact_information">Contact Information</string>
+    <string name="register_loyalty_information">Loyalty Programme</string>
+
+    <string name="register_address_1">Address Line 1</string>
+    <string name="register_address_2">Address Line 2</string>
+    <string name="register_address_3">Address Line 3</string>
+
+    <string name="register_country">Country</string>
+    <string name="register_town">Town/City</string>
+    <string name="register_state">State</string>
+    <string name="register_postcode">Postcode</string>
+    <string name="register_mobile_phone">Mobile Phone</string>
+    <string name="register_alternate_phone">Alternate Phone</string>
+    <string name="register_bonuslink">Bonuslink Card Number</string>
+
+    <string name="register_fax">Fax</string>
+    <string name="register_city">City</string>
+
+
+    <string name="title_register">REGISTER</string>
+
+    <string name="asterik">*</string>
+    <!-- END REGISTER -->
+
+
+    <!-- BOOKING FLIGHT - SEARCH FLIGHT -->
+    <string name="book_flight">BOOK FLIGHT</string>
+    <string name="book_flight_one_way">ONE WAY</string>
+    <string name="book_flight_return">RETURN</string>
+
+    <string name="book_flight_departure_airport">DEPARTURE AIRPORT</string>
+    <string name="book_flight_arrival_airport">ARRIVAL AIRPORT</string>
+
+    <string name="book_flight_departure_date">DEPARTURE DATE</string>
+    <string name="book_flight_arrival_date">RETURN DATE</string>
+
+    <string name="book_flight_adult">Adult</string>
+    <string name="book_flight_adult_year">2+ years old</string>
+
+    <string name="book_flight_children">Children</string>
+    <string name="book_flight_children_year">2+ years old</string>
+
+    <string name="book_flight_infant">Infant</string>
+    <string name="book_flight_infant_year"> 9 days - 2 years old</string>
+
+
+    <!-- BOOKING FLIGHT - SEARCH FLIGHT -->
+
+    <!-- BOOKING FLIGHT - LIST FLIGHT -->
+    <string name="book_flight_basic">BASIC</string>
+    <string name="book_flight_premier">PREMIER</string>
+
+
+    <string name="mobile_checkin">MOBILE CHECK-IN</string>
+
+    <!-- MANAGE FLIGHT -->
+    <string name="manage_flight">MANAGE FLIGHT</string>
+    <string name="manage_flight_contact_email">Contact Email</string>
+    <string name="manage_flight_confirmation_number">PNR Code</string>
+
+    <string name="manage_flight_change_contact">CHANGE CONTACT</string>
+    <string name="manage_flight_edit_passenger">EDIT PASSENGER</string>
+    <string name="manage_flight_change_flight">CHANGE FLIGHT</string>
+    <string name="manage_flight_change_seat">CHANGE SEAT</string>
+    <string name="manage_flight_add_payment">ADD PAYMENT</string>
+    <string name="manage_flight_send_itinenary">SEND ITINENARY</string>
+    <string name="manage_flight_contact_detail">CONTACT DETAIL</string>
+    <string name="manage_flight_sent_itinenary">SEND ITINENARY</string>
+    <string name="manage_flight_seat_optional">Seat Selection (Optional)</string>
+
+
+    <!-- General -->
+    <string name="general_continue">Continue</string>
+    <string name="general_email_addresss">Email Address</string>
+    <string name="general_travel_purpose">Primary Purpose of Your Travel:</string>
+
+    <string name="agreeTnc">I agree with the Term &amp; Condition</string>
+    <string name="subscribe">Yes, I want to receive promotional information from Firefly and its partners</string>
+    <string name="alertTNC">You must agree to the terms.</string>
+
+
+    <!-- Boarding Pass -->
+    <string name="boarding_pass">BOARDING PASS</string>
+
+    <!-- Forgot Password -->
+    <string name="forgot_password_email">USER ID (Email)</string>
+    <string name="forgot_password">FORGOT PASSWORD</string>
+    <string name="title_activity_password_expired">PasswordExpiredActivity</string>
+    <string name="password_expire_text">Your password has expired and needs to be changed. The password must consist of at least 8 characters, must include one upper case letter, one lower case letter, one numeric digit and one symbol. Example: SkyPark+123</string>
+
+    <!-- Update Profile -->
+    <string name="title_activity_update_profile">UPDATE PROFILE</string>
+    <string name="update_profile_logininfo">Login Information</string>
+    <string name="update_profile_contactinfo">Contact Information</string>
+
+
+    <!-- Mobile Check in -->
+    <string name="mobile_checkin_check1">Yes, I am aware that the dangerous good above are not permitted in my bag, luggage has been in my possession at all times and i am aware of the contents in my bag.</string>
+    <string name="mobile_checkin_check2">Yes, I have read and agree with the important information.</string>
+    <string name="mobile_checkin_check3">Yes, I have access to a printer and print the mobile check-in boarding pass from my email if my departing station is NOT Subang(SZB), Penang(PEN), Johor Bharu(JHB) or Kota Bharu(KBR).</string>
+    <string name="title_activity_terms">Terms</string>
+
+    <!-- Terms-->
+    <string name="title_terms">TERMS AND CONDITIONS</string>
+
+
+    <string name="update_success">Update Success</string>
+    <string name="exit">EXIT FIREFLY</string>
+    <string name="term_webview">http://fyapidev.me-tech.com.my/api/displayTerm</string>
+
+
+    <string name="start_geofence_service">Starting geofence transition service</string>
+    <string name="entering_geofence">Entering the GeoFence zone</string>
+    <string name="exiting_geofence">Exiting the GeoFence zone</string>
+
+
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">Push Notifications</string>
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+
+</resources>

@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
+            android:background="@color/dark_lvl1" >
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView12"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_plain" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:id="@+id/imageView13"
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:adjustViewBounds="true"
+                android:src="@drawable/flyfirefly_logo_text" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="@drawable/grey_with_white_gradient"
+            android:paddingBottom="5dp" >
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:paddingLeft="10dp"
+                android:paddingTop="5dp"
+                android:paddingRight="10dp" >
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:padding="5dp"
+                    android:background="@drawable/shape_stroke" >
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="right"
+                        android:background="@color/black" >
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="@string/manage_flight_change_flight"
+                            android:gravity="center"
+                            android:textSize="@dimen/font21sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="1" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="fill_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:id="@+id/linearLayout4"
+                                android:background="@color/actionBarColour_default_theme" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="GOING FLIGHT"
+                                    android:textStyle="bold"
+                                    android:padding="6dp"
+                                    android:textColor="@color/white"
+                                    android:id="@+id/es" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="4dp"
+                            android:background="@drawable/drawable_login_bottom_border" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="15dp"
+                                android:gravity="center|right" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:src="@drawable/departure_icon"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="PENANG  (PEN)"
+                                    android:id="@+id/textViasew117"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/drawable_black_bottom_border"
+                            android:paddingBottom="10dp"
+                            android:padding="4dp">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="match_parent"
+                                android:gravity="center|right"
+                                android:paddingRight="15dp" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:id="@+id/as"
+                                    android:src="@drawable/arrival_icon"
+                                    android:scaleType="fitXY"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="SUBANG (SZB)"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/block_with_border"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp">
+
+                                <EditText
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="5dp"
+                                    android:id="@+id/txtChangeFlightDatePicker1"
+                                    android:background="@null"
+                                    android:hint="28/9/1990"/>
+                            </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="1" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="fill_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:id="@+id/ssa"
+                                android:background="@color/actionBarColour_default_theme" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="SUBANG (SZB)"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/white"
+                                    android:padding="6dp"
+                                    android:id="@+id/textView116" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/drawable_login_bottom_border"
+                            android:padding="4dp"
+                            >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="wrap_content"
+                                android:paddingRight="15dp"
+
+                                android:gravity="center|right" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:src="@drawable/departure_icon"
+                                    android:scaleType="fitCenter"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="SUBANG (SZB)"
+                                    android:id="@+id/textView117"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/drawable_black_bottom_border"
+                            android:paddingBottom="10dp"
+                            android:padding="4dp">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="match_parent"
+                                android:gravity="center|right"
+                                android:paddingRight="15dp" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="45dp"
+                                    android:id="@+id/imageView21"
+                                    android:src="@drawable/arrival_icon"
+                                    android:scaleType="fitXY"
+                                    android:adjustViewBounds="true" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.75"
+                                android:layout_height="match_parent"
+                                android:gravity="center|left" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:text="PENANG (PEN)"
+                                    android:textSize="17dp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/block_with_border"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp" >
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/editText12"
+                                android:background="@null"
+                                android:hint="28/9/1990" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp" >
+
+                    <Button
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/general_continue"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:id="@+id/button2"
+                        android:background="@drawable/login_login_button_clicked" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/actionBarColour_default_theme"
+        android:padding="3dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SUBANG - PENANG"
+            android:textSize="19dp"
+            android:textColor="@color/white"
+            android:id="@+id/txtPort"
+            android:textStyle="bold"
+            android:layout_marginBottom="1dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="(Going Flight)"
+            android:textColor="@color/white"
+            android:id="@+id/textView33"
+            android:textStyle="bold"
+            android:layout_marginBottom="1dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="22 JAN 2015"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:id="@+id/textView34" />
+    </LinearLayout>
+</LinearLayout>
