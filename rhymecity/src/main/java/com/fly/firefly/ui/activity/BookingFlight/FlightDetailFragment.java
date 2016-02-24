@@ -34,6 +34,7 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -126,7 +127,6 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         //RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
         /* ------------ */
 
-
         Bundle bundle = getArguments();
         flightType = bundle.getString(FLIGHT_TYPE);
         adult = bundle.getString(ADULT);
@@ -152,27 +152,27 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
 
         //Check From ManageFlight
-        if(obj.getJourneyObj().getJourneys().get(0).getFlights().size() == 0){
+        if(obj.getJourneys().get(0).getFlights().size() == 0){
             goingFlightBlock.setVisibility(View.GONE);
         }
         /*Departure*/
-        List<FlightInfo> departFlight = obj.getJourneyObj().getJourneys().get(0).getFlights();
+        List<FlightInfo> departFlight = obj.getJourneys().get(0).getFlights();
 
         //Depart Airport
-        departPort = obj.getJourneyObj().getJourneys().get(0).getDeparture_station_name();
-        arrivalPort = obj.getJourneyObj().getJourneys().get(0).getArrival_station_name();
+        departPort = obj.getJourneys().get(0).getDeparture_station_name();
+        arrivalPort = obj.getJourneys().get(0).getArrival_station_name();
 
-        departPortCode = obj.getJourneyObj().getJourneys().get(0).getDeparture_station_code();
-        arrivalPortCode = obj.getJourneyObj().getJourneys().get(0).getArrival_station_code();
+        departPortCode = obj.getJourneys().get(0).getDeparture_station_code();
+        arrivalPortCode = obj.getJourneys().get(0).getArrival_station_code();
 
-        String type = obj.getJourneyObj().getJourneys().get(0).getType();
+        String type = obj.getJourneys().get(0).getType();
         Log.e("FlightType",type);
 
         txtDepartAirport.setText(departPort+" - "+arrivalPort);
         txtFlightType.setText(type);
 
         //Reformat Date
-        String departDate = obj.getJourneyObj().getJourneys().get(0).getDeparture_date();
+        String departDate = obj.getJourneys().get(0).getDeparture_date();
         //String[] output = departDate.split(" ");
         //String month = output[1];
         txtDepartureDate.setText(departDate);
@@ -186,21 +186,21 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         premierFlightDeparture.setAdapter(departListPremier);
 
         /*Return If Available*/
-        if(obj.getJourneyObj().getJourneys().size() > 1){
-          List<FlightInfo> returnFlight = obj.getJourneyObj().getJourneys().get(1).getFlights();
+        if(obj.getJourneys().size() > 1){
+          List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
           returnFlightBlock.setVisibility(View.VISIBLE);
           returnBasicPremier.setVisibility(View.VISIBLE);
 
 
           //Return Airport
-          returnDepartPort = obj.getJourneyObj().getJourneys().get(1).getDeparture_station_name();
-          returnArrivalPort = obj.getJourneyObj().getJourneys().get(1).getArrival_station_name();
-          String returnType = obj.getJourneyObj().getJourneys().get(1).getType();
+          returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
+          returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
+          String returnType = obj.getJourneys().get(1).getType();
           txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
           txtReturnType.setText(returnType);
 
             //Reformat Date
-            String returnDate = obj.getJourneyObj().getJourneys().get(1).getDeparture_date();
+            String returnDate = obj.getJourneys().get(1).getDeparture_date();
             txtReturnDate.setText(returnDate);
 
             returnListBasic = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,BASIC,RETURN,this);
@@ -233,9 +233,9 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
                 }else{
 
                     proceed = true;
-                    changeFlightType = obj.getJourneyObj().getType();
-                    status1 = obj.getJourneyObj().getGoing_flight().getStatus();
-                    status2 = obj.getJourneyObj().getReturn_flight().getStatus();
+                    changeFlightType = obj.getType();
+                    status1 = obj.getGoing_flight().getStatus();
+                    status2 = obj.getReturn_flight().getStatus();
                     Log.e("status2",status2);
                     if(status1.equals("Y")){
                         if(departFlightNumber == null){
@@ -340,7 +340,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
         changeFlightObj.setPnr(pnr);
         changeFlightObj.setBooking_id(bookingId);
-        changeFlightObj.setSignature(obj.getJourneyObj().getSignature());
+        changeFlightObj.setSignature(obj.getSignature());
 
         changeFlightObj.setType(changeFlightType);
 

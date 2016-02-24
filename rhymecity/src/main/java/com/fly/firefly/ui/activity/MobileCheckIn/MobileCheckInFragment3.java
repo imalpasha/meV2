@@ -295,6 +295,7 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
         if (status) {
 
             RealmObjectController.saveBoardingPass(getActivity(),obj,storeUsername);
+
             Intent next = new Intent(getActivity(), MobileCheckInActivity4.class);
             next.putExtra("MOBILE_CHECK_IN", (new Gson()).toJson(obj));
             getActivity().startActivity(next);

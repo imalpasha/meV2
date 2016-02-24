@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
+import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
@@ -17,6 +19,9 @@ import com.fly.firefly.ui.presenter.HomePresenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Objects;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -76,7 +81,6 @@ public class Controller extends BaseFragment {
         act.startActivity(loginPage);
         act.finish();
     }
-
 
 
 

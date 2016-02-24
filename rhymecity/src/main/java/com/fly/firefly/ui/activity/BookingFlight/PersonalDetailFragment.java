@@ -186,6 +186,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
+        Log.e("signature",signature);
 
         /*Adult Passenger Data For Selection*/
         for (int i = 1; i < Integer.parseInt(adult)+1 ; i++)
@@ -197,53 +198,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         }
 
         /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
-        for (int i = 0; i < jsonTitle.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonTitle.opt(i);
-
-            DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText(row.optString("title_name"));
-            itemTitle.setCode(row.optString("title_code"));
-            itemTitle.setTag("Title");
-            titleList.add(itemTitle);
-        }
-
-        /*Gender*/
-        final String[] gender = getResources().getStringArray(R.array.gender);
-        for(int i = 0;i<gender.length; i++)
-        {
-            DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText(gender[i]);
-            genderList.add(itemTitle);
-        }
-
-        /*Travel Doc*/
-        final String[] doc = getResources().getStringArray(R.array.travel_doc);
-        for(int i = 0;i<doc.length; i++)
-        {
-            String travelDoc = doc[i];
-            String[] splitDoc = travelDoc.split("-");
-
-            DropDownItem itemDoc = new DropDownItem();
-            itemDoc.setText(splitDoc[0]);
-            travelDocList.add(itemDoc);
-        }
-
-          /*Display Country Data*/
-        JSONArray jsonCountry = getCountry(getActivity());
-
-        for (int i = 0; i < jsonCountry.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonCountry.opt(i);
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(row.optString("country_name"));
-            itemCountry.setCode(row.optString("country_code"));
-            itemCountry.setTag("Country");
-            itemCountry.setId(i);
-            countrys.add(itemCountry);
-        }
+        titleList = getStaticTitle(getActivity());
+        genderList = getGender(getActivity());
+        travelDocList = getTravelDoc(getActivity());
+        countrys = getStaticCountry(getActivity());
 
         int totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
         for (int adultInc = 1; adultInc < totalPassenger; adultInc++) {
@@ -742,6 +700,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             pref.setNewsletterStatus(obj.getUser_info().getNewsletter());
             pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
             pref.setUsername(obj.getUser_info().getFirst_name());
+            signature = obj.getUser_info().getSignature();
 
             Log.e(storeUsername,storePassword);
             pref.setUserEmail(storeUsername);

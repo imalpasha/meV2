@@ -12,10 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
+import com.fly.firefly.BusProvider;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -30,6 +32,9 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Produce;
+import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -129,6 +134,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private String PICKER;
     public static final String DATEPICKER_TAG = "datepicker";
 
+    private Bus mbus = BusProvider.getInstance();
     public static SearchFlightFragment newInstance() {
 
         SearchFlightFragment fragment = new SearchFlightFragment();
@@ -159,7 +165,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         datePickerDialog.setYearRange(year, year + 1);
 
         /*Preference Manager*/
-        pref = new SharedPrefManager(MainFragmentActivity.getContext());
+        pref = new SharedPrefManager(getActivity());
 
         txtDepartureFlight.setTag(DEPARTURE_FLIGHT);
         txtArrivalFlight.setTag(ARRIVAL_FLIGHT);
@@ -495,27 +501,23 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
                 }
             }
-        Log.e("Arrive",dataFlightArrival.toString());
+        Log.e("Arrive", dataFlightArrival.toString());
 
     }
 
-
     /*Public-Inner Func*/
-    public void goRegisterPage()
-    {
+    public void goRegisterPage() {
         Intent loginPage = new Intent(getActivity(), RegisterActivity.class);
         getActivity().startActivity(loginPage);
     }
 
-    public void goFlightDetailPage()
-    {
+    public void goFlightDetailPage() {
         Intent flightDetail = new Intent(getActivity(), FlightDetailActivity.class);
         getActivity().startActivity(flightDetail);
     }
 
     //Switch Flight Type
-    public void switchWay(String way)
-    {
+    public void switchWay(String way) {
         if(way == RETURN) {
             returnDateBlock.setVisibility(View.VISIBLE);
             btnReturn.setBackgroundColor(getResources().getColor(R.color.white));
@@ -601,16 +603,18 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onBookingDataReceive(SearchFlightReceive obj) {
 
         dismissLoading();
+        Log.e("XXX","XXX");
+        //Clear SearchFlightObj result
+        //pref.setTempResult("stop");
 
         Gson gson = new Gson();
         String countryList = gson.toJson(obj);
-        Boolean status = Controller.getRequestStatus(obj.getJourneyObj().getStatus(), obj.getJourneyObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
-            Log.e("Signature",obj.getJourneyObj().getSignature());
-            pref.setSignatureToLocalStorage(obj.getJourneyObj().getSignature());
+            //Log.e("Status",obj.getStatus());
+            //pref.setSignatureToLocalStorage(obj.getSignature());
 
-            SearchFlightReceive passObj = new SearchFlightReceive(obj);
             Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             flight.putExtra("FLIGHT_TYPE", flightType );
@@ -624,16 +628,11 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             }else{
                 date = bookFlightReturnDate.getTag().toString();
             }
-            flight.putExtra("RETURN_DATE", date );
-
+            flight.putExtra("RETURN_DATE", date);
             getActivity().startActivity(flight);
-
-        }else if(obj.getJourneyObj().getStatus().equals("error")){
-            croutonAlert(getActivity(), obj.getJourneyObj().getMessage());
         }
 
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -642,13 +641,29 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     }
 
     @Override
-    public void onResume() {
+    public void onStart() {
         super.onResume();
         presenter.onResume();
-        Log.e("RESUME", "TRUE");
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
+        //SearchFlightReceive obj = null;
 
+        //String result = checkResultCached(getActivity());
+       /* SharedPrefManager xx = new SharedPrefManager(getActivity());
+        HashMap<String, String> initResult = xx.getTempResult();
+        String result = initResult.get(SharedPrefManager.TEMP_RESULT);
+        if(result != null) {
+            Log.e("result", result);
+            if (!result.equals("stop")) {
+                Log.e("result2", result);
+                Gson gson = new Gson();
+                SearchFlightReceive obj = gson.fromJson(result, SearchFlightReceive.class);
+                onBookingDataReceive(obj);
+                //pref.setTempResult("stop");
+                //HashMap<String, String> initResult = pref.getTempResult();
+                //String tempResult = initResult.get(SharedPrefManager.TEMP_RESULT);
+                //Log.e("tempResult", tempResult);
+            }
+        }*/
     }
 
     @Override

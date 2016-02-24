@@ -15,6 +15,10 @@ public class SearchFlightReceive extends BaseObj{
     private String type;
     private GoingFlight going_flight;
     private GoingFlight return_flight;
+    private String pnr;
+    private String booking_id;
+    private List<JourneyInfo> journeys = new ArrayList<JourneyInfo>();
+    private SearchFlightReceive journeyObj;
 
     public GoingFlight getGoing_flight() {
         return going_flight;
@@ -118,16 +122,22 @@ public class SearchFlightReceive extends BaseObj{
         this.booking_id = booking_id;
     }
 
-    private String pnr;
-    private String booking_id;
-    private List<JourneyInfo> journeys = new ArrayList<JourneyInfo>();
-    private SearchFlightReceive journeyObj;
+
 
     public SearchFlightReceive(){
     }
 
-    public SearchFlightReceive(SearchFlightReceive param_obj){
-        this.journeyObj = param_obj;
+    public SearchFlightReceive(SearchFlightReceive obj){
+
+        status = obj.getStatus();
+        message = obj.getMessage();
+        type = obj.getType();
+        going_flight = obj.getGoing_flight();
+        return_flight = obj.getReturn_flight();
+        pnr = obj.getPnr();
+        booking_id = obj.getBooking_id();
+        journeys = obj.getJourneys();
+
     }
 
     public String getStatus() {

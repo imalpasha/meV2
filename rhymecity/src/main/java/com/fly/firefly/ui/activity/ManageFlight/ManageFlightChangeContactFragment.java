@@ -215,7 +215,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         travelPurpose = obj.getObj().getContact_information().getTravel_purpose();
 
         /*Travelling Purpose*/
-        final String[] purpose = getResources().getStringArray(R.array.purpose);
+        /*final String[] purpose = getResources().getStringArray(R.array.purpose);
         for(int i = 0;i<purpose.length; i++)
         {
             int purposeTag = i+1;
@@ -223,10 +223,12 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
             itemPurpose.setText(purpose[i]);
             itemPurpose.setCode(Integer.toString(purposeTag));
             purposeList.add(itemPurpose);
-        }
-
+        }*/
+        titleList = getStaticTitle(getActivity());
+        countrysList = getStaticCountry(getActivity());
+        purposeList = getPurpose(getActivity());
          /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
+       /* JSONArray jsonTitle = getTitle(getActivity());
         for (int i = 0; i < jsonTitle.length(); i++)
         {
             JSONObject row = (JSONObject) jsonTitle.opt(i);
@@ -236,9 +238,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
             itemTitle.setCode(row.optString("title_code"));
             itemTitle.setTag("Title");
             titleList.add(itemTitle);
-        }
+        }*/
 
-        /*Display Country Data*/
+        /*Display Country Data*//*
         JSONArray jsonCountry = getCountry(getActivity());
 
         for (int i = 0; i < jsonCountry.length(); i++)
@@ -251,7 +253,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
             itemCountry.setTag("Country");
             itemCountry.setId(i);
             countrysList.add(itemCountry);
-        }
+        }*/
 
 
         txtCountry.setOnClickListener(new View.OnClickListener() {

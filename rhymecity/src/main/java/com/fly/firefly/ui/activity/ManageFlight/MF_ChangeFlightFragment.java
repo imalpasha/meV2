@@ -271,11 +271,11 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     @Override
     public void onNewFlightReceive(SearchFlightReceive obj) {
         dismissLoading();
-        Log.e("New Flight", obj.getJourneyObj().getStatus());
-        Boolean status = Controller.getRequestStatus(obj.getJourneyObj().getStatus(), obj.getJourneyObj().getMessage(), getActivity());
+        Log.e("New Flight", obj.getStatus());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
-            String flightType = obj.getJourneyObj().getType();
+            String flightType = obj.getType();
             SearchFlightReceive passObj = new SearchFlightReceive(obj);
             Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));

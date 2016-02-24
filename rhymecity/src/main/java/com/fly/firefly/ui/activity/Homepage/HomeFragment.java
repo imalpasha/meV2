@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -19,7 +20,9 @@ import android.widget.Toast;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.Beacon.BeaconRanging;
 import com.fly.firefly.ui.activity.BoardingPass.BoardingPassActivity;
@@ -70,20 +73,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     // --------------------------------------------------------------------------------//
 
-    public static final String TAG = GeoFencingFragment.class.getSimpleName();
-    private static final long LOCATION_ITERATION_PAUSE_TIME = 1000;
-    private static final int NUMBER_OF_LOCATION_ITERATIONS = 10;
-    private GoogleMap map; // Might be null if Google Play services APK is not available.
-    private MyPlaces happyPlace;
-    private MyPlaces home;
-    private List<Geofence> myFences = new ArrayList<>();
-    private GoogleApiClient googleApiClient;
-    private PendingIntent geofencePendingIntent;
-    //private UpdateLocationRunnable updateLocationRunnable;
-    private LocationManager locationManager;
-    private int marker = 0;
-    private Location lastLocation;
-    //FragmentManager fm;
+
 
     // --------------------------------------------------------------------------------//
     private Tracker mTracker;
@@ -110,12 +100,22 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     ImageView bannerImg;
 
     private static final String SCREEN_LABEL = "Home";
-    /* Beacon - Testing Module */
-    //private BeaconManager beaconManager;
-
+    private String facebookUrl,twitterUrl,instagramUrl;
     private int fragmentContainerId;
     private SharedPrefManager pref;
-
+    public static final String TAG = GeoFencingFragment.class.getSimpleName();
+   /* private static final int NUMBER_OF_LOCATION_ITERATIONS = 10;
+    private GoogleMap map; // Might be null if Google Play services APK is not available.
+    private MyPlaces happyPlace;
+    private MyPlaces home;
+    private List<Geofence> myFences = new ArrayList<>();
+    private GoogleApiClient googleApiClient;
+    private PendingIntent geofencePendingIntent;
+    //private UpdateLocationRunnable updateLocationRunnable;
+    private LocationManager locationManager;
+    private int marker = 0;
+    private Location lastLocation;*/
+    //FragmentManager fm;
 
     public static HomeFragment newInstance() {
 
@@ -130,8 +130,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new HomeModule(this)).inject(this);
-
-
     }
 
     @Override
@@ -139,6 +137,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
         View view = inflater.inflate(R.layout.home, container, false);
         ButterKnife.inject(this, view);
+        aq.recycle(view);
+        pref = new SharedPrefManager(getActivity());
 
         /*Realm Obj Test*/
 //        Realm realm = Realm.getInstance(getActivity());
@@ -146,23 +146,22 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 //        Log.e("Result",result2.toString());
         /* ------------ */
 
-        aq.recycle(view);
-        pref = new SharedPrefManager(getActivity());
-
-
-        /*SET BANNER*/
+        /*GET PREF DATA*/
         HashMap<String, String> init = pref.getDefaultBanner();
         String defaultBanner = init.get(SharedPrefManager.DEFAULT_BANNER);
-        //Log.e("defaultBanner",defaultBanner);
-        try {
-            aq.id(R.id.bannerImg).image(defaultBanner);
-            Log.e("Banner",defaultBanner);
-        }catch (Exception e){
+        aq.id(R.id.bannerImg).image(defaultBanner);
 
-        }
-        HashMap<String, String> init2 = pref.getSignatureFromLocalStorage();
-        String signature = init2.get(SharedPrefManager.SIGNATURE);
+        HashMap<String, String> initSocialMedia = pref.getSocialMedia();
+        String socialMedia = initSocialMedia.get(SharedPrefManager.SOCIAL_MEDIA);
 
+        Gson gson = new Gson();
+        DeviceInfoSuccess.SocialMedia socialMediaObj = gson.fromJson(socialMedia, DeviceInfoSuccess.SocialMedia.class);
+
+        facebookUrl = socialMediaObj.getFacebook();
+        twitterUrl = socialMediaObj.getTwitter();
+        instagramUrl = socialMediaObj.getInstagram();
+
+        Log.e("Facebook",facebookUrl);
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();
@@ -219,13 +218,12 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             }
         });
 
-
-
         //setUpMap();
         getScreenSize();
 
         return view;
     }
+
 
     public void getScreenSize(){
 
@@ -248,17 +246,12 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             Log.e("toastMsg",toastMsg);
     }
 
-
-
-
     // ------------------------------------------------------------------------------------------- //
 
     public void gotPushRegistration(){
         Intent loginPage = new Intent(getActivity(), PushNotificationActivity.class);
         getActivity().startActivity(loginPage);
     }
-
-
 
     /*Public-Inner Func*/
     public void goToLoginPage(){
@@ -270,35 +263,24 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     }
 
-    public void goToManageFlight()
-    {
+    public void goToManageFlight() {
         Intent loginPage = new Intent(getActivity(), ManageFlightActivity.class);
         getActivity().startActivity(loginPage);
 
     }
 
     /*Public-Inner Func*/
-    public void goToMobileCheckIn()
-    {
+    public void goToMobileCheckIn() {
         Intent mcheckin = new Intent(getActivity(), MobileCheckInActivity1.class);
-        //Intent mcheckin = new Intent(getActivity(), NearKioskActivity.class);
-        //Intent mcheckin = new Intent(getActivity(), RegisterActivity.class);
-
-
         getActivity().startActivity(mcheckin);
-
     }
 
-    public void goToBeacon()
-    {
+    public void goToBeacon() {
         Intent loginPage = new Intent(getActivity(), BeaconRanging.class);
-        //Intent loginPage = new Intent(getActivity(), CurrentGateActivity.class);
         getActivity().startActivity(loginPage);
-
     }
 
-    public void goToBoardingPass()
-    {
+    public void goToBoardingPass() {
         //Intent loginPage = new Intent(getActivity(), BeaconRanging.class);
         Intent loginPage = new Intent(getActivity(), BoardingPassActivity.class);
         //Intent loginPage = new Intent(getActivity(), GenFencingActivity.class);
@@ -306,22 +288,15 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     }
 
-    public void goBookingPage()
-    {
+    public void goBookingPage() {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
         getActivity().startActivity(loginPage);
-
-
-        //getActivity().finish();
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //progressIndicator = ((ProgressIndicatorActivity) getActivity()).getProgressIndicator();
         fragmentContainerId = ((FragmentContainerActivity) getActivity()).getFragmentContainerId();
-        //((ToolbarActivity) getActivity()).getToolbar().setTitle(getString(R.string.app_name));
     }
 
     private void getSampleData() {
@@ -332,19 +307,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        //AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
-
-        Log.i(TAG, "Setup MOCK Location Providers");
-        //locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-        Log.i(TAG, "GPS Provider");
-        //locationManager.addTestProvider(LocationManager.GPS_PROVIDER, false, true, false, false, false, false, false, Criteria.POWER_HIGH, Criteria.ACCURACY_FINE);
-        //locationManager.setTestProviderEnabled(LocationManager.GPS_PROVIDER, true);
-
-        Log.i(TAG, "Network Provider");
-        //locationManager.addTestProvider(LocationManager.NETWORK_PROVIDER, true, false, true, false, false, false, false, Criteria.POWER_MEDIUM, Criteria.ACCURACY_FINE);
-        //locationManager.setTestProviderEnabled(LocationManager.NETWORK_PROVIDER, true);
     }
 
     @Override
@@ -353,8 +315,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         presenter.onPause();
     }
 
-    public void registerBackFunction()
-    {
+    public void registerBackFunction() {
         new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
                 .setTitleText("EXIT FIREFLY")
                 .setContentText("Confirm exit?")
@@ -376,7 +337,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
                     }
                 })
                 .show();
-
 
     }
 

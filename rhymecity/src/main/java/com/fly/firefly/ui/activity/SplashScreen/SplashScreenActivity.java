@@ -23,6 +23,7 @@ public class SplashScreenActivity extends MainFragmentActivity implements Fragme
 
         hideMenuButton();
         hideTitle();
+        lockDrawer();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, SplashScreenFragment.newInstance()).commit();

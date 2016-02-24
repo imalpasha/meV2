@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/FlyFireflyV3.iml" filepath="$PROJECT_DIR$/FlyFireflyV3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FlyFireflyV2.iml" filepath="$PROJECT_DIR$/FlyFireflyV2.iml" />
       <module fileurl="file://$PROJECT_DIR$/rhymecity/rhymecity.iml" filepath="$PROJECT_DIR$/rhymecity/rhymecity.iml" />
     </modules>
   </component>

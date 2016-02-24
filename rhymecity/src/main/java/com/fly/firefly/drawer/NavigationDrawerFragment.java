@@ -160,7 +160,7 @@ public class NavigationDrawerFragment extends Fragment {
 
                 DrawerItem vrsm = new DrawerItem();
                 vrsm.setId(0);
-                vrsm.setTitle("Welcome " + userName);
+                vrsm.setTitle("Hi " + userName);
                 vrsm.setTag("HEADER");
                 vrsm.setLayoutId(DrawerViewType.HEADER_CLOSEBTN);
                 vrsm.setBackgroundColor(getResources().getColor(R.color.black));
@@ -177,8 +177,8 @@ public class NavigationDrawerFragment extends Fragment {
                 DrawerItem profile = new DrawerItem();
                 profile.setId(4);
                 profile.setIconId(R.drawable.side_profile_s);
-                profile.setTag("Profile");
-                profile.setTitle("Profile");
+                profile.setTag("Information_Update");
+                profile.setTitle("Information Update");
                 profile.setLayoutId(DrawerViewType.STATIC_MENU);
                 itemList.add(profile);
 
@@ -261,8 +261,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         DrawerItem terms = new DrawerItem();
         terms.setId(5);
-        terms.setTag("Terms");
-        terms.setTitle("Terms");
+        terms.setTag("Faq");
+        terms.setTitle("Faq");
         terms.setLayoutId(DrawerViewType.STATIC_MENU);
         terms.setIconId(R.drawable.side_faq_s);
         itemList.add(terms);
@@ -473,6 +473,14 @@ public class NavigationDrawerFragment extends Fragment {
             mDrawerLayout.openDrawer(mFragmentContainerView);
         }
 
+    }
+
+    public void lockDrawer() {
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
+
+    public void unlockDrawer(){
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
     }
 
 }

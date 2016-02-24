@@ -641,7 +641,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:inputType="textPhonetic"
+                                            android:maxLength="16"
+                                            android:inputType="number"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger1_enrich"
                                             android:tag="passenger1_enrich"/>
@@ -1048,8 +1049,9 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Enrich Loyalty No:  e.g. MH123456789"
-                                        android:id="@+id/textView176" />
+                                        android:text="Bonuslink Card No."
+                                        android:id="@+id/textView176"
+                                        android:textStyle="bold"/>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1063,7 +1065,7 @@
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_enrich"
-                                            android:inputType="textPhonetic"
+                                            android:inputType="number"
                                             android:tag="passenger2_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1460,7 +1462,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Enrich Loyalty No:  e.g. MH123456789"
+                                        android:text="Bonuslink Card No."
+                                        android:textStyle="bold"
                                         android:id="@+id/textView191" />
 
                                     <LinearLayout
@@ -1473,6 +1476,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="number"
+                                            android:maxLength="16"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger3_enrich"
                                             android:tag="passenger3_enrich" />
@@ -1501,7 +1506,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Passenger 2"
+                                    android:text="Passenger 4"
                                     android:id="@+id/textView192"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
@@ -1870,7 +1875,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Enrich Loyalty No:  e.g. MH123456789"
+                                        android:text="Bonuslink Card No."
+                                        android:textStyle="bold"
                                         android:id="@+id/textView211" />
 
                                     <LinearLayout
@@ -1883,6 +1889,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="number"
+                                            android:maxLength="16"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger4_enrich"
                                             android:tag="passenger4_enrich" />
@@ -1911,7 +1919,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Passenger 2"
+                                    android:text="Passenger 5"
                                     android:id="@+id/textView212"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
@@ -2280,7 +2288,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Enrich Loyalty No:  e.g. MH123456789"
+                                        android:text="Bonuslink Card No."
+                                        android:textStyle="bold"
                                         android:id="@+id/textView231" />
 
                                     <LinearLayout
@@ -2293,6 +2302,8 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="number"
+                                            android:maxLength="16"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger5_enrich"
                                             android:tag="passenger5_enrich" />
@@ -2307,7 +2318,7 @@
                             android:layout_height="match_parent"
                             android:id="@+id/passengerBlock6"
                             android:tag="passengerBlock6"
-                            android:visibility="gone" >
+                            android:visibility="gone">
 
                             <LinearLayout
                                 android:orientation="vertical"
@@ -2315,14 +2326,12 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout42" >
+                                android:background="@color/actionBarColour_default_theme" >
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Passenger 2"
-                                    android:id="@+id/textView232"
+                                    android:text="Passenger 6"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -2332,8 +2341,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout50" >
+                                android:padding="5dp" >
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -2342,14 +2350,13 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border"
-                                    android:id="@+id/linearLayout44"
-                                    android:tag="passenger2_travelling_with_block" >
+                                    android:id="@+id/passenger6_travelling_with_block"
+                                    android:tag="passenger6_travelling_with_block">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Travelling With."
-                                        android:id="@+id/textView233"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2357,8 +2364,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout43" >
+                                        android:layout_marginTop="5dp" >
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -2366,8 +2372,9 @@
                                             android:padding="5dp"
                                             android:text="0"
                                             android:textStyle="bold"
-                                            android:id="@+id/textView234"
-                                            android:tag="passenger2_travelling_with" />
+                                            android:id="@+id/passenger6_travelling_with"
+                                            android:tag="passenger6_travelling_with"/>
+
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2378,14 +2385,13 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border"
-                                    android:id="@+id/linearLayout46"
-                                    android:tag="passenger2_title_with_block" >
+                                    android:id="@+id/passenger6_title_with_block"
+                                    android:tag="passenger6_title_with_block">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Title."
-                                        android:id="@+id/textView235"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2393,16 +2399,15 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout45" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
-                                            android:layout_width="wrap_content"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:textStyle="bold"
-                                            android:id="@+id/textView236"
-                                            android:tag="passenger2_title" />
+                                            android:id="@+id/passenger6_title"
+                                            android:tag="passenger6_title" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2412,13 +2417,13 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
+                                    android:tag="passenger2_gender_block"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Gender."
-                                        android:id="@+id/textView237"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2426,16 +2431,15 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout47" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:textStyle="bold"
-                                            android:id="@+id/textView238"
-                                            android:tag="passenger2_gender" />
+                                            android:id="@+id/passenger6_gender"
+                                            android:tag="passenger6_gender"/>
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2451,7 +2455,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="First Name"
-                                        android:id="@+id/textView239"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2466,8 +2469,9 @@
                                             android:padding="3dp"
                                             android:inputType="textPersonName"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/editText28"
-                                            android:tag="passenger2_first_name" />
+                                            android:id="@+id/passenger6_first_name"
+                                            android:tag="passenger6_first_name"/>
+
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2483,7 +2487,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Last Name"
-                                        android:id="@+id/textView240"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2498,8 +2501,9 @@
                                             android:padding="3dp"
                                             android:inputType="textPersonName"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/editText29"
-                                            android:tag="passenger2_last_name" />
+                                            android:id="@+id/passenger6_last_name"
+                                            android:tag="passenger6_last_name"
+                                            />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2515,7 +2519,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Date Of Birth"
-                                        android:id="@+id/textView241"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2531,16 +2534,16 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:id="@+id/linearLayout48" >
+                                            android:background="@drawable/block_with_border">
 
                                             <TextView
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:hint="DOB"
                                                 android:padding="3dp"
-                                                android:background="@drawable/block_with_border"
-                                                android:id="@+id/textView242"
-                                                android:tag="passenger2_dob" />
+                                                android:id="@+id/passenger6_dob"
+                                                android:tag="passenger6_dob"/>
+
                                         </LinearLayout>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2557,7 +2560,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Travel Document:*"
-                                        android:id="@+id/textView243"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2571,8 +2573,8 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/textView244"
-                                            android:tag="passenger2_travel_doc" />
+                                            android:id="@+id/passenger6_travel_doc"
+                                            android:tag="passenger6_travel_doc"/>
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2583,15 +2585,14 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:visibility="gone"
-                                    android:tag="passenger2_expire_date_block"
-                                    android:background="@drawable/drawable_login_bottom_border" >
+                                    android:tag="passenger6_expire_date_block"
+                                    android:background="@drawable/drawable_login_bottom_border">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Expiration Date:*"
-                                        android:id="@+id/textView245"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -2604,15 +2605,17 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/textView246"
-                                            android:tag="passenger2_expire_date" />
+                                            android:id="@+id/passenger6_expire_date"
+                                            android:tag="passenger6_expire_date"/>
 
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:id="@+id/textView247"
-                                            android:tag="passenger2_hidden_expire_date" />
+                                            android:id="@+id/passenger6_hidden_expire_date"
+                                            android:tag="passenger6_hidden_expire_date"/>
+
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -2627,7 +2630,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Issuing Country:*"
-                                        android:id="@+id/textView248"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2641,8 +2643,8 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/textView249"
-                                            android:tag="passenger2_issuing_country" />
+                                            android:id="@+id/passenger6_issuing_country"
+                                            android:tag="passenger6_issuing_country"/>
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2658,7 +2660,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="Document No:*"
-                                        android:id="@+id/textView250"
                                         android:textStyle="bold" />
 
                                     <LinearLayout
@@ -2671,9 +2672,10 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/editText30"
-                                            android:tag="passenger2_doc_no" />
+                                            android:id="@+id/passenger6_doc_no"
+                                            android:tag="passenger6_doc_no"/>
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -2684,14 +2686,14 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border"
-                                    android:id="@+id/linearLayout49"
-                                    android:tag="passenger2_enrich_block" >
+                                    android:id="@+id/passenger6_enrich_block"
+                                    android:tag="passenger6_enrich_block">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Enrich Loyalty No:  e.g. MH123456789"
-                                        android:id="@+id/textView251" />
+                                        android:text="Bonuslink Card No."
+                                        android:textStyle="bold"/>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -2704,8 +2706,9 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/editText31"
-                                            android:tag="passenger2_enrich" />
+                                            android:id="@+id/passenger6_enrich"
+                                            android:inputType="number"
+                                            android:tag="passenger6_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>

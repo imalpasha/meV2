@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.util.Log;
 
 //import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.Crashlytics;
@@ -13,6 +14,7 @@ import com.estimote.sdk.BeaconManager;
 import com.estimote.sdk.Region;
 import com.fly.firefly.api.ApiRequestHandler;
 import com.fly.firefly.api.ApiService;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.squareup.otto.Bus;
 
@@ -37,8 +39,7 @@ public class FireFlyApplication extends AnalyticsApplication {
     private Boolean arrive_airport = true;
 
     @Inject Bus bus;
-    @Inject
-    ApiService apiService;
+    @Inject ApiService apiService;
 
     @Override
     public void onCreate() {
@@ -55,7 +56,7 @@ public class FireFlyApplication extends AnalyticsApplication {
         pref = new SharedPrefManager(this);
         region = new Region("region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
         /* ------------------------------------- */
-
+        Log.e("1", "1");
  /* ----------------------- Beacon Range ------------------------------- */
 
         /*On enter region - start monitoring*/
@@ -122,6 +123,8 @@ public class FireFlyApplication extends AnalyticsApplication {
     private void createApiRequestHandler() {
         bus.register(new ApiRequestHandler(bus, apiService));
     }
+
+
 
     public ObjectGraph createScopedGraph(Object module) {
         return objectGraph.plus(module);

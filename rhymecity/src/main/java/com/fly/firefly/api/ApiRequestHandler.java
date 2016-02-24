@@ -1,10 +1,11 @@
 package com.fly.firefly.api;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 
+import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.Gson;
+import com.fly.firefly.Controller;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
@@ -13,16 +14,13 @@ import com.fly.firefly.api.obj.ConfirmUpdateReceive;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
-import com.fly.firefly.api.obj.GetFlightAvailabilityReceive;
 import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
-import com.fly.firefly.api.obj.ManageFlightReceive;
 import com.fly.firefly.api.obj.ManageRequestIntinenary;
 import com.fly.firefly.api.obj.MobileCheckInPassengerReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.fly.firefly.api.obj.PushNotificationReceive;
 import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
-import com.fly.firefly.api.obj.SelectChangeFlightReceive;
 import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
@@ -51,7 +49,6 @@ import com.fly.firefly.ui.object.ManageContactInfo;
 import com.fly.firefly.ui.object.ManageFlightObj;
 import com.fly.firefly.ui.object.ManageFlightObjV2;
 import com.fly.firefly.ui.object.ManageFlightObjV3;
-import com.fly.firefly.ui.object.ManageFlightRetrieveObj;
 import com.fly.firefly.ui.object.ManagePassengerInfo;
 import com.fly.firefly.ui.object.ManageSeatInfo;
 import com.fly.firefly.ui.object.MobileCheckInPassenger;
@@ -75,11 +72,6 @@ import com.fly.firefly.ui.object.UpdateProfileRequest;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
-import java.util.BitSet;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -94,7 +86,6 @@ public class ApiRequestHandler {
         this.bus = bus;
         this.apiService = apiService;
     }
-
 
     // ------------------------------------------------------------------------------ //
 
@@ -335,6 +326,7 @@ public class ApiRequestHandler {
             public void success(SearchFlightReceive rhymesResponse, Response response) {
 
                 bus.post(new SearchFlightReceive(rhymesResponse));
+                ///BaseFragment.tempResult((new Gson()).toJson(rhymesResponse));
 
             }
 

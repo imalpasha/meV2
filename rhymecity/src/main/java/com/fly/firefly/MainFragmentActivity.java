@@ -58,7 +58,6 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
-
     }
 
     private void initActionBar() {
@@ -126,6 +125,16 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         });
     }
 
+    public void lockDrawer(){
+        mNavigationDrawerFragment.lockDrawer();
+
+    }
+
+    public void unlockDrawer(){
+        mNavigationDrawerFragment.unlockDrawer();
+    }
+
+
     public void hideMenuButton()
     {
         View actionBarView = getActionBar().getCustomView();
@@ -179,14 +188,14 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 startActivity(register);
 
             }
-            else if (item.getTag().equals("Profile"))
+            else if (item.getTag().equals("Information_Update"))
             {
                 Intent register = new Intent(this, UpdateProfileActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(register);
 
             }
-            else if (item.getTag().equals("Terms"))
+            else if (item.getTag().equals("Faq"))
             {
                 Intent terms = new Intent(this, Terms.class);
                 terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

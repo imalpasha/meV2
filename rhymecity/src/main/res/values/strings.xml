@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="retrieve_rhymes_failed">The network is slow or unavailable</string>
+   <!-- <string name="retrieve_rhymes_failed">The network is slow or unavailable</string>
     <string name="no_rhymes_found_error">Couldn\'t find anything that rhymes with %s</string>
 
     <string name="search_hint">Retrofit - Test On api.github.com</string>
@@ -11,37 +11,29 @@
     <string name="rhymes_with">Rhymes with %s</string>
 
 
-    <!-- Soap Setting -->
     <string name="soapURL">http://192.168.0.120:9766/vrsm/generalHTTP/1.1</string>
 
-    <!-- End Soap Setting -->
     <string name="module_package_name">com.silverlake.ifb.module</string>
 
-    <!-- Unable To Connect Layout -->
     <string name="utc">Unable to connect to server</string>
 
-    <!-- Internet not available -->
     <string name="internetNA">Internet connection not available </string>
 
-    <!-- Login Page -->
     <string name="loginUserNameHint">Username</string>
     <string name="loginUserPasswordHint">Password</string>
     <string name="loginBtnLogin">Login</string>
     <string name="loginBtnSignUp">Sign Up</string>
     <string name="loginTxtFYP">Forgot your password?</string>
 
-    <!-- End Login Page -->
 
 
-    <!-- Login Page -->
     <string name="promotionLabel">Promotions</string>
 
-    <!-- Contact Us Description Page -->
     <string name="contactUsDescription">VRSM provides merchants with unsurpassed store-front features and functionalities that deliver personalize mobile shopping experience.
 	It is built from customer perspective that is easy to understand, protects customer data and customizable layout tailored to individual need.The velocity at which mobile devices increase its computing power to support complex multimedia rich applications makes VRSM an ideal landscape to bring online shopping experience to the mobile devices.
-</string>
+</string> -->
 
-    <!-- Register Page -->
+    <!-- Register Page --> <!--
     <string name="registerLabel">Fill Up \nand \nLets Shop!</string>
     <string name="registerHintUserID">User ID*</string>
     <string name="registerHintUserPassword">Password*</string>
@@ -64,16 +56,14 @@
     <string name="registerHintUserState">State*</string>
     <string name="registerTC">I agree with Terms &amp; Condition</string>
     <string name="registerRP">Return Policy</string>
-    <string name="register">Register</string>
-    <string name="tc">Terms &amp; Condition</string>
+    <string name="tc">Terms &amp; Condition</string>-->
 
-    <!-- Error Text -->
+    <!-- Error Text --><!--
     <string name="errorPleaseFillUpEmptyField">Please fill up the highlighted field</string>
     <string name="errorUserNamePassword">Invalid Username / Password</string>
-    <string name="loginErrorEmptyField">Forgot You Passoword</string>
+    <string name="loginErrorEmptyField">Forgot You Passoword</string> -->
 
-    <!-- General -->
-    <string name="action_settings">FIREFLY</string>
+    <!-- General --><!--
     <string name="department_section1">Ladies</string>
     <string name="department_section2">Men</string>
     <string name="department_section3">Books</string>
@@ -85,19 +75,17 @@
     <string name="more_section1">Newsletter</string>
     <string name="more_section2">Augmented Reality</string>
     <string name="more_section3">Partners</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <string name="action_example">Example action</string>
     <string name="VRSM_webservices_url">http://localhost:9766/vrsm/VrsmWS/</string>
     <string name="TRY">Try again</string>
     <string name="internet_NA_with_retry">Unable to connect to server. Check your internet connection and try again</string>
     <string name="connection_error">Connection error</string>
     <string name="promotion">Promotion</string>
-    <string name="pna">Product not available or no longer sold by the merchant</string>
-
+    <string name="pna">Product not available or no longer sold by the merchant</string> -->
 
     <!-- Sliding Menu -->
-    <string name="newsletter">Newsletter</string>
+    <!--<string name="newsletter">Newsletter</string>
     <string name="newsletter_mine">My Newsletter</string>
     <string name="augmented_reality">Augmented Reality</string>
     <string name="social_media_wall">Social Media Wall</string>
@@ -107,7 +95,8 @@
     <string name="tnc">Term &amp; Condition </string>
     <string name="more_about_vrsm">More about VRSM</string>
     <string name="faq">FAQ</string>
-    <string name="return_policy">Return Policy</string>
+    <string name="return_policy">Return Policy</string>-->
+
 
     <!-- DropDown Value -->
     <string-array name="gender">
@@ -207,21 +196,19 @@
         <item>STD_LVL3,Department,department.DepartmentView</item>
         <item>STD_LVL4,Department,department.DepartmentView</item>
     </string-array>
+    <string name="google_map_api_key"><![CDATA[AIzaSyCK7VCGJomx5--fAPlvJZYGRsq4jyVyev0]]></string>
+    <string name="imal_google_map_api_key"><![CDATA[AIzaSyBPg4DVdsfxlhmo_OT2_9iNVHSKK3OPBEA]]></string>
 
     <!-- Unable to connect to server -->
-    <string name="UTC">Unable to connect to server</string>
+    <!--<string name="UTC">Unable to connect to server</string>
 
-    <!-- Augmented Reality -->
     <string name="compass_accuracy_low">Please re-calibrate compass by waving your device in a figure 8 motion.</string>
     <string name="location_fetching">Trying to find out where you are</string>
     <string name="location_fetching2">Still trying to find out where you are. Please wait a little bit more.</string>
-    <string name="google_map_api_key"><![CDATA[AIzaSyCK7VCGJomx5--fAPlvJZYGRsq4jyVyev0]]></string>
-    <string name="imal_google_map_api_key"><![CDATA[AIzaSyBPg4DVdsfxlhmo_OT2_9iNVHSKK3OPBEA]]></string>
 
 
     <string name="faizal_google_map_api_key"><![CDATA[AIzaSyCrMUgb-rRMIcSNwt9fEmoomirDaCoDniU]]></string>
 
-    <!-- Wish List -->
     <string name="wishlist_add_all_cart">Add All to Cart</string>
     <string name="wishlist_create_new">Add New Wish List</string>
     <string name="wishlist_add_to">Add to Wish List</string>
@@ -240,14 +227,12 @@
     <string name="wishlist_insert_title">Please insert wishlist title</string>
     <string name="wishlist_select_color">Please select wishlist colors and icons</string>
 
-    <!-- Customer Review -->
     <string name="review_no_input">Please fill in the blank</string>
     <string name="review_confirm_delete">Mark as spam?</string>
     <string name="review_button_delete">Yes</string>
     <string name="review_button_cancel">Cancel</string>
     <string name="review_rate">Rate this product:</string>
 
-    <!-- Badges -->
     <string name="badge_title">Badges</string>
     <string name="badge_mine_title">My Badges</string>
     <string name="badge_congrate">Congratulations!</string>
@@ -257,7 +242,6 @@
     <string name="badge_member_since">"Member since: "</string>
     <string name="badge_location">"Location: "</string>
 
-    <!-- Order History -->
     <string name="orderhistory_no_order">No orders have been made</string>
     <string name="orderhistory_number">Order Number :</string>
     <string name="orderhistory_date">Date :</string>
@@ -271,28 +255,22 @@
     <string name="orderhistory_product_view">View</string>
     <string name="orderhistory_product_return">Return</string>
 
-    <!-- Gallery -->
     <string name="gallery">Gallery</string>
 
-    <!-- Carts -->
     <string name="NA">Not Available</string>
     <string name="product_deleted">Product Deleted</string>
 
-    <!-- Contact US -->
     <string name="call">Call</string>
     <string name="cancel">Cancel</string>
 
-    <!-- Search -->
     <string name="searchBoxHint">Search Here</string>
     <string name="noResult">No result</string>
 
-    <!-- Newsletter -->
     <string name="newsletterTitle">Title</string>
     <string name="newsletterSave">Successfully saved</string>
     <string name="newsletterFailLoadPdf">Failed to load Pdf saved</string>
     <string name="newsletterNoItem">No saved newsletter available</string>
 
-    <!-- Merchant -->
     <string name="merchantSuccessUnSubscribe">Successfully Unsubscribe</string>
     <string name="merchantSubscribeBtn">Subscribe to Newsletter</string>
     <string name="merchantUnsubscribeBtn">Unsubscribe to Newsletter</string>
@@ -301,18 +279,8 @@
     <string name="merchantWebsite">Visit Website</string>
     <string name="location_lbl">Location</string>
 
-    <!-- ForgotPassword -->
-    <string name="forgotPassword">Forgot Password</string>
-    <string name="ForgotPasswordEmailSent">Your password reset has been confirmed. \nThe link to reset your password has been sent to the \nemail registered to</string>
-    <string name="forgotPasswordNextBtn">Next</string>
-    <string name="forgotPasswordUserID">User ID</string>
-    <string name="forgotPasswordTxt">Forgot \nPassword</string>
-    <string name="forgotPasswordExpired">PASSWORD EXPIRED</string>
-    <string name="forgotPasswordCurrent">Current Password</string>
-    <string name="forgotPasswordNew">New Password</string>
-    <string name="forgotPasswordConfirm">Confirm Password</string>
 
-    <!-- Product Profile -->
+
     <string name="productAddToCartLoading">Loading...</string>
     <string name="productEnterQuantity">Please enter quantity</string>
     <string name="productSelectColourSize">Please select colour &amp; size</string>
@@ -325,8 +293,6 @@
     <string name="productQTY"> quantity</string>
     <string name="selectColourFirst">Please select colour</string>
 
-
-    <!-- My Profile -->
     <string name="myProfile">My Profile</string>
     <string name="myProfileCompleteAction">Complete action using</string>
     <string name="myProfileImageUpdated">Profile image updated</string>
@@ -359,8 +325,7 @@
     <string name="name">Name: </string>
     <string name="userid">User ID: </string>
     <string name="userid_">User ID </string>
-    <string name="dob">DOB: </string>
-    <string name="dob_">DOB</string>
+
     <string name="changepassword">Change Password</string>
     <string name="logOutOtherDevices">Log out of other devices?</string>
     <string name="mobile_">Mobile: </string>
@@ -381,7 +346,6 @@
     <string name="month">Month</string>
     <string name="year">Year</string>
 
-    <!-- My Profile - Add Request-->
     <string name="addRequestProduct">Product</string>
     <string name="addRequestType">Request Type*</string>
     <string name="addRequestQuantityReturn">Quantity Return*</string>
@@ -391,7 +355,6 @@
     <string name="addRequestPleaseSelect">Please select</string>
     <string name="addRequestComment..">Comment...</string>
 
-    <!--My Profile - Add New Request-->
     <string name="addNewRequestOrderNumber">Order Number</string>
     <string name="addNewRequestRequestItem">Request item</string>
     <string name="addNewRequestItems">Items</string>
@@ -399,7 +362,6 @@
     <string name="addNewRequestType">Type</string>
     <string name="addNewRequestTapOnReturnItem">Tap on return item</string>
 
-    <!-- Check Out -->
     <string name="checkOut">Check-Out</string>
     <string name="pleaseSelectMethod">Please select  the method you prefer on how you would like to receive your purchased products</string>
     <string name="selfpickup">Self Pick-Up</string>
@@ -424,24 +386,18 @@
     <string name="please_delete_shipping_add">Please delete a shipping address in order to add a new one to the list</string>
     <string name="shipping_add_deleted">Shipping Address Deleted</string>
 
-    <!-- Payment -->
     <string name="payment_title">Payment</string>
     <string name="pickup_location">Pick-Up Location</string>
     <string name="please_select_pickup_loc">Please select pickup location for all merchant</string>
 
-
-    <!-- Promotion Landing.Exit -->
     <string name="confirm_exit_box">Confirm Exit?</string>
     <string name="cancel_exit">No</string>
     <string name="confirm_exit">Yes</string>
 
-    <!-- Module Title -->
     <string name="SBB">Shop By Brand</string>
     <string name="myCart">My Cart</string>
     <string name="loginTitle">Login</string>
     <string name="customerReview">Customer Review</string>
-
-
     <string name="contactUs">Contact Us</string>
     <string name="search">Search</string>
     <string name="log_out_lbl">Log Out</string>
@@ -477,7 +433,7 @@
     <string name="order_now_lbl">Order Now</string>
     <string name="your_order_lbl">Your Order</string>
     <string name="placeholder_product_name">-</string>
-    <string name="placeholder_shop_name">--</string>
+    <string name="placeholder_shop_name">-</string>
     <string name="quantity_lbl">Quantity: 5</string>
     <string name="size_lbl">Size: 40D</string>
     <string name="colour_lbl">Colour: Hitam</string>
@@ -491,7 +447,6 @@
     <string name="ur_comment_lbl">Your comment</string>
     <string name="comment_instru">Kindly fill the comment section before you proceed with posting your review</string>
     <string name="post_ur_rating_lbl">Post your rating</string>
-    <string name="x_lbl">X</string>
     <string name="forgot_password_lbl">Forgot \nPassword</string>
     <string name="reset_pwd_lbl">Reset \nPassword</string>
     <string name="reset_pwd2_lbl">Reset Password</string>
@@ -590,7 +545,6 @@
     <string name="similar_prod_lbl">Similar Product</string>
     <string name="error_product_has_not_reviewed">This product has not been reviewed yet!</string>
     <string name="button_placeholder_lbl">Button</string>
-    <string name="textview_placeholder_lbl">TextView</string>
     <string name="product_desc_placeholder">Lose your belly fat</string>
     <string name="date_placeholder_lbl">10 Jul 2014</string>
     <string name="placeholder_product_long_desc">Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitnessHere everything u need to know about fitness Here everything u need to know about fitness Here everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitnessHere everything u need to know about fitness</string>
@@ -606,10 +560,7 @@
     <string name="create_wishlist_instru">Please create a wish list to add your product</string>
     <string name="product_successful_wishlist">This Product has been successfully added to your wish list</string>
     <string name="add_all_to_cart">Add All to Cart</string>
-
     <string name="merchantLocation">Merchant Location</string>
-    <string name="searchCountryHint">Search Country</string>
-    <string name="countryListDialogTitle">Please select your country</string>
 
     <string name="my_request">My Request</string>
     <string name="add_new_request">Add New Request</string>
@@ -622,7 +573,6 @@
     <string name="loginTxt">Login to VRSM </string>
     <string name="rma_number">RMA Number:</string>
     <string name="date_request">Date Request</string>
-
     <string name="type">Type</string>
     <string name="add_request_item">Add Request Item</string>
     <string name="refund">Refund</string>
@@ -630,7 +580,6 @@
     <string name="request_item">Request Item</string>
     <string name="save">Save</string>
 
-    <!--View Return Item-->
     <string name="product">Product</string>
     <string name="request_type">Request Type</string>
     <string name="quantity_return">Quantity Return</string>
@@ -649,7 +598,6 @@
     <string name="total_discount">Total Discount</string>
     <string name="grand_total">Grand Total</string>
 
-    <!--Cart-->
     <string name="size">Size :</string>
     <string name="color">Color :</string>
     <string name="qty">Qty :</string>
@@ -664,9 +612,8 @@
     <string name="title_activity_tnc_adapter">TncAdapter</string>
     <string name="title_activity_tn_clist">TnCList</string>
 
-    <!--Login TnC-->
     <string name="agreement">Agreement</string>
-    <string name="agree">Agree</string>
+    <string name="agree">Agree</string> -->
 
 
     <!-- HOMEPAGE FIREFLY -->
@@ -754,7 +701,8 @@
 
     <string name="register_fax">Fax</string>
     <string name="register_city">City</string>
-
+    <string name="register_password_hint">The given password violates the password policy of domain WWW. Policy: Password must be at least 8 characters, no more than 16 characters, must include at least one upper case letter, one lower case letter, one numeric digit, and one non-alphanumeric. The password cannot contain a period(.) comma(,) or tilde(~).</string>
+    <string name="register_password_policy">Password Policy</string>
 
     <string name="title_register">REGISTER</string>
 
@@ -811,10 +759,10 @@
     <!-- General -->
     <string name="general_continue">Continue</string>
     <string name="general_email_addresss">Email Address</string>
-    <string name="general_travel_purpose">Primary Purpose of Your Travel:</string>
+    <string name="general_travel_purpose">Primary Purpose of Your Travel</string>
 
     <string name="agreeTnc">I agree with the Term &amp; Condition</string>
-    <string name="subscribe">Yes, I want to receive promotional information from Firefly and its partners</string>
+    <string name="subscribe">Yes, I do not want to receive promotional information from Firefly and its partners</string>
     <string name="alertTNC">You must agree to the terms.</string>
 
 
@@ -831,6 +779,7 @@
     <string name="title_activity_update_profile">UPDATE PROFILE</string>
     <string name="update_profile_logininfo">Login Information</string>
     <string name="update_profile_contactinfo">Contact Information</string>
+    <string name="update_profile_btn">Update</string>
 
 
     <!-- Mobile Check in -->
@@ -841,6 +790,25 @@
 
     <!-- Terms-->
     <string name="title_terms">TERMS AND CONDITIONS</string>
+
+
+    <!-- Forgot Password Module -->
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="ForgotPasswordEmailSent">Your password reset has been confirmed. \nThe link to reset your password has been sent to the \nemail registered to</string>
+    <string name="forgotPasswordNextBtn">Next</string>
+    <string name="forgotPasswordUserID">User ID</string>
+    <string name="forgotPasswordTxt">Forgot \nPassword</string>
+    <string name="forgotPasswordExpired">PASSWORD EXPIRED</string>
+    <string name="forgotPasswordCurrent">Current Password</string>
+    <string name="forgotPasswordNew">New Password</string>
+    <string name="forgotPasswordConfirm">Confirm Password</string>
+
+
+
+
+
+
+
 
 
     <string name="update_success">Update Success</string>
@@ -873,4 +841,18 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
 
+    <!-- Drawer -->
+    <string name="x_lbl">X</string>
+
+    <!-- General -->
+    <string name="searchCountryHint">Search</string>
+    <string name="dob">DOB: </string>
+    <string name="dob_">DOB</string>
+    <string name="textview_placeholder_lbl">TextView</string>
+    <string name="action_settings">FIREFLY</string>
+    <string name="register">Register</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="countryListDialogTitle">Please select country</string>
+    <string name="stateListDialogTitle">Please select state</string>
 </resources>

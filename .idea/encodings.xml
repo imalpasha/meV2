@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/GeoFencing/GeofenceTransitionReceiver.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/GeoFencing/MyPlaces.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/SlidePage/BaseFragmentPagerAdapter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/SlidePage/BaseListFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/SlidePage/ProductImagesFragment.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/java/com/fly/firefly/ui/activity/SlidePage/ProductImagesPagerAdapter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/rhymecity/src/main/res/values-w820dp/ids.xml" charset="windows-1252" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

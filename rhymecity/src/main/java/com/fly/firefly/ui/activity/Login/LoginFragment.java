@@ -189,7 +189,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
             pref.setUsername(obj.getUser_info().getFirst_name());
 
+            Log.e("signature",obj.getUser_info().getSignature());
             Log.e(storeUsername,storePassword);
+
             pref.setUserEmail(storeUsername);
             pref.setUserPassword(storePassword);
 

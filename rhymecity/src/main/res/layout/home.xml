@@ -51,7 +51,7 @@
                 android:layout_height="fill_parent"
                 android:padding="2dp"
                 android:id="@+id/bannerImg"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:adjustViewBounds="true"/>
         </LinearLayout>
 

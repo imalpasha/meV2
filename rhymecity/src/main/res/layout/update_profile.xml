@@ -695,6 +695,7 @@
                                         android:background="@null"
                                         android:paddingBottom="8dp"
                                         android:hint="@string/register_alternate_phone"
+                                        android:maxLength="16"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
                                         android:id="@+id/txtAltPhone" />
@@ -715,6 +716,7 @@
                                         android:background="@null"
                                         android:paddingBottom="8dp"
                                         android:hint="@string/register_fax"
+                                        android:maxLength="16"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
                                         android:id="@+id/txtFax" />
@@ -764,6 +766,7 @@
                                         android:paddingBottom="8dp"
                                         android:hint="@string/register_bonuslink"
                                         android:textSize="@dimen/font16sp"
+                                        android:maxLength="16"
                                         android:textColorHint="@color/loginFontTxt"
                                         android:id="@+id/txtBonusLink" />
                                 </LinearLayout>
@@ -781,7 +784,8 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:visibility="gone">
 
                                 <CheckBox
                                     android:layout_width="wrap_content"
@@ -812,7 +816,7 @@
                                 <Button
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/register_continue_button"
+                                    android:text="@string/update_profile_btn"
                                     android:background="@drawable/login_login_button_clicked"
                                     android:textColor="@color/white"
                                     android:textStyle="bold"

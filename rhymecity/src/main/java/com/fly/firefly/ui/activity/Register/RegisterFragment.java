@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
@@ -23,6 +24,7 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.activity.Picker.DatePickerFragment;
+import com.fly.firefly.ui.activity.Picker.StateListDialogFragment;
 import com.fly.firefly.ui.module.RegisterModule;
 import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.RegisterObj;
@@ -35,8 +37,8 @@ import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Checked;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Optional;
@@ -67,18 +69,20 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.editTextCountry)
     TextView editTextCountry;
 
+    @Order(16) @NotEmpty
     @InjectView(R.id.editTextState)
     TextView editTextState;
 
     @NotEmpty(sequence = 1)
     @Order(1)
+    @Email(message = "Invalid Email")
     @InjectView(R.id.txtUsername)
     EditText txtUsername;
 
     @Order(2)
     @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6, message = "Must at least 6 character")
-    @Password(sequence =3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Must have uppercase char,number and symbols") // Password validator
+    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 6 and maximum 16 character")
+    @Password(sequence = 3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Password invalid , please refer the password hint") // Password validator
     @InjectView(R.id.txtPassword)
     EditText txtPassword;
 
@@ -115,15 +119,14 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     EditText editTextPostcode;
 
     @Order(10) @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6,max = 14, message = "invalid phone number")
+    @Length(sequence = 1, min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.editTextMobilePhone) EditText editTextMobilePhone;
 
     @InjectView(R.id.editTextAlternatePhone)
-    EditText editTextAlternatePhone;
+    EditText txtAlternatePhoneNumber;
 
-    @Order(12)@Optional
     @InjectView(R.id.editTextFax)
-    EditText editTextFax;
+    EditText txtFaqNumber;
 
     @Order(13)@NotEmpty
     @InjectView(R.id.txtCity)
@@ -148,10 +151,11 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.txtBonusLink)
     EditText txtBonusLink;
 
+    @InjectView(R.id.txtPasswordHint)
+    LinearLayout txtPasswordHint;
+
     private Validator mValidator;
     private int currentPage;
-    private ArrayList<DropDownItem> countrys;
-    private ArrayList<DropDownItem> state;
     private int day;
     private int month;
     private int year;
@@ -159,7 +163,6 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private SharedPrefManager pref;
     private int month_number;
     private DatePickerObj date;
-    private ArrayList<DropDownItem> titleList;
     private String selectedTitle;
     private String[] state_val;
     private String selectedState;
@@ -167,9 +170,15 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
     private static final String SCREEN_LABEL = "Register";
+    private Boolean validateStatus = true;
+
+    /*DropDown Variable*/
+    private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> countrys  = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> state = new ArrayList<DropDownItem>();
+
 
     public static RegisterFragment newInstance() {
-
         RegisterFragment fragment = new RegisterFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -201,44 +210,26 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
         pref = new SharedPrefManager(getActivity());
-        countrys = new ArrayList<DropDownItem>();
-        titleList = new ArrayList<DropDownItem>();
-
-        /*Display Country Data*/
-        JSONArray jsonCountry = getCountry(getActivity());
-
-        for (int i = 0; i < jsonCountry.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonCountry.opt(i);
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(row.optString("country_name"));
-            itemCountry.setCode(row.optString("country_code"));
-            itemCountry.setTag("Country");
-            itemCountry.setId(i);
-            countrys.add(itemCountry);
-        }
 
 
-        /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
-        for (int i = 0; i < jsonTitle.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonTitle.opt(i);
+        /*Get Data From BaseFragment*/
+        countrys = getStaticCountry(getActivity());
+        titleList = getStaticTitle(getActivity());
 
-            DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText(row.optString("title_name"));
-            itemTitle.setCode(row.optString("title_code"));
-            itemTitle.setTag("Title");
-            titleList.add(itemTitle);
-        }
+          /*Display Password Hint*/
+        txtPasswordHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setNormalDialog(getActivity(), getActivity().getResources().getString(R.string.register_password_hint), getActivity().getResources().getString(R.string.register_password_policy));
+            }
+        });
 
          /*Switch register info block*/
         editTextCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Country");
-                showCountrySelector(getActivity(),countrys);
+                showCountrySelector(getActivity(), countrys,"country");
             }
         });
 
@@ -246,7 +237,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "State");
-                showCountrySelector(getActivity(), state);
+                showCountrySelector(getActivity(), state,"state");
             }
         });
 
@@ -254,9 +245,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Date");
-                //datePickerDialog.setVibrate(isVibrate());
                 datePickerDialog.setYearRange(year - 80, year);
-                //datePickerDialog.setCloseOnSingleTapDay(isCloseOnSingleTapDay());
                 datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
             }
         });
@@ -265,8 +254,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Title");
-               Log.e("Clicked", "Ok");
-               popupSelection(titleList, getActivity(),txtTitle,true,view);
+                Log.e("Clicked", "Ok");
+                popupSelection(titleList, getActivity(), txtTitle, true, view);
             }
         });
 
@@ -274,16 +263,25 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "ContinueButton");
-                mValidator.validate();
                 Utils.hideKeyboard(getActivity(), v);
+
+                //Multiple Manual Validation - Library Problem (failed to validate optional field)
+                resetManualValidationStatus();
+                manualValidation(txtBonusLink, "bonuslink");
+                manualValidation(txtAlternatePhoneNumber, "phoneNumber");
+                manualValidation(txtFaqNumber,"phoneNumber");
+                validateStatus = getManualValidationStatus();
+
+                mValidator.validate();
             }
         });
 
 
 
-
         return view;
     }
+
+
 
     /*Date Picker -> need to move to main activity*/
     public void showTimePickerDialog(View v) {
@@ -292,18 +290,21 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         newFragment.show(getFragmentManager(), "datePicker");
     }
 
-
     /*Country selector - > need to move to main activity*/
-    public void showCountrySelector(Activity act,ArrayList constParam)
+    public void showCountrySelector(Activity act,ArrayList constParam,String data)
     {
         if(act != null) {
             try {
-
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-                CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
-                countryListDialogFragment.setTargetFragment(RegisterFragment.this, 0);
-                countryListDialogFragment.show(fm, "countryListDialogFragment");
-
+                if(data.equals("state")){
+                    StateListDialogFragment countryListDialogFragment = StateListDialogFragment.newInstance(constParam);
+                    countryListDialogFragment.setTargetFragment(RegisterFragment.this, 0);
+                    countryListDialogFragment.show(fm, "countryListDialogFragment");
+                }else{
+                    CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
+                    countryListDialogFragment.setTargetFragment(RegisterFragment.this, 0);
+                    countryListDialogFragment.show(fm, "countryListDialogFragment");
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -369,13 +370,13 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             regObj.setAddress_1(txtAddressLine1.getText().toString());
             regObj.setAddress_2(txtAddressLine2.getText().toString());
             regObj.setAddress_3(txtAddressLine2.getText().toString());
-            regObj.setAlternate_phone(editTextAlternatePhone.getText().toString());
+            regObj.setAlternate_phone(txtAlternatePhoneNumber.getText().toString());
             regObj.setMobile_phone(editTextMobilePhone.getText().toString());
             regObj.setCountry(selectedCountryCode);
             regObj.setState(selectedState);
             regObj.setCity(txtCity.getText().toString());
             regObj.setPostcode(editTextPostcode.getText().toString());
-            regObj.setFax(editTextFax.getText().toString());
+            regObj.setFax(txtFaqNumber.getText().toString());
             regObj.setBonuslink(txtBonusLink.getText().toString());
             regObj.setSignature("");
 
@@ -405,9 +406,12 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
     @Override
     public void onValidationSucceeded() {
-        //check checkBox
+
+        //need to do optional validation
         if(chkTNC.isChecked()){
-            requestRegister();
+            if(validateStatus){
+                requestRegister();
+            }
         }else{
             croutonAlert(getActivity(), "You must agree with tem & condition");
         }
@@ -429,26 +433,26 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(splitErrorMsg[0]);
-
+            }else if(view instanceof TextView)
+            {
+                ((TextView) view).setError(splitErrorMsg[0]);
             }
             fieldError = true;
             errorMessage = splitErrorMsg[0];
         }
 
         if(fieldError){
-            croutonAlert(getActivity(), errorMessage);
+            //croutonAlert(getActivity(), errorMessage);
         }
 
 
     }
-
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         fragmentContainerId = ((FragmentContainerActivity) getActivity()).getFragmentContainerId();
     }
-
 
     @Override
     public void onResume() {

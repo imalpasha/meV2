@@ -2,6 +2,7 @@ package com.fly.firefly.api.obj;
 
 import com.fly.firefly.ui.object.AirportObj;
 import com.fly.firefly.ui.object.Country;
+import com.fly.firefly.ui.object.SocialMedia;
 import com.fly.firefly.ui.object.State;
 import com.fly.firefly.ui.object.TitleObj;
 
@@ -22,6 +23,17 @@ public class DeviceInfoSuccess{
     private List<Country> data_country = new ArrayList<Country>();
     private List<State> data_state = new ArrayList<State>();
     private List<AirportObj> data_market = new ArrayList<AirportObj>();
+    private SocialMedia social_media_link;
+
+    public SocialMedia getSocial_media() {
+        return social_media_link;
+    }
+
+    public void setSocial_media(SocialMedia social_media) {
+        this.social_media_link = social_media;
+    }
+
+
     private String titleCode;
     private String titleName;
     private String status;
@@ -139,6 +151,38 @@ public class DeviceInfoSuccess{
 
     public DeviceInfoSuccess getObj() {
         return userObj;
+    }
+
+    public class SocialMedia {
+
+        private String facebook;
+        private String twitter;
+        private String instagram;
+
+        public String getFacebook() {
+            return facebook;
+        }
+
+        public void setFacebook(String facebook) {
+            this.facebook = facebook;
+        }
+
+        public String getTwitter() {
+            return twitter;
+        }
+
+        public void setTwitter(String twitter) {
+            this.twitter = twitter;
+        }
+
+        public String getInstagram() {
+            return instagram;
+        }
+
+        public void setInstagram(String instagram) {
+            this.instagram = instagram;
+        }
+
     }
 
 

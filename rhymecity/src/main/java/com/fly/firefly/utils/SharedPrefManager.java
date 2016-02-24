@@ -3,6 +3,7 @@ package com.fly.firefly.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.util.Log;
 
 import java.util.HashMap;
 
@@ -32,8 +33,10 @@ public class SharedPrefManager {
     public static final String PAYMENT_DUMMY = "PAYMENT_DUMMY";
     public static final String PNR = "PNR";
     public static final String PASSWORD = "PASSWORD";
-
+    public static final String SOCIAL_MEDIA ="SM";
     public static final String DATA_VERSION = "DV";
+
+    public static final String TEMP_RESULT = "TR";
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -43,6 +46,20 @@ public class SharedPrefManager {
         this._context = context;
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
+    }
+
+    /*SOCIAL MEDIA*/
+    public HashMap<String, String> getSocialMedia() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(SOCIAL_MEDIA, _sharedPrefs.getString(SOCIAL_MEDIA, null));
+        return init;
+    }
+
+    /*SOCIAL MEDIA*/
+    public HashMap<String, String> getTempResult() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(TEMP_RESULT, _sharedPrefs.getString(TEMP_RESULT, null));
+        return init;
     }
 
     /*DATA VERSION*/
@@ -197,6 +214,18 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*Set SEAT*/
+    public void setTempResult(String tempResult) {
+        _prefsEditor.putString(TEMP_RESULT, tempResult);
+        _prefsEditor.apply();
+    }
+
+    /*Set Booking ID*/
+    public void setSocialMedia(String version) {
+        _prefsEditor.putString(SOCIAL_MEDIA, version);
+        _prefsEditor.apply();
+    }
+
     /*Set Booking ID*/
     public void setDataVersion(String version) {
         _prefsEditor.putString(DATA_VERSION, version);
@@ -327,6 +356,11 @@ public class SharedPrefManager {
     public void setUserEmail(String url) {
         _prefsEditor.putString(USER_EMAIL, url);
         _prefsEditor.apply();
+    }
+
+    /*Set Booking ID*/
+    public void clearSocialMedia() {
+        _sharedPrefs.edit().remove(SOCIAL_MEDIA).apply();
     }
 
     /*Clear TermValue*/
@@ -460,5 +494,12 @@ public class SharedPrefManager {
     public void clearUserEmail() {
         // Clearing Selected
         _sharedPrefs.edit().remove(USER_EMAIL).apply();
+    }
+
+    /*Clear UserInfo Value*/
+    public void clearTempResult() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(TEMP_RESULT).apply();
+        Log.e("Clear", "True");
     }
 }

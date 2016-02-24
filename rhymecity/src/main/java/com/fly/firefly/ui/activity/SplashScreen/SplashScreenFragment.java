@@ -90,8 +90,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
 
         if(localDataVersion == null){
-            sendDeviceInformationToServer(info);
-        }else{
+           sendDeviceInformationToServer(info);
+        }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
+           sendDeviceInformationToServer(info);
+        }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
             goHomepage();
         }
 
@@ -147,12 +149,13 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             String bannerUrl = obj.getObj().getBanner_default();
             String promoBannerUrl = obj.getObj().getBanner_promo();
             String dataVersion = obj.getObj().getData_version();
-
+            DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
+            Log.e("Facebook", socialMediaObj.getFacebook());
             HashMap<String, String> initLogin = pref.getDataVesion();
             String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
             Log.e(localDataVersion,dataVersion);
 
-            if (localDataVersion == null || !localDataVersion.equals(dataVersion)){
+           // if (localDataVersion == null || !localDataVersion.equals(dataVersion)){
 
                 Log.e("localDataVersion","Update");
 
@@ -169,6 +172,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
                 String flight = gson.toJson(obj.getObj().getData_market());
                 pref.setFlight(flight);
+
+                String socialMedia = gson.toJson(socialMediaObj);
+                Log.e("socialMedia",socialMedia);
+                pref.setSocialMedia(socialMedia);
                 /*End*/
 
                 /*Save Signature to local storage*/
@@ -176,10 +183,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
                 pref.setBannerUrl(bannerUrl);
                 pref.setPromoBannerUrl(promoBannerUrl);
                 pref.setDataVersion(dataVersion);
-            }else{
-                Log.e("localDataVersion","No Update");
 
-            }
+           // }else{
+           //    Log.e("localDataVersion","No Update");
+          //  }
             //Redirect to homepage after success loading splashscreen
             goHomepage();
 

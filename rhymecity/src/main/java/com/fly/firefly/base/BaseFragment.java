@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -64,7 +65,7 @@ public class BaseFragment extends Fragment {
 	private static SpotsDialog mProgressDialog;
 	private static SweetAlertDialog pDialog;
 	private static Boolean status;
-
+	Boolean manualValidationStatus = true;
 	private static int staticIndex = -1;
 
 	/* ------------------ Mobile Check-In ------------------- */
@@ -126,7 +127,7 @@ public class BaseFragment extends Fragment {
 		mDialog.getWindow().setAttributes(lp);
 	}
 
-	public static  ArrayList<DropDownItem> getStaticCountry(Activity act){
+	public static ArrayList<DropDownItem> getStaticCountry(Activity act){
 
 		ArrayList<DropDownItem> countrys = new ArrayList<DropDownItem>();
 		JSONArray json = null;
@@ -161,11 +162,93 @@ public class BaseFragment extends Fragment {
 
     /* -------------------------------------------------------- */
 
+	public static ArrayList<DropDownItem> getTravelDoc(Activity act) {
+
+		/*Travelling Purpose*/
+		ArrayList<DropDownItem> travelDocList = new ArrayList<DropDownItem>();
+
+		/*Travel Doc*/
+		final String[] doc = act.getResources().getStringArray(R.array.travel_doc);
+		for(int i = 0;i<doc.length; i++)
+		{
+			String travelDoc = doc[i];
+			String[] splitDoc = travelDoc.split("-");
+
+			DropDownItem itemDoc = new DropDownItem();
+			itemDoc.setText(splitDoc[0]);
+			travelDocList.add(itemDoc);
+		}
+
+		return travelDocList;
+
+	}
 
 
 
+	public static ArrayList<DropDownItem> getGender(Activity act) {
+
+		/*Travelling Purpose*/
+		ArrayList<DropDownItem> genderList = new ArrayList<DropDownItem>();
+
+		final String[] gender = act.getResources().getStringArray(R.array.gender);
+		for (int i = 0; i < gender.length; i++) {
+			DropDownItem itemTitle = new DropDownItem();
+			itemTitle.setText(gender[i]);
+			genderList.add(itemTitle);
+		}
+
+		return genderList;
+	}
+
+	public static ArrayList<DropDownItem> getPurpose(Activity act){
+
+		/*Travelling Purpose*/
+		ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
+
+		final String[] purpose = act.getResources().getStringArray(R.array.purpose);
+		for(int i = 0;i<purpose.length; i++)
+		{
+			int purposeTag = i+1;
+			DropDownItem itemPurpose = new DropDownItem();
+			itemPurpose.setText(purpose[i]);
+			itemPurpose.setCode(Integer.toString(purposeTag));
+			purposeList.add(itemPurpose);
+		}
+
+		return purposeList;
+	}
 
 
+	public static ArrayList<DropDownItem> getStaticTitle(Activity act){
+
+		ArrayList<DropDownItem> title = new ArrayList<DropDownItem>();
+		JSONArray json = null;
+
+		prefManager = new SharedPrefManager(act);
+		HashMap<String, String> init = prefManager.getTitle();
+		String dataTitle = init.get(SharedPrefManager.TITLE);
+
+		try {
+			json = new JSONArray(dataTitle);
+			Log.e("json",Integer.toString(json.length()));
+		}catch (JSONException e){
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < json.length(); i++)
+		{
+			JSONObject row = (JSONObject) json.opt(i);
+
+			DropDownItem itemCountry = new DropDownItem();
+			itemCountry.setText(row.optString("title_name"));
+			itemCountry.setCode(row.optString("title_code"));
+			itemCountry.setTag("Country");
+			itemCountry.setId(i);
+			title.add(itemCountry);
+		}
+
+		return title;
+	}
 
 
 
@@ -243,9 +326,9 @@ public class BaseFragment extends Fragment {
 				.show();
 	}
 
-	public static void setAlertDialogV2(Context act,String msg){
-		new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-				.setTitleText("Error!")
+	public static void setNormalDialog(Context act,String msg,String title){
+		new SweetAlertDialog(act, SweetAlertDialog.NORMAL_TYPE)
+				.setTitleText(title)
 				.setContentText(msg)
 				.show();
 	}
@@ -288,7 +371,6 @@ public class BaseFragment extends Fragment {
 				})
 				.show();
 	}
-
 
 	public ArrayList<DropDownItem> getListOfYear(Activity act){
 		int totalMonth = 12;
@@ -510,23 +592,7 @@ public class BaseFragment extends Fragment {
 		return selectedValue;
 	}
 
-	public JSONArray getTitle(Activity act){
 
-		JSONArray json = null;
-
-		prefManager = new SharedPrefManager(act);
-		HashMap<String, String> init = prefManager.getTitle();
-		String dataTitle = init.get(SharedPrefManager.TITLE);
-
-		try {
-			json = new JSONArray(dataTitle);
-			Log.e("json",Integer.toString(json.length()));
-		}catch (JSONException e){
-			e.printStackTrace();
-		}
-
-		return json;
-	}
 
 	public String getTitleCode(Activity act,String title,String data){
 
@@ -936,6 +1002,55 @@ public class BaseFragment extends Fragment {
 		ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 		return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+
+	public String checkResultCached(Activity act){
+
+		HashMap<String, String> initResult = prefManager.getTempResult();
+		String tempResult = initResult.get(SharedPrefManager.TEMP_RESULT);
+
+		try {
+			Log.e("tempResult",tempResult);
+		}catch (Exception e){
+
+		}
+
+		return tempResult;
+	}
+
+	//Cached Result In GSON String
+	public static void tempResult(String cachedResult){
+
+		prefManager.setTempResult(cachedResult);
+
+	}
+
+	public void manualValidation(EditText editText,String validationRule){
+
+		if(!editText.getText().toString().equals("")) {
+
+			if(validationRule.equals("bonuslink")){
+				if (editText.getText().toString().length() < 16 || editText.getText().toString().length() > 16) {
+					editText.setError("Invalid bonuslink card number");
+					manualValidationStatus = false;
+				}
+			}else if(validationRule.equals("phoneNumber")){
+				if (editText.getText().toString().length() < 6 || editText.getText().toString().length() > 16) {
+					editText.setError("Invalid phone/fax number");
+					manualValidationStatus = false;
+				}
+			}
+
+		}
+	}
+
+
+	public Boolean getManualValidationStatus(){
+		return manualValidationStatus;
+	}
+
+	public void resetManualValidationStatus(){
+		manualValidationStatus = true;
 	}
 
 }

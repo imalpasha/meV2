@@ -36,14 +36,14 @@ public class SearchFlightActivity extends MainFragmentActivity implements Fragme
                 .commit();
     }*/
 
-   @Override
+   /*@Override
     public void onBackPressed() {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         } else {
             super.onBackPressed();
         }
-    }
+    }*/
 
     /*@Override
     public ProgressBar getProgressIndicator() {

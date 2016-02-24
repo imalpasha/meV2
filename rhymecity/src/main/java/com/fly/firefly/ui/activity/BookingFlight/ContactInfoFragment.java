@@ -35,6 +35,8 @@ import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
@@ -94,7 +96,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.txtFirstName)
     TextView txtFirstName;
 
-
     @NotEmpty
     @Order(4)
     @InjectView(R.id.txtLastName)
@@ -102,6 +103,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     @NotEmpty
     @Order(5)
+    @Email(message = "Invalid Email")
     @InjectView(R.id.txtEmailAddress)
     TextView txtEmailAddress;
 
@@ -122,15 +124,18 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     @NotEmpty
     @Order(9)
+    @Length(min = 4,max = 8, message = "Invalid postcode number")
     @InjectView(R.id.txtPostCode)
     TextView txtPostCode;
 
     @NotEmpty
+    @Length(min = 6,max = 14, message = "Invalid phone number")
     @Order(10)
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
     @NotEmpty
+    @Length(min = 6,max = 14, message = "Invalid phone number")
     @Order(11)
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
@@ -278,44 +283,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-        /*Travelling Purpose*/
-        final String[] purpose = getResources().getStringArray(R.array.purpose);
-        for(int i = 0;i<purpose.length; i++)
-        {
-            int purposeTag = i+1;
-            DropDownItem itemPurpose = new DropDownItem();
-            itemPurpose.setText(purpose[i]);
-            itemPurpose.setCode(Integer.toString(purposeTag));
-            purposeList.add(itemPurpose);
-        }
 
-         /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
-        for (int i = 0; i < jsonTitle.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonTitle.opt(i);
 
-            DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText(row.optString("title_name"));
-            itemTitle.setCode(row.optString("title_code"));
-            itemTitle.setTag("Title");
-            titleList.add(itemTitle);
-        }
+         /*Get Data From BaseFragment*/
+        purposeList = getPurpose(getActivity());
+        titleList = getStaticTitle(getActivity());
+        countrysList = getStaticCountry(getActivity());
 
-        /*Display Country Data*/
-        JSONArray jsonCountry = getCountry(getActivity());
-
-        for (int i = 0; i < jsonCountry.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonCountry.opt(i);
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(row.optString("country_name"));
-            itemCountry.setCode(row.optString("country_code"));
-            itemCountry.setTag("Country");
-            itemCountry.setId(i);
-            countrysList.add(itemCountry);
-        }
 
         /* -------------------------- Select Country --------------------------------*/
         txtCountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {

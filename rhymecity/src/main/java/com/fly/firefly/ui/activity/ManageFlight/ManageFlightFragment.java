@@ -120,13 +120,15 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
         String storePassword = initPassword.get(SharedPrefManager.PASSWORD);
 
         if(loginStatus != null && loginStatus.equals("Y")) {
-            initiateLoading(getActivity());
-            presenter.onSendPNRV2(storeUsername,storePassword,"manage_booking");
+            if(Controller.connectionAvailable(getActivity())){
+                initiateLoading(getActivity());
+                presenter.onSendPNRV2(storeUsername, storePassword,"manage_booking");
+            }else{
+                //Display No Internet connection
+            }
         }else{
             pnrLayout.setVisibility(View.VISIBLE);
         }
-
-
 
         txtPNR.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         btnManageFlightContinue.setOnClickListener(new View.OnClickListener() {

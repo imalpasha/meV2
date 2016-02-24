@@ -126,8 +126,12 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
 
         if(loginStatus != null && loginStatus.equals("Y")) {
-            initiateLoading(getActivity());
-            presenter.getUserPNR(storeUsername,storePassword,"check_in");
+            if(Controller.connectionAvailable(getActivity())){
+                initiateLoading(getActivity());
+                presenter.getUserPNR(storeUsername,storePassword,"check_in");
+            }else{
+                //Display No Internet connection
+            }
         }else{
             mobileCheckInPNRLayout.setVisibility(View.VISIBLE);
 
@@ -225,13 +229,13 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 Log.e("Username", pref.getUserEmail().toString());
                 initiateLoading(getActivity());
 
-               // ManageFlightObj manageFlightObj = new ManageFlightObj();
-               // manageFlightObj.setPnr(selectedFromList.getPnr());
-               // manageFlightObj.setUsername(storeUsername);
+                // ManageFlightObj manageFlightObj = new ManageFlightObj();
+                // manageFlightObj.setPnr(selectedFromList.getPnr());
+                // manageFlightObj.setUsername(storeUsername);
 
-               // presenter.checkinFlight(flightObj);
+                // presenter.checkinFlight(flightObj);
 
-               // presenter.onSendPNRV1(manageFlightObj);
+                // presenter.onSendPNRV1(manageFlightObj);
 
                 MobileCheckinObj flightObj = new MobileCheckinObj();
                 flightObj.setPnr(selectedFromList.getPnr());

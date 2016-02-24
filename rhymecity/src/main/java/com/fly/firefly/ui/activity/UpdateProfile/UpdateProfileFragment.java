@@ -41,6 +41,7 @@ import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Checked;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Optional;
 import com.mobsandgeeks.saripaar.annotation.Order;
@@ -80,6 +81,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     DropDownItem selectedCountry,selectTitle_code;
     private View view;
     private LoginReceive.UserInfo loginObj;
+    private Boolean validateStatus;
 
     @Inject UpdateProfilePresenter presenter;
 
@@ -135,23 +137,18 @@ public class UpdateProfileFragment extends BaseFragment implements
     TextView txtState;
 
     @Order(11)@NotEmpty
-    //@Length(sequence = 1, min = 5,max = 7, message = "invalid postcode")
+    @Length(sequence = 1, min = 5,max = 7, message = "Invalid postcode")
     @InjectView(R.id.txtPostCode)
     EditText txtPostCode;
 
     @Order(12)@NotEmpty
-    //@Length(sequence = 1, min = 6,max = 14, message = "invalid phone number")
+    @Length(sequence = 1, min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtMobilePhone)
     EditText txtMobilePhone;
 
-
-    @Order(13)
-    @Optional
-    //@Length(sequence = 1, min = 6,max = 14, message = "invalid phone number")
     @InjectView(R.id.txtAltPhone)
     EditText txtAltPhone;
 
-    @Order(14)@Optional
     @InjectView(R.id.txtFax)
     EditText txtFax;
 
@@ -163,10 +160,10 @@ public class UpdateProfileFragment extends BaseFragment implements
     @InjectView(R.id.checkBox2)
     CheckBox checkBox2;
 
-    @Order(17)
-    @Checked(message = "You must agree with term & condition")
-    @InjectView(R.id.chkTNC)
-    CheckBox chkTNC;
+    //@Order(17)
+    //@Checked(message = "You must agree with term & condition")
+    //@InjectView(R.id.chkTNC)
+    //CheckBox chkTNC;
 
     @InjectView(R.id.txtBonusLink)
     EditText txtBonusLink;
@@ -211,33 +208,8 @@ public class UpdateProfileFragment extends BaseFragment implements
         state = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
 
-        /*Display Country Data*/
-        JSONArray jsonCountry = getCountry(getActivity());
-
-        for (int i = 0; i < jsonCountry.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonCountry.opt(i);
-
-            DropDownItem itemCountry = new DropDownItem();
-            itemCountry.setText(row.optString("country_name"));
-            itemCountry.setCode(row.optString("country_code"));
-            itemCountry.setTag("Country");
-            itemCountry.setId(i);
-            countrys.add(itemCountry);
-        }
-
-         /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
-        for (int i = 0; i < jsonTitle.length(); i++)
-        {
-            JSONObject row = (JSONObject) jsonTitle.opt(i);
-
-            DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText(row.optString("title_name"));
-            itemTitle.setCode(row.optString("title_code"));
-            itemTitle.setTag("Title");
-            titleList.add(itemTitle);
-        }
+        titleList = getStaticTitle(getActivity());
+        countrys = getStaticCountry(getActivity());
 
         HashMap<String, String> init2 = pref.getNewsletterStatus();
         String newsletter = init2.get(SharedPrefManager.ISNEWSLETTER);
@@ -334,8 +306,15 @@ public class UpdateProfileFragment extends BaseFragment implements
 
                 AnalyticsApplication.sendEvent("Click", "btnUpdateProfile");
                 Log.e("Clicked", "Ok");
+
+                //Multiple Manual Validation - Library Problem (failed to validate optional field)
+                resetManualValidationStatus();
+                manualValidation(txtBonusLink, "bonuslink");
+                manualValidation(txtAltPhone, "phoneNumber");
+                manualValidation(txtFax,"phoneNumber");
+                validateStatus = getManualValidationStatus();
+
                 mValidator.validate();
-                Utils.hideKeyboard(getActivity(), v);
 
             }
         });
@@ -509,8 +488,9 @@ public class UpdateProfileFragment extends BaseFragment implements
 
     @Override
     public void onValidationSucceeded() {
-        requestUpdateProfile();
-        Log.e("Validation", "success");
+        if(validateStatus){
+            requestUpdateProfile();
+        }
 
     }
 

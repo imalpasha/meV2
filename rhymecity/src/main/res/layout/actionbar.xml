@@ -125,7 +125,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
                     android:background="@null"
-                    android:hint="@string/searchBoxHint"
+                    android:hint="Search"
                     android:imeOptions="actionGo"
                     android:singleLine="true"
                     android:textColorHint="#ffffff" >
@@ -154,7 +154,7 @@
             android:ellipsize="end"
             android:onClick="homePage"
             android:singleLine="true"
-            android:text="@string/log_out_lbl"
+            android:text="Logout"
             android:textColor="#ffffff"
             android:textSize="17dp"
             android:visibility="gone" />
@@ -168,7 +168,7 @@
             android:ellipsize="end"
             android:onClick="AR"
             android:singleLine="true"
-            android:text="@string/ar_lbl"
+            android:text="Augmented"
             android:textColor="#ffffff"
             android:textSize="17dp"
             android:visibility="gone" />
@@ -182,7 +182,7 @@
             android:ellipsize="end"
             android:onClick="addRequest"
             android:singleLine="true"
-            android:text="@string/plus"
+            android:text="+"
             android:textColor="#ffffff"
             android:textSize="20sp"
             android:textStyle="bold"

@@ -192,7 +192,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         }
 
         /*Display Title Data*/
-        JSONArray jsonTitle = getTitle(getActivity());
+        /*JSONArray jsonTitle = getTitle(getActivity());
         for (int i = 0; i < jsonTitle.length(); i++)
         {
             JSONObject row = (JSONObject) jsonTitle.opt(i);
@@ -202,19 +202,22 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             itemTitle.setCode(row.optString("title_code"));
             itemTitle.setTag("Title");
             titleList.add(itemTitle);
-        }
-
+        }*/
+        titleList = getStaticTitle(getActivity());
+        genderList = getGender(getActivity());
+        travelDocList = getTravelDoc(getActivity());
+        countrys = getStaticCountry(getActivity());
         /*Gender*/
-        final String[] gender = getResources().getStringArray(R.array.gender);
+        /*final String[] gender = getResources().getStringArray(R.array.gender);
         for(int i = 0;i<gender.length; i++)
         {
             DropDownItem itemTitle = new DropDownItem();
             itemTitle.setText(gender[i]);
             genderList.add(itemTitle);
-        }
+        }*/
 
         /*Travel Doc*/
-        final String[] doc = getResources().getStringArray(R.array.travel_doc);
+        /*final String[] doc = getResources().getStringArray(R.array.travel_doc);
         for(int i = 0;i<doc.length; i++)
         {
             String travelDoc = doc[i];
@@ -223,10 +226,10 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             DropDownItem itemDoc = new DropDownItem();
             itemDoc.setText(splitDoc[0]);
             travelDocList.add(itemDoc);
-        }
+        }*/
 
           /*Display Country Data*/
-        JSONArray jsonCountry = getCountry(getActivity());
+        /*JSONArray jsonCountry = getCountry(getActivity());
 
         for (int i = 0; i < jsonCountry.length(); i++)
         {
@@ -238,7 +241,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             itemCountry.setTag("Country");
             itemCountry.setId(i);
             countrys.add(itemCountry);
-        }
+        }*/
 
         int totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
         for (int adultInc = 1; adultInc < totalPassenger; adultInc++) {

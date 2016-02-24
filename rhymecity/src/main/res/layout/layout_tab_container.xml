@@ -33,7 +33,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:lines="1"
-                android:text="@string/search"
                 android:textColor="@android:color/white"
                 android:textSize="11dp" />
         </LinearLayout>
@@ -59,7 +58,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:lines="1"
-                android:text="@string/wishlist_lbl"
                 android:textColor="@android:color/white"
                 android:textSize="11dp" />
         </LinearLayout>
@@ -86,7 +84,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:lines="1"
-                android:text="@string/home_lbl"
                 android:textColor="@android:color/white"
                 android:textSize="11dp" />
         </LinearLayout>
@@ -112,7 +109,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:lines="1"
-                android:text="@string/cart"
                 android:textColor="@android:color/white"
                 android:textSize="11dp" />
         </LinearLayout>
@@ -138,7 +134,6 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:lines="1"
-                android:text="@string/myProfile"
                 android:textColor="@android:color/white"
                 android:textSize="11dp" />
         </LinearLayout>

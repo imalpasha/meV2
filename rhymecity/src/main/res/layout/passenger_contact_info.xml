@@ -115,12 +115,26 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="@string/general_travel_purpose"
-                                    android:id="@+id/textView111"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/general_travel_purpose"
+                                        android:id="@+id/textView111"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -136,6 +150,7 @@
                                         android:background="@drawable/block_with_border"
                                         android:id="@+id/txtPurpose" />
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -147,12 +162,26 @@
                                 android:background="@drawable/drawable_login_bottom_border">
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Title."
-                                    android:id="@+id/textView16"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Title."
+                                        android:id="@+id/textView16"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -179,12 +208,26 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="First Name"
-                                    android:id="@+id/textView18"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="First Name"
+                                        android:id="@+id/textView18"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -201,6 +244,7 @@
                                         android:background="@drawable/block_with_border"
                                         />
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -211,12 +255,27 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border"  >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Last Name"
-                                    android:id="@+id/textView20"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Last Name"
+                                        android:id="@+id/textView20"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -233,6 +292,7 @@
                                         android:background="@drawable/block_with_border"
                                         />
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -244,12 +304,26 @@
                                 android:id="@+id/linearLayout13"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/textView196"
-                                    android:text="@string/general_email_addresss"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/textView196"
+                                        android:text="@string/general_email_addresss"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -265,6 +339,7 @@
                                         android:background="@drawable/block_with_border"
                                         android:id="@+id/txtEmailAddress" />
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -275,11 +350,26 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Country"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Country"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"
+                                        android:id="@+id/textView114" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -294,6 +384,7 @@
                                         android:background="@drawable/block_with_border"
                                         android:id="@+id/txtCountry" />
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -311,12 +402,26 @@
                                     android:paddingBottom="13dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/textView152"
-                                        android:text="Company Name"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/textView152"
+                                            android:text="Company Name"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -333,6 +438,7 @@
                                             android:inputType="textPersonName"
                                             android:background="@drawable/block_with_border"/>
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -343,11 +449,25 @@
                                     android:paddingBottom="13dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Company Address 1"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Company Address 1"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/red"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -363,6 +483,7 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/txtCompanyAddress1" />
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -433,11 +554,26 @@
                                     android:paddingBottom="13dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="State"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="State"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView118" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -452,6 +588,7 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/txtState" />
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -462,11 +599,25 @@
                                     android:paddingBottom="13dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="City"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="City"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textStyle="bold"
+                                            android:textColor="@color/red"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -482,6 +633,7 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/txtCity" />
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -492,11 +644,25 @@
                                     android:paddingBottom="13dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Post Code"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Post Code"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -512,6 +678,7 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/txtPostCode" />
                                     </LinearLayout>
+
                                 </LinearLayout>
 
 
@@ -525,12 +692,27 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/txtMobilePhone"
-                                    android:text="Mobile Phone"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:id="@+id/txtMobilePhone"
+                                        android:text="Mobile Phone"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"
+                                        android:id="@+id/textView115" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -544,8 +726,10 @@
                                         android:padding="5dp"
                                         android:background="@drawable/block_with_border"
                                         android:inputType="phone"
-                                        android:id="@+id/txtPhone" />
+                                        android:id="@+id/txtPhone"
+                                        android:maxLength="14"/>
                                 </LinearLayout>
+
                             </LinearLayout>
 
                             <LinearLayout
@@ -556,11 +740,25 @@
                                 android:paddingBottom="13dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Alternate Phone"
-                                    android:textStyle="bold" />
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Alternate Phone"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -574,8 +772,10 @@
                                         android:padding="5dp"
                                         android:inputType="phone"
                                         android:background="@drawable/block_with_border"
-                                        android:id="@+id/txtAlternatePhone" />
+                                        android:id="@+id/txtAlternatePhone"
+                                        android:maxLength="14"/>
                                 </LinearLayout>
+
                             </LinearLayout>
 
                         </LinearLayout>

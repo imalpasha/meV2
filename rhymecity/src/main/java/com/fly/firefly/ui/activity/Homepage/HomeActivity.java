@@ -27,6 +27,7 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
         fragmentManager.beginTransaction().replace(R.id.main_content, HomeFragment.newInstance(),"Home").commit();
 
         hideTitle();
+        unlockDrawer();
 
     }
 
