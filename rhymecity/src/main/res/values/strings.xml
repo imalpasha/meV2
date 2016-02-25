@@ -763,7 +763,7 @@
     <string name="general_email_addresss">Email Address</string>
     <string name="general_travel_purpose">Primary Purpose of Your Travel</string>
 
-    <string name="agreeTnc">I agree with the Term &amp; Condition</string>
+    <string name="agreeTnc">I agree with the Terms &amp; Conditions</string>
     <string name="subscribe">Yes, I do not want to receive promotional information from Firefly and its partners</string>
     <string name="alertTNC">You must agree to the terms.</string>
 
