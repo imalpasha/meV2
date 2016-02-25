@@ -707,6 +707,8 @@
     <string name="title_register">REGISTER</string>
 
     <string name="asterik">*</string>
+
+    <string name="register_term_error_message">You must agree with terms &amp; conditions</string>
     <!-- END REGISTER -->
 
 

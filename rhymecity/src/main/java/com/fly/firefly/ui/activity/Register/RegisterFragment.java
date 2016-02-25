@@ -81,8 +81,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
     @Order(2)
     @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 6 and maximum 16 character")
-    @Password(sequence = 3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Password invalid , please refer the password hint") // Password validator
+    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 6 and maximum 16 characters")
+    @Password(sequence = 3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Password invalid , please refer to the password hint") // Password validator
     @InjectView(R.id.txtPassword)
     EditText txtPassword;
 
@@ -114,7 +114,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.txtAddressLine2)
     EditText txtAddressLine2;
 
-    @Order(9) @NotEmpty(sequence = 1) @Length(sequence = 2, min = 5,max = 7, message = "invalid postcode")
+    @Order(9) @NotEmpty(sequence = 1) @Length(sequence = 2, min = 5,max = 7, message = "Invalid postcode")
     @InjectView(R.id.editTextPostcode)
     EditText editTextPostcode;
 
@@ -137,7 +137,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     TextView txtTitle;
 
     //@Order(16)
-    //@Checked(message = "You must agree with tem & condition")
+    //@Checked(message = "You must agree with terms & conditions")
     @InjectView(R.id.chkTNC)
     CheckBox chkTNC;
 
@@ -413,7 +413,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 requestRegister();
             }
         }else{
-            croutonAlert(getActivity(), "You must agree with tem & condition");
+            croutonAlert(getActivity(), getActivity().getString(R.string.register_term_error_message));
         }
     }
 
