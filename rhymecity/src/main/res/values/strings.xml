@@ -697,7 +697,7 @@
     <string name="register_postcode">Postcode</string>
     <string name="register_mobile_phone">Mobile Phone</string>
     <string name="register_alternate_phone">Alternate Phone</string>
-    <string name="register_bonuslink">Bonuslink Card Number</string>
+    <string name="register_bonuslink">BonusLink Card No:</string>
 
     <string name="register_fax">Fax</string>
     <string name="register_city">City</string>
