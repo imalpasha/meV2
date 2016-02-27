@@ -18,6 +18,7 @@ import com.fly.firefly.base.AQuery;
 import com.fly.firefly.base.BaseFragmentActivity;
 import com.fly.firefly.drawer.DrawerItem;
 import com.fly.firefly.drawer.NavigationDrawerFragment;
+//import com.fly.firefly.ui.activity.AboutUs.AboutUsActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
@@ -195,6 +196,13 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 startActivity(register);
 
             }
+            /*else if (item.getTag().equals("About"))
+            {
+                Intent about = new Intent(this, AboutUsActivity.class);
+                about.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(about);
+
+            }*/
             else if (item.getTag().equals("Faq"))
             {
                 Intent terms = new Intent(this, Terms.class);

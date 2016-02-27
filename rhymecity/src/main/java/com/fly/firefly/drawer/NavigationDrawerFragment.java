@@ -166,13 +166,13 @@ public class NavigationDrawerFragment extends Fragment {
                 vrsm.setBackgroundColor(getResources().getColor(R.color.black));
                 itemList.add(vrsm);
 
-                DrawerItem sbb = new DrawerItem();
-                sbb.setId(3);
-                sbb.setTag("Logout");
-                sbb.setTitle("Logout");
-                sbb.setLayoutId(DrawerViewType.STATIC_MENU);
-                sbb.setIconId(R.drawable.side_logout_s);
-                itemList.add(sbb);
+                DrawerItem home = new DrawerItem();
+                home.setId(1);
+                home.setTag("Home");
+                home.setTitle("Home");
+                home.setLayoutId(DrawerViewType.STATIC_MENU);
+                home.setIconId(R.drawable.side_home_s);
+                itemList.add(home);
 
                 DrawerItem profile = new DrawerItem();
                 profile.setId(4);
@@ -182,6 +182,30 @@ public class NavigationDrawerFragment extends Fragment {
                 profile.setLayoutId(DrawerViewType.STATIC_MENU);
                 itemList.add(profile);
 
+                DrawerItem about = new DrawerItem();
+                about.setId(5);
+                about.setTag("About");
+                about.setTitle("About");
+                about.setLayoutId(DrawerViewType.STATIC_MENU);
+                about.setIconId(R.drawable.side_about_s);
+                itemList.add(about);
+
+                DrawerItem terms = new DrawerItem();
+                terms.setId(5);
+                terms.setTag("Faq");
+                terms.setTitle("FAQ");
+                terms.setLayoutId(DrawerViewType.STATIC_MENU);
+                terms.setIconId(R.drawable.side_faq_s);
+                itemList.add(terms);
+
+                DrawerItem sbb = new DrawerItem();
+                sbb.setId(3);
+                sbb.setTag("Logout");
+                sbb.setTitle("Logout");
+                sbb.setLayoutId(DrawerViewType.STATIC_MENU);
+                sbb.setIconId(R.drawable.side_logout_s);
+                itemList.add(sbb);
+
             } else{
                 DrawerItem vrsm = new DrawerItem();
                 vrsm.setId(0);
@@ -190,6 +214,14 @@ public class NavigationDrawerFragment extends Fragment {
                 vrsm.setLayoutId(DrawerViewType.HEADER_CLOSEBTN);
                 vrsm.setBackgroundColor(getResources().getColor(R.color.black));
                 itemList.add(vrsm);
+
+                DrawerItem home = new DrawerItem();
+                home.setId(1);
+                home.setTag("Home");
+                home.setTitle("Home");
+                home.setLayoutId(DrawerViewType.STATIC_MENU);
+                home.setIconId(R.drawable.side_home_s);
+                itemList.add(home);
 
                 DrawerItem sbb = new DrawerItem();
                 sbb.setId(2);
@@ -206,6 +238,22 @@ public class NavigationDrawerFragment extends Fragment {
                 register.setLayoutId(DrawerViewType.STATIC_MENU);
                 register.setIconId(R.drawable.side_register_s);
                 itemList.add(register);
+
+                DrawerItem about = new DrawerItem();
+                about.setId(5);
+                about.setTag("About");
+                about.setTitle("About");
+                about.setLayoutId(DrawerViewType.STATIC_MENU);
+                about.setIconId(R.drawable.side_about_s);
+                itemList.add(about);
+
+                DrawerItem terms = new DrawerItem();
+                terms.setId(5);
+                terms.setTag("Faq");
+                terms.setTitle("FAQ");
+                terms.setLayoutId(DrawerViewType.STATIC_MENU);
+                terms.setIconId(R.drawable.side_faq_s);
+                itemList.add(terms);
             }
         }
         else{
@@ -216,6 +264,14 @@ public class NavigationDrawerFragment extends Fragment {
             vrsm.setLayoutId(DrawerViewType.HEADER_CLOSEBTN);
             vrsm.setBackgroundColor(getResources().getColor(R.color.black));
             itemList.add(vrsm);
+
+            DrawerItem home = new DrawerItem();
+            home.setId(1);
+            home.setTag("Home");
+            home.setTitle("Home");
+            home.setLayoutId(DrawerViewType.STATIC_MENU);
+            home.setIconId(R.drawable.side_home_s);
+            itemList.add(home);
 
             DrawerItem sbb = new DrawerItem();
             sbb.setId(2);
@@ -232,24 +288,23 @@ public class NavigationDrawerFragment extends Fragment {
             register.setLayoutId(DrawerViewType.STATIC_MENU);
             register.setIconId(R.drawable.side_register_s);
             itemList.add(register);
+
+            DrawerItem about = new DrawerItem();
+            about.setId(5);
+            about.setTag("About");
+            about.setTitle("About");
+            about.setLayoutId(DrawerViewType.STATIC_MENU);
+            about.setIconId(R.drawable.side_about_s);
+            itemList.add(about);
+
+            DrawerItem terms = new DrawerItem();
+            terms.setId(5);
+            terms.setTag("Faq");
+            terms.setTitle("FAQ");
+            terms.setLayoutId(DrawerViewType.STATIC_MENU);
+            terms.setIconId(R.drawable.side_faq_s);
+            itemList.add(terms);
         }
-
-
-        DrawerItem home = new DrawerItem();
-        home.setId(1);
-        home.setTag("Home");
-        home.setTitle("Home");
-        home.setLayoutId(DrawerViewType.STATIC_MENU);
-        home.setIconId(R.drawable.side_home_s);
-        itemList.add(home);
-
-        DrawerItem about = new DrawerItem();
-        about.setId(5);
-        about.setTag("About");
-        about.setTitle("About");
-        about.setLayoutId(DrawerViewType.STATIC_MENU);
-        about.setIconId(R.drawable.side_about_s);
-        itemList.add(about);
 
         /*DrawerItem faq = new DrawerItem();
         faq.setId(5);
@@ -258,15 +313,6 @@ public class NavigationDrawerFragment extends Fragment {
         faq.setLayoutId(DrawerViewType.MENU);
         faq.setIconId(R.drawable.side_faq_s);
         itemList.add(faq);*/
-
-        DrawerItem terms = new DrawerItem();
-        terms.setId(5);
-        terms.setTag("Faq");
-        terms.setTitle("Faq");
-        terms.setLayoutId(DrawerViewType.STATIC_MENU);
-        terms.setIconId(R.drawable.side_faq_s);
-        itemList.add(terms);
-
     }
 
     public boolean isDrawerOpen() {

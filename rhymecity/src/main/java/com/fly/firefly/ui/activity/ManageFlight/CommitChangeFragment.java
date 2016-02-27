@@ -122,7 +122,6 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     @InjectView(R.id.goingFlightPriceDetail)
     LinearLayout goingFlightPriceDetail;
 
-
     @InjectView(R.id.txtReturnFlightPriceDetail)
     TextView txtReturnFlightPriceDetail;
 
