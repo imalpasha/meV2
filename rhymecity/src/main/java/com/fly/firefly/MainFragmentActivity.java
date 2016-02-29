@@ -18,6 +18,7 @@ import com.fly.firefly.base.AQuery;
 import com.fly.firefly.base.BaseFragmentActivity;
 import com.fly.firefly.drawer.DrawerItem;
 import com.fly.firefly.drawer.NavigationDrawerFragment;
+//import com.fly.firefly.ui.activity.AboutUs.AboutUsActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
