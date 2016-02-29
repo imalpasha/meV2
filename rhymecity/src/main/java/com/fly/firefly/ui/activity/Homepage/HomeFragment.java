@@ -235,7 +235,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             public void onClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("fb://page/52630456510")));
+                            Uri.parse("fb://page/"+facebookUrl)));
 
                 } catch(Exception e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
