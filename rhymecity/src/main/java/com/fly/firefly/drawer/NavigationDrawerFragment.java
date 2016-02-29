@@ -301,7 +301,7 @@ public class NavigationDrawerFragment extends Fragment {
 
             DrawerItem terms = new DrawerItem();
             terms.setId(5);
-            terms.setTag("Faq");
+            terms.setTag("FAQ");
             terms.setTitle("FAQ");
             terms.setLayoutId(DrawerViewType.STATIC_MENU);
             terms.setIconId(R.drawable.side_faq_s);
@@ -316,13 +316,6 @@ public class NavigationDrawerFragment extends Fragment {
         faq.setIconId(R.drawable.side_faq_s);
         itemList.add(faq);*/
 
-        DrawerItem terms = new DrawerItem();
-        terms.setId(5);
-        terms.setTag("FAQ");
-        terms.setTitle("FAQ");
-        terms.setLayoutId(DrawerViewType.STATIC_MENU);
-        terms.setIconId(R.drawable.side_faq_s);
-        itemList.add(terms);
 
     }
 
