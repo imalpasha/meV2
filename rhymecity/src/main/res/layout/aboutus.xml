@@ -87,6 +87,14 @@
                         android:layout_height="50dp"
                         android:id="@+id/space" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textView119"
+                        android:layout_gravity="center_horizontal"
+                        android:text="About Us page" />
+
                 </LinearLayout>
 
             </LinearLayout>

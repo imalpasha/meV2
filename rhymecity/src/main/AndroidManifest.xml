@@ -52,7 +52,8 @@
 
         <!-- android:theme="@style/Theme1" -->
         <!-- android:name="com.fly.firefly.ui.activity.MainActivity" -->
-        <activity android:name=".ui.activity.Homepage.HomeActivity">
+        <activity android:name=".ui.activity.Homepage.HomeActivity"></activity>
+        <activity android:name=".ui.activity.Aboutus.AboutUsActivity">
 
         </activity>
         <activity android:name=".ui.activity.PushNotification.PushNotificationActivity" />
