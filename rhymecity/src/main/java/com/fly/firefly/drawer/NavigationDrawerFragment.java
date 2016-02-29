@@ -158,6 +158,7 @@ public class NavigationDrawerFragment extends Fragment {
         if(loginStatus != null){
             if(loginStatus.equals("Y")) {
 
+                // Set Hi
                 DrawerItem vrsm = new DrawerItem();
                 vrsm.setId(0);
                 vrsm.setTitle("Hi " + userName);
@@ -166,6 +167,7 @@ public class NavigationDrawerFragment extends Fragment {
                 vrsm.setBackgroundColor(getResources().getColor(R.color.black));
                 itemList.add(vrsm);
 
+                //Set Logout
                 DrawerItem sbb = new DrawerItem();
                 sbb.setId(3);
                 sbb.setTag("Logout");
@@ -261,8 +263,8 @@ public class NavigationDrawerFragment extends Fragment {
 
         DrawerItem terms = new DrawerItem();
         terms.setId(5);
-        terms.setTag("Faq");
-        terms.setTitle("Faq");
+        terms.setTag("FAQ");
+        terms.setTitle("FAQ");
         terms.setLayoutId(DrawerViewType.STATIC_MENU);
         terms.setIconId(R.drawable.side_faq_s);
         itemList.add(terms);

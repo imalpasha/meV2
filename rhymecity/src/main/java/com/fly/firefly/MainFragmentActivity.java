@@ -195,7 +195,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 startActivity(register);
 
             }
-            else if (item.getTag().equals("Faq"))
+            else if (item.getTag().equals("FAQ"))
             {
                 Intent terms = new Intent(this, Terms.class);
                 terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
