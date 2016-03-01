@@ -532,16 +532,15 @@
                                         android:textStyle="bold"
                                         android:layout_marginRight="2dp"/>
 
-                                    <EditText
+                                    <TextView
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@null"
-                                        android:inputType="textLongMessage"
                                         android:paddingBottom="8dp"
-                                        android:hint="@string/register_city"
+                                        android:hint="@string/register_country"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
-                                        android:id="@+id/txtCity" />
+                                        android:id="@+id/editTextCountry" />
 
                                 </LinearLayout>
 
@@ -561,15 +560,16 @@
                                         android:textStyle="bold"
                                         android:layout_marginRight="2dp"/>
 
-                                    <TextView
+                                    <EditText
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@null"
+                                        android:inputType="textLongMessage"
                                         android:paddingBottom="8dp"
-                                        android:hint="@string/register_country"
+                                        android:hint="@string/register_city"
                                         android:textSize="@dimen/font16sp"
                                         android:textColorHint="@color/loginFontTxt"
-                                        android:id="@+id/editTextCountry" />
+                                        android:id="@+id/txtCity" />
                                 </LinearLayout>
 
                                 <LinearLayout
