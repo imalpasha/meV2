@@ -72,7 +72,10 @@
         <activity android:name=".ui.activity.Login.LoginActivity" />
         <activity android:name=".ui.activity.Register.RegisterActivity" />
         <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
-        <activity android:name=".ui.activity.BookingFlight.FlightDetailActivity" />
+        <activity android:name=".ui.activity.BookingFlight.FireflyFlightListActivity" />
+        <activity android:name=".ui.activity.BookingFlight.CodeShareFlightListActivity" />
+
+
         <activity android:name=".ui.activity.BookingFlight.PersonalDetailActivity" />
         <activity android:name=".ui.activity.BookingFlight.SeatSelectionActivity" >
 

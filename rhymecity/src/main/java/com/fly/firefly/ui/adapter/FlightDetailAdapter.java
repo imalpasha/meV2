@@ -1,6 +1,5 @@
 package com.fly.firefly.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
+import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListFragment;
 
 import java.util.List;
 
@@ -28,11 +27,11 @@ public class FlightDetailAdapter extends BaseAdapter {
     private String arrivalAirport;
     private String flightClass;
     private Integer selected_position = -1;
-    private FlightDetailFragment fragment;
+    private FireflyFlightListFragment fragment;
     private String flightWay;
     private Boolean active = false;
 
-    public FlightDetailAdapter(Context context, List<FlightInfo> paramObj,String depart, String arrival,String flightClass,String flightWay,FlightDetailFragment frag) {
+    public FlightDetailAdapter(Context context, List<FlightInfo> paramObj,String depart, String arrival,String flightClass,String flightWay,FireflyFlightListFragment frag) {
         this.context = context;
         this.obj = paramObj;
         this.departureAirport = depart;

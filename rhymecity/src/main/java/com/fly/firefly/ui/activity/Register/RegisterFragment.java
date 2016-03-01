@@ -171,12 +171,13 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private String fullDate;
     private static final String SCREEN_LABEL = "Register";
     private Boolean validateStatus = true;
-
+    private Boolean limitAge;
     /*DropDown Variable*/
     private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> countrys  = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> state = new ArrayList<DropDownItem>();
-
+    private Calendar calendar;
+    private int age;
 
     public static RegisterFragment newInstance() {
         RegisterFragment fragment = new RegisterFragment();
@@ -204,7 +205,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         ButterKnife.inject(this, view);
 
 
-        final Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
 
         final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -408,13 +409,18 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onValidationSucceeded() {
 
         //need to do optional validation
-        if(chkTNC.isChecked()){
-            if(validateStatus){
-                requestRegister();
+        if(limitAge){
+            if(chkTNC.isChecked()){
+                if(validateStatus){
+                    requestRegister();
+                }
+            }else{
+                croutonAlert(getActivity(), "You must agree with tem & condition");
             }
         }else{
-            croutonAlert(getActivity(), "You must agree with tem & condition");
+            croutonAlert(getActivity(), "You must be at least 18 years old to register.");
         }
+
     }
 
     @Override
@@ -486,6 +492,14 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
         fullDate = year + "-" + varMonth+""+(month+1)+"-"+varDay+""+day;
         Log.e("fullDate", fullDate);
+        int currentYear = calendar.get(Calendar.YEAR);
+        age = currentYear - year;
+        if(age < 18){
+            limitAge = false;
+        }else{
+            limitAge = true;
+        }
+
         /*fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
         Log.e("fullDate", fullDate);*/
     }

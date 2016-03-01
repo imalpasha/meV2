@@ -125,6 +125,7 @@
                                         android:textSize="15dp"
                                         android:hint="PNR Code"
                                         android:id="@+id/editPnr"
+
                                         android:background="@null" />
 
                                 </LinearLayout>

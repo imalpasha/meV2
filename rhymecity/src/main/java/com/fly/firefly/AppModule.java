@@ -46,13 +46,16 @@ public class AppModule {
     @Singleton
     ApiService provideApiService(RequestInterceptor requestInterceptor, Endpoint endpoint) {
 
-          int MAX_IDLE_CONNECTIONS = 30;
-          int KEEP_ALIVE_DURATION_MS = 3 * 60 * 1000;
+        int MAX_IDLE_CONNECTIONS = 30 * 60 * 1000;
+        int KEEP_ALIVE_DURATION_MS = 3 * 60 * 1000;
 
         OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setReadTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        okHttpClient.setConnectTimeout(60 * 1000, TimeUnit.MILLISECONDS);
-        okHttpClient.setConnectionPool(new com.squareup.okhttp.ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS));
+        okHttpClient.setConnectTimeout(60, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(60, TimeUnit.SECONDS);
+        okHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
+        //okHttpClient.setConnectionPool(new com.squareup.okhttp.ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS));
+
+
 
         return new RestAdapter.Builder()
                 .setEndpoint(endpoint)

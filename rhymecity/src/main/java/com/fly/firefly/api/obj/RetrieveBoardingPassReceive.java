@@ -27,6 +27,7 @@ public class RetrieveBoardingPassReceive {
         private String BarCodeData;
         private String BarCodeURL;
         private String QRCodeURL;
+        private String QRCode;
         private String DepartureGate;
         private String DepartureDate;
         private String DepartureTime;
@@ -44,6 +45,14 @@ public class RetrieveBoardingPassReceive {
         private String DepartureDateTime;
         private String ArrivalDateTime;
         private String DepartureDayDate;
+
+        public String getQRCode() {
+            return QRCode;
+        }
+
+        public void setQRCode(String QRCode) {
+            this.QRCode = QRCode;
+        }
 
         public String getDepartureDayDate() {
             return DepartureDayDate;

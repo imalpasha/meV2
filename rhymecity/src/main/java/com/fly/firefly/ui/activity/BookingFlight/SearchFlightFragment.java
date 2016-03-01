@@ -17,7 +17,6 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
-import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -27,14 +26,11 @@ import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
-import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
 import com.squareup.otto.Bus;
-import com.squareup.otto.Produce;
-import com.squareup.otto.Subscribe;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -512,7 +508,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     }
 
     public void goFlightDetailPage() {
-        Intent flightDetail = new Intent(getActivity(), FlightDetailActivity.class);
+        Intent flightDetail = new Intent(getActivity(), FireflyFlightListActivity.class);
         getActivity().startActivity(flightDetail);
     }
 
@@ -613,15 +609,20 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         if (status) {
 
             //Log.e("Status",obj.getStatus());
-            //pref.setSignatureToLocalStorage(obj.getSignature());
+            pref.setSignatureToLocalStorage(obj.getSignature());
+            Log.e("siganature", obj.getSignature());
+            Intent flight = null;
+            if(obj.getType().equals("MH")){
+                   flight = new Intent(getActivity(), CodeShareFlightListActivity.class);
 
-            Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
+            }else{
+               flight = new Intent(getActivity(), FireflyFlightListActivity.class);
+            }
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             flight.putExtra("FLIGHT_TYPE", flightType );
             flight.putExtra("ADULT", txtAdultTotal.getText().toString() );
-            flight.putExtra("INFANT", txtInfantTotal.getText().toString() );
-            flight.putExtra("DEPARTURE_DATE", bookFlightDepartureDate.getTag().toString() );
-
+            flight.putExtra("INFANT", txtInfantTotal.getText().toString());
+            flight.putExtra("DEPARTURE_DATE", bookFlightDepartureDate.getTag().toString());
             String date;
             if(flightType.equals("0")){
                 date = "";
@@ -630,6 +631,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             }
             flight.putExtra("RETURN_DATE", date);
             getActivity().startActivity(flight);
+
         }
 
     }

@@ -1,6 +1,7 @@
 package com.fly.firefly.utils;
 
 import android.app.Activity;
+import android.util.Log;
 
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
@@ -12,6 +13,7 @@ import com.google.gson.Gson;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 /**
  * Created by Dell on 2/11/2016.
@@ -68,6 +70,74 @@ public class RealmObjectController extends BaseFragment{
         realm.commitTransaction();
 
     }
+
+    public static boolean currentPNR(Activity act, final MobileConfirmCheckInPassengerReceive obj,final String username){
+
+        final Realm realm = Realm.getInstance(act);
+        BoardingPassObj boardingPas;
+        Log.e("Record",obj.getObj().getBoarding_pass().get(0).getRecordLocator());
+
+        Gson gsonFlight = new Gson();
+       final String mobileConfirmCheckIn = gsonFlight.toJson(obj);
+
+        // Query and update the result asynchronously in another thread
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                // begin & end transcation calls are done for you
+                //Log.e("Record",obj.getBoarding_pass().get(0).getRecordLocator());
+                //BoardingPassObj boardingPas = realm.where(BoardingPassObj.class).equalTo("pnr", obj.getObj().getBoarding_pass().get(0).getRecordLocator()).findFirst();
+                //boardingPas.setBoardingPassObj(3);
+                RealmResults<BoardingPassObj> teenagers = realm.where(BoardingPassObj.class).equalTo("pnr", obj.getObj().getBoarding_pass().get(0).getRecordLocator()).findAll();
+                //BoardingPassObj firstJohn = teenagers.where().equalTo("pnr", obj.getBoarding_pass().get(0).getRecordLocator()).findFirst();
+                if(teenagers.size() == 0){
+
+                    Log.e("Do Realm Query","OK");
+
+                    //realm.beginTransaction();
+                    BoardingPassObj realmObject = realm.createObject(BoardingPassObj.class);
+                    realmObject.setPnr(obj.getObj().getBoarding_pass().get(0).getRecordLocator());
+                    realmObject.setUsername(username);
+                    realmObject.setBoardingPassObj(mobileConfirmCheckIn);
+                    //realm.commitTransaction();*/
+
+                }else{
+
+                    teenagers.clear();
+                    Log.e("Quuery","Update");
+
+                    BoardingPassObj dog = new BoardingPassObj();
+                    dog.setPnr(obj.getObj().getBoarding_pass().get(0).getRecordLocator());
+                    dog.setUsername(username);
+                    dog.setBoardingPassObj(mobileConfirmCheckIn);
+
+                    //realm.copyToRealm(dog);
+                }
+            }
+        }, new Realm.Transaction.Callback() {
+            @Override
+            public void onSuccess() {
+
+                Log.e("Query","Success");
+                //BoardingPassObj realmObject = realm.createObject(BoardingPassObj.class);
+                //Log.e("Size", realmObject.getPnr());
+                // Original Queries and Realm objects are automatically updated.
+                //puppies.size(); // => 0 because there are no more puppies (less than 2 years old)
+                //dog.getAge();   // => 3 the dogs age is updated
+            }
+
+            @Override
+            public void onError(Exception e) {
+                // transaction is automatically rolled-back, do any cleanup here
+                Log.e("Exception",e.getMessage());
+            }
+
+        });
+
+        return true;
+    }
+
+
 
 
 }

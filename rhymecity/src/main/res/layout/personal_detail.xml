@@ -214,9 +214,8 @@
                                         android:textStyle="bold"
                                         android:textSize="16dp"
                                         android:textColor="@color/sign_in_button"
-                                        android:id="@+id/button4"
+                                        android:id="@+id/txtForgotPassword"
                                         android:layout_margin="4dp"
-
                                         android:background="@drawable/passenger_ask_login_btn"/>
 
                                     <Button

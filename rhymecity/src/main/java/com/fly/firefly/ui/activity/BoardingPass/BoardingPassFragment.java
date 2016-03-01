@@ -152,29 +152,25 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             if(!Controller.connectionAvailable(getActivity())){
                 //if login & no internet.. display data from local database
                 Realm realm = Realm.getInstance(getActivity());
-                RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
+                final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
 
-                Gson gson = new Gson();
-                final MobileConfirmCheckInPassengerReceive obj = gson.fromJson(result2.get(0).getBoardingPassObj(), MobileConfirmCheckInPassengerReceive.class);
 
-                offlineAdapter = new OfflineBookingListAdapter(getActivity(),obj.getObj().getBoarding_pass());
+//              offlineAdapter = new OfflineBookingListAdapter(getActivity(),obj.getObj().getBoarding_pass());
+                offlineAdapter = new OfflineBookingListAdapter(getActivity(),result2);
+
                 listView.setAdapter(offlineAdapter);
 
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
-                        MobileConfirmCheckInPassengerReceive.BoardingPass selectedFromList = (MobileConfirmCheckInPassengerReceive.BoardingPass) (listView.getItemAtPosition(myItemInt));
 
-                        Log.e("Success", "True");
-                        //startPagination();
+                        final MobileConfirmCheckInPassengerReceive obj = (new Gson()).fromJson(result2.get(myItemInt).getBoardingPassObj(), MobileConfirmCheckInPassengerReceive.class);
+
                         Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
                         next.putExtra("OFFLINE_BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
                         getActivity().startActivity(next);
 
                     }
                 });
-                Log.e("Result",result2.toString());
-                /* ------------ */
-                //dismissLoading();
 
             }else{
                 initiateLoading(getActivity());

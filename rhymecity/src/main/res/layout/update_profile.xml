@@ -71,7 +71,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/title_register"
+                            android:text="@string/title_activity_update_profile"
                             android:id="@+id/txt_loginpssword"
                             android:gravity="center"
                             android:textSize="@dimen/font21sp"

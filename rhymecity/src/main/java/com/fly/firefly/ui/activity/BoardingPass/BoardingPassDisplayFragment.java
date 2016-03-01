@@ -125,6 +125,7 @@ public class BoardingPassDisplayFragment extends BaseFragment {
             PagerBoardingPassObj boardingPass = new PagerBoardingPassObj();
 
             boardingPass.setQRCodeURL(passObj.getObj().getBoarding_pass().get(i).getQRCodeURL());
+            boardingPass.setQRCode(passObj.getObj().getBoarding_pass().get(i).getQRCode());
             boardingPass.setSSR(passObj.getObj().getBoarding_pass().get(i).getSSR());
             boardingPass.setName(passObj.getObj().getBoarding_pass().get(i).getName());
             boardingPass.setFlightNumber(passObj.getObj().getBoarding_pass().get(i).getFlightNumber());
@@ -178,6 +179,7 @@ public class BoardingPassDisplayFragment extends BaseFragment {
             PagerBoardingPassObj boardingPass = new PagerBoardingPassObj();
 
             boardingPass.setQRCodeURL(passObj.getObj().getBoarding_pass().get(i).getQRCodeURL());
+            boardingPass.setQRCode(passObj.getObj().getBoarding_pass().get(i).getQRCode());
             boardingPass.setSSR(passObj.getObj().getBoarding_pass().get(i).getSSR());
             boardingPass.setName(passObj.getObj().getBoarding_pass().get(i).getName());
             boardingPass.setFlightNumber(passObj.getObj().getBoarding_pass().get(i).getFlightNumber());

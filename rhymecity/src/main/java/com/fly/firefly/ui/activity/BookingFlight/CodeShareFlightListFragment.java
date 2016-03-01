@@ -17,15 +17,14 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
-import com.fly.firefly.api.obj.SelectChangeFlightReceive;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.ManageFlight.CommitChangeActivity;
+import com.fly.firefly.ui.adapter.CodeShareAdapter;
 import com.fly.firefly.ui.adapter.FlightDetailAdapter;
-import com.fly.firefly.ui.module.FlightDetailModule;
+import com.fly.firefly.ui.module.CodeShareFlightModule;
 import com.fly.firefly.ui.module.SelectFlightModule;
-import com.fly.firefly.ui.object.BoardingPassObj;
 import com.fly.firefly.ui.object.SelectChangeFlight;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.presenter.BookingPresenter;
@@ -34,22 +33,21 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
-public class FlightDetailFragment extends BaseFragment implements BookingPresenter.ListFlightView {
+public class CodeShareFlightListFragment extends BaseFragment implements BookingPresenter.ListFlightView {
 
     @Inject BookingPresenter presenter;
     @InjectView(R.id.btnListFlight)Button btnListFlight;
     @InjectView(R.id.flightDeparture)ExpandAbleGridView flightDeparture;
     @InjectView(R.id.flightArrival)ExpandAbleGridView flightArrival;
+    @InjectView(R.id.codeShareDeparture)ExpandAbleGridView codeShareDeparture;
+
     @InjectView(R.id.returnFlightBlock)LinearLayout returnFlightBlock;
     @InjectView(R.id.goingFlightBlock)LinearLayout goingFlightBlock;
     @InjectView(R.id.returnBasicPremier)LinearLayout returnBasicPremier;
@@ -68,9 +66,11 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
     @InjectView(R.id.premierFlightDeparture)ExpandAbleGridView premierFlightDeparture;
     @InjectView(R.id.premierFlightArrival)ExpandAbleGridView premierFlightArrival;
+    @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
+
 
     private int fragmentContainerId;
-    private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
+    private CodeShareAdapter codeShareDepart,departListPremier, returnListBasic,returnListPremier;
     private String departPort,departDatePlain,arrivalPort,departPortCode,flightType;
     private String returnDepartPort,returnArrivalPort,returnDatePlain,arrivalPortCode;
     private String adult,infant;
@@ -81,7 +81,11 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     private final String DEPART_PREMIER = "DEPART_PREMIER";
     private final String RETURN_PREMIER = "RETURN_PREMIER";
     private final String RETURN_BASIC = "RETURN_BASIC";
-    private final String BASIC = "BASIC";
+
+    private final String ECONOMY_PROMO = "ECONOMY_PROMO";
+    private final String ECONOMY = "ECONOMY";
+
+
     private final String PREMIER = "PREMIER";
     private static final String SCREEN_LABEL = "Flight Detail";
     private final String FLIGHT_TYPE = "FLIGHT_TYPE";
@@ -102,9 +106,9 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
             returnFlightFareSellKey;
     private String pnr,bookingId,changeFlightType;
 
-    public static FlightDetailFragment newInstance(Bundle bundle) {
+    public static CodeShareFlightListFragment newInstance(Bundle bundle) {
 
-        FlightDetailFragment fragment = new FlightDetailFragment();
+        CodeShareFlightListFragment fragment = new CodeShareFlightListFragment();
         fragment.setArguments(bundle);
         return fragment;
 
@@ -113,7 +117,7 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FireFlyApplication.get(getActivity()).createScopedGraph(new SelectFlightModule(this)).inject(this);
+        FireFlyApplication.get(getActivity()).createScopedGraph(new CodeShareFlightModule(this)).inject(this);
     }
 
     @Override
@@ -122,18 +126,14 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         View view = inflater.inflate(R.layout.flight_detail, container, false);
         ButterKnife.inject(this, view);
 
-        /*Realm Obj Test*/
-        //Realm realm = Realm.getInstance(getActivity());
-        //RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
-        /* ------------ */
-
         Bundle bundle = getArguments();
         flightType = bundle.getString(FLIGHT_TYPE);
         adult = bundle.getString(ADULT);
         infant = bundle.getString(INFANT);
         departDatePlain = bundle.getString(DEPARTURE_DATE);
         returnDatePlain = bundle.getString(RETURN_DATE);
-
+        basicPremierLayout.setVisibility(View.GONE);
+        returnBasicPremier.setVisibility(View.GONE);
         try {
             pnr = bundle.getString("PNR");
             bookingId = bundle.getString("BOOKING_ID");
@@ -141,15 +141,13 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
         }
 
+
         pref = new SharedPrefManager(getActivity());
 
-        btnPremier.setBackgroundColor(getResources().getColor(R.color.grey));
-        btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.grey));
 
         String dataFlight2 = bundle.getString("FLIGHT_OBJ");
         Gson gson = new Gson();
         obj = gson.fromJson(dataFlight2, SearchFlightReceive.class);
-
 
         //Check From ManageFlight
         if(obj.getJourneys().get(0).getFlights().size() == 0){
@@ -158,56 +156,33 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         /*Departure*/
         List<FlightInfo> departFlight = obj.getJourneys().get(0).getFlights();
 
-        //Depart Airport
-        departPort = obj.getJourneys().get(0).getDeparture_station_name();
-        arrivalPort = obj.getJourneys().get(0).getArrival_station_name();
-
         departPortCode = obj.getJourneys().get(0).getDeparture_station_code();
         arrivalPortCode = obj.getJourneys().get(0).getArrival_station_code();
 
-        String type = obj.getJourneys().get(0).getType();
-        Log.e("FlightType",type);
+        codeShareDepart = new CodeShareAdapter(getActivity(),departFlight,departPort,arrivalPort,DEPART,this);
+        codeShareDeparture.setAdapter(codeShareDepart);
 
-        txtDepartAirport.setText(departPort+" - "+arrivalPort);
-        txtFlightType.setText(type);
-
-        //Reformat Date
-        String departDate = obj.getJourneys().get(0).getDeparture_date();
-        //String[] output = departDate.split(" ");
-        //String month = output[1];
-        txtDepartureDate.setText(departDate);
-
-        /*Basic*/
-        departListBasic = new FlightDetailAdapter(getActivity(),departFlight,departPort,arrivalPort,BASIC,DEPART,this);
-        flightDeparture.setAdapter(departListBasic);
-
-        /*Premier*/
-        departListPremier = new FlightDetailAdapter(getActivity(),departFlight,departPort,arrivalPort,PREMIER,DEPART,this);
-        premierFlightDeparture.setAdapter(departListPremier);
-
-        /*Return If Available*/
+         /*Return If Available*/
         if(obj.getJourneys().size() > 1){
-          List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
-          returnFlightBlock.setVisibility(View.VISIBLE);
-          returnBasicPremier.setVisibility(View.VISIBLE);
+            List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
+            returnFlightBlock.setVisibility(View.VISIBLE);
+            returnBasicPremier.setVisibility(View.VISIBLE);
 
 
-          //Return Airport
-          returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
-          returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
-          String returnType = obj.getJourneys().get(1).getType();
-          txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
-          txtReturnType.setText(returnType);
+            //Return Airport
+            returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
+            returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
+            String returnType = obj.getJourneys().get(1).getType();
+            txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
+            txtReturnType.setText(returnType);
 
             //Reformat Date
             String returnDate = obj.getJourneys().get(1).getDeparture_date();
             txtReturnDate.setText(returnDate);
 
-            returnListBasic = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,BASIC,RETURN,this);
+            returnListBasic = new CodeShareAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,RETURN,this);
             flightArrival.setAdapter(returnListBasic);
 
-            returnListPremier = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,PREMIER,RETURN,this);
-            premierFlightArrival.setAdapter(returnListPremier);
 
         }
 
@@ -253,44 +228,9 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
                 }
                 if(proceed){
 
-                  if(pnr == null){
-                    goPersonalDetail();
-                  }  else{
-                      changeFlight();
-                  }
+                   goPersonalDetail();
+
                 }
-            }
-        });
-
-        btnBasic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "btnBasic");
-                switchFare(DEPART_BASIC);
-            }
-        });
-
-        btnPremier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "btnPremier");
-                switchFare(DEPART_PREMIER);
-            }
-        });
-
-        btnBasicReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "btnBasicReturn");
-                switchFare(RETURN_BASIC);
-            }
-        });
-
-        btnPremierReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnalyticsApplication.sendEvent("Click", "btnPremierReturn");
-                switchFare(RETURN_PREMIER);
             }
         });
 
@@ -332,42 +272,6 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
         AnalyticsApplication.sendEvent("StartActivity", "Passenger Information");
     }
 
-    public void changeFlight() {
-
-        initiateLoading(getActivity());
-
-        SelectChangeFlight changeFlightObj = new SelectChangeFlight();
-
-        changeFlightObj.setPnr(pnr);
-        changeFlightObj.setBooking_id(bookingId);
-        changeFlightObj.setSignature(obj.getSignature());
-
-        changeFlightObj.setType(changeFlightType);
-
-        changeFlightObj.setDeparture_station(departPortCode);
-        changeFlightObj.setArrival_station(arrivalPortCode);
-        changeFlightObj.setDeparture_date(departDatePlain);
-        changeFlightObj.setReturn_date(returnDatePlain);
-
-        changeFlightObj.setStatus_1(status1);
-        changeFlightObj.setFlight_number_1(departFlightNumber);
-        changeFlightObj.setDeparture_time_1(departFlightDepartureTime);
-        changeFlightObj.setArrival_time_1(departFlightArrivalTime);
-        changeFlightObj.setJourney_sell_key_1(departFlightJourneyKey);
-        changeFlightObj.setFare_sell_key_1(departFlightFareSellKey);
-
-        changeFlightObj.setStatus_2(status2);
-        changeFlightObj.setFlight_number_2(returnFlightNumber);
-        changeFlightObj.setDeparture_time_2(returnFlightDepartureTime);
-        changeFlightObj.setArrival_time_2(returnFlightArrivalTime);
-        changeFlightObj.setJourney_sell_key_2(returnFlightJourneyKey);
-        changeFlightObj.setFare_sell_key_2(returnFlightFareSellKey);
-
-        presenter.changeFlight(changeFlightObj);
-
-        AnalyticsApplication.sendEvent("StartActivity", "Passenger Information");
-    }
-
     @Override
     public void onSeletFlightReceive(SelectFlightReceive obj) {
 
@@ -392,68 +296,26 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
 
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
-            Log.e("Success","true");
+            Log.e("Success", "true");
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
             intent.putExtra("COMMIT_UPDATE", (new Gson()).toJson(obj));
             getActivity().startActivity(intent);
         }
     }
 
-    //Switch Flight Type
-    public void switchFare(String way)
-    {
-        if(way == DEPART_BASIC) {
-
-            premierFlightDeparture.setVisibility(View.GONE);
-            flightDeparture.setVisibility(View.VISIBLE);
-            btnBasic.setBackgroundColor(getResources().getColor(R.color.white));
-            btnPremier.setBackgroundColor(getResources().getColor(R.color.grey));
-            departListBasic.invalidateSelected();
-            departFlightNumber = null;
-
-        }else if (way == DEPART_PREMIER){
-
-            premierFlightDeparture.setVisibility(View.VISIBLE);
-            flightDeparture.setVisibility(View.GONE);
-            btnBasic.setBackgroundColor(getResources().getColor(R.color.grey));
-            btnPremier.setBackgroundColor(getResources().getColor(R.color.white));
-            departListPremier.invalidateSelected();
-            departFlightNumber = null;
-
-        }else if (way == RETURN_BASIC){
-
-            premierFlightArrival.setVisibility(View.GONE);
-            flightArrival.setVisibility(View.VISIBLE);
-            btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.grey));
-            btnBasicReturn.setBackgroundColor(getResources().getColor(R.color.white));
-            returnListBasic.invalidateSelected();
-            returnFlightNumber = null;
-
-        }else if (way == RETURN_PREMIER)
-        {
-            premierFlightArrival.setVisibility(View.VISIBLE);
-            flightArrival.setVisibility(View.GONE);
-            btnBasicReturn.setBackgroundColor(getResources().getColor(R.color.grey));
-            btnPremierReturn.setBackgroundColor(getResources().getColor(R.color.white));
-            returnListPremier.invalidateSelected();
-            returnFlightNumber = null;
-
-        }
-    }
-
-
     public void selectedInfo(FlightInfo obj,String type,String way) {
 
         if (way.equals(DEPART)) {
 
+            Log.e("Here",obj.getFlight_number());
             departFlightNumber = obj.getFlight_number();
             departFlightDepartureTime = obj.getDeparture_time();
             departFlightArrivalTime = obj.getArrival_time();
             departFlightJourneyKey = obj.getJourney_sell_key();
-            if (type.equals(BASIC)) {
-                departFlightFareSellKey = obj.getBasicObj().getFare_sell_key();
-            } else {
-                departFlightFareSellKey = obj.getFlexObj().getFare_sell_key();
+            if (type.equals(ECONOMY_PROMO)) {
+                departFlightFareSellKey = obj.getEconomy_promo_class().getFare_sell_key();
+            } else if(type.equals(ECONOMY)){
+                departFlightFareSellKey = obj.getEconomy_class().getFare_sell_key();
             }
         } else if (way.equals(RETURN)) {
 
@@ -462,18 +324,17 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
             returnFlightArrivalTime = obj.getArrival_time();
             returnFlightJourneyKey = obj.getJourney_sell_key();
 
-            if (type.equals(BASIC)) {
-                returnFlightFareSellKey = obj.getBasicObj().getFare_sell_key();
-            } else {
-                returnFlightFareSellKey = obj.getFlexObj().getFare_sell_key();
+            if (type.equals(ECONOMY_PROMO)) {
+                returnFlightFareSellKey = obj.getEconomy_promo_class().getFare_sell_key();
+            } else if(type.equals(ECONOMY)){
+                returnFlightFareSellKey = obj.getEconomy_class().getFare_sell_key();
             }
         }
     }
 
-        public void alertNotAvailable(){
-            Utils.toastNotification(getActivity(),"Not Available");
-        }
-
+    public void alertNotAvailable(){
+        Utils.toastNotification(getActivity(),"Not Available");
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
