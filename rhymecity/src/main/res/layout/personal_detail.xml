@@ -210,7 +210,7 @@
                                         android:layout_width="0dp"
                                         android:layout_weight="0.35"
                                         android:layout_height="match_parent"
-                                        android:text="Forgot Passsword?"
+                                        android:text="Forgot Password?"
                                         android:textStyle="bold"
                                         android:textSize="16dp"
                                         android:textColor="@color/sign_in_button"
@@ -488,12 +488,25 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border">
 
+                                <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:*"
+                                        android:text="Travel Document:"
                                         android:id="@+id/textView25"
                                         android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -560,12 +573,25 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Issuing Country:*"
-                                        android:id="@+id/textView150"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Issuing Country:"
+                                            android:id="@+id/textView150"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -591,12 +617,25 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Document No:*"
-                                        android:id="@+id/textView154"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Document No:"
+                                            android:id="@+id/textView154"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -908,12 +947,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Travel Document:*"
-                                        android:id="@+id/textView173"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travel Document:"
+                                            android:id="@+id/textView173"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -980,12 +1033,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:*"
+                                        android:text="Issuing Country:"
                                         android:id="@+id/textView174"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1011,12 +1078,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:*"
+                                        android:text="Document No:"
                                         android:id="@+id/textView175"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1324,12 +1405,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:*"
+                                        android:text="Travel Document:"
                                         android:id="@+id/textView183"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1394,12 +1489,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:*"
+                                        android:text="Issuing Country:"
                                         android:id="@+id/textView188"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1425,12 +1534,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:*"
+                                        android:text="Document No:"
                                         android:id="@+id/textView190"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1737,12 +1860,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:*"
+                                        android:text="Travel Document:"
                                         android:id="@+id/textView203"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1807,12 +1944,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:*"
+                                        android:text="Issuing Country:"
                                         android:id="@+id/textView208"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -1838,12 +1989,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:*"
+                                        android:text="Document No:"
                                         android:id="@+id/textView210"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -2150,12 +2315,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:*"
+                                        android:text="Travel Document:"
                                         android:id="@+id/textView223"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -2220,12 +2399,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:*"
+                                        android:text="Issuing Country:"
                                         android:id="@+id/textView228"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -2251,12 +2444,26 @@
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:*"
+                                        android:text="Document No:"
                                         android:id="@+id/textView230"
-                                        android:textStyle="bold" />
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/red"
+                                        android:textStyle="bold"
+                                        android:layout_marginLeft="3dp"/>
+                                </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="vertical"

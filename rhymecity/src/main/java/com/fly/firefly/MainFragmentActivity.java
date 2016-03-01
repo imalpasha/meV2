@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.fly.firefly.base.AQuery;
 import com.fly.firefly.base.BaseFragmentActivity;
 import com.fly.firefly.drawer.DrawerItem;
 import com.fly.firefly.drawer.NavigationDrawerFragment;
+import com.fly.firefly.ui.activity.Aboutus.AboutUsActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
@@ -195,7 +197,15 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 startActivity(register);
 
             }
-            else if (item.getTag().equals("Faq"))
+            else if (item.getTag().equals("About"))
+            {
+                Intent about = new Intent(this, AboutUsActivity.class);
+                about.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(about);
+                Log.e("xx",item.getTag().toString());
+
+            }
+            else if (item.getTag().equals("FAQ"))
             {
                 Intent terms = new Intent(this, Terms.class);
                 terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

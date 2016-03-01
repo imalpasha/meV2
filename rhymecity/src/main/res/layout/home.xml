@@ -314,7 +314,8 @@
                 android:layout_weight="0.3"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:id="@+id/facebookLink">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -350,7 +351,8 @@
                 android:layout_weight="0.3"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:id="@+id/twitterLink">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -386,7 +388,8 @@
                 android:layout_weight="0.3"
                 android:layout_height="fill_parent"
                 android:gravity="center"
-                android:weightSum="1">
+                android:weightSum="1"
+                android:id="@+id/instagramLink">
 
                 <LinearLayout
                     android:orientation="vertical"

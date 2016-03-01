@@ -99,6 +99,15 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @InjectView(R.id.bannerImg)
     ImageView bannerImg;
 
+    @InjectView(R.id.facebookLink)
+    LinearLayout fbLink;
+
+    @InjectView(R.id.twitterLink)
+    LinearLayout twtLink;
+
+    @InjectView(R.id.instagramLink)
+    LinearLayout igLink;
+
     private static final String SCREEN_LABEL = "Home";
     private String facebookUrl,twitterUrl,instagramUrl;
     private int fragmentContainerId;
@@ -162,9 +171,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         instagramUrl = socialMediaObj.getInstagram();
 
         Log.e("Facebook",facebookUrl);
-        Log.e("Facebook",twitterUrl);
-        Log.e("Facebook",instagramUrl);
-
 
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
@@ -219,6 +225,56 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
                 //AnalyticsApplication.sendEvent("Click", "homeMobileBoardingPass");
                 goToBoardingPass();
                 //gotPushRegistration();
+            }
+        });
+
+        //facebook link
+        fbLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("fb://page/"+facebookUrl)));
+
+                } catch(Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://www.facebook.com/"+facebookUrl)));
+                }
+            }
+        });
+
+        //twitter link
+        twtLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("twitter://user?screen_name="+twitterUrl)));
+
+                } catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://twitter.com/"+twitterUrl)));
+                }
+            }
+        });
+
+        //instagram link
+        igLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Uri uri = Uri.parse("http://instagram.com/_u/"+instagramUrl);
+                Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
+
+                likeIng.setPackage("com.instagram.android");
+
+                try {
+                    startActivity(likeIng);
+
+                } catch (Exception e) {
+                    startActivity(new Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://www.instagram.com/"+instagramUrl)));
+                }
             }
         });
 

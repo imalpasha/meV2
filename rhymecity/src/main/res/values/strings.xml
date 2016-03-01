@@ -661,7 +661,7 @@
     <string name="login_register_txt">Register</string>
     <string name="login_no_account">Don\'t have account yet?</string>
     <string name="title_login_and_password">LOGIN AND PASSWORD</string>
-    <string name="login_forgot_password">Forgot Password</string>
+    <string name="login_forgot_password">Forgot Password?</string>
 
 
     <!-- END LOGIN -->
@@ -697,7 +697,7 @@
     <string name="register_postcode">Postcode</string>
     <string name="register_mobile_phone">Mobile Phone</string>
     <string name="register_alternate_phone">Alternate Phone</string>
-    <string name="register_bonuslink">Bonuslink Card Number</string>
+    <string name="register_bonuslink">BonusLink Card No:</string>
 
     <string name="register_fax">Fax</string>
     <string name="register_city">City</string>
@@ -707,6 +707,8 @@
     <string name="title_register">REGISTER</string>
 
     <string name="asterik">*</string>
+
+    <string name="register_term_error_message">You must agree with terms &amp; conditions</string>
     <!-- END REGISTER -->
 
 
@@ -761,7 +763,7 @@
     <string name="general_email_addresss">Email Address</string>
     <string name="general_travel_purpose">Primary Purpose of Your Travel</string>
 
-    <string name="agreeTnc">I agree with the Term &amp; Condition</string>
+    <string name="agreeTnc">I agree with the Terms &amp; Conditions</string>
     <string name="subscribe">Yes, I do not want to receive promotional information from Firefly and its partners</string>
     <string name="alertTNC">You must agree to the terms.</string>
 
