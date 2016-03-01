@@ -159,7 +159,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         departPortCode = obj.getJourneys().get(0).getDeparture_station_code();
         arrivalPortCode = obj.getJourneys().get(0).getArrival_station_code();
 
-        String type = obj.getJourneys().get(0).getType();
+        String type = "("+obj.getJourneys().get(0).getType()+")";
         Log.e("FlightType",type);
 
         txtDepartAirport.setText(departPort+" - "+arrivalPort);
@@ -189,7 +189,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
           //Return Airport
           returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
           returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
-          String returnType = obj.getJourneys().get(1).getType();
+          String returnType = "("+obj.getJourneys().get(1).getType()+")";
           txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
           txtReturnType.setText(returnType);
 
