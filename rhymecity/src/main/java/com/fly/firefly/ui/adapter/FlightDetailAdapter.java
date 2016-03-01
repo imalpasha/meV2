@@ -135,7 +135,7 @@ public class FlightDetailAdapter extends BaseAdapter {
             totalFare = "MYR "+obj.get(position).getBasicObj().getTotal_fare();
         }
 
-        vh.txtFlightNo.setText("FLIGHT NO. "+ obj.get(position).getFlight_number());
+        vh.txtFlightNo.setText("FLIGHT NO. FY "+ obj.get(position).getFlight_number());
         vh.txtArrivalTime.setText(obj.get(position).getArrival_time());
         vh.txtDepartureTime.setText(obj.get(position).getDeparture_time());
         vh.txtDepartureAirport.setText(departureAirport);
