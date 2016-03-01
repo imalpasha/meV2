@@ -700,7 +700,7 @@
     <string name="register_bonuslink">BonusLink Card No:</string>
 
     <string name="register_fax">Fax</string>
-    <string name="register_city">City</string>
+    <string name="register_city">Town/City</string>
     <string name="register_password_hint">The given password violates the password policy of domain WWW. Policy: Password must be at least 8 characters, no more than 16 characters, must include at least one upper case letter, one lower case letter, one numeric digit, and one non-alphanumeric. The password cannot contain a period(.) comma(,) or tilde(~).</string>
     <string name="register_password_policy">Password Policy</string>
 
