@@ -19,11 +19,16 @@ public class DeviceInfoSuccess{
     private String location;
     private String banner_default;
     private String banner_promo;
+    private String banner_module;
     private List<TitleObj> data_title = new ArrayList<TitleObj>();
     private List<Country> data_country = new ArrayList<Country>();
     private List<State> data_state = new ArrayList<State>();
     private List<AirportObj> data_market = new ArrayList<AirportObj>();
     private SocialMedia social_media_link;
+    private String titleCode;
+    private String titleName;
+    private String status;
+    private String signature;
 
     public SocialMedia getSocial_media() {
         return social_media_link;
@@ -33,11 +38,13 @@ public class DeviceInfoSuccess{
         this.social_media_link = social_media;
     }
 
+    public String getBanner_module() {
+        return banner_module;
+    }
 
-    private String titleCode;
-    private String titleName;
-    private String status;
-    private String signature;
+    public void setBanner_module(String banner_module) {
+        this.banner_module = banner_module;
+    }
 
     public String getMessage() {
         return message;

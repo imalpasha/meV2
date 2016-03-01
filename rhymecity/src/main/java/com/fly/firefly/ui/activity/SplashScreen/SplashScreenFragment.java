@@ -149,6 +149,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             String bannerUrl = obj.getObj().getBanner_default();
             String promoBannerUrl = obj.getObj().getBanner_promo();
             String dataVersion = obj.getObj().getData_version();
+            String bannerModule = obj.getObj().getBanner_module();
             DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
             Log.e("Facebook", socialMediaObj.getFacebook());
             HashMap<String, String> initLogin = pref.getDataVesion();
@@ -182,6 +183,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
                 pref.setSignatureToLocalStorage(signature);
                 pref.setBannerUrl(bannerUrl);
                 pref.setPromoBannerUrl(promoBannerUrl);
+                pref.setBannerModule(bannerModule);
                 pref.setDataVersion(dataVersion);
 
            // }else{

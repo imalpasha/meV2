@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.fly.firefly.AnalyticsApplication;
+import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
@@ -156,9 +157,25 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         /* ------------ */
 
         /*GET PREF DATA*/
-        HashMap<String, String> init = pref.getDefaultBanner();
-        String defaultBanner = init.get(SharedPrefManager.DEFAULT_BANNER);
-        aq.id(R.id.bannerImg).image(defaultBanner);
+        HashMap<String, String> initPromoBanner = pref.getDefaultBanner();
+        String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
+        if(banner == null || banner == ""){
+            HashMap<String, String> initDefaultBanner = pref.getDefaultBanner();
+            banner = initDefaultBanner.get(SharedPrefManager.DEFAULT_BANNER);
+        }
+
+        aq.id(R.id.bannerImg).image(banner);
+        HashMap<String, String> initBannerModule = pref.getBannerModule();
+        final String bannerModule = initBannerModule.get(SharedPrefManager.BANNER_MODULE);
+
+        bannerImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bannerModule != null){
+                    Controller.clickableBanner(getActivity(),bannerModule);
+                }
+            }
+        });
 
         HashMap<String, String> initSocialMedia = pref.getSocialMedia();
         String socialMedia = initSocialMedia.get(SharedPrefManager.SOCIAL_MEDIA);

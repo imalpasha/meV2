@@ -10,11 +10,14 @@ import android.widget.ProgressBar;
 
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.api.obj.SearchFlightReceive;
+import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
+import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.PasswordExpired.ChangePasswordActivity;
 import com.fly.firefly.ui.activity.SplashScreen.SplashScreenFragment;
+import com.fly.firefly.ui.activity.Terms.Terms;
 import com.fly.firefly.ui.presenter.HomePresenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
@@ -31,6 +34,18 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class Controller extends BaseFragment {
 
     private static SweetAlertDialog pDialog;
+
+    public static void clickableBanner(Activity act,String page){
+
+        Intent bannerIntent;
+        if(page.equals("booking")){
+            bannerIntent = new Intent(act,SearchFlightActivity.class);
+            act.startActivity(bannerIntent);
+        }else if(page.equals("faq")){
+            bannerIntent = new Intent(act,Terms.class);
+            act.startActivity(bannerIntent);
+        }
+    }
 
     public static boolean connectionAvailable(Activity act){
 

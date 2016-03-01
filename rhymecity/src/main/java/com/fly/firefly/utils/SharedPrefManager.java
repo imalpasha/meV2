@@ -35,8 +35,9 @@ public class SharedPrefManager {
     public static final String PASSWORD = "PASSWORD";
     public static final String SOCIAL_MEDIA ="SM";
     public static final String DATA_VERSION = "DV";
-
     public static final String TEMP_RESULT = "TR";
+    public static final String BANNER_MODULE = "BM";
+
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -46,6 +47,13 @@ public class SharedPrefManager {
         this._context = context;
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
+    }
+
+    /*SOCIAL MEDIA*/
+    public HashMap<String, String> getBannerModule() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(BANNER_MODULE, _sharedPrefs.getString(BANNER_MODULE, null));
+        return init;
     }
 
     /*SOCIAL MEDIA*/
@@ -308,6 +316,13 @@ public class SharedPrefManager {
         _prefsEditor.apply();
     }
 
+    /*Set Signature Value*/
+    public void setBannerModule(String module) {
+        _prefsEditor.putString(BANNER_MODULE, module);
+        _prefsEditor.apply();
+    }
+
+
 
     /*Set Signature Value*/
     public void setLoginStatus(String status) {
@@ -500,6 +515,13 @@ public class SharedPrefManager {
     public void clearTempResult() {
         // Clearing Selected
         _sharedPrefs.edit().remove(TEMP_RESULT).apply();
+        Log.e("Clear", "True");
+    }
+
+    /*Clear UserInfo Value*/
+    public void clearBannerModule() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(BANNER_MODULE).apply();
         Log.e("Clear", "True");
     }
 }
