@@ -1,6 +1,9 @@
 package com.fly.firefly.ui.activity.SlidePage;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -137,9 +140,10 @@ public class ProductImagesFragment extends BaseFragment {
         txtPassengerFare.setText(boardingObj.getFare());
         txtRecordLocator.setText(boardingObj.getRecordLocator());
 
-        Log.e("here", boardingObj.getRecordLocator());
         try {
-            aq.id(R.id.qrCodeImg).image(boardingObj.getQRCodeURL());
+            byte[] decodedString = Base64.decode(boardingObj.getQRCode(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            aq.id(R.id.qrCodeImg).getImageView().setImageBitmap(decodedByte);
         }catch (Exception e){
 
         }

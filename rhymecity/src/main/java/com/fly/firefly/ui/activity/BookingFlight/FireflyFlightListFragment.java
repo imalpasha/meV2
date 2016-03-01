@@ -17,15 +17,12 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
-import com.fly.firefly.api.obj.SelectChangeFlightReceive;
 import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.ManageFlight.CommitChangeActivity;
 import com.fly.firefly.ui.adapter.FlightDetailAdapter;
-import com.fly.firefly.ui.module.FlightDetailModule;
 import com.fly.firefly.ui.module.SelectFlightModule;
-import com.fly.firefly.ui.object.BoardingPassObj;
 import com.fly.firefly.ui.object.SelectChangeFlight;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.presenter.BookingPresenter;
@@ -34,17 +31,14 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
-public class FlightDetailFragment extends BaseFragment implements BookingPresenter.ListFlightView {
+public class FireflyFlightListFragment extends BaseFragment implements BookingPresenter.ListFlightView {
 
     @Inject BookingPresenter presenter;
     @InjectView(R.id.btnListFlight)Button btnListFlight;
@@ -102,9 +96,9 @@ public class FlightDetailFragment extends BaseFragment implements BookingPresent
             returnFlightFareSellKey;
     private String pnr,bookingId,changeFlightType;
 
-    public static FlightDetailFragment newInstance(Bundle bundle) {
+    public static FireflyFlightListFragment newInstance(Bundle bundle) {
 
-        FlightDetailFragment fragment = new FlightDetailFragment();
+        FireflyFlightListFragment fragment = new FireflyFlightListFragment();
         fragment.setArguments(bundle);
         return fragment;
 

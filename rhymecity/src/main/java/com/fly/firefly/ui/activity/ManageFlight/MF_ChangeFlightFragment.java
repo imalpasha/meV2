@@ -1,6 +1,5 @@
 package com.fly.firefly.ui.activity.ManageFlight;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -19,18 +17,14 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
-import com.fly.firefly.api.obj.GetFlightAvailabilityReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailActivity;
-import com.fly.firefly.ui.activity.BookingFlight.ItinenaryActivity;
+import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.module.ManageChangeFlight;
 import com.fly.firefly.ui.module.ManageChangeFlightDate;
 import com.fly.firefly.ui.object.ChangeFlight;
 import com.fly.firefly.ui.object.GetChangeFlight;
 import com.fly.firefly.ui.object.GetFlightAvailability;
-import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -43,7 +37,6 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class MF_ChangeFlightFragment extends BaseFragment implements  DatePickerDialog.OnDateSetListener,ManageFlightPrenter.GetFlightView {
 
@@ -277,7 +270,7 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
             String flightType = obj.getType();
             SearchFlightReceive passObj = new SearchFlightReceive(obj);
-            Intent flight = new Intent(getActivity(), FlightDetailActivity.class);
+            Intent flight = new Intent(getActivity(), FireflyFlightListActivity.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             flight.putExtra("FLIGHT_TYPE", "" );
             flight.putExtra("ADULT", "" );

@@ -149,7 +149,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:weightSum="1"
-                                android:layout_marginTop="5dp" >
+                                android:layout_marginTop="5dp"
+                                android:id="@+id/basicPremierLayout">
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -205,6 +206,18 @@
 
                         <com.fly.firefly.utils.ExpandAbleGridView
                             android:id="@+id/flightDeparture"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:columnWidth="220dp"
+                            android:gravity="center"
+                            android:horizontalSpacing="1dp"
+                            android:numColumns="1"
+                            android:stretchMode="columnWidth"
+                            android:verticalSpacing="1dp">
+                        </com.fly.firefly.utils.ExpandAbleGridView>
+
+                        <com.fly.firefly.utils.ExpandAbleGridView
+                            android:id="@+id/codeShareDeparture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:columnWidth="220dp"

@@ -82,9 +82,14 @@ public class ApiRequestHandler {
     private final ApiService apiService;
     Context context;
     ProgressDialog mProgressDialog;
+    private int inc;
+    private boolean retry;
+
     public ApiRequestHandler(Bus bus, ApiService apiService) {
         this.bus = bus;
         this.apiService = apiService;
+        inc = 0;
+        retry = true;
     }
 
     // ------------------------------------------------------------------------------ //
@@ -670,8 +675,12 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                if (retry) {
+                    onManageFlight(event);
+                    loop(inc);
+                } else {
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -937,7 +946,12 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                if (retry) {
+                    onRetrieveBoardingPass(event);
+                    loop(inc);
+                } else {
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -946,9 +960,14 @@ public class ApiRequestHandler {
 
 
 
-
-
-
+    public void loop(int inc){
+        inc++;
+        if(inc > 2){
+            retry = false;
+        }else{
+            retry = true;
+        }
+    }
 
 
 

@@ -1,33 +1,26 @@
 package com.fly.firefly.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.fly.firefly.R;
-import com.fly.firefly.api.obj.FlightInfo;
-import com.fly.firefly.api.obj.FlightSummaryReceive;
-import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
 import com.fly.firefly.ui.activity.ManageFlight.ManageFlightFragment;
-
-import java.util.List;
+import com.fly.firefly.ui.object.BoardingPassObj;
+import com.google.gson.Gson;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class OfflineBookingListAdapter extends BaseAdapter {
 
     private final Context context;
-    private final List<MobileConfirmCheckInPassengerReceive.BoardingPass> obj;
+    private final RealmResults<BoardingPassObj> obj;
     private String departureAirport;
     private String arrivalAirport;
     private String flightClass;
@@ -36,7 +29,7 @@ public class OfflineBookingListAdapter extends BaseAdapter {
     private String flightWay;
     private Boolean active = false;
 
-    public OfflineBookingListAdapter(Context context, List<MobileConfirmCheckInPassengerReceive.BoardingPass> paramObj) {
+    public OfflineBookingListAdapter(Context context, RealmResults<BoardingPassObj> paramObj) {
         this.context = context;
         this.obj = paramObj;
     }
@@ -77,8 +70,8 @@ public class OfflineBookingListAdapter extends BaseAdapter {
             vh = (ViewHolder) view.getTag();
         }
 
-        vh.txtPNR.setText(obj.get(position).getRecordLocator());
-        vh.txtDate.setText(obj.get(position).getDepartureDate());
+        vh.txtPNR.setText(obj.get(position).getPnr());
+        vh.txtDate.setText((new Gson()).fromJson(obj.get(position).getBoardingPassObj(),MobileConfirmCheckInPassengerReceive.class).getObj().getBoarding_pass().get(0).getDepartureDate());
 
         return view;
 

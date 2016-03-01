@@ -36,6 +36,7 @@ public class MobileConfirmCheckInPassengerReceive {
         private String BarCodeData;
         private String BarCodeURL;
         private String QRCodeURL;
+        private String QRCode;
         private String DepartureGate;
         private String DepartureDate;
         private String DepartureTime;
@@ -52,6 +53,14 @@ public class MobileConfirmCheckInPassengerReceive {
         private String ArrivalStationCode;
         private String DepartureDateTime;
         private String ArrivalDateTime;
+
+        public String getQRCode() {
+            return QRCode;
+        }
+
+        public void setQRCode(String QRCode) {
+            this.QRCode = QRCode;
+        }
 
         public String getRecordLocator() {
             return RecordLocator;

@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fly.firefly.R;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
+import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListFragment;
 import com.fly.firefly.ui.activity.ManageFlight.MF_SeatSelectionFragment;
 import com.fly.firefly.ui.object.PasssengerInfoV2;
 
@@ -27,7 +27,7 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
     private String arrivalAirport;
     private String flightClass;
     private Integer selected_position = -1;
-    private FlightDetailFragment fragment;
+    private FireflyFlightListFragment fragment;
     private String flightWay;
     private Boolean active = false;
     MF_SeatSelectionFragment frag;

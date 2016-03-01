@@ -7,7 +7,7 @@ public class RetrieveBoardingPassObj{
 
     private String departure_station_code ;
     private String arrival_station_code ;
-    private String pnr;
+    private String RecordLocator,pnr;
     private String user_id;
     private String signature;
 
@@ -44,13 +44,18 @@ public class RetrieveBoardingPassObj{
         departure_station_code = data.getDeparture_station();
         arrival_station_code = data.getArrival_station();
         signature = data.getSignature();
+        RecordLocator = data.getPnr();
         pnr = data.getPnr();
         user_id = data.getUser_id();
     }
 
-    public String getPnr() {return pnr;}
+    public String getPnr() {
+        return RecordLocator;}
 
-    public void setPnr(String pnr) {this.pnr = pnr;}
+    public void setPnr(String pnr) {
+        this.RecordLocator = pnr;
+        this.pnr = pnr;
+    }
 
     public String getDeparture_station() {
         return departure_station_code;
@@ -71,6 +76,7 @@ public class RetrieveBoardingPassObj{
     public void setSignature(String signature) {
         this.signature = signature;
     }
+
 
 
 

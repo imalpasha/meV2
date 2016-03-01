@@ -32,6 +32,8 @@ import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
@@ -64,11 +66,12 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     @InjectView(R.id.changeContactInfoBtn)
     LinearLayout changeContactInfoBtn;
 
-    @Order(1) @NotEmpty
+    @Order(1)
+    @NotEmpty
     @InjectView(R.id.txtPurpose)
     TextView txtPurpose;
 
-    @Optional
+    @NotEmpty
     @InjectView(R.id.txtCompanyAddress1)
     TextView txtCompanyAddress1;
 
@@ -102,6 +105,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
     @NotEmpty
     @Order(5)
+    @Email(message = "Invalid Email")
     @InjectView(R.id.txtEmailAddress)
     TextView txtEmailAddress;
 
@@ -122,16 +126,19 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
     @NotEmpty
     @Order(9)
+    @Length(min = 4,max = 8, message = "Invalid postcode number")
     @InjectView(R.id.txtPostCode)
     TextView txtPostCode;
 
-    @NotEmpty
     @Order(10)
+    @NotEmpty
+    @Length(min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
-    @NotEmpty
     @Order(11)
+    @NotEmpty
+    @Length(min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
 

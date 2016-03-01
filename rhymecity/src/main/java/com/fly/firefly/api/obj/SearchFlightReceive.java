@@ -8,8 +8,9 @@ import java.util.List;
 /**
  * Created by Dell on 11/23/2015.
  */
-public class SearchFlightReceive extends BaseObj{
+public class SearchFlightReceive {
 
+    private String signature;
     private String status;
     private String message;
     private String type;
@@ -19,6 +20,14 @@ public class SearchFlightReceive extends BaseObj{
     private String booking_id;
     private List<JourneyInfo> journeys = new ArrayList<JourneyInfo>();
     private SearchFlightReceive journeyObj;
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 
     public GoingFlight getGoing_flight() {
         return going_flight;
@@ -137,7 +146,7 @@ public class SearchFlightReceive extends BaseObj{
         pnr = obj.getPnr();
         booking_id = obj.getBooking_id();
         journeys = obj.getJourneys();
-
+        signature = obj.getSignature();
     }
 
     public String getStatus() {

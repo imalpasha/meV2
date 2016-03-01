@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
+import com.fly.firefly.ui.activity.BookingFlight.CodeShareFlightListFragment;
 import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListFragment;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.squareup.otto.Bus;
@@ -11,15 +12,15 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-        injects = FireflyFlightListFragment.class,
+        injects = CodeShareFlightListFragment.class,
         addsTo = AppModule.class,
         complete = false
 )
-public class SelectFlightModule {
+public class CodeShareFlightModule {
 
     private final BookingPresenter.ListFlightView flightDetailViewView;
 
-    public SelectFlightModule(BookingPresenter.ListFlightView flightDetailViewView) {
+    public CodeShareFlightModule(BookingPresenter.ListFlightView flightDetailViewView) {
         this.flightDetailViewView = flightDetailViewView;
     }
 

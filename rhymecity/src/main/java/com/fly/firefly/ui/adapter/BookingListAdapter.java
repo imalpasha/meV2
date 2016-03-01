@@ -1,21 +1,14 @@
 package com.fly.firefly.ui.adapter;
 
-import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.fly.firefly.R;
-import com.fly.firefly.api.obj.FlightInfo;
-import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ListBookingReceive;
-import com.fly.firefly.ui.activity.BookingFlight.FlightDetailFragment;
 import com.fly.firefly.ui.activity.ManageFlight.ManageFlightFragment;
 
 import java.util.List;

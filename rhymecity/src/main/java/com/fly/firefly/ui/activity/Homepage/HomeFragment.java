@@ -171,8 +171,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         instagramUrl = socialMediaObj.getInstagram();
 
         Log.e("Facebook",facebookUrl);
-        Log.e("Twitter",twitterUrl);
-        Log.e("Instagram",instagramUrl);
+
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
         AnalyticsApplication application = (AnalyticsApplication) getActivity().getApplication();

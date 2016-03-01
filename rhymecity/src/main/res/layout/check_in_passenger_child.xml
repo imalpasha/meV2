@@ -163,10 +163,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:inputType="textPhonetic"
+                    android:inputType="number"
                     android:background="@drawable/block_with_border"
                     android:id="@+id/checkInPassengerBonuslink"
-                    android:tag="passenger1_bonus_link" />
+                    android:tag="passenger1_bonus_link"
+                    android:maxLength="16"/>
             </LinearLayout>
         </LinearLayout>
 

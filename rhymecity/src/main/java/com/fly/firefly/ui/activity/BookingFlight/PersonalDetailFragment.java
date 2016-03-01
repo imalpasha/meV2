@@ -2,20 +2,25 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.base.BaseFragment;
@@ -26,6 +31,7 @@ import com.fly.firefly.ui.object.InfantInfo;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
 import com.fly.firefly.ui.object.PassengerInfo;
+import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
@@ -101,6 +107,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     @InjectView(R.id.memberLoginBlock)
     LinearLayout memberLoginBlock;
 
+    @InjectView(R.id.txtForgotPassword)
+    Button txtForgotPassword;
 
 
     private int fragmentContainerId;
@@ -125,6 +133,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     private View view;
     private String storeUsername;
     private String storePassword;
+    private AlertDialog dialog;
 
     public static PersonalDetailFragment newInstance(Bundle bundle) {
 
@@ -236,7 +245,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 btnGender.setOnClickListener(new View.OnClickListener() {
                    @Override
                     public void onClick(View v) {
-                        popupSelection(genderList, getActivity(), btnGender, false,view);
+                        popupSelection(genderList, getActivity(), btnGender, false, view);
                     }
                 });
 
@@ -279,7 +288,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         boolExpireDate = true;
                     }
                 });
-            Log.e("adultInc--", Integer.toString(adultInc));
 
         }
 
@@ -488,9 +496,78 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             }
         });
 
+        txtForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                forgotPassword();
+            }
+        });
 
         return view;
+    }
+
+    public void forgotPassword(){
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        final View myView = li.inflate(R.layout.forgot_password_screen, null);
+        Button cont = (Button)myView.findViewById(R.id.btncontinue);
+
+        final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail_login);
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(editEmail.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_LONG).show();
+
+                }else if (!editEmail.getText().toString().matches(emailPattern)) {
+                    Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
+                }else{
+                    requestForgotPassword(editEmail.getText().toString(),"");
+                    dialog.dismiss();
+                }
+
+            }
+
+        });
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(myView);
+
+        dialog = builder.create();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //lp.height = 570;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+    public void requestForgotPassword(String username,String signature){
+        initiateLoading(getActivity());
+        PasswordRequest data = new PasswordRequest();
+        data.setEmail(username);
+        data.setSignature(signature);
+        presenter.forgotPassword(data);
+    }
+
+    @Override
+    public void onRequestPasswordSuccess(ForgotPasswordReceive obj) {
+        dismissLoading();
+        Log.e("Message", obj.getMessage());
+
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
+        if (status) {
+            setSuccessDialog(getActivity(), obj.getMessage(),null);
+        }
+
     }
 
     public void checkTextViewNull(TextView txtView){

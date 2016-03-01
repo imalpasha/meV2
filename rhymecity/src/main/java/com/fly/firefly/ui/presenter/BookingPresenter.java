@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
+import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
@@ -18,6 +19,7 @@ import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.FlightSummary;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
+import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.object.Payment;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SeatSelection;
@@ -42,7 +44,7 @@ public class BookingPresenter {
     public interface PassengerInfoView{
         void onPassengerInfo(PassengerInfoReveice obj);
         void onLoginSuccess(LoginReceive obj);
-
+        void onRequestPasswordSuccess(ForgotPasswordReceive obj);
     }
 
     public interface ContactInfoView{
@@ -67,7 +69,6 @@ public class BookingPresenter {
     public interface FlightSummaryView{
         void onFlightSummary(FlightSummaryReceive obj);
     }
-
 
 
 
@@ -97,6 +98,7 @@ public class BookingPresenter {
         this.bus = bus;
     }
 
+
     public BookingPresenter(ContactInfoView view, Bus bus) {
         this.view4 = view;
         this.bus = bus;
@@ -120,6 +122,12 @@ public class BookingPresenter {
     public BookingPresenter(FlightSummaryView view, Bus bus) {
         this.view8 = view;
         this.bus = bus;
+    }
+
+    /*Forgot Password*/
+    public void forgotPassword(PasswordRequest data) {
+        Log.e("xxxx",data.getEmail());
+        bus.post(new PasswordRequest(data));
     }
 
     /*User Search FLight*/
@@ -203,6 +211,13 @@ public class BookingPresenter {
     }
 
     @Subscribe
+    public void onUserSuccessReqPassword(ForgotPasswordReceive obj) {
+
+        //*Save Session And Redirect To Homepage*//*
+        view3.onRequestPasswordSuccess(obj.getUserObj());
+    }
+
+    @Subscribe
     public void onContactInfoReceive(ContactInfoReceive event) {
         view4.onContactInfo(event);
 
@@ -229,8 +244,7 @@ public class BookingPresenter {
         view2.onChangeFlightSuccess(event);
     }
 
-
-   //@Subscribe
+    //@Subscribe
    // public void onItineraryReceive(ContactInfoReceive event) {view6.onItineraryInfo(event);}
 
     public void onResume() {

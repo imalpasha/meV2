@@ -2,7 +2,6 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -15,7 +14,7 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class FlightDetailActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class CodeShareFlightListActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     //private FragmentManager fragmentManager;
     private Tracker mTracker;
@@ -30,7 +29,7 @@ public class FlightDetailActivity extends MainFragmentActivity implements Fragme
         Bundle bundle = getIntent().getExtras();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, FlightDetailFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, CodeShareFlightListFragment.newInstance(bundle)).commit();
         hideTitle();
     }
 
