@@ -415,7 +415,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                     requestRegister();
                 }
             }else{
-                croutonAlert(getActivity(), "You must agree with tem & condition");
+                croutonAlert(getActivity(), "You must agree with terms & conditions");
             }
         }else{
             croutonAlert(getActivity(), "You must be at least 18 years old to register.");
