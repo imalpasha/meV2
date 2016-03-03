@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 
 import butterknife.ButterKnife;
@@ -28,7 +29,7 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
 
         hideTitle();
         unlockDrawer();
-
+        BaseFragment.removeLogoHeader(this);
     }
 
    /* private void goToSearchFragment() {

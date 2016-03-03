@@ -73,7 +73,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="About Us"
+                            android:text="ABOUT US"
                             android:id="@+id/txt_aboutus"
                             android:gravity="center"
                             android:textSize="@dimen/font21sp"
@@ -82,17 +82,12 @@
 
                     </LinearLayout>
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:id="@+id/space" />
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView119"
-                        android:layout_gravity="center_horizontal"
+                        android:id="@+id/txtAboutUs"
+                        android:padding="15dp"
                         android:text="About Us page" />
 
                 </LinearLayout>

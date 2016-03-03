@@ -1,11 +1,54 @@
-<FrameLayout
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/main_content"
-    android:focusableInTouchMode="true"
-    tools:context="com.fly.firefly.MainFragmentActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:weightSum="1">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:weightSum="1"
+        android:focusableInTouchMode="true">
 
-</FrameLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:background="@color/dark_lvl1"
+        android:id="@+id/mainLogoLayout"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/imageView12"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:src="@drawable/flyfirefly_logo_plain" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:id="@+id/imageView13"
+            android:padding="10dp"
+            android:scaleType="centerInside"
+            android:adjustViewBounds="true"
+            android:src="@drawable/flyfirefly_logo_text" />
+    </RelativeLayout>
+
+    <FrameLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/main_content"
+        tools:context="com.fly.firefly.MainFragmentActivity">
+    </FrameLayout>
+    </LinearLayout>
+</ScrollView>
+
+<!--  -->
+

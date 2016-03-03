@@ -290,7 +290,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
         flightObj.setPnr(editPnr.getText().toString());
         flightObj.setDeparture_station(txtDeparture.getTag().toString());
         flightObj.setArrival_station(txtArrive.getTag().toString());
-        flightObj.setSignature(signatureFromLocal);
+        //flightObj.setSignature(signatureFromLocal);
         searchFlightFragment(flightObj);
                     /*FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

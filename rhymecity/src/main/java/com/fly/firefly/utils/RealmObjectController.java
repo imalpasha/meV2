@@ -88,7 +88,8 @@ public class RealmObjectController extends BaseFragment{
                 //Log.e("Record",obj.getBoarding_pass().get(0).getRecordLocator());
                 //BoardingPassObj boardingPas = realm.where(BoardingPassObj.class).equalTo("pnr", obj.getObj().getBoarding_pass().get(0).getRecordLocator()).findFirst();
                 //boardingPas.setBoardingPassObj(3);
-                RealmResults<BoardingPassObj> teenagers = realm.where(BoardingPassObj.class).equalTo("pnr", obj.getObj().getBoarding_pass().get(0).getRecordLocator()).findAll();
+                String pnr = obj.getObj().getBoarding_pass().get(0).getRecordLocator();
+                RealmResults<BoardingPassObj> teenagers = realm.where(BoardingPassObj.class).equalTo("pnr",pnr).equalTo("departureDateTime", obj.getObj().getBoarding_pass().get(0).getDepartureDateTime()).findAll();
                 //BoardingPassObj firstJohn = teenagers.where().equalTo("pnr", obj.getBoarding_pass().get(0).getRecordLocator()).findFirst();
                 if(teenagers.size() == 0){
 
@@ -109,6 +110,7 @@ public class RealmObjectController extends BaseFragment{
                     BoardingPassObj dog = new BoardingPassObj();
                     dog.setPnr(obj.getObj().getBoarding_pass().get(0).getRecordLocator());
                     dog.setUsername(username);
+                    dog.setDepartureDateTime(obj.getObj().getBoarding_pass().get(0).getDepartureDateTime());
                     dog.setBoardingPassObj(mobileConfirmCheckIn);
 
                     //realm.copyToRealm(dog);

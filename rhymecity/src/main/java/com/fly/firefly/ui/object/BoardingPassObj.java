@@ -11,7 +11,16 @@ public class BoardingPassObj extends RealmObject{
 
     private String pnr;
     private String username;
+    private String departureDateTime;
     private String boardingPassObj;
+
+    public String getDepartureDateTime() {
+        return departureDateTime;
+    }
+
+    public void setDepartureDateTime(String departureDateTime) {
+        this.departureDateTime = departureDateTime;
+    }
 
     public String getPnr() {
         return pnr;

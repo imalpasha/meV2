@@ -21,6 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.fly.firefly.Controller;
@@ -1051,6 +1052,19 @@ public class BaseFragment extends Fragment {
 
 	public void resetManualValidationStatus(){
 		manualValidationStatus = true;
+	}
+
+	public static void removeLogoHeader(Activity activity)
+	{
+		try
+		{
+			RelativeLayout mainFrameRelative = (RelativeLayout) activity.findViewById(R.id.mainLogoLayout);
+			mainFrameRelative.setVisibility(View.GONE);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 }

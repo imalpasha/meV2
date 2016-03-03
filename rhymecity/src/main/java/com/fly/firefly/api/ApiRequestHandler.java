@@ -7,6 +7,7 @@ import android.util.Log;
 import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.Gson;
 import com.fly.firefly.Controller;
 import com.fly.firefly.MainFragmentActivity;
+import com.fly.firefly.api.obj.AboutUsReceive;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.CheckInListReceive;
@@ -36,6 +37,7 @@ import com.fly.firefly.api.obj.ItineraryInfoReceive;
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.object.AboutUs;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ConfirmUpdateRequest;
 import com.fly.firefly.ui.object.ContactInfo;
@@ -947,8 +949,33 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 if (retry) {
-                    onRetrieveBoardingPass(event);
                     loop(inc);
+                    onRetrieveBoardingPass(event);
+                } else {
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+        });
+    }
+
+    @Subscribe
+    public void onRetrieveAboutUs(final AboutUs event) {
+
+        apiService.onRetrieveAboutUs(event, new Callback<AboutUsReceive>() {
+
+            @Override
+            public void success(AboutUsReceive responseData, Response response) {
+                bus.post(new AboutUsReceive(responseData));
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                if (retry) {
+                    loop(inc);
+                    onRetrieveAboutUs(event);
                 } else {
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }

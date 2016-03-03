@@ -1,5 +1,6 @@
 package com.fly.firefly.api;
 
+import com.fly.firefly.api.obj.AboutUsReceive;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.CheckInListReceive;
@@ -31,6 +32,7 @@ import com.fly.firefly.api.obj.ItineraryInfoReceive;
 import com.fly.firefly.api.obj.TermsReceive;
 import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.api.obj.tryObj;
+import com.fly.firefly.ui.object.AboutUs;
 import com.fly.firefly.ui.object.BaseObj;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
 import com.fly.firefly.ui.object.ConfirmUpdateRequest;
@@ -194,9 +196,8 @@ public interface ApiService {
     @POST("/getBoardingPass")
     void onRetrieveBoardingPass(@Body RetrieveBoardingPassObj obj, Callback<RetrieveBoardingPassReceive> callback);
 
-
-
-
+    @POST("/getAboutUS")
+    void onRetrieveAboutUs(@Body AboutUs obj, Callback<AboutUsReceive> callback);
 
 
 

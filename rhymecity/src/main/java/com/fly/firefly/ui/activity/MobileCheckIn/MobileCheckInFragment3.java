@@ -226,7 +226,6 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
     @Override
     public void onValidationSucceeded() {
         Log.e("Success", "True");
-
         checkInPassenger();
     }
 
@@ -318,7 +317,6 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
         super.onActivityCreated(savedInstanceState);
         fragmentContainerId = ((FragmentContainerActivity) getActivity()).getFragmentContainerId();
     }
-
 
     @Override
     public void onResume() {

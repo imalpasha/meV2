@@ -533,7 +533,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         int totalPassenger = totalAdult+totalChildren+totalInfant;
 
 
-        if(totalPassenger > 5){
+        if(totalPassenger > 9){
 
             if(passenger == ADULT){ totalAdult--; }
             else if(passenger == CHILDREN){ totalChildren--; }

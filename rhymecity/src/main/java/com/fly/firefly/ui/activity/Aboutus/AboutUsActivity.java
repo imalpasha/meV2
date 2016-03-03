@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeFragment;
 
@@ -24,16 +25,9 @@ public class AboutUsActivity extends MainFragmentActivity implements FragmentCon
 
         hideTitle();
         unlockDrawer();
-
+        BaseFragment.removeLogoHeader(this);
     }
 
-    @Override
-    public void onBackPressed(){
-
-        final FragmentManager manager = getSupportFragmentManager();
-        HomeFragment fragment = (HomeFragment) manager.findFragmentByTag("Home");
-        fragment.registerBackFunction();
-    }
 
     /*@Override
     public ProgressBar getProgressIndicator() {

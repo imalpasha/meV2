@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
 
     <LinearLayout
@@ -11,37 +11,11 @@
         android:layout_height="fill_parent"
         android:weightSum="1">
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:orientation="vertical"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"
-            android:background="@color/dark_lvl1" >
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView12"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_plain" />
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView13"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_text" />
-        </RelativeLayout>
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85"
+            android:layout_weight="1"
             android:background="@drawable/grey_with_white_gradient">
 
             <LinearLayout
@@ -84,7 +58,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="1dp">
 
                         <ImageView
@@ -99,7 +73,7 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -111,7 +85,7 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:background="@color/actionBarColour_default_theme" >
@@ -129,14 +103,14 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="5dp"
                                     android:id="@+id/linearLayout23"
@@ -182,7 +156,7 @@
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="5dp"
                                     android:visibility="gone"
@@ -228,7 +202,7 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:background="@color/actionBarColour_default_theme" >
@@ -246,7 +220,7 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:id="@+id/goingFlightPrice"
                                 android:background="@drawable/drawable_login_bottom_border" >
@@ -254,7 +228,7 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="3dp"
                                     android:layout_marginTop="10dp" >
@@ -262,7 +236,7 @@
                                     <LinearLayout
                                         android:orientation="horizontal"
                                         android:layout_width="match_parent"
-                                        android:layout_height="match_parent" >
+                                        android:layout_height="wrap_content" >
 
                                         <TextView
                                             android:layout_width="wrap_content"
@@ -277,7 +251,7 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="2dp" >
 
@@ -313,7 +287,7 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="3dp" >
 
@@ -859,7 +833,7 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
@@ -915,7 +889,7 @@
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:id="@+id/servicesList"
                                     android:weightSum="1">
 
@@ -924,7 +898,7 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+                                    android:layout_height="wrap_content"
                                     android:weightSum="1"
                                     android:padding="2dp"
                                     android:layout_marginTop="5dp">

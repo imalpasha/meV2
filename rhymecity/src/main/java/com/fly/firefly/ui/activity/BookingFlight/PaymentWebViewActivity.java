@@ -7,6 +7,7 @@ import android.util.Log;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -33,6 +34,8 @@ public class PaymentWebViewActivity extends MainFragmentActivity implements Frag
         fragmentManager.beginTransaction().replace(R.id.main_content, PaymentWebViewFragment.newInstance(bundle)).commit();
 
         hideTitle();
+        BaseFragment.removeLogoHeader(this);
+
     }
 
     @Override

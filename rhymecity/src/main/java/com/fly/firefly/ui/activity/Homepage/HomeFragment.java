@@ -172,6 +172,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             @Override
             public void onClick(View v) {
                 if(bannerModule != null){
+                    Log.e("bannerModule",bannerModule);
                     Controller.clickableBanner(getActivity(),bannerModule);
                 }
             }

@@ -745,7 +745,7 @@
     <!-- MANAGE FLIGHT -->
     <string name="manage_flight">MANAGE FLIGHT</string>
     <string name="manage_flight_contact_email">Contact Email</string>
-    <string name="manage_flight_confirmation_number">PNR Code</string>
+    <string name="manage_flight_confirmation_number">Confirmation Number</string>
 
     <string name="manage_flight_change_contact">CHANGE CONTACT</string>
     <string name="manage_flight_edit_passenger">EDIT PASSENGER</string>

@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:weightSum="1">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:orientation="vertical"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"
-            android:visibility="gone"
-            android:background="@color/dark_lvl1" >
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView12"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_plain" />
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView13"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_text" />
-        </RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
@@ -77,12 +51,13 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
+                    android:gravity="center_vertical"
                     android:layout_height="fill_parent"
                     android:padding="8dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView2"
                         android:layout_gravity="right"
                         android:adjustViewBounds="true"
@@ -123,14 +98,15 @@
                     android:orientation="vertical"
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
+                    android:gravity="center_vertical"
                     android:layout_height="fill_parent"
-                    android:gravity="right"
                     android:padding="8dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView3"
+                        android:layout_gravity="right"
                         android:src="@drawable/fly_manage_flight"
                         android:adjustViewBounds="true"/>
                 </LinearLayout>
@@ -171,13 +147,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
                     android:layout_height="fill_parent"
-                    android:gravity="right"
+                    android:gravity="center_vertical"
                     android:padding="8dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView4"
+                        android:layout_gravity="right"
                         android:src="@drawable/fly_mobile_checkin"
                         android:adjustViewBounds="true"/>
                 </LinearLayout>
@@ -217,13 +194,14 @@
                     android:layout_width="0dp"
                     android:layout_weight="0.3"
                     android:layout_height="fill_parent"
-                    android:gravity="right"
+                    android:gravity="center_vertical"
                     android:padding="8dp">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView5"
+                        android:layout_gravity="right"
                         android:src="@drawable/boarding_pass_logo"
                         android:adjustViewBounds="true"/>
                 </LinearLayout>
@@ -425,4 +403,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>
