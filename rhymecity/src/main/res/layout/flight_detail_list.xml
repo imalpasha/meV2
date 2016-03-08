@@ -22,8 +22,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:id="@+id/imageView8"
-                android:src="@drawable/departure_icon"/>
+                android:id="@+id/listFlightIcon"/>
         </LinearLayout>
 
         <LinearLayout

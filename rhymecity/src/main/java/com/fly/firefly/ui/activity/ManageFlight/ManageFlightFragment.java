@@ -60,12 +60,12 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     @NotEmpty(sequence = 1)
     @Order(1)
     @InjectView(R.id.txtPNR)
-    TextView txtPNR;
+    EditText txtPNR;
 
     @NotEmpty(sequence = 1)
     @Order(2)
     @InjectView(R.id.txtUsername)
-    TextView txtUsername;
+    EditText txtUsername;
 
     @InjectView(R.id.listView)
     ListView listView;
@@ -122,10 +122,12 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
         if(loginStatus != null && loginStatus.equals("Y")) {
             if(Controller.connectionAvailable(getActivity())){
                 initiateLoading(getActivity());
-                presenter.onSendPNRV2(storeUsername, storePassword,"manage_booking");
+                presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
             }else{
                 //Display No Internet connection
             }
+            btnManageFlightContinue.setVisibility(View.GONE);
+
         }else{
             pnrLayout.setVisibility(View.VISIBLE);
         }
@@ -217,13 +219,14 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     }
 
     @Override
-    public void onUserPnrList(ListBookingReceive obj){
+    public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
             adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
             listView.setAdapter(adapter);
+            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
             //pnrLayout.setVisibility(View.GONE);
         }
 
@@ -235,12 +238,14 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
                 //view.startAnimation(hyperspaceJumpAnimation);
 
                 Log.e("Selected PNR", selectedFromList.getPnr());
-                Log.e("Username",pref.getUserEmail().toString());
+                Log.e("Username", pref.getUserEmail().toString());
                 initiateLoading(getActivity());
 
                 ManageFlightObj manageFlightObj = new ManageFlightObj();
                 manageFlightObj.setPnr(selectedFromList.getPnr());
                 manageFlightObj.setUsername(storeUsername);
+                manageFlightObj.setUser_id(obj.getObj().getUser_id());
+                manageFlightObj.setSignature(obj.getObj().getSignature());
 
                 presenter.onSendPNRV1(manageFlightObj);
             }

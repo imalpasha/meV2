@@ -17,12 +17,28 @@
             android:paddingBottom="10dp"
             android:background="@drawable/drawable_login_bottom_border" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Issuing Country *"
-                android:id="@+id/textView82"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Issuing Country"
+                    android:id="@+id/textView82"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/asterik"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="3dp"
+                    android:id="@+id/textView340" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -48,12 +64,28 @@
             android:paddingBottom="10dp"
             android:background="@drawable/drawable_login_bottom_border" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Travel Document *"
-                android:id="@+id/textView113"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Travel Document"
+                    android:id="@+id/textView113"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/asterik"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="3dp"
+                    android:id="@+id/textView341" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -114,12 +146,28 @@
             android:paddingBottom="10dp"
             android:background="@drawable/drawable_login_bottom_border" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Document No *"
-                android:id="@+id/textView87"
-                android:textStyle="bold" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Document No"
+                    android:id="@+id/textView87"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/asterik"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="3dp"
+                    android:id="@+id/textView342" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -164,6 +212,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:inputType="number"
+                    android:hint="@string/bonuslink_hint"
                     android:background="@drawable/block_with_border"
                     android:id="@+id/checkInPassengerBonuslink"
                     android:tag="passenger1_bonus_link"

@@ -601,11 +601,26 @@
                                     android:tag="passenger1_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView229" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -745,6 +760,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
                                             android:maxLength="16"
                                             android:inputType="number"
                                             android:background="@drawable/block_with_border"
@@ -1150,12 +1166,27 @@
                                     android:tag="passenger2_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:id="@+id/txtExpire"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:id="@+id/txtExpire"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView332" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -1299,9 +1330,11 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_enrich"
                                             android:inputType="number"
+                                            android:maxLength="16"
                                             android:tag="passenger2_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1659,7 +1692,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:"
+                                        android:text="Travel Document."
                                         android:id="@+id/textView183"
                                         android:textStyle="bold"/>
 
@@ -1698,12 +1731,27 @@
                                     android:tag="passenger3_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:id="@+id/textView185"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date"
+                                            android:id="@+id/textView185"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView333" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -1743,7 +1791,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:"
+                                        android:text="Issuing Country"
                                         android:id="@+id/textView188"
                                         android:textStyle="bold"/>
 
@@ -1788,7 +1836,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:"
+                                        android:text="Document No."
                                         android:id="@+id/textView190"
                                         android:textStyle="bold"/>
 
@@ -1845,9 +1893,10 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="number"
-                                            android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger3_enrich"
+                                            android:maxLength="16"
                                             android:tag="passenger3_enrich" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -2148,7 +2197,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:id="@+id/textView201"
                                             android:textStyle="bold" />
 
@@ -2205,7 +2254,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:"
+                                        android:text="Travel Document."
                                         android:id="@+id/textView203"
                                         android:textStyle="bold"/>
 
@@ -2244,12 +2293,27 @@
                                     android:tag="passenger4_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:id="@+id/textView205"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date."
+                                            android:id="@+id/textView205"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView334" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -2289,7 +2353,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:"
+                                        android:text="Issuing Country."
                                         android:id="@+id/textView208"
                                         android:textStyle="bold"/>
 
@@ -2334,7 +2398,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:"
+                                        android:text="Document No."
                                         android:id="@+id/textView210"
                                         android:textStyle="bold"/>
 
@@ -2392,6 +2456,7 @@
                                             android:padding="5dp"
                                             android:inputType="number"
                                             android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger4_enrich"
                                             android:tag="passenger4_enrich" />
@@ -2694,7 +2759,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -2749,7 +2814,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Travel Document:"
+                                        android:text="Travel Document."
                                         android:id="@+id/textView223"
                                         android:textStyle="bold"/>
 
@@ -2788,12 +2853,27 @@
                                     android:tag="passenger5_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:id="@+id/textView225"
-                                        android:textStyle="bold" />
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date."
+                                            android:id="@+id/textView225"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView335" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -2833,7 +2913,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:"
+                                        android:text="Issuing Country."
                                         android:id="@+id/textView228"
                                         android:textStyle="bold"/>
 
@@ -2878,7 +2958,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Document No:"
+                                        android:text="Document No."
                                         android:id="@+id/textView230"
                                         android:textStyle="bold"/>
 
@@ -2936,6 +3016,7 @@
                                             android:padding="5dp"
                                             android:inputType="number"
                                             android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger5_enrich"
                                             android:tag="passenger5_enrich" />
@@ -3230,7 +3311,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3286,7 +3367,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Travel Document:"
+                                            android:text="Travel Document."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3325,11 +3406,26 @@
                                     android:tag="passenger6_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date."
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView336" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -3371,7 +3467,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Issuing Country."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3416,7 +3512,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Document No:"
+                                            android:text="Document No."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3475,6 +3571,8 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger6_enrich"
                                             android:inputType="number"
+                                            android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:tag="passenger6_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -3763,7 +3861,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3818,7 +3916,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Travel Document:"
+                                            android:text="Travel Document."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3853,14 +3951,29 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:visibility="gone"
-                                    android:tag="passenger6_expire_date_block"
+                                    android:tag="passenger7_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date."
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView339" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -3902,7 +4015,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Issuing Country."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3946,7 +4059,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Document No:"
+                                            android:text="Document No."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4004,6 +4117,8 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger7_enrich"
                                             android:inputType="number"
+                                            android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:tag="passenger7_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4291,7 +4406,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4346,7 +4461,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Travel Document:"
+                                            android:text="Travel Document."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4381,14 +4496,29 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:visibility="gone"
-                                    android:tag="passenger6_expire_date_block"
+                                    android:tag="passenger8_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date."
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView338" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -4430,7 +4560,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Issuing Country."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4474,7 +4604,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Document No:"
+                                            android:text="Document No."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4532,6 +4662,8 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger8_enrich"
                                             android:inputType="number"
+                                            android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:tag="passenger8_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
@@ -4819,7 +4951,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Date Of Birth"
+                                            android:text="Date Of Birth."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4874,7 +5006,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Travel Document:"
+                                            android:text="Travel Document."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4909,14 +5041,29 @@
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:visibility="gone"
-                                    android:tag="passenger6_expire_date_block"
+                                    android:tag="passenger9_expire_date_block"
                                     android:background="@drawable/drawable_login_bottom_border">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Expiration Date:*"
-                                        android:textStyle="bold"/>
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView337" />
+                                    </LinearLayout>
 
                                     <LinearLayout
                                         android:orientation="horizontal"
@@ -4958,7 +5105,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Issuing Country."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5002,7 +5149,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Document No:"
+                                            android:text="Document No."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5060,11 +5207,2299 @@
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger9_enrich"
                                             android:inputType="number"
+                                            android:maxLength="16"
+                                            android:hint="@string/bonuslink_hint"
                                             android:tag="passenger9_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/passengerBlock10"
+                            android:tag="passengerBlock10"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:background="@color/actionBarColour_default_theme"
+                                android:id="@+id/linearLayout5" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Passenger 10"
+                                    android:id="@+id/textView1610"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/linearLayout10" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger10_travelling_with_block"
+                                    android:tag="passenger10_travelling_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travelling With."
+                                            android:id="@+id/textView163"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView128" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout6" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:text="0"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger10_travelling_with"
+                                            android:tag="passenger10_travelling_with"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger10_title_with_block"
+                                    android:tag="passenger10_title_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Title."
+                                            android:id="@+id/textView167"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView129" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout8" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger10_title"
+                                            android:tag="passenger10_title" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:tag="passenger10_gender_block"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Gender."
+                                            android:id="@+id/textView165"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView130" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout7" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger10_gender"
+                                            android:tag="passenger10_gender"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="First Name"
+                                            android:id="@+id/textView169"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView131" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_first_name"
+                                            android:tag="passenger10_first_name"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Last Name"
+                                            android:id="@+id/textView170"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView133" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_last_name"
+                                            android:tag="passenger10_last_name"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Date Of Birth"
+                                            android:id="@+id/textView171"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView134" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:layout_marginTop="5dp" >
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="match_parent"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/linearLayout9" >
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:hint="DOB"
+                                                android:padding="3dp"
+                                                android:id="@+id/passenger10_dob"
+                                                android:tag="passenger10_dob"/>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travel Document:"
+                                            android:id="@+id/textView173"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_travel_doc"
+                                            android:tag="passenger10_travel_doc"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:visibility="gone"
+                                    android:tag="passenger10_expire_date_block"
+                                    android:background="@drawable/drawable_login_bottom_border">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:id="@+id/txtExpire"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView332" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_expire_date"
+                                            android:tag="passenger10_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger10_hidden_expire_date"
+                                            android:tag="passenger10_hidden_expire_date"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Issuing Country:"
+                                            android:id="@+id/textView174"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_issuing_country"
+                                            android:tag="passenger10_issuing_country"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Document No:"
+                                            android:id="@+id/textView175"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:inputType="textPhonetic"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_doc_no"
+                                            android:tag="passenger10_doc_no"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger10_enrich_block"
+                                    android:tag="passenger10_enrich_block">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Bonuslink Card No."
+                                        android:id="@+id/textView176"
+                                        android:textStyle="bold"/>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger10_enrich"
+                                            android:inputType="number"
+                                            android:maxLength="16"
+                                            android:tag="passenger10_enrich"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/passengerBlock11"
+                            android:tag="passengerBlock11"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:background="@color/actionBarColour_default_theme"
+                                android:id="@+id/linearLayout5" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Passenger 2"
+                                    android:id="@+id/textView162"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/linearLayout10" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger11_travelling_with_block"
+                                    android:tag="passenger11_travelling_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travelling With."
+                                            android:id="@+id/textView163"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView128" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout6" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:text="0"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger11_travelling_with"
+                                            android:tag="passenger11_travelling_with"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger11_title_with_block"
+                                    android:tag="passenger11_title_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Title."
+                                            android:id="@+id/textView167"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView129" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout8" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger11_title"
+                                            android:tag="passenger11_title" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:tag="passenger11_gender_block"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Gender."
+                                            android:id="@+id/textView165"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView130" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout7" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger11_gender"
+                                            android:tag="passenger11_gender"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="First Name"
+                                            android:id="@+id/textView169"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView131" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_first_name"
+                                            android:tag="passenger11_first_name"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Last Name"
+                                            android:id="@+id/textView170"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView133" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_last_name"
+                                            android:tag="passenger11_last_name"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Date Of Birth"
+                                            android:id="@+id/textView171"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView134" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:layout_marginTop="5dp" >
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="match_parent"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/linearLayout9" >
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:hint="DOB"
+                                                android:padding="3dp"
+                                                android:id="@+id/passenger11_dob"
+                                                android:tag="passenger11_dob"/>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travel Document:"
+                                            android:id="@+id/textView173"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_travel_doc"
+                                            android:tag="passenger11_travel_doc"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:visibility="gone"
+                                    android:tag="passenger11_expire_date_block"
+                                    android:background="@drawable/drawable_login_bottom_border">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:id="@+id/txtExpire"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView332" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_expire_date"
+                                            android:tag="passenger11_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger11_hidden_expire_date"
+                                            android:tag="passenger11_hidden_expire_date"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Issuing Country:"
+                                            android:id="@+id/textView174"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_issuing_country"
+                                            android:tag="passenger11_issuing_country"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Document No:"
+                                            android:id="@+id/textView175"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:inputType="textPhonetic"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_doc_no"
+                                            android:tag="passenger11_doc_no"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger11_enrich_block"
+                                    android:tag="passenger11_enrich_block">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Bonuslink Card No."
+                                        android:id="@+id/textView176"
+                                        android:textStyle="bold"/>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger11_enrich"
+                                            android:inputType="number"
+                                            android:maxLength="16"
+                                            android:tag="passenger11_enrich"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/passengerBlock12"
+                            android:tag="passengerBlock12"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:background="@color/actionBarColour_default_theme"
+                                android:id="@+id/linearLayout5" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Passenger 2"
+                                    android:id="@+id/textView162"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/linearLayout10" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger12_travelling_with_block"
+                                    android:tag="passenger12_travelling_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travelling With."
+                                            android:id="@+id/textView163"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView128" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout6" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:text="0"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger12_travelling_with"
+                                            android:tag="passenger12_travelling_with"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger12_title_with_block"
+                                    android:tag="passenger12_title_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Title."
+                                            android:id="@+id/textView167"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView129" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout8" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger12_title"
+                                            android:tag="passenger12_title" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:tag="passenger12_gender_block"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Gender."
+                                            android:id="@+id/textView165"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView130" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout7" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger12_gender"
+                                            android:tag="passenger12_gender"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="First Name"
+                                            android:id="@+id/textView169"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView131" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_first_name"
+                                            android:tag="passenger12_first_name"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Last Name"
+                                            android:id="@+id/textView170"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView133" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_last_name"
+                                            android:tag="passenger12_last_name"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Date Of Birth"
+                                            android:id="@+id/textView171"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView134" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:layout_marginTop="5dp" >
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="match_parent"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/linearLayout9" >
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:hint="DOB"
+                                                android:padding="3dp"
+                                                android:id="@+id/passenger12_dob"
+                                                android:tag="passenger12_dob"/>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travel Document:"
+                                            android:id="@+id/textView173"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_travel_doc"
+                                            android:tag="passenger12_travel_doc"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:visibility="gone"
+                                    android:tag="passenger12_expire_date_block"
+                                    android:background="@drawable/drawable_login_bottom_border">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:id="@+id/txtExpire"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView332" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_expire_date"
+                                            android:tag="passenger12_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger12_hidden_expire_date"
+                                            android:tag="passenger12_hidden_expire_date"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Issuing Country:"
+                                            android:id="@+id/textView174"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_issuing_country"
+                                            android:tag="passenger12_issuing_country"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Document No:"
+                                            android:id="@+id/textView175"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:inputType="textPhonetic"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_doc_no"
+                                            android:tag="passenger12_doc_no"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger12_enrich_block"
+                                    android:tag="passenger12_enrich_block">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Bonuslink Card No."
+                                        android:id="@+id/textView176"
+                                        android:textStyle="bold"/>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger12_enrich"
+                                            android:inputType="number"
+                                            android:maxLength="16"
+                                            android:tag="passenger12_enrich"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/passengerBlock13"
+                            android:tag="passengerBlock13"
+                            android:visibility="gone">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:background="@color/actionBarColour_default_theme"
+                                android:id="@+id/linearLayout5" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Passenger 2"
+                                    android:id="@+id/textView162"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/linearLayout10" >
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger13_travelling_with_block"
+                                    android:tag="passenger13_travelling_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travelling With."
+                                            android:id="@+id/textView163"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView128" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout6" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:text="0"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger13_travelling_with"
+                                            android:tag="passenger13_travelling_with"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger13_title_with_block"
+                                    android:tag="passenger13_title_with_block">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Title."
+                                            android:id="@+id/textView167"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView129" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout8" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger13_title"
+                                            android:tag="passenger13_title" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:tag="passenger13_gender_block"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Gender."
+                                            android:id="@+id/textView165"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView130" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/block_with_border"
+                                        android:layout_marginTop="5dp"
+                                        android:id="@+id/linearLayout7" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:textStyle="bold"
+                                            android:id="@+id/passenger13_gender"
+                                            android:tag="passenger13_gender"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="First Name"
+                                            android:id="@+id/textView169"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView131" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_first_name"
+                                            android:tag="passenger13_first_name"/>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Last Name"
+                                            android:id="@+id/textView170"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView133" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="3dp"
+                                            android:inputType="textPersonName"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_last_name"
+                                            android:tag="passenger13_last_name"
+                                            />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Date Of Birth"
+                                            android:id="@+id/textView171"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView134" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:weightSum="1"
+                                        android:layout_marginTop="5dp" >
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="0dp"
+                                            android:layout_weight="1"
+                                            android:layout_height="match_parent"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/linearLayout9" >
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:hint="DOB"
+                                                android:padding="3dp"
+                                                android:id="@+id/passenger13_dob"
+                                                android:tag="passenger13_dob"/>
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Travel Document:"
+                                            android:id="@+id/textView173"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_travel_doc"
+                                            android:tag="passenger13_travel_doc"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:visibility="gone"
+                                    android:tag="passenger13_expire_date_block"
+                                    android:background="@drawable/drawable_login_bottom_border">
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Expiration Date:"
+                                            android:id="@+id/txtExpire"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"
+                                            android:id="@+id/textView332" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_expire_date"
+                                            android:tag="passenger13_expire_date"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/passenger13_hidden_expire_date"
+                                            android:tag="passenger13_hidden_expire_date"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Issuing Country:"
+                                            android:id="@+id/textView174"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <TextView
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_issuing_country"
+                                            android:tag="passenger13_issuing_country"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Document No:"
+                                            android:id="@+id/textView175"
+                                            android:textStyle="bold"/>
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginLeft="3dp"/>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:inputType="textPhonetic"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_doc_no"
+                                            android:tag="passenger13_doc_no"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:background="@drawable/drawable_login_bottom_border"
+                                    android:id="@+id/passenger13_enrich_block"
+                                    android:tag="passenger13_enrich_block">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Bonuslink Card No."
+                                        android:id="@+id/textView176"
+                                        android:textStyle="bold"/>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="5dp" >
+
+                                        <EditText
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:padding="5dp"
+                                            android:hint="@string/bonuslink_hint"
+                                            android:background="@drawable/block_with_border"
+                                            android:id="@+id/passenger13_enrich"
+                                            android:inputType="number"
+                                            android:maxLength="16"
+                                            android:tag="passenger13_enrich"/>
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
 
                     </LinearLayout>
 

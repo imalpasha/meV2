@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,15 +74,15 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.editTextState)
     TextView editTextState;
 
-    @NotEmpty(sequence = 1)
     @Order(1)
-    @Email(message = "Invalid Email")
+    @NotEmpty(sequence = 1)
+    @Email(sequence = 2 ,message = "Invalid Email")
     @InjectView(R.id.txtUsername)
     EditText txtUsername;
 
     @Order(2)
     @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 6 and maximum 16 characters")
+    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 8 and maximum 16 characters")
     @Password(sequence = 3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Password invalid , please refer to the password hint") // Password validator
     @InjectView(R.id.txtPassword)
     EditText txtPassword;
@@ -114,14 +115,18 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.txtAddressLine2)
     EditText txtAddressLine2;
 
-    @Order(9) @NotEmpty(sequence = 1) @Length(sequence = 2, min = 5,max = 7, message = "Invalid postcode")
+    @Order(9) @NotEmpty(sequence = 1)
+    @Length(sequence = 2, min = 5,max = 7, message = "Invalid postcode")
     @InjectView(R.id.editTextPostcode)
     EditText editTextPostcode;
 
-    @Order(10) @NotEmpty(sequence = 1)
-    @Length(sequence = 1, min = 6,max = 14, message = "Invalid phone number")
+    @Order(10)
+    @NotEmpty(sequence = 1)
+    @Length(sequence = 2, min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.editTextMobilePhone) EditText editTextMobilePhone;
 
+    @NotEmpty(sequence = 1)
+    @Length(sequence = 2, min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.editTextAlternatePhone)
     EditText txtAlternatePhoneNumber;
 
@@ -212,6 +217,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
         pref = new SharedPrefManager(getActivity());
 
+        txtConfirmPassword.setTransformationMethod(new PasswordTransformationMethod());
+        txtPassword.setTransformationMethod(new PasswordTransformationMethod());
 
         /*Get Data From BaseFragment*/
         countrys = getStaticCountry(getActivity());
@@ -269,7 +276,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 //Multiple Manual Validation - Library Problem (failed to validate optional field)
                 resetManualValidationStatus();
                 manualValidation(txtBonusLink, "bonuslink");
-                manualValidation(txtAlternatePhoneNumber, "phoneNumber");
+                //manualValidation(txtAlternatePhoneNumber, "phoneNumber");
                 manualValidation(txtFaqNumber,"phoneNumber");
                 validateStatus = getManualValidationStatus();
 

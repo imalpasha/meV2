@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -207,6 +208,11 @@ public class UpdateProfileFragment extends BaseFragment implements
         countrys = new ArrayList<DropDownItem>();
         state = new ArrayList<DropDownItem>();
         titleList = new ArrayList<DropDownItem>();
+
+        ///password
+        txtCurrentPassword.setTransformationMethod(new PasswordTransformationMethod());
+        txtNewPassword.setTransformationMethod(new PasswordTransformationMethod());
+        txtConfirmPassword.setTransformationMethod(new PasswordTransformationMethod());
 
         titleList = getStaticTitle(getActivity());
         countrys = getStaticCountry(getActivity());

@@ -21,6 +21,7 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ItinenaryModule;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.Validator;
@@ -175,6 +176,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ItinenaryModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
     }
 

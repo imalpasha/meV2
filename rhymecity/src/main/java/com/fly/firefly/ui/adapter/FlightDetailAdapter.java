@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fly.firefly.R;
@@ -63,9 +64,8 @@ public class FlightDetailAdapter extends BaseAdapter {
         @InjectView(R.id.txtDepartureAirport) TextView txtDepartureAirport;
         @InjectView(R.id.txtArrivalAirport) TextView txtArrivalAirport;
         @InjectView(R.id.txtFarePrice) TextView txtFarePrice;
+        @InjectView(R.id.listFlightIcon) ImageView listFlightIcon;
         @InjectView(R.id.checkBox) CheckBox checkBox;
-
-
     }
 
     @Override
@@ -141,6 +141,12 @@ public class FlightDetailAdapter extends BaseAdapter {
         vh.txtDepartureAirport.setText(departureAirport);
         vh.txtArrivalAirport.setText(arrivalAirport);
         vh.txtFarePrice.setText(totalFare);
+
+        if(flightWay.equals("DEPART")){
+           vh.listFlightIcon.setBackgroundResource(R.drawable.departure_icon);
+        }else{
+            vh.listFlightIcon.setBackgroundResource(R.drawable.arrival_icon);
+        }
         return view;
 
     }

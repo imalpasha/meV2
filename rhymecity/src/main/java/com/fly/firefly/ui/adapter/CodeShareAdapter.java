@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.fly.firefly.R;
@@ -72,7 +73,7 @@ public class CodeShareAdapter extends BaseAdapter {
         @InjectView(R.id.economyPromoCheckBox) CheckBox economyPromoCheckBox;
         @InjectView(R.id.economyCheckBox) CheckBox economyCheckBox;
         @InjectView(R.id.businessCheckBox) CheckBox businessCheckBox;
-
+        @InjectView(R.id.listFlightIcon) ImageView listFlightIcon;
 
     }
 
@@ -221,6 +222,12 @@ public class CodeShareAdapter extends BaseAdapter {
         }else{
             vh.txtBusiness.setText(obj.get(position).getBusiness_class().getStatus());
             vh.businessCheckBox.setVisibility(View.GONE);
+        }
+
+        if(flightWay.equals("DEPART")){
+            vh.listFlightIcon.setBackgroundResource(R.drawable.departure_icon);
+        }else{
+            vh.listFlightIcon.setBackgroundResource(R.drawable.arrival_icon);
         }
 
         return view;

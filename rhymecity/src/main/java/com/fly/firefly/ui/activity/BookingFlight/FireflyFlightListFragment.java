@@ -1,20 +1,27 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
+import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SelectFlightReceive;
@@ -23,20 +30,28 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.ManageFlight.CommitChangeActivity;
 import com.fly.firefly.ui.adapter.FlightDetailAdapter;
 import com.fly.firefly.ui.module.SelectFlightModule;
+import com.fly.firefly.ui.object.CachedResult;
+import com.fly.firefly.ui.object.LoginRequest;
+import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.object.SelectChangeFlight;
 import com.fly.firefly.ui.object.SelectFlight;
 import com.fly.firefly.ui.presenter.BookingPresenter;
+import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.ExpandAbleGridView;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class FireflyFlightListFragment extends BaseFragment implements BookingPresenter.ListFlightView {
 
@@ -91,12 +106,17 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     private SharedPrefManager pref;
     private SearchFlightReceive obj;
     private String status1 = "N",status2 = "N";
+    private AlertDialog dialog;
 
     private String departFlightNumber,departFlightDepartureTime,departFlightArrivalTime,departFlightJourneyKey,
             departFlightFareSellKey;
     private String returnFlightNumber,returnFlightDepartureTime,returnFlightArrivalTime,returnFlightJourneyKey,
             returnFlightFareSellKey;
     private String pnr,bookingId,changeFlightType;
+    private String storeUsername;
+    private String storePassword;
+    private SelectFlight selectFlightObj;
+    private String loginStatus;
 
     public static FireflyFlightListFragment newInstance(Bundle bundle) {
 
@@ -110,6 +130,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SelectFlightModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -118,6 +140,13 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         View view = inflater.inflate(R.layout.flight_detail, container, false);
         ButterKnife.inject(this, view);
 
+
+          /*Preference Manager*/
+        pref = new SharedPrefManager(getActivity());
+
+            /* If Passenger Already Login - Auto display necessary data */
+        HashMap<String, String> initLogin = pref.getLoginStatus();
+        loginStatus = initLogin.get(SharedPrefManager.ISLOGIN);
         /*Realm Obj Test*/
         //Realm realm = Realm.getInstance(getActivity());
         //RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
@@ -257,7 +286,12 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                 if(proceed){
 
                   if(pnr == null){
-                    goPersonalDetail();
+                      if(loginStatus == null || loginStatus.equals("N")) {
+                          continueAs();
+                      }else{
+                          goPersonalDetail();
+                      }
+
                   }  else{
                       changeFlight();
                   }
@@ -297,9 +331,114 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             }
         });
 
-
         return view;
     }
+
+    public void continueAs(){
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        final View myView = li.inflate(R.layout.continue_as, null);
+
+        Button cont = (Button)myView.findViewById(R.id.btnContinue);
+        Button close = (Button)myView.findViewById(R.id.btnClose);
+        Button login = (Button)myView.findViewById(R.id.btnLogin);
+        final EditText userId = (EditText)myView.findViewById(R.id.txtUserId);
+        final EditText password = (EditText)myView.findViewById(R.id.txtPassword);
+        password.setTransformationMethod(new PasswordTransformationMethod());
+
+        final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail_login);
+        final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                goPersonalDetail();
+                dialog.dismiss();
+
+            }
+
+        });
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (userId.getText().toString().equals("") || password.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "User ID is required", Toast.LENGTH_LONG).show();
+                } else if (!userId.getText().toString().matches(emailPattern)) {
+                    Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
+                } else {
+                    loginFragment(userId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, password.getText().toString()));
+                }
+            }
+
+        });
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(myView);
+
+        dialog = builder.create();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //lp.height = 570;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+
+    /* SENT REQUEST TO LOGIN API*/
+    public void loginFragment(String username,String password){
+        /*Start Loading*/
+        initiateLoading(getActivity());
+        LoginRequest data = new LoginRequest();
+        data.setUsername(username);
+        data.setPassword(password);
+
+        storeUsername = username;
+        storePassword = password;
+
+        presenter.requestLogin(data);
+    }
+
+    @Override
+    public void onLoginSuccess(LoginReceive obj) {
+
+        dismissLoading();
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
+        if (status) {
+
+            pref.setLoginStatus("Y");
+            pref.setNewsletterStatus(obj.getUser_info().getNewsletter());
+            pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
+            pref.setUsername(obj.getUser_info().getFirst_name());
+
+            Log.e(storeUsername,storePassword);
+            pref.setUserEmail(storeUsername);
+            pref.setUserPassword(storePassword);
+
+            Gson gsonUserInfo = new Gson();
+            String userInfo = gsonUserInfo.toJson(obj.getUser_info());
+            pref.setUserInfo(userInfo);
+
+            dialog.dismiss();
+            goPersonalDetail();
+        }
+    }
+
 
     /*Inner Func*/
     public void goPersonalDetail()
@@ -307,7 +446,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         initiateLoading(getActivity());
 
-        SelectFlight selectFlightObj = new SelectFlight();
+        selectFlightObj = new SelectFlight();
         selectFlightObj.setType(flightType);
 
         selectFlightObj.setDeparture_station(departPortCode);
@@ -490,6 +629,16 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         presenter.onResume();
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         Log.e("Tracker", SCREEN_LABEL);
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            SelectFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SelectFlightReceive.class);
+            onSeletFlightReceive(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.PassengerSeatAdapterV1;
 import com.fly.firefly.ui.adapter.PassengerSeatAdapterV2;
 import com.fly.firefly.ui.module.SeatSelectionModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageSeatInfo;
 import com.fly.firefly.ui.object.PasssengerInfoV2;
 import com.fly.firefly.ui.object.SeatInfo;
@@ -31,6 +32,7 @@ import com.fly.firefly.ui.object.SeatSelection;
 import com.fly.firefly.ui.object.SeatSetup;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.ExpandAbleGridView;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
@@ -44,6 +46,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import io.realm.RealmResults;
 
 public class SeatSelectionFragment extends BaseFragment implements BookingPresenter.SeatSelectionView {
 
@@ -110,6 +113,8 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SeatSelectionModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -120,6 +125,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
+
         HashMap<String, String> init = pref.getSeat();
         String seatHash = init.get(SharedPrefManager.SEAT);
         /*Booking Id*/
@@ -129,12 +135,13 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-        //Bundle bundle = getArguments();
-        //String seatGSON = bundle.getString("SEAT_INFORMATION");
+       // Bundle bundle = getArguments();
+       // String seatGSON = bundle.getString("SEAT_INFORMATION");
 
         /*Initiate Seat Row*/
         Gson gson = new Gson();
         ContactInfoReceive obj = gson.fromJson(seatHash, ContactInfoReceive.class);
+
         seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
         List<ContactInfoReceive.Journeys> journeys = obj.getObj().getJourneys();
 
@@ -166,14 +173,16 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         setSeat1(seatListDepart, seatInfoDepart);
         setPassenger1("DEPART", listPassengerDepart, txtSeatDeparture, objV2, journeys.get(0).getDeparture_station(), journeys.get(0).getArrival_station());
+        seatListReturn.setVisibility(View.GONE);
 
         if(journeys.size() > 1){
 
+            Log.e("ReturnSeat","True");
             twoWay = true;
             seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
-            setSeat2(seatListReturn,seatInfoReturn);
-
+            setSeat2(seatListReturn, seatInfoReturn);
+            passengerSeatListReturn.setVisibility(View.VISIBLE);
         }
 
 
@@ -191,10 +200,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                     passengerSeatListV2.clearSelected();
                 }
                 seatTag1 = new ArrayList<>(1);
-
-                //newLogin2/22
-                Log.e("myItemInt",Integer.toString(myItemInt));
-                Log.e("passengerSize",Integer.toString(passengerSize-1));
 
                 if(myItemInt < passengerSize-1){
                     next1 = false;
@@ -324,6 +329,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         //   Log.e(type, type);
 
         //}
+        Log.e("Seaat","return");
         txtSeat.setText(depart + " - " + arrival);
         passengerSeatListV2 = new PassengerSeatAdapterV2(getActivity(),passengers,this);
         list.setAdapter(passengerSeatListV2);
@@ -534,6 +540,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     }
 
     public void setSeat2(LinearLayout seatList,List<SeatInfo> seatInfo){
+
+
+        Log.e("Seatt","Return");
 
         int seatSize = seatInfo.size();
         int seatCount = 0;
@@ -814,6 +823,16 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            SeatSelectionReveice obj = gson.fromJson(result.get(0).getCachedResult(), SeatSelectionReveice.class);
+            onSeatSelect(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override

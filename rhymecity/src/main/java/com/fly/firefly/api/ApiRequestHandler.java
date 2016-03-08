@@ -71,6 +71,7 @@ import com.fly.firefly.ui.object.SendItinenaryObj;
 import com.fly.firefly.ui.object.Signature;
 import com.fly.firefly.ui.object.TermsRequest;
 import com.fly.firefly.ui.object.UpdateProfileRequest;
+import com.fly.firefly.utils.RealmObjectController;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -101,27 +102,27 @@ public class ApiRequestHandler {
 
        //
        // apiService.onRegisterNotification(event, new Callback<PushNotificationReceive>() {
-       apiService.onRegisterNotification(event.getCmd(),event.getUser_id(),event.getToken(),event.getName(),event.getCode(),new Callback<PushNotificationReceive>() {
+       apiService.onRegisterNotification(event.getCmd(), event.getUser_id(), event.getToken(), event.getName(), event.getCode(), new Callback<PushNotificationReceive>() {
 
-            @Override
-            public void success(PushNotificationReceive deviceResponse, Response response) {
+           @Override
+           public void success(PushNotificationReceive retroResponse, Response response) {
 
-                bus.post(new PushNotificationReceive(deviceResponse));
+               bus.post(new PushNotificationReceive(retroResponse));
+               RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
-            }
+           }
 
-            @Override
-            public void failure(RetrofitError error) {
+           @Override
+           public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+               BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
 
-            }
+           }
 
-        });
+       });
     }
     // ------------------------------------------------------------------------------ //
 
-    // - 1
     /* Subscribe From HomePresenter - Send Device Information to server - ImalPasha */
     @Subscribe
     public void onDeviceInfo(final DeviceInformation event) {
@@ -129,9 +130,10 @@ public class ApiRequestHandler {
         apiService.onSendDeviceInfo(event, new Callback<DeviceInfoSuccess>() {
 
             @Override
-            public void success(DeviceInfoSuccess deviceResponse, Response response) {
+            public void success(DeviceInfoSuccess retroResponse, Response response) {
 
-                bus.post(new DeviceInfoSuccess(deviceResponse));
+                bus.post(new DeviceInfoSuccess(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -145,28 +147,8 @@ public class ApiRequestHandler {
         });
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Subscribe
     public void onLoginRequest(final LoginRequest event) {
-
-        Log.e("Username", event.getUsername());
-        Log.e("Password", event.getPassword());
-
-       // initiateLoading();
-       // loading(true);
 
 
         apiService.onRequestToLogin(event, new Callback<LoginReceive>() {
@@ -175,6 +157,9 @@ public class ApiRequestHandler {
             public void success(LoginReceive rhymesResponse, Response response) {
 
                 bus.post(new LoginReceive(rhymesResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+
+
             }
 
             @Override
@@ -186,8 +171,6 @@ public class ApiRequestHandler {
 
         });
     }
-
-
 
     @Subscribe
     public void onPasswordRequest(final PasswordRequest event) {
@@ -201,6 +184,7 @@ public class ApiRequestHandler {
             public void success(ForgotPasswordReceive rhymesResponse, Response response) {
 
                 bus.post(new ForgotPasswordReceive(rhymesResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
             }
 
@@ -224,6 +208,7 @@ public class ApiRequestHandler {
             public void success(ChangePasswordReceive rhymesResponse, Response response) {
 
                 bus.post(new ChangePasswordReceive(rhymesResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
             }
 
@@ -282,7 +267,7 @@ public class ApiRequestHandler {
             public void success(UpdateProfileReceive rhymesResponse, Response response) {
 
                 bus.post(new UpdateProfileReceive(rhymesResponse));
-                // loading(false);
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
             }
 
             @Override
@@ -307,9 +292,8 @@ public class ApiRequestHandler {
             @Override
             public void success(RegisterReceive rhymesResponse, Response response) {
 
-                Log.e("Success", "True");
                 bus.post(new RegisterReceive(rhymesResponse));
-                // loading(false);
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
             }
 
             @Override
@@ -323,7 +307,6 @@ public class ApiRequestHandler {
         });
     }
 
-
     @Subscribe
     public void onSearchFlight(final SearchFlightObj event) {
 
@@ -333,7 +316,7 @@ public class ApiRequestHandler {
             public void success(SearchFlightReceive rhymesResponse, Response response) {
 
                 bus.post(new SearchFlightReceive(rhymesResponse));
-                ///BaseFragment.tempResult((new Gson()).toJson(rhymesResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
             }
 
@@ -341,7 +324,6 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
 
             }
 
@@ -355,15 +337,13 @@ public class ApiRequestHandler {
     @Subscribe
     public void onMobileCheckin(final MobileCheckinObj event) {
 
-        //initiateLoading();
-        //loading(true);
-
         apiService.onMobileCheckinRequest(event, new Callback<MobileCheckinReceive>() {
 
             @Override
             public void success(MobileCheckinReceive rhymesResponse, Response response) {
 
                 bus.post(new MobileCheckinReceive(rhymesResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
             }
 
@@ -378,11 +358,8 @@ public class ApiRequestHandler {
         });
     }
 
-        @Subscribe
-        public void onPassengerCheckIn(final MobileCheckInPassenger event) {
-
-            //initiateLoading();
-            //loading(true);
+    @Subscribe
+    public void onPassengerCheckIn(final MobileCheckInPassenger event) {
 
             apiService.onPassengerCheckIn(event, new Callback<MobileCheckInPassengerReceive>() {
 
@@ -390,6 +367,7 @@ public class ApiRequestHandler {
                 public void success(MobileCheckInPassengerReceive rhymesResponse, Response response) {
 
                     bus.post(new MobileCheckInPassengerReceive(rhymesResponse));
+                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
                 }
 
@@ -398,37 +376,33 @@ public class ApiRequestHandler {
 
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
 
-
                 }
 
             });
         }
 
+    @Subscribe
+    public void onConfirmPassengerCheckIn(final MobileConfirmCheckInPassenger event) {
 
-            @Subscribe
-            public void onConfirmPassengerCheckIn(final MobileConfirmCheckInPassenger event) {
+               apiService.onConfirmPassengerCheckIn(event, new Callback<MobileConfirmCheckInPassengerReceive>() {
 
-                //initiateLoading();
-                //loading(true);
+                   @Override
+                   public void success(MobileConfirmCheckInPassengerReceive rhymesResponse, Response response) {
 
-                apiService.onConfirmPassengerCheckIn(event, new Callback<MobileConfirmCheckInPassengerReceive>() {
+                       bus.post(new MobileConfirmCheckInPassengerReceive(rhymesResponse));
+                       RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
 
-                    @Override
-                    public void success(MobileConfirmCheckInPassengerReceive rhymesResponse, Response response) {
+                   }
 
-                        bus.post(new MobileConfirmCheckInPassengerReceive(rhymesResponse));
+                   @Override
+                   public void failure(RetrofitError error) {
 
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-
-                        BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                       BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
 
 
-                    }
+                   }
 
-                });
+               });
 
     }
 
@@ -438,8 +412,11 @@ public class ApiRequestHandler {
         apiService.onSelectFlight(event, new Callback<SelectFlightReceive>() {
 
             @Override
-            public void success(SelectFlightReceive xx, Response response) {
-                bus.post(new SelectFlightReceive(xx));
+            public void success(SelectFlightReceive retroResponse, Response response) {
+
+                bus.post(new SelectFlightReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -452,15 +429,16 @@ public class ApiRequestHandler {
         });
     }
 
-
     @Subscribe
     public void onPassengerInfo(final Passenger event) {
 
         apiService.onPassengerInfo(event, new Callback<PassengerInfoReveice>() {
 
             @Override
-            public void success(PassengerInfoReveice responseData, Response response) {
-                bus.post(new PassengerInfoReveice(responseData));
+            public void success(PassengerInfoReveice retroResponse, Response response) {
+
+                bus.post(new PassengerInfoReveice(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -481,10 +459,10 @@ public class ApiRequestHandler {
         apiService.onContactInfo(event, new Callback<ContactInfoReceive>() {
 
             @Override
-            public void success(ContactInfoReceive responseData, Response response) {
+            public void success(ContactInfoReceive retroResponse, Response response) {
 
-                bus.post(new ContactInfoReceive(responseData));
-
+                bus.post(new ContactInfoReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -499,22 +477,16 @@ public class ApiRequestHandler {
         });
     }
 
-
     @Subscribe
     public void onTermsRequest(final TermsRequest data) {
-
-        // initiateLoading();
-        // loading(true);
-
 
         apiService.onTermsRequest(new Callback<TermsReceive>() {
 
             @Override
             public void success(TermsReceive rhymesResponse, Response response) {
 
-                Log.e("success", "True");
                 bus.post(new TermsReceive(rhymesResponse));
-                // loading(false);
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
             }
 
             @Override
@@ -527,7 +499,6 @@ public class ApiRequestHandler {
 
         });
     }
-
 
     @Subscribe
     public void onSeatSelection(final SeatSelection event) {
@@ -535,9 +506,10 @@ public class ApiRequestHandler {
         apiService.onSeatSelection(event, new Callback<SeatSelectionReveice>() {
 
             @Override
-            public void success(SeatSelectionReveice responseData, Response response) {
+            public void success(SeatSelectionReveice retroResponse, Response response) {
 
-                bus.post(new SeatSelectionReveice(responseData));
+                bus.post(new SeatSelectionReveice(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -558,9 +530,10 @@ public class ApiRequestHandler {
         apiService.onPaymentInfo(event, new Callback<PaymentInfoReceive>() {
 
             @Override
-            public void success(PaymentInfoReceive responseData, Response response) {
+            public void success(PaymentInfoReceive retroResponse, Response response) {
 
-                bus.post(new PaymentInfoReceive(responseData));
+                bus.post(new PaymentInfoReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -582,9 +555,10 @@ public class ApiRequestHandler {
         apiService.onPaymentProcess(event, new Callback<PaymentReceive>() {
 
             @Override
-            public void success(PaymentReceive responseData, Response response) {
+            public void success(PaymentReceive retroResponse, Response response) {
 
-                bus.post(new PaymentReceive(responseData));
+                bus.post(new PaymentReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -605,9 +579,10 @@ public class ApiRequestHandler {
         apiService.onItineraryRequest(new Callback<ItineraryInfoReceive>() {
 
             @Override
-            public void success(ItineraryInfoReceive responseData, Response response) {
+            public void success(ItineraryInfoReceive retroResponse, Response response) {
 
-                bus.post(new ItineraryInfoReceive(responseData));
+                bus.post(new ItineraryInfoReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -628,8 +603,11 @@ public class ApiRequestHandler {
         apiService.onFlightSummary(event, new Callback<FlightSummaryReceive>() {
 
             @Override
-            public void success(FlightSummaryReceive responseData, Response response) {
-                bus.post(new FlightSummaryReceive(responseData));
+            public void success(FlightSummaryReceive retroResponse, Response response) {
+
+                bus.post(new FlightSummaryReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -650,8 +628,11 @@ public class ApiRequestHandler {
         apiService.onManageFlight(event, new Callback<FlightSummaryReceive>() {
 
             @Override
-            public void success(FlightSummaryReceive responseData, Response response) {
-                bus.post(new FlightSummaryReceive(responseData));
+            public void success(FlightSummaryReceive retroResponse, Response response) {
+
+                bus.post(new FlightSummaryReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -670,8 +651,11 @@ public class ApiRequestHandler {
         apiService.onManageFlightV2(event, new Callback<ListBookingReceive>() {
 
             @Override
-            public void success(ListBookingReceive responseData, Response response) {
-                bus.post(new ListBookingReceive(responseData));
+            public void success(ListBookingReceive retroResponse, Response response) {
+
+                bus.post(new ListBookingReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -694,8 +678,11 @@ public class ApiRequestHandler {
         apiService.onManageFlightV3(event, new Callback<CheckInListReceive>() {
 
             @Override
-            public void success(CheckInListReceive responseData, Response response) {
-                bus.post(new CheckInListReceive(responseData));
+            public void success(CheckInListReceive retroResponse, Response response) {
+
+                bus.post(new CheckInListReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -716,8 +703,11 @@ public class ApiRequestHandler {
         apiService.onChangeContactInfo(event, new Callback<ManageChangeContactReceive>() {
 
             @Override
-            public void success(ManageChangeContactReceive responseData, Response response) {
-                bus.post(new ManageChangeContactReceive(responseData));
+            public void success(ManageChangeContactReceive retroResponse, Response response) {
+
+                bus.post(new ManageChangeContactReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -737,8 +727,11 @@ public class ApiRequestHandler {
         apiService.onChangeRequestConfirm(event, new Callback<ConfirmUpdateReceive>() {
 
             @Override
-            public void success(ConfirmUpdateReceive responseData, Response response) {
-                bus.post(new ConfirmUpdateReceive(responseData));
+            public void success(ConfirmUpdateReceive retroResponse, Response response) {
+
+                bus.post(new ConfirmUpdateReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -751,38 +744,16 @@ public class ApiRequestHandler {
         });
     }
 
-
-
-
-
-    /*@Subscribe
-    public void onRetrieveManageFlight(final ManageFlightRetrieveObj event) {
-
-        apiService.onRetrieveFlightSummary(event, new Callback<ManageChangeContactReceive>() {
-
-            @Override
-            public void success(ManageChangeContactReceive responseData, Response response) {
-                bus.post(new ManageChangeContactReceive(responseData));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-                BaseFragment.setAlertDialog(MainFragmentActivity.getContext(), "Unable to connect to server");
-                BaseFragment.dismissLoading();
-            }
-
-        });
-    }*/
-
     @Subscribe
     public void onChangePassenger(final ManagePassengerInfo event) {
 
         apiService.onChangePassenger(event, new Callback<ManageChangeContactReceive>() {
 
             @Override
-            public void success(ManageChangeContactReceive responseData, Response response) {
-                bus.post(new ManageChangeContactReceive(responseData));
+            public void success(ManageChangeContactReceive retroResponse, Response response) {
+
+                bus.post(new ManageChangeContactReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
 
             }
 
@@ -804,8 +775,11 @@ public class ApiRequestHandler {
         apiService.onSeatRequest(event, new Callback<ContactInfoReceive>() {
 
             @Override
-            public void success(ContactInfoReceive responseData, Response response) {
-                bus.post(new ContactInfoReceive(responseData));
+            public void success(ContactInfoReceive retroResponse, Response response) {
+
+                bus.post(new ContactInfoReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -818,9 +792,6 @@ public class ApiRequestHandler {
 
         });
     }
-
-
-
 
     @Subscribe
     public void onChangeSeat(final ManageSeatInfo event) {
@@ -828,8 +799,11 @@ public class ApiRequestHandler {
         apiService.onChangeSeat(event, new Callback<ManageChangeContactReceive>() {
 
             @Override
-            public void success(ManageChangeContactReceive responseData, Response response) {
-                bus.post(new ManageChangeContactReceive(responseData));
+            public void success(ManageChangeContactReceive retroResponse, Response response) {
+
+                bus.post(new ManageChangeContactReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -842,9 +816,6 @@ public class ApiRequestHandler {
 
         });
     }
-
-
-
 
     @Subscribe
     public void onRequestItinenary(final SendItinenaryObj event) {
@@ -852,8 +823,11 @@ public class ApiRequestHandler {
         apiService.onRequestItinenary(event, new Callback<ManageRequestIntinenary>() {
 
             @Override
-            public void success(ManageRequestIntinenary responseData, Response response) {
-                bus.post(new ManageRequestIntinenary(responseData));
+            public void success(ManageRequestIntinenary retroResponse, Response response) {
+
+                bus.post(new ManageRequestIntinenary(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -866,8 +840,6 @@ public class ApiRequestHandler {
 
         });
     }
-
-
 
     @Subscribe
     public void onGetFlightRequest(final GetFlightAvailability event) {
@@ -875,8 +847,11 @@ public class ApiRequestHandler {
         apiService.onGetFlightRequest(event, new Callback<ChangeSearchFlightReceive>() {
 
             @Override
-            public void success(ChangeSearchFlightReceive responseData, Response response) {
-                bus.post(new ChangeSearchFlightReceive(responseData));
+            public void success(ChangeSearchFlightReceive retroResponse, Response response) {
+
+                bus.post(new ChangeSearchFlightReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -889,7 +864,6 @@ public class ApiRequestHandler {
 
         });
     }
-
 
     @Subscribe
     public void onGetChangeFlight(final GetChangeFlight event) {
@@ -897,8 +871,11 @@ public class ApiRequestHandler {
         apiService.onGetChangeFlight(event, new Callback<SearchFlightReceive>() {
 
             @Override
-            public void success(SearchFlightReceive responseData, Response response) {
-                bus.post(new SearchFlightReceive(responseData));
+            public void success(SearchFlightReceive retroResponse, Response response) {
+
+                bus.post(new SearchFlightReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -911,7 +888,6 @@ public class ApiRequestHandler {
 
         });
     }
-
 
 
     @Subscribe
@@ -920,8 +896,11 @@ public class ApiRequestHandler {
         apiService.onSelectChangeFlight(event, new Callback<ManageChangeContactReceive>() {
 
             @Override
-            public void success(ManageChangeContactReceive responseData, Response response) {
-                bus.post(new ManageChangeContactReceive(responseData));
+            public void success(ManageChangeContactReceive retroResponse, Response response) {
+
+                bus.post(new ManageChangeContactReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -941,8 +920,11 @@ public class ApiRequestHandler {
         apiService.onRetrieveBoardingPass(event, new Callback<RetrieveBoardingPassReceive>() {
 
             @Override
-            public void success(RetrieveBoardingPassReceive responseData, Response response) {
-                bus.post(new RetrieveBoardingPassReceive(responseData));
+            public void success(RetrieveBoardingPassReceive retroResponse, Response response) {
+
+                bus.post(new RetrieveBoardingPassReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -966,8 +948,11 @@ public class ApiRequestHandler {
         apiService.onRetrieveAboutUs(event, new Callback<AboutUsReceive>() {
 
             @Override
-            public void success(AboutUsReceive responseData, Response response) {
-                bus.post(new AboutUsReceive(responseData));
+            public void success(AboutUsReceive retroResponse, Response response) {
+
+                bus.post(new AboutUsReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+
             }
 
             @Override
@@ -986,23 +971,13 @@ public class ApiRequestHandler {
     }
 
 
-
     public void loop(int inc){
         inc++;
-        if(inc > 2){
+        if(inc > 5){
             retry = false;
         }else{
             retry = true;
         }
     }
 
-
-
-
-
-
 }
-
-//apiService.onRequestToLogin(event.getUsername(),event.getPassword(), new Callback<LoginRequest>() {
-//apiService.onRequestToLogin(123,"zhariffadam@me-tech.com.my","P@$$w0rd", new Callback<LoginRequest>() {
-//apiService.getFeed2("adam", new Callback<LoginRequest>() {

@@ -180,7 +180,7 @@ public class NavigationDrawerFragment extends Fragment {
                 profile.setId(4);
                 profile.setIconId(R.drawable.side_profile_s);
                 profile.setTag("Information_Update");
-                profile.setTitle("Information Update");
+                profile.setTitle("Update Information");
                 profile.setLayoutId(DrawerViewType.STATIC_MENU);
                 itemList.add(profile);
 

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.LoginReceive;
@@ -26,9 +27,11 @@ import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ContactInfoModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -55,6 +58,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
+import io.realm.RealmResults;
 
 public class ContactInfoFragment extends BaseFragment implements Validator.ValidationListener,DatePickerDialog.OnDateSetListener,BookingPresenter.ContactInfoView {
 
@@ -207,6 +211,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ContactInfoModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -333,10 +338,19 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelection(titleList, getActivity(), txtTitle, true,view);
+                popupSelection(titleList, getActivity(), txtTitle, true, view);
             }
         });
         /* --------------------------- End Title ---------------------------------- */
+
+        /*Booking Id*/
+        HashMap<String, String> initFlightType = pref.getBookingID();
+        String flightType = initFlightType.get(SharedPrefManager.BOOKING_ID);
+
+        if(flightType.equals("MH")){
+            btnSeatSelection.setVisibility(View.GONE);
+            btnWithoutSeatSelection.setText("Continue");
+        }
 
          /*Onclick Continue*/
         btnSeatSelection.setOnClickListener(new View.OnClickListener() {
@@ -551,6 +565,16 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            ContactInfoReceive obj = gson.fromJson(result.get(0).getCachedResult(), ContactInfoReceive.class);
+            onContactInfo(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override

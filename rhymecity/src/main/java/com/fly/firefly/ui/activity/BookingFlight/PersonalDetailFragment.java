@@ -19,14 +19,17 @@ import android.widget.Toast;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.api.obj.SelectFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.PersonalDetailModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.InfantInfo;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
@@ -36,6 +39,7 @@ import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
@@ -57,6 +61,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import io.realm.RealmResults;
 
 public class PersonalDetailFragment extends BaseFragment implements Validator.ValidationListener,DatePickerDialog.OnDateSetListener,BookingPresenter.PassengerInfoView {
 
@@ -71,9 +76,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
-
-    @InjectView(R.id.passengerBtnLogin)
-    Button passengerBtnLogin;
 
     @InjectView(R.id.passengerBlock1)
     LinearLayout passengerBlock1;
@@ -96,7 +98,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     @InjectView(R.id.btnPersonalInfo)
     Button btnPersonalInfo;
 
-    @NotEmpty(sequence = 1)
+   /* @NotEmpty(sequence = 1)
     @InjectView(R.id.txtUserId)
     EditText txtUserId;
 
@@ -109,6 +111,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
     @InjectView(R.id.txtForgotPassword)
     Button txtForgotPassword;
+
+    @InjectView(R.id.passengerBtnLogin)
+    Button passengerBtnLogin;*/
 
 
     private int fragmentContainerId;
@@ -148,6 +153,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new PersonalDetailModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -297,6 +303,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             public void onClick(View v) {
                 int intTotalAdult = 0;
 
+                formContinue = true;
+
                 /*Manual Validation*/
                 for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
@@ -322,7 +330,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
                     checkEditTextNull(docNo);
-
+                    checkBonuslink(enrich);
                 }
 
 
@@ -349,7 +357,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
-                    checkEditTextNull(docNo);
+                    //checkEditTextNull(docNo);
 
                 }
 
@@ -488,7 +496,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         //Login from passenger detail page
 
-        passengerBtnLogin.setOnClickListener(new View.OnClickListener() {
+       /* passengerBtnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mValidator.validate();
@@ -502,7 +510,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                 forgotPassword();
             }
-        });
+        });*/
 
         return view;
     }
@@ -574,8 +582,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         if(txtView.getText().toString() == "") {
             txtView.setError("Field Required");
             formContinue = false;
-        }else{
-            formContinue = true;
         }
     }
 
@@ -584,9 +590,19 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         if (editText.getText().toString().matches("")) {
             editText.setError("Field Required");
             formContinue = false;
-        }else{
-            formContinue = true;
         }
+
+    }
+
+    public void checkBonuslink(EditText bonuslink){
+
+        if (!bonuslink.getText().toString().matches("")) {
+            if(bonuslink.length() < 16 || bonuslink.length() > 16){
+                bonuslink.setError("Invalid bonuslink card number");
+            }
+            formContinue = false;
+        }
+
     }
 
     public void runPassengerInfo(Passenger obj){
@@ -748,7 +764,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     /* Validation Success - Start send data to server */
     @Override
     public void onValidationSucceeded() {
-        loginFragment(txtUserId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, txtPassword.getText().toString()));
+        //loginFragment(txtUserId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, txtPassword.getText().toString()));
     }
 
     /* SENT REQUEST TO LOGIN API*/
@@ -787,7 +803,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             String userInfo = gsonUserInfo.toJson(obj.getUser_info());
             pref.setUserInfo(userInfo);
             autoFill();
-            memberLoginBlock.setVisibility(View.GONE);
+            //memberLoginBlock.setVisibility(View.GONE);
         }
     }
 
@@ -798,7 +814,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         String loginStatus = initLogin.get(SharedPrefManager.ISLOGIN);
 
         if(loginStatus != null && loginStatus.equals("Y")) {
-            memberLoginBlock.setVisibility(View.GONE);
+            //memberLoginBlock.setVisibility(View.GONE);
             Log.e("GONE","TRUE");
             Gson gson = new Gson();
             String userInfo = getUserInfoCached(getActivity());
@@ -815,7 +831,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             passenger1LastName.setText(loginObj.getContact_last_name());
             passenger1Dob.setText(reformatDOB(loginObj.getDOB()));
         }else{
-            memberLoginBlock.setVisibility(View.VISIBLE);
+            //memberLoginBlock.setVisibility(View.VISIBLE);
             Log.e("VISIBLE", "TRUE");
         }
 
@@ -851,6 +867,16 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            PassengerInfoReveice obj = gson.fromJson(result.get(0).getCachedResult(), PassengerInfoReveice.class);
+            onPassengerInfo(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override

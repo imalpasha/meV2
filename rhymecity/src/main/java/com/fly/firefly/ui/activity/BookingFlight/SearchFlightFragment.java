@@ -1,15 +1,19 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.BusProvider;
@@ -17,19 +21,28 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
 import com.fly.firefly.ui.module.SearchFlightModule;
+import com.fly.firefly.ui.object.BoardingPassObj;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.DatePickerObj;
+import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.SearchFlightObj;
 import com.fly.firefly.ui.presenter.BookingPresenter;
+import com.fly.firefly.utils.AESCBC;
+import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
 import com.squareup.otto.Bus;
 
 import org.json.JSONArray;
@@ -46,6 +59,9 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.Optional;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class SearchFlightFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,BookingPresenter.SearchFlightView {
 
@@ -129,8 +145,11 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private String RETURN_DATE_PICKER = "RETURN_DATE_PICKER";
     private String PICKER;
     public static final String DATEPICKER_TAG = "datepicker";
+    private AlertDialog dialog;
+    private Validator mValidator;
 
-    private Bus mbus = BusProvider.getInstance();
+    private SearchFlightObj flightObj;
+
     public static SearchFlightFragment newInstance() {
 
         SearchFlightFragment fragment = new SearchFlightFragment();
@@ -145,6 +164,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SearchFlightModule(this)).inject(this);
+        Log.e("Oncreate","Create");
     }
 
     @Override
@@ -168,6 +188,8 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         bookFlightDepartureDate.setTag(DEPARTURE_FLIGHT_DATE);
         bookFlightReturnDate.setTag(ARRIVAL_FLIGHT_DATE);
+
+
 
         /*Retrieve All Flight Data From Preference Manager - Display Flight Data*/
         JSONArray jsonFlight = getFlight(getActivity());
@@ -435,7 +457,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         HashMap<String, String> initUserPassword = pref.getUserPassword();
         String userPassword = initUserPassword.get(SharedPrefManager.PASSWORD);
 
-        SearchFlightObj flightObj = new SearchFlightObj();
+        flightObj = new SearchFlightObj();
         flightObj.setAdult(txtAdultTotal.getText().toString());
         flightObj.setChildren(txtChildTotal.getText().toString());
         flightObj.setInfant(txtInfantTotal.getText().toString());
@@ -462,6 +484,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         flightObj.setSignature(signatureFromLocal);
         searchFlightFragment(flightObj);
+
                     /*FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.main_activity_fragment_container, BF_FlightDetailFragment.newInstance(), "FLIGHT_DETAIL");
@@ -472,8 +495,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
     public void searchFlightFragment(SearchFlightObj flightObj){
 
-        presenter.searchFlight(flightObj);
+       presenter.searchFlight(flightObj);
     }
+
 
     /*Filter Arrival Airport*/
     public static void filterArrivalAirport(String code) {
@@ -533,13 +557,14 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         int totalPassenger = totalAdult+totalChildren+totalInfant;
 
 
-        if(totalPassenger > 9){
+        if(totalPassenger > 14){
 
             if(passenger == ADULT){ totalAdult--; }
             else if(passenger == CHILDREN){ totalChildren--; }
             else{ totalInfant--; }
 
-            Utils.toastNotification(getActivity(), "9 Passenger Per Booking");
+            Utils.toastNotification(getActivity(), "13" +
+                    " Passenger Per Booking");
 
         }else{
 
@@ -599,12 +624,12 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onBookingDataReceive(SearchFlightReceive obj) {
 
         dismissLoading();
-        Log.e("XXX","XXX");
-        //Clear SearchFlightObj result
-        //pref.setTempResult("stop");
+        Log.e("XXX", "XXX");
 
         Gson gson = new Gson();
         String countryList = gson.toJson(obj);
+        pref.setFlightType(obj.getType());
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
@@ -643,35 +668,33 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     }
 
     @Override
-    public void onStart() {
+    public void onResume() {
         super.onResume();
         presenter.onResume();
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        //SearchFlightReceive obj = null;
 
-        //String result = checkResultCached(getActivity());
-       /* SharedPrefManager xx = new SharedPrefManager(getActivity());
-        HashMap<String, String> initResult = xx.getTempResult();
-        String result = initResult.get(SharedPrefManager.TEMP_RESULT);
-        if(result != null) {
-            Log.e("result", result);
-            if (!result.equals("stop")) {
-                Log.e("result2", result);
-                Gson gson = new Gson();
-                SearchFlightReceive obj = gson.fromJson(result, SearchFlightReceive.class);
-                onBookingDataReceive(obj);
-                //pref.setTempResult("stop");
-                //HashMap<String, String> initResult = pref.getTempResult();
-                //String tempResult = initResult.get(SharedPrefManager.TEMP_RESULT);
-                //Log.e("tempResult", tempResult);
-            }
-        }*/
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            SearchFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SearchFlightReceive.class);
+            onBookingDataReceive(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.onPause();
+        Log.e("Screen Paused", "True");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.e("Screen Stop", "True");
     }
 
     @Override

@@ -267,7 +267,7 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
 
 
         }
-        croutonAlert(getActivity(), "Please Check Box");
+        croutonAlert(getActivity(), "You must read and understand the important dangerous goods information and terms and condition");
 
     }
 

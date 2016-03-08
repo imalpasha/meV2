@@ -136,7 +136,7 @@
             android:layout_width="0dp"
             android:layout_weight="0.25"
             android:layout_height="wrap_content"
-            android:text="Check In"
+            android:text="Check-In"
             android:gravity="center"
             android:textStyle="bold"
             android:id="@+id/textView90"

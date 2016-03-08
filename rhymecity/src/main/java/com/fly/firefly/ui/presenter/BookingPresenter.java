@@ -38,6 +38,7 @@ public class BookingPresenter {
 
     public interface ListFlightView {
         void onSeletFlightReceive(SelectFlightReceive obj);
+        void onLoginSuccess(LoginReceive obj);
         void onChangeFlightSuccess(ManageChangeContactReceive obj);
     }
 
@@ -184,7 +185,14 @@ public class BookingPresenter {
     public void onUserSuccessLogin(LoginReceive event) {
 
         /*Save Session And Redirect To Homepage*/
-        view3.onLoginSuccess(event.getUserObj());
+        if(view3 != null){
+            view3.onLoginSuccess(event.getUserObj());
+        }
+
+        if(view2 != null){
+            view2.onLoginSuccess(event.getUserObj());
+        }
+
     }
 
     @Subscribe

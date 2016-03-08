@@ -79,7 +79,6 @@ public class Controller extends BaseFragment {
 
         }
         else if (objStatus.equals("change_password")) {
-            pref.setLoginStatus("Y");
             goChangePasswordPage(act);
         }else if(objStatus.equals("error")) {
             //croutonAlert(getActivity(),obj.getMessage());
@@ -89,6 +88,7 @@ public class Controller extends BaseFragment {
         return status;
 
     }
+
 
     //Redirect
     public static void goChangePasswordPage(Activity act){

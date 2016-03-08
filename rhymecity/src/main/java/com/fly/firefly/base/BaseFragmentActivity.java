@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 
 import com.fly.firefly.R;
 import com.fly.firefly.utils.App;
+import com.fly.firefly.utils.RealmObjectController;
 
 //import com.actionbarsherlock.app.ActionBar;
 //import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -194,6 +195,8 @@ public class BaseFragmentActivity extends FragmentActivity {
     {
         super.startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        RealmObjectController.clearCachedResult(this);
+
     }
 
     @Override
@@ -209,6 +212,8 @@ public class BaseFragmentActivity extends FragmentActivity {
     {
         super.onBackPressed();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
+        RealmObjectController.clearCachedResult(this);
+
         //setResult(RESULT_CANCELED);
     }
 

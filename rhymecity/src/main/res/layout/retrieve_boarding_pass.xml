@@ -78,13 +78,28 @@
                                 android:background="@drawable/drawable_login_bottom_border">
 
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Confirmation Number:"
-                                    android:id="@+id/textView16"
-                                    android:textSize="17dp"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Confirmation Number"
+                                        android:id="@+id/textView16"
+                                        android:textSize="17dp"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"
+                                        android:id="@+id/textView343" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -114,13 +129,28 @@
                                 android:paddingBottom="15dp"
                                 android:background="@drawable/drawable_login_bottom_border" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Departing:"
-                                    android:textSize="17dp"
-                                    android:id="@+id/textView18"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Departing"
+                                        android:textSize="17dp"
+                                        android:id="@+id/textView18"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"
+                                        android:id="@+id/textView344" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -147,13 +177,28 @@
                                 android:paddingBottom="15dp"
                                 android:background="@drawable/drawable_login_bottom_border"  >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Arriving"
-                                    android:textSize="17dp"
-                                    android:id="@+id/textView20"
-                                    android:textStyle="bold"/>
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Arriving"
+                                        android:textSize="17dp"
+                                        android:id="@+id/textView20"
+                                        android:textStyle="bold"/>
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textStyle="bold"
+                                        android:textColor="@color/red"
+                                        android:layout_marginLeft="3dp"
+                                        android:id="@+id/textView345" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
