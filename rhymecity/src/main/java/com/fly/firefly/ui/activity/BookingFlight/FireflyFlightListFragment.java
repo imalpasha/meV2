@@ -47,6 +47,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     @InjectView(R.id.returnFlightBlock)LinearLayout returnFlightBlock;
     @InjectView(R.id.goingFlightBlock)LinearLayout goingFlightBlock;
     @InjectView(R.id.returnBasicPremier)LinearLayout returnBasicPremier;
+    @InjectView(R.id.returnFlightAvailable)LinearLayout returnFlightAvailable;
+    @InjectView(R.id.goingFlightAvailable)LinearLayout goingFlightAvailable;
 
     @InjectView(R.id.txtDepartAirport)TextView txtDepartAirport;
     @InjectView(R.id.txtFlightType)TextView txtFlightType;
@@ -147,8 +149,13 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         //Check From ManageFlight
         if(obj.getJourneys().get(0).getFlights().size() == 0){
-            goingFlightBlock.setVisibility(View.GONE);
+            goingFlightAvailable.setVisibility(View.VISIBLE);
+        }else
+        {
+            goingFlightAvailable.setVisibility(View.GONE);
+
         }
+
         /*Departure*/
         List<FlightInfo> departFlight = obj.getJourneys().get(0).getFlights();
 
@@ -203,6 +210,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             returnListPremier = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,PREMIER,RETURN,this);
             premierFlightArrival.setAdapter(returnListPremier);
 
+        } else{
+            returnFlightAvailable.setVisibility(View.VISIBLE);
         }
 
         btnListFlight.setOnClickListener(new View.OnClickListener() {

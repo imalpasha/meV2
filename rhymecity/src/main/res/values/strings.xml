@@ -734,6 +734,7 @@
 
 
     <!-- BOOKING FLIGHT - SEARCH FLIGHT -->
+    <string name="book_flight_availability">Flight Not Available</string>
 
     <!-- BOOKING FLIGHT - LIST FLIGHT -->
     <string name="book_flight_basic">BASIC</string>

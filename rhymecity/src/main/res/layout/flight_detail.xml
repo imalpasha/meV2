@@ -164,6 +164,26 @@
                                         android:id="@+id/textView28" />
                                 </LinearLayout>
                             </LinearLayout>
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/goingFlightAvailable"
+                                android:visibility="visible"
+                                android:padding="35dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/book_flight_availability"
+                                    android:textSize="19dp"
+                                    android:textColor="@color/dark_lvl5"
+                                    android:id="@+id/txtGoingAvailability"
+                                    android:layout_marginBottom="1dp"
+                                    android:layout_gravity="center_horizontal" />
+
+                            </LinearLayout>
+
                         </LinearLayout>
 
                         <com.fly.firefly.utils.ExpandAbleGridView
@@ -288,6 +308,26 @@
                                     android:padding="6dp"
                                     android:id="@+id/textView145" />
                             </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/returnFlightAvailable"
+                            android:padding="35dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/book_flight_availability"
+                                android:textSize="19dp"
+                                android:textColor="@color/dark_lvl5"
+                                android:id="@+id/txtReturnAvailability"
+                                android:layout_marginBottom="1dp"
+                                android:layout_gravity="center_horizontal" />
+
                         </LinearLayout>
 
                         <com.fly.firefly.utils.ExpandAbleGridView
