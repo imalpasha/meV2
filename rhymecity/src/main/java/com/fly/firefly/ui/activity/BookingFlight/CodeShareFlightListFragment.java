@@ -65,6 +65,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     @InjectView(R.id.returnFlightBlock)LinearLayout returnFlightBlock;
     @InjectView(R.id.goingFlightBlock)LinearLayout goingFlightBlock;
     @InjectView(R.id.returnBasicPremier)LinearLayout returnBasicPremier;
+    @InjectView(R.id.returnFlightAvailable)LinearLayout returnFlightAvailable;
+    @InjectView(R.id.goingFlightAvailable)LinearLayout goingFlightAvailable;
 
     @InjectView(R.id.txtDepartAirport)TextView txtDepartAirport;
     @InjectView(R.id.txtFlightType)TextView txtFlightType;
@@ -178,7 +180,11 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
         //Check From ManageFlight
         if(obj.getJourneys().get(0).getFlights().size() == 0){
-            goingFlightBlock.setVisibility(View.GONE);
+            goingFlightAvailable.setVisibility(View.VISIBLE);
+        }else
+        {
+            goingFlightAvailable.setVisibility(View.GONE);
+
         }
 
         //Depart Airport ----------------------------------
@@ -209,10 +215,10 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
          /*Return If Available*/
         if(obj.getJourneys().size() > 1){
+
             List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
             returnFlightBlock.setVisibility(View.VISIBLE);
             returnBasicPremier.setVisibility(View.VISIBLE);
-
 
             //Return Airport
             returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
@@ -228,7 +234,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             returnListBasic = new CodeShareAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,RETURN,this);
             flightArrival.setAdapter(returnListBasic);
 
-
+        } else{
+            returnFlightAvailable.setVisibility(View.VISIBLE);
         }
 
         btnListFlight.setOnClickListener(new View.OnClickListener() {
