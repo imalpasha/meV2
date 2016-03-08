@@ -164,7 +164,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SearchFlightModule(this)).inject(this);
-        Log.e("Oncreate","Create");
+        RealmObjectController.clearCachedResult(getActivity());
     }
 
     @Override
