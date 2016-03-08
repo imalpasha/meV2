@@ -8,6 +8,7 @@ import com.fly.firefly.rhymes.RhymesRequestedEvent;
 import com.fly.firefly.ui.object.AboutUs;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.PushNotificationObj;
+import com.fly.firefly.ui.object.Signature;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -38,8 +39,8 @@ public class AboutUsPresenter {
         bus.unregister(this);
     }
 
-    public void requestAboutUsInfo() {
-        bus.post(new AboutUs());
+    public void requestAboutUsInfo(AboutUs obj) {
+        bus.post(new AboutUs(obj));
     }
 
     @Subscribe

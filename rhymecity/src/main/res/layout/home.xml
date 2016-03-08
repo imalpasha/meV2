@@ -302,8 +302,8 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView6"
                         android:src="@drawable/facebook"
                         android:padding="8dp"
@@ -339,8 +339,8 @@
                     android:layout_height="wrap_content" >
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView9"
                         android:src="@drawable/twitter"
                         android:padding="8dp"
@@ -378,8 +378,8 @@
                     >
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:id="@+id/imageView7"
                         android:src="@drawable/insta"
                         android:padding="8dp"

@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -62,20 +63,34 @@ public class PaymentWebViewFragment extends BaseFragment  {
         webview.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
-                if(paymentFrom.equals("NORMAL")){
-                    Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    getActivity().startActivity(intent);
-                    getActivity().finish();
-                }else{
-                    Intent intent = new Intent(getActivity(), ManageFlightActionActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra("AlertDialog", "Y");
-                    getActivity().startActivity(intent);
-                    getActivity().finish();
-                }
+                Boolean status;
 
-                return true;
+                Log.e("URL",url);
+                String[] parts = url.split("//");
+                String part1 = parts[0]; // 004
+                if(part1.equals("https:")){
+
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(browserIntent);
+                    status = true;
+
+                }else{
+
+                    if(paymentFrom.equals("NORMAL")){
+                        Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
+                    }else {
+                        Intent intent = new Intent(getActivity(), ManageFlightActionActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("AlertDialog", "Y");
+                        getActivity().startActivity(intent);
+                        getActivity().finish();
+                    }
+                        status = true;
+                }
+                return true ;
             }
             @Override
             public void onPageFinished(WebView view, String url) {

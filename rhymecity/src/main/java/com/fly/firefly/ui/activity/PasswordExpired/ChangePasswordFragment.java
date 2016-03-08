@@ -3,6 +3,7 @@ package com.fly.firefly.ui.activity.PasswordExpired;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,7 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -65,19 +67,26 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     @InjectView(R.id.editTextemail)
     EditText editTextemail;
 
-    @Order(2)@NotEmpty (sequence = 1)
+    @Order(2)
+    @NotEmpty (sequence = 1)
     @InjectView(R.id.editTextforgotPasswordCurrent)
     EditText editTextPasswordCurrent;
 
-    @Order(3)@NotEmpty (sequence = 1)
+    @Order(3)
+    @NotEmpty (sequence = 1)
     @ConfirmPassword(message = "Password mismatch")
     @InjectView(R.id.editTextforgotPasswordConfirm)
     EditText editTextPasswordConfirm;
 
-    @Order(4)@NotEmpty(sequence = 1)
-    @Password(sequence =3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Must have uppercase char,number and symbols") // Password validator
+    @Order(4)
+    @NotEmpty(sequence = 1)
+    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 8 and maximum 16 characters")
+    @Password(sequence = 3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Password invalid , please refer to the password hint") // Password validator
     @InjectView(R.id.editTextforgotPasswordNew)
     EditText editTextPasswordNew;
+
+    @InjectView(R.id.txtPasswordHint)
+    TextView txtPasswordHint;
 
     @InjectView(R.id.btnchangepassword)
     Button changepasswordButton;
@@ -112,6 +121,11 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
         pref = new SharedPrefManager(getActivity());
 
+        //password
+        editTextPasswordCurrent.setTransformationMethod(new PasswordTransformationMethod());
+        editTextPasswordConfirm.setTransformationMethod(new PasswordTransformationMethod());
+        editTextPasswordNew.setTransformationMethod(new PasswordTransformationMethod());
+
         HashMap<String, String> userinfo = pref.getUserEmail();
         String email = userinfo.get(SharedPrefManager.USER_EMAIL);
 
@@ -122,6 +136,14 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Action", "changepasswordButton");
                 mValidator.validate();
+            }
+        });
+
+           /*Display Password Hint*/
+        txtPasswordHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setNormalDialog(getActivity(), getActivity().getResources().getString(R.string.register_password_hint), getActivity().getResources().getString(R.string.register_password_policy));
             }
         });
 
@@ -169,7 +191,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
             Crouton.makeText(getActivity(), "Password must contain uppercase char,number and symbols", Style.ALERT).show();
             EditText txtCurrentPassword = (EditText) view.findViewById(R.id.editTextforgotPasswordCurrent);
-            txtCurrentPassword.setError("");
+            txtCurrentPassword.setError(null);
 
             //editTextPasswordNew.setError(true);
         }else{
@@ -196,13 +218,14 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
             String splitErrorMsg[] = message.split("\\r?\\n");
-
             // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(splitErrorMsg[0]);
-                Crouton.makeText(getActivity(), message, Style.ALERT).show();
             }
         }
+
+        //Crouton.makeText(getActivity(), message, Style.ALERT).show();
+
     }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

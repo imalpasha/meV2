@@ -3,6 +3,7 @@ package com.fly.firefly.ui.activity.Login;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,10 @@ import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
+import com.mobsandgeeks.saripaar.annotation.Password;
 
 import java.util.List;
 
@@ -61,7 +64,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Inject
     LoginPresenter presenter;
 
-    @InjectView(R.id.edit_area) LinearLayout edit_area;
     @InjectView(R.id.registerBtn) Button registerButton;
     @InjectView(R.id.btnLogin) Button btnLogin;
 
@@ -75,14 +77,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
 
     @NotEmpty(sequence = 1)
-    //@Length(sequence = 2, min = 6, message = "Must at least 6 character")
-    //@Password(sequence =3,scheme = Password.Scheme.ALPHA_NUMERIC_MIXED_CASE_SYMBOLS,message = "Must have uppercase char,number and symbols") // Password validator
+    @Length(sequence = 2, min = 6, max = 16 , message = "Must be at least 8 and maximum 16 characters")
     @Order(2)
     @InjectView(R.id.txtLoginPassword) EditText txtLoginPassword;
-
-    /*@NotEmpty(sequence = 1)
-    @Order(3)
-    @InjectView(R.id.editEmail) EditText editEmail;*/
 
     private AlertDialog dialog;
     private SharedPrefManager pref;
@@ -115,6 +112,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         ButterKnife.inject(this, view);
 
         pref = new SharedPrefManager(getActivity());
+
+        //set edittext password input type
+        txtLoginPassword.setTransformationMethod(new PasswordTransformationMethod());
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override

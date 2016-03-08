@@ -766,6 +766,8 @@
     <string name="agreeTnc">I agree with the Terms &amp; Conditions</string>
     <string name="subscribe">Yes, I do not want to receive promotional information from Firefly and its partners</string>
     <string name="alertTNC">You must agree to the terms.</string>
+    <string name="bonuslink_hint">e.g. 6018XXXXXXXXXXXX</string>
+
 
 
     <!-- Boarding Pass -->
@@ -778,7 +780,7 @@
     <string name="password_expire_text">Your password has expired and needs to be changed. The password must consist of at least 8 characters, must include one upper case letter, one lower case letter, one numeric digit and one symbol. Example: SkyPark+123</string>
 
     <!-- Update Profile -->
-    <string name="title_activity_update_profile">UPDATE PROFILE</string>
+    <string name="title_activity_update_profile">UPDATE INFORMATION</string>
     <string name="update_profile_logininfo">Login Information</string>
     <string name="update_profile_contactinfo">Contact Information</string>
     <string name="update_profile_btn">Update</string>

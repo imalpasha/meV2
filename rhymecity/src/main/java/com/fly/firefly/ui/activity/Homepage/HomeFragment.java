@@ -43,6 +43,7 @@ import com.fly.firefly.ui.activity.SlidePage.NearKioskActivity;
 import com.fly.firefly.ui.module.HomeModule;
 import com.fly.firefly.ui.object.BoardingPassObj;
 import com.fly.firefly.ui.presenter.HomePresenter;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
@@ -149,6 +150,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         ButterKnife.inject(this, view);
         aq.recycle(view);
         pref = new SharedPrefManager(getActivity());
+
+        RealmObjectController.clearCachedResult(getActivity());
 
         /*Realm Obj Test*/
 //        Realm realm = Realm.getInstance(getActivity());

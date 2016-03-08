@@ -38,6 +38,7 @@ public class SharedPrefManager {
     public static final String TEMP_RESULT = "TR";
     public static final String BANNER_MODULE = "BM";
 
+    public static final String FLIGHT_TYPE ="FT";
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -47,6 +48,14 @@ public class SharedPrefManager {
         this._context = context;
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
+    }
+
+
+    /*SOCIAL MEDIA*/
+    public HashMap<String, String> getFlightType() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(FLIGHT_TYPE, _sharedPrefs.getString(FLIGHT_TYPE, null));
+        return init;
     }
 
     /*SOCIAL MEDIA*/
@@ -220,6 +229,13 @@ public class SharedPrefManager {
         HashMap<String, String> init = new HashMap<String, String>();
         init.put(PASSWORD, _sharedPrefs.getString(PASSWORD, null));
         return init;
+    }
+
+
+    /*Set Booking ID*/
+    public void setFlightType(String type) {
+        _prefsEditor.putString(FLIGHT_TYPE, type);
+        _prefsEditor.apply();
     }
 
     /*Set SEAT*/
@@ -419,9 +435,13 @@ public class SharedPrefManager {
         // Clearing All URL
         _sharedPrefs.edit().remove(TERM_INFO).apply();
 
-
     }
 
+    /*Clear State Value*/
+    public void clearFlightType() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(FLIGHT_TYPE).apply();
+    }
 
     /*Clear Signature Value*/
     public void clearDataVersion() {

@@ -129,6 +129,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             if(Controller.connectionAvailable(getActivity())){
                 initiateLoading(getActivity());
                 presenter.getUserPNR(storeUsername,storePassword,"check_in");
+                mobileCheckInNext1.setVisibility(View.GONE);
             }else{
                 //Display No Internet connection
             }
@@ -211,13 +212,14 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     }
 
     @Override
-    public void onUserPnrList(ListBookingReceive obj){
+    public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
             adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
             listView.setAdapter(adapter);
+            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
             //pnrLayout.setVisibility(View.GONE);
         }
 
@@ -239,9 +241,10 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
                 MobileCheckinObj flightObj = new MobileCheckinObj();
                 flightObj.setPnr(selectedFromList.getPnr());
+                flightObj.setUser_id(obj.getObj().getUser_id());
                 flightObj.setDeparture_station(selectedFromList.getDeparture_station_code());
                 flightObj.setArrival_station(selectedFromList.getArrival_station_code());
-                flightObj.setSignature(signatureFromLocal);
+                flightObj.setSignature(obj.getObj().getSignature());
 
                 searchFlightFragment(flightObj);
 

@@ -9,6 +9,15 @@ public class ManageFlightObj {
     private String pnr;
     private String username;
     private String signature;
+    private String user_id;
+
+    public String getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
+    }
 
     public String getPassword() {
         return password;
@@ -28,7 +37,7 @@ public class ManageFlightObj {
         username = data.getUsername();
         signature = data.getSignature();
         pnr = data.getPnr();
-
+        user_id = data.getUser_id();
     }
 
     public String getPnr() {

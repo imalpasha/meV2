@@ -583,7 +583,6 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
                         if (seatTag2.size() == 1) {
 
-
                             //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
                             TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+passengerSeatListV2.getSelected(passengerNoV2));
 
@@ -609,7 +608,8 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                             //selectedSeatTag.add(txtDetailList.getText().toString());
                         } else {
 
-                            if(passengerSeatListV2.getSelected(passengerNoV2) != null){
+                            if(passengerSeatListV2.getSelected(passengerNoV2) != null && passengerSeatListV2.getSelected(passengerNoV2) != ""){
+
                                 TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+
                                         passengerSeatListV2.getSelected(passengerNoV2));
                                 seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
@@ -792,14 +792,15 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
         setSeat1(seatListDepart, seatInfoDepart);
         setPassenger1("DEPART", listPassengerDepart, txtSeatDeparture, objV2, journeys.get(0).getDeparture_station(), journeys.get(0).getArrival_station());
+        seatListReturn.setVisibility(View.GONE);
 
         if(journeys.size() > 1){
 
             twoWay = true;
             seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
-            setSeat2(seatListReturn,seatInfoReturn);
-
+            setSeat2(seatListReturn, seatInfoReturn);
+            passengerSeatListReturn.setVisibility(View.VISIBLE);
         }
 
 

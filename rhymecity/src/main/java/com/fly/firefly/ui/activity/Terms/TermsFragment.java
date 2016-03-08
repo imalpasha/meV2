@@ -1,6 +1,9 @@
 package com.fly.firefly.ui.activity.Terms;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +13,8 @@ import android.webkit.WebViewClient;
 
 import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.activity.BookingFlight.FlightSummaryActivity2;
+import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActionActivity;
 import com.fly.firefly.ui.presenter.TermsPresenter;
 
 import javax.inject.Inject;
@@ -47,13 +52,22 @@ public class TermsFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.term, container, false);
         ButterKnife.inject(this, view);
 
+        initiateLoading(getActivity());
+
         WebSettings webSettings = mainWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         mainWebView.setWebViewClient(new MyCustomWebViewClient());
         mainWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mainWebView.loadUrl(URL);
+        mainWebView.setWebViewClient(new WebViewClient() {
 
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                dismissLoading();
+            }
+
+        });
         return view;
     }
 

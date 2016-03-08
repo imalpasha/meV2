@@ -171,10 +171,11 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
 
                     }
                 });
-
+                boardingPassBtn.setVisibility(View.GONE);
             }else{
                 initiateLoading(getActivity());
                 presenter.retriveListOfBoardingPass(storeUsername, storePassword, "boarding_pass");
+                boardingPassBtn.setVisibility(View.GONE);
             }
         }else{
             pnrLayout.setVisibility(View.VISIBLE);
@@ -352,13 +353,14 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     }
 
     @Override
-    public void onUserPnrList(ListBookingReceive obj){
+    public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
             adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
             listView.setAdapter(adapter);
+            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
             //pnrLayout.setVisibility(View.GONE);
         }
 
@@ -371,10 +373,11 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 initiateLoading(getActivity());
 
                 RetrieveBoardingPassObj flightObj = new RetrieveBoardingPassObj();
+                flightObj.setUser_id(obj.getObj().getUser_id());
                 flightObj.setPnr(selectedFromList.getPnr());
                 flightObj.setDeparture_station(selectedFromList.getDeparture_station_code());
                 flightObj.setArrival_station(selectedFromList.getArrival_station_code());
-                flightObj.setSignature(signatureFromLocal);
+                flightObj.setSignature(obj.getObj().getSignature());
 
                 presenter.retrieveBoardingPass(flightObj);
             }

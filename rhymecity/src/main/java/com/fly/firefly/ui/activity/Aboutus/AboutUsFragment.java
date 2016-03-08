@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.Aboutus;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.AboutUsModule;
 import com.fly.firefly.ui.module.LoginModule;
+import com.fly.firefly.ui.object.AboutUs;
+import com.fly.firefly.ui.object.Signature;
 import com.fly.firefly.ui.presenter.AboutUsPresenter;
 
 import javax.inject.Inject;
@@ -50,14 +53,15 @@ public class AboutUsFragment extends BaseFragment implements AboutUsPresenter.Ab
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.aboutus, container, false);
         ButterKnife.inject(this, view);
+
+        AboutUs obj = new AboutUs();
         initiateLoading(getActivity());
-        presenter.requestAboutUsInfo();
+        presenter.requestAboutUsInfo(obj);
         return view;
     }
 
@@ -88,7 +92,7 @@ public class AboutUsFragment extends BaseFragment implements AboutUsPresenter.Ab
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if(status) {
-            txtAboutUs.setText(obj.getData());
+            txtAboutUs.setText(Html.fromHtml(obj.getData().replaceAll("</br>", "<p>")));
         }
     }
 }

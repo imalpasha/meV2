@@ -8,6 +8,7 @@ import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.object.BoardingPassObj;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.RealmFlightObj;
 import com.google.gson.Gson;
 
@@ -19,6 +20,42 @@ import io.realm.RealmResults;
  * Created by Dell on 2/11/2016.
  */
 public class RealmObjectController extends BaseFragment{
+
+    public static void cachedResult(Activity act,String cachedResult){
+
+        Realm realm = Realm.getInstance(act);
+
+        final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
+        realm.beginTransaction();
+        result.clear();
+        realm.commitTransaction();
+
+        realm.beginTransaction();
+        CachedResult realmObject = realm.createObject(CachedResult.class);
+        //realmObject.setCachedAPI(cachedApi);
+        realmObject.setCachedResult(cachedResult);
+        realm.commitTransaction();
+
+    }
+
+    public static RealmResults<CachedResult> getCachedResult(Activity act){
+
+        Realm realm = Realm.getInstance(act);
+        final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
+
+        return result;
+    }
+
+    public static void clearCachedResult(Activity act){
+
+        Realm realm = Realm.getInstance(act);
+
+        final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
+        realm.beginTransaction();
+        result.clear();
+        realm.commitTransaction();
+
+    }
 
     public static void saveBoardingPass(Activity act,MobileConfirmCheckInPassengerReceive obj,String username){
 

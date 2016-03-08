@@ -51,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="@string/forgot_password"
+                            android:text="LOGIN"
                             android:id="@+id/txt_loginpssword"
                             android:gravity="center"
                             android:textSize="@dimen/font21sp"
@@ -67,29 +67,7 @@
                         android:layout_marginTop="5dp"
                         android:padding="5dp"
                         android:paddingBottom="13dp"
-                         >
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/forgot_password_email"
-                            android:id="@+id/textView140"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="*"
-                            android:textColor="@color/red"
-                            android:textStyle="bold"
-                            android:layout_marginLeft="3dp"/>
-
-                        </LinearLayout>
+                        >
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -100,7 +78,8 @@
                             <EditText
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:id="@+id/editTextemail_login"
+                                android:id="@+id/txtUserId"
+                                android:hint="User Email "
                                 android:textColorHint="@color/loginFontTxt"
                                 android:background="@drawable/drawable_login_bottom_border"
                                 android:padding="5dp"
@@ -110,11 +89,36 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:padding="5dp"
+                        android:paddingBottom="13dp" >
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp" >
+
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/txtPassword"
+                                android:textColorHint="@color/loginFontTxt"
+                                android:background="@drawable/drawable_login_bottom_border"
+                                android:padding="5dp"
+                                android:hint="User Password"
+                                android:inputType="textEmailAddress" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginTop="15dp"
                         android:weightSum="1">
 
                         <LinearLayout
@@ -128,10 +132,10 @@
                             android:layout_width="0dp"
                             android:layout_weight="0.9"
                             android:layout_height="wrap_content"
-                            android:text="@string/general_continue"
+                            android:text="Login"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:id="@+id/btncontinue"
+                            android:id="@+id/btnLogin"
                             android:background="@drawable/login_login_button_clicked" />
 
                         <LinearLayout
@@ -139,7 +143,68 @@
                             android:layout_width="0dp"
                             android:layout_weight="0.05"
                             android:layout_height="match_parent"></LinearLayout>
+                    </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:weightSum="1">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+
+                        <Button
+                            android:padding="10dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.9"
+                            android:layout_height="wrap_content"
+                            android:text="Continue as guest"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:id="@+id/btnContinue"
+                            android:background="@drawable/login_login_button_clicked" />
+
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp" >
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+                        <Button
+                            android:padding="10dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="wrap_content"
+                            android:text="Close"
+                            android:textColor="@color/orange_firefly"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="10dp"
+                            android:id="@+id/btnClose"
+                            android:background="@drawable/login_register_button_clicked" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
                     </LinearLayout>
 
 

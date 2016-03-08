@@ -103,9 +103,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     @InjectView(R.id.txtLastName)
     TextView txtLastName;
 
-    @NotEmpty
+    @NotEmpty(sequence = 1)
     @Order(5)
-    @Email(message = "Invalid Email")
+    @Email(sequence = 2,message = "Invalid Email")
     @InjectView(R.id.txtEmailAddress)
     TextView txtEmailAddress;
 
@@ -124,21 +124,21 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     @InjectView(R.id.txtCity)
     TextView txtCity;
 
-    @NotEmpty
+    @NotEmpty(sequence = 1)
     @Order(9)
-    @Length(min = 4,max = 8, message = "Invalid postcode number")
+    @Length(sequence = 2,min = 4,max = 8, message = "Invalid postcode number")
     @InjectView(R.id.txtPostCode)
     TextView txtPostCode;
 
     @Order(10)
-    @NotEmpty
-    @Length(min = 6,max = 14, message = "Invalid phone number")
+    @NotEmpty(sequence = 1)
+    @Length(sequence = 2,min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
     @Order(11)
-    @NotEmpty
-    @Length(min = 6,max = 14, message = "Invalid phone number")
+    @NotEmpty(sequence = 1)
+    @Length(sequence = 2,min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
 

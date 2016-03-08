@@ -24,6 +24,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.api.obj.PaymentReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
@@ -31,6 +32,7 @@ import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ContactInfoModule;
 import com.fly.firefly.ui.module.FlightSummaryModule;
 import com.fly.firefly.ui.module.ItinenaryModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SeatSelection;
@@ -59,6 +61,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
+import io.realm.RealmResults;
 
 public class FlightSummaryFragment extends BaseFragment implements BookingPresenter.FlightSummaryView {
 
@@ -250,6 +253,8 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new FlightSummaryModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -623,6 +628,16 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            FlightSummaryReceive obj = gson.fromJson(result.get(0).getCachedResult(), FlightSummaryReceive.class);
+            onFlightSummary(obj);
+        }else{
+            Log.e("x","2");
+        }
     }
 
     @Override
