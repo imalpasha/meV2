@@ -71,7 +71,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     TextView txtForgotPassword;
 
     @NotEmpty(sequence = 1)
-    @Email(sequence = 2)
     @Order(1)
     @InjectView(R.id.txtLoginEmail) EditText txtLoginEmail;
 

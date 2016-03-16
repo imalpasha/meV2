@@ -28,6 +28,7 @@ import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
+import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity2;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity3;
 import com.fly.firefly.ui.activity.SlidePage.ProductImagesPagerAdapter;
@@ -227,6 +228,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "txtDeparture");
                 popupSelection(dataFlightDeparture, getActivity(), txtDeparture,true,view);
+                txtArrive.setText("");
                 //txtDeparture.setText("ARRIVAL AIRPORT");
             }
         });
@@ -401,6 +403,16 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onPause() {
         super.onPause();
         presenter.onPause();
+    }
+
+    public void onBackPressed(){
+
+        Intent backToHome = new Intent(getActivity(), HomeActivity.class);
+        backToHome.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        getActivity().startActivity(backToHome);
+        getActivity().finish();
+        Log.e("Tedy","x");
+
     }
 
 

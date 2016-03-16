@@ -65,8 +65,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     @InjectView(R.id.returnFlightBlock)LinearLayout returnFlightBlock;
     @InjectView(R.id.goingFlightBlock)LinearLayout goingFlightBlock;
     @InjectView(R.id.returnBasicPremier)LinearLayout returnBasicPremier;
-    @InjectView(R.id.returnFlightAvailable)LinearLayout returnFlightAvailable;
-    @InjectView(R.id.goingFlightAvailable)LinearLayout goingFlightAvailable;
+    //@InjectView(R.id.returnFlightAvailable)LinearLayout returnFlightAvailable;
+    //@InjectView(R.id.goingFlightAvailable)LinearLayout goingFlightAvailable;
 
     @InjectView(R.id.txtDepartAirport)TextView txtDepartAirport;
     @InjectView(R.id.txtFlightType)TextView txtFlightType;
@@ -82,8 +82,10 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
     @InjectView(R.id.premierFlightDeparture)ExpandAbleGridView premierFlightDeparture;
     @InjectView(R.id.premierFlightArrival)ExpandAbleGridView premierFlightArrival;
-    @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
 
+    @InjectView(R.id.returnFlightNA)LinearLayout returnFlightNA;
+    @InjectView(R.id.goingFlightNA)LinearLayout goingFlightNA;
+    @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
 
     private int fragmentContainerId;
     private CodeShareAdapter codeShareDepart,departListPremier, returnListBasic,returnListPremier;
@@ -149,6 +151,11 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         View view = inflater.inflate(R.layout.flight_detail, container, false);
         ButterKnife.inject(this, view);
 
+
+        //Premium Flight Button Disable
+        basicPremierLayout.setVisibility(View.GONE);
+        returnBasicPremier.setVisibility(View.GONE);
+
           /*Preference Manager*/
         pref = new SharedPrefManager(getActivity());
 
@@ -180,13 +187,13 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
         //Check From ManageFlight
         if(obj.getJourneys().get(0).getFlights().size() == 0){
-            goingFlightAvailable.setVisibility(View.VISIBLE);
-        }else
-        {
-            goingFlightAvailable.setVisibility(View.GONE);
-
+            //goingFlightBlock.setVisibility(View.GONE);
+            goingFlightNA.setVisibility(View.VISIBLE);
+            basicPremierLayout.setVisibility(View.GONE);
+        }else{
+            goingFlightNA.setVisibility(View.GONE);
+            basicPremierLayout.setVisibility(View.VISIBLE);
         }
-
         //Depart Airport ----------------------------------
         departPort = obj.getJourneys().get(0).getDeparture_station_name();
         arrivalPort = obj.getJourneys().get(0).getArrival_station_name();
@@ -216,9 +223,19 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
          /*Return If Available*/
         if(obj.getJourneys().size() > 1){
 
+
+            //Check From ManageFlight
+            if(obj.getJourneys().get(1).getFlights().size() == 0){
+                //goingFlightBlock.setVisibility(View.GONE);
+                returnFlightNA.setVisibility(View.VISIBLE);
+                returnBasicPremier.setVisibility(View.GONE);
+            }else{
+                returnFlightNA.setVisibility(View.GONE);
+                returnBasicPremier.setVisibility(View.VISIBLE);
+            }
+
             List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
             returnFlightBlock.setVisibility(View.VISIBLE);
-            returnBasicPremier.setVisibility(View.VISIBLE);
 
             //Return Airport
             returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
@@ -234,9 +251,10 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             returnListBasic = new CodeShareAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,RETURN,this);
             flightArrival.setAdapter(returnListBasic);
 
-        } else{
-            returnFlightAvailable.setVisibility(View.VISIBLE);
         }
+        //else{
+        //    returnFlightAvailable.setVisibility(View.VISIBLE);
+        //}
 
         btnListFlight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,13 +263,13 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                 //check if flight checked
                 if(flightType.equals("0")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight 1");
+                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else{
                         proceed = true;
                     }
                 }else if(flightType.equals("1")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight 2");
+                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Return Flight");
                     }else{
@@ -294,6 +312,9 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             }
         });
 
+        //Premium Flight Button Disable
+        basicPremierLayout.setVisibility(View.GONE);
+        returnBasicPremier.setVisibility(View.GONE);
 
         return view;
     }

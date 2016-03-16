@@ -8,6 +8,7 @@ import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
+import com.fly.firefly.ui.activity.Homepage.HomeFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -32,10 +33,17 @@ public class BoardingPassActivity extends MainFragmentActivity implements Fragme
         mTracker = application.getDefaultTracker();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, BoardingPassFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, BoardingPassFragment.newInstance(),"Boarding").commit();
         hideTitle();
     }
 
+    @Override
+    public void onBackPressed(){
+
+        final FragmentManager manager = getSupportFragmentManager();
+        BoardingPassFragment fragment = (BoardingPassFragment) manager.findFragmentByTag("Boarding");
+        fragment.onBackPressed();
+    }
 
     @Override
     public void onResume() {

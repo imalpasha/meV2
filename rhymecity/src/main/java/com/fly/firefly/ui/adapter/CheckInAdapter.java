@@ -250,28 +250,35 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
        // vh = new ViewHolder();
         final ExpandableListView eLV = (ExpandableListView) parent;
 
-        if (convertView == null) {
+       // if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
             vh = new ViewHolderHeader();
             ButterKnife.inject(vh, convertView);
             convertView.setTag(vh);
-        }
-        else {
-            vh = (ViewHolderHeader) convertView.getTag();
-        }
+       /// }
+       /// else {
+       ///     vh = (ViewHolderHeader) convertView.getTag();
+       /// }
 
 
         if(obj.get(groupPosition).getStatus().equals("Checked In")){
             vh.passengerCheckInCheckBox.setVisibility(View.INVISIBLE);
             vh.txtCheckInStatus.setVisibility(View.VISIBLE);
             vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
-
-
         }else{
             vh.passengerCheckInCheckBox.setVisibility(View.VISIBLE);
             vh.txtCheckInStatus.setVisibility(View.GONE);
-            vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
+            //vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
         }
+
+        //Put some manual condition here
+        /*if(obj.get(groupPosition).getChecked() != null){
+            if(obj.get(groupPosition).getChecked().equals("Y")){
+                vh.passengerCheckInCheckBox.setChecked(true);
+            }else{
+                vh.passengerCheckInCheckBox.setChecked(false);
+            }
+        }*/
 
         //obj.get(position).setChecked("N");
         vh.passengerCheckInCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

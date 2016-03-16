@@ -453,7 +453,7 @@ public class BaseFragment extends Fragment {
 		pDialog = new SweetAlertDialog(act, SweetAlertDialog.PROGRESS_TYPE);
 		pDialog.getProgressHelper().setBarColor(Color.parseColor("#CCff6a4d"));
 		pDialog.setTitleText("Loading");
-		pDialog.setCancelable(true);
+		pDialog.setCancelable(false);
 		pDialog.show();
 
 		/*mProgressDialog = new SpotsDialog(act);
@@ -1037,7 +1037,12 @@ public class BaseFragment extends Fragment {
 				}
 			}else if(validationRule.equals("phoneNumber")){
 				if (editText.getText().toString().length() < 6 || editText.getText().toString().length() > 16) {
-					editText.setError("Invalid phone/fax number");
+					editText.setError("Invalid phone number");
+					manualValidationStatus = false;
+				}
+			}else if(validationRule.equals("faxNumber")){
+				if (editText.getText().toString().length() < 6 || editText.getText().toString().length() > 16) {
+					editText.setError("Invalid fax number");
 					manualValidationStatus = false;
 				}
 			}

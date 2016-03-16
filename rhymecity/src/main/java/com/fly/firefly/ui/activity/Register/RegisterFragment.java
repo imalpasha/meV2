@@ -120,13 +120,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     @InjectView(R.id.editTextPostcode)
     EditText editTextPostcode;
 
-    @Order(10)
-    @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6,max = 14, message = "Invalid phone number")
-    @InjectView(R.id.editTextMobilePhone) EditText editTextMobilePhone;
+    @InjectView(R.id.editTextMobilePhone)
+    EditText editTextMobilePhone;
 
-    @NotEmpty(sequence = 1)
-    @Length(sequence = 2, min = 6,max = 14, message = "Invalid phone number")
     @InjectView(R.id.editTextAlternatePhone)
     EditText txtAlternatePhoneNumber;
 
@@ -276,8 +272,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 //Multiple Manual Validation - Library Problem (failed to validate optional field)
                 resetManualValidationStatus();
                 manualValidation(txtBonusLink, "bonuslink");
-                //manualValidation(txtAlternatePhoneNumber, "phoneNumber");
-                manualValidation(txtFaqNumber,"phoneNumber");
+                manualValidation(editTextMobilePhone, "phoneNumber");
+                manualValidation(txtAlternatePhoneNumber, "phoneNumber");
+                manualValidation(txtFaqNumber,"faxNumber");
                 validateStatus = getManualValidationStatus();
 
                 mValidator.validate();

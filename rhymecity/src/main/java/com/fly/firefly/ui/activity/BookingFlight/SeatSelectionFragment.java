@@ -100,6 +100,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     private List<SeatInfo> seatInfoReturn;
     private List<SeatInfo> seatInfoDepart;
     private boolean twoWay = false;
+    private ContactInfoReceive contactObj;
 
     public static SeatSelectionFragment newInstance(Bundle bundle) {
 
@@ -140,13 +141,13 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         /*Initiate Seat Row*/
         Gson gson = new Gson();
-        ContactInfoReceive obj = gson.fromJson(seatHash, ContactInfoReceive.class);
+        contactObj = gson.fromJson(seatHash, ContactInfoReceive.class);
 
-        seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
-        List<ContactInfoReceive.Journeys> journeys = obj.getObj().getJourneys();
+        seatInfoDepart = contactObj.getObj().getJourneys().get(0).getSeat_info();
+        List<ContactInfoReceive.Journeys> journeys = contactObj.getObj().getJourneys();
 
         /*Set Passenger to adapter*/
-        final List<ContactInfoReceive.PasssengerInfo> passengers = obj.getObj().getPassengers();
+        final List<ContactInfoReceive.PasssengerInfo> passengers = contactObj.getObj().getPassengers();
 
         /*Create New Passenger Obj*/
         final List<PasssengerInfoV2> objV2 = new ArrayList<PasssengerInfoV2>();
@@ -179,7 +180,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
             Log.e("ReturnSeat","True");
             twoWay = true;
-            seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
+            seatInfoReturn = contactObj.getObj().getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
             setSeat2(seatListReturn, seatInfoReturn);
             passengerSeatListReturn.setVisibility(View.VISIBLE);
@@ -256,8 +257,8 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                 ArrayList<SeatSelect> goingSeat = new ArrayList<SeatSelect>();
                 ArrayList<SeatSelect> returnSeat = new ArrayList<SeatSelect>();
-                Boolean oneWayProceed = true;
-                Boolean twoWayProceed = true;
+                Boolean oneWayProceed = false;
+                Boolean twoWayProceed = false;
 
                 for(int x = 0 ; x < passengers.size() ; x++){
 
@@ -270,7 +271,11 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                         oneWayProceed = true;
 
                     }else{
-                        oneWayProceed = false;
+                        SeatSelect obj = new SeatSelect();
+                        obj.setCompartment_designator("");
+                        obj.setSeat_number("");
+                        goingSeat.add(obj);
+                        oneWayProceed = true;
                     }
 
                 }
@@ -290,8 +295,12 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                     }
                 }
 
-                if(!oneWayProceed || !twoWayProceed){
-                    Crouton.makeText(getActivity(), "Please select seat", Style.ALERT).show();
+                if(!oneWayProceed && !twoWayProceed){
+                    //Crouton.makeText(getActivity(), "Please select seat", Style.ALERT).show();
+                    Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
+                    intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(contactObj));
+                    getActivity().startActivity(intent);
+
                 }else{
                     //Validate
                     //Validate

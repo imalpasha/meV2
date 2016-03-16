@@ -2,16 +2,21 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,13 +29,17 @@ import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.PassengerInfoReveice;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.activity.BoardingPass.BoardingPassFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
+import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInFragment1;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ContactInfoModule;
 import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
+import com.fly.firefly.ui.object.DefaultPassengerObj;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.DropMenuAdapter;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
@@ -171,6 +180,10 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.changeContactInfoBtn)
     LinearLayout changeContactInfoBtn;
 
+    @InjectView(R.id.checkAsPassenger)
+    CheckBox checkAsPassenger;
+
+
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -198,6 +211,10 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private boolean withSeat = false;
     private View view;
     private LoginReceive.UserInfo loginObj;
+    private DefaultPassengerObj defaultPassengerObj;
+    private ArrayList<DefaultPassengerObj> defaultObj = new ArrayList<DefaultPassengerObj>();
+    private ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
+    private int index = -1;
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
 
@@ -216,6 +233,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
         mValidator.setValidationMode(Validator.Mode.BURST);
+
     }
 
     @Override
@@ -226,9 +244,20 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
 
+        Bundle xxx = getActivity().getIntent().getExtras();
         String insurance = bundle.getString("INSURANCE_STATUS");
+
+        String defaultPassenger = "";
+        try {
+             defaultObj = getActivity().getIntent().getParcelableArrayListExtra("DEFAULT_PASSENGER_INFO");
+        }catch (Exception e){
+            Log.e("Invalid","True");
+        }
+
+
         changeContactInfoBtn.setVisibility(View.GONE);
         Gson gson = new Gson();
+
         PassengerInfoReveice obj = gson.fromJson(insurance, PassengerInfoReveice.class);
 
         /* If Passenger Already Login - Auto display necessary data */
@@ -257,6 +286,46 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         }
         /* ---------------------------------------------------------- */
 
+
+        checkAsPassenger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked)
+                {
+                    Log.e("defaultObj.size()",Integer.toString(defaultObj.size()));
+                    if(defaultObj.size() > 1){
+                        ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
+
+                        for(int i = 0;i<defaultObj.size(); i++)
+                        {
+                            DropDownItem itemPurpose = new DropDownItem();
+                            itemPurpose.setText(defaultObj.get(i).getTitle()+" "+defaultObj.get(i).getFirstname());
+                            itemPurpose.setCode(Integer.toString(i));
+                            passengerList.add(itemPurpose);
+                        }
+                        //popupSelection(passengerList, getActivity());
+                        customPopupForContactInfo(passengerList, getActivity());
+
+                    }else{
+                        txtTitle.setText(getTitleCode(getActivity(), defaultObj.get(0).getTitle(), "name"));
+                        txtTitle.setTag(defaultObj.get(0).getTitle());
+                        txtFirstName.setText(defaultObj.get(0).getFirstname());
+                        txtLastName.setText(defaultObj.get(0).getLastname());
+                        txtCountry.setTag(defaultObj.get(0).getIssuingCountry());
+                        txtCountry.setText(getCountryName(getActivity(), defaultObj.get(0).getIssuingCountry()));
+                    }
+                }else{
+                    txtTitle.setText("");
+                    txtTitle.setTag("");
+                    txtFirstName.setText("");
+                    txtLastName.setText("");
+                    txtCountry.setTag("");
+                    txtCountry.setText("");
+                }
+            }
+        });
 
         String insuranceStatus = obj.getObj().getInsuranceObj().getStatus();
         if(insuranceStatus.equals("Y")){
@@ -344,12 +413,14 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         /* --------------------------- End Title ---------------------------------- */
 
         /*Booking Id*/
-        HashMap<String, String> initFlightType = pref.getBookingID();
-        String flightType = initFlightType.get(SharedPrefManager.BOOKING_ID);
+        HashMap<String, String> initFlightType = pref.getFlightType();
+        String flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
         if(flightType.equals("MH")){
             btnSeatSelection.setVisibility(View.GONE);
             btnWithoutSeatSelection.setText("Continue");
+        }else{
+            Log.e("FlightType",flightType);
         }
 
          /*Onclick Continue*/
@@ -375,6 +446,48 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         return view;
     }
+
+
+     /*Global PoPup*/
+     public void customPopupForContactInfo(final ArrayList array,Activity act){
+
+
+         Log.e("Popup Alert", "True");
+            final ArrayList<DropDownItem> a = array;
+            DropMenuAdapter dropState = new DropMenuAdapter(act);
+            dropState.setItems(a);
+
+            AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
+
+            alertStateCode.setSingleChoiceItems(dropState, index, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    String selectedCode = a.get(which).getCode();
+
+                    txtTitle.setText(getTitleCode(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getTitle(), "name"));
+                    txtTitle.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getTitle());
+                    txtFirstName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getFirstname());
+                    txtLastName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getLastname());
+                    txtCountry.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
+                    txtCountry.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
+
+                    index = which;
+                    dialog.dismiss();
+                }
+            });
+
+
+            AlertDialog mDialog = alertStateCode.create();
+            mDialog.show();
+
+            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+            lp.copyFrom(mDialog.getWindow().getAttributes());
+            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+            lp.height = 600;
+            mDialog.getWindow().setAttributes(lp);
+        }
+
 
     /*Country selector - > need to move to main activity*/
     public void showCountrySelector(Activity act,ArrayList constParam)

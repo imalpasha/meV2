@@ -646,7 +646,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Goods amp; Sevices Tax"
+                                android:text="Goods &amp; Sevices Tax"
                                 android:textSize="13dp" />
                         </LinearLayout>
 

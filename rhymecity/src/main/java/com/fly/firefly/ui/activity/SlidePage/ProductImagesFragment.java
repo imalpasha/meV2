@@ -131,7 +131,7 @@ public class ProductImagesFragment extends BaseFragment {
         txtPassengerDepart.setText(boardingObj.getDepartureStation() +" ("+ boardingObj.getDepartureStationCode()+")");
         txtPassengerFlightDate.setText(boardingObj.getDepartureDayDate());
         txtPassengerArrive.setText(boardingObj.getArrivalStation() +" ("+ boardingObj.getArrivalStationCode()+")");
-        txtPassengerDepartureTime.setText(boardingObj.getDepartureDateTime());
+        txtPassengerDepartureTime.setText(boardingObj.getDepartureTime());
         txtPassengerBoardingTime.setText(boardingObj.getBoardingTime());
         //txtPassengerGate.setText(boardingObj.getDepartureGate());
         txtPassengerFlightNo.setText(boardingObj.getFlightNumber());

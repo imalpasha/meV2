@@ -350,7 +350,13 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onMobileCheckin(event);
+                    loop();
+                } else {
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
 
             }
@@ -661,9 +667,10 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
+                Log.e("inc",Integer.toString(inc));
                 if (retry) {
                     onManageFlight(event);
-                    loop(inc);
+                    loop();
                 } else {
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }
@@ -931,7 +938,7 @@ public class ApiRequestHandler {
             public void failure(RetrofitError error) {
 
                 if (retry) {
-                    loop(inc);
+                    loop();
                     onRetrieveBoardingPass(event);
                 } else {
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
@@ -957,9 +964,8 @@ public class ApiRequestHandler {
 
             @Override
             public void failure(RetrofitError error) {
-
                 if (retry) {
-                    loop(inc);
+                    loop();
                     onRetrieveAboutUs(event);
                 } else {
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
@@ -971,7 +977,7 @@ public class ApiRequestHandler {
     }
 
 
-    public void loop(int inc){
+    public void loop(){
         inc++;
         if(inc > 5){
             retry = false;

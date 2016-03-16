@@ -33,6 +33,17 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 public class Controller extends BaseFragment {
 
+    public static void clearAll(Activity act){
+        SharedPrefManager  pref = new SharedPrefManager(act);
+        pref.clearSignatureFromLocalStorage();
+        pref.clearPassword();
+        pref.clearUserEmail();
+
+        Log.e("SUCCESS","ok");
+
+    }
+
+
     private static SweetAlertDialog pDialog;
 
     public static void clickableBanner(Activity act,String page){
@@ -88,8 +99,6 @@ public class Controller extends BaseFragment {
         return status;
 
     }
-
-
     //Redirect
     public static void goChangePasswordPage(Activity act){
         Intent loginPage = new Intent(act, ChangePasswordActivity.class);

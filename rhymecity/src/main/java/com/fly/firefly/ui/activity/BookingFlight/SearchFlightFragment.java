@@ -299,10 +299,12 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnAdultIncrease");
-                if(!blockAdult && totalAdult <= 9){
+                if(!blockAdult && totalAdult < 9){
                    totalAdult++;
                    setPassengerTotal(ADULT);
-               }
+               }else{
+                    Utils.toastNotification(getActivity(), "Adult limit is 9");
+                }
             }
         });
 
@@ -313,16 +315,24 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
                 if(totalAdult == 1){
                     blockAdultNumber = true;
                 }
-                if(!blockAdultNumber){
-                    totalAdult--;
-                    setPassengerTotal(ADULT);
-                }else if(blockAdultNumber && totalAdult > 9){
-                    totalAdult--;
-                    totalAdult--;
-                    setPassengerTotal(ADULT);
-                    Log.e("blockChildNumber", "True");
-                    Log.e("totalChildren", Integer.toString(totalAdult));
+
+                Log.e(Integer.toString(totalAdult),Integer.toString(totalInfant));
+                if((totalAdult-1) < totalInfant){
+                    Utils.toastNotification(getActivity(),"Adult cannot be less than infant");
+                }else{
+                    if(!blockAdultNumber){
+                        totalAdult--;
+                        setPassengerTotal(ADULT);
+                    }else if(blockAdultNumber && totalAdult > 9){
+                        totalAdult--;
+                        totalAdult--;
+                        setPassengerTotal(ADULT);
+                        Log.e("blockChildNumber", "True");
+                        Log.e("totalChildren", Integer.toString(totalAdult));
+                    }
                 }
+
+
             }
         });
 
@@ -373,9 +383,11 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
                 AnalyticsApplication.sendEvent("Click", "btnInfantIncrease");
 
                 if(totalInfant < totalAdult ){
-                    if(!blockInfant && totalInfant <= 9){
+                    if(!blockInfant && totalInfant < 4){
                         totalInfant++;
                         setPassengerTotal(INFANT);
+                    }else{
+                        Utils.toastNotification(getActivity(),"Infant limit is 4");
                     }
                 }else{
                     Utils.toastNotification(getActivity(),"Infant cannot be more than adult");
@@ -482,7 +494,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         //String returnDate = flightType.equals("1") ? bookFlightReturnDate.getTag().toString() : "";
         flightObj.setReturn_date(returnDate);
 
-        flightObj.setSignature(signatureFromLocal);
+        //flightObj.setSignature(signatureFromLocal);
         searchFlightFragment(flightObj);
 
                     /*FragmentManager fragmentManager = getFragmentManager();
@@ -556,15 +568,16 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         int totalPassenger = totalAdult+totalChildren+totalInfant;
 
+        Log.e("totalPassenger",Integer.toString(totalPassenger));
 
         if(totalPassenger > 14){
+
 
             if(passenger == ADULT){ totalAdult--; }
             else if(passenger == CHILDREN){ totalChildren--; }
             else{ totalInfant--; }
 
-            Utils.toastNotification(getActivity(), "13" +
-                    " Passenger Per Booking");
+            Utils.toastNotification(getActivity(), "13" + " Passenger Per Booking");
 
         }else{
 
@@ -603,17 +616,21 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             }
             else if(passenger == INFANT)
             {
-                if(totalInfant < 10 && totalInfant >= 0) {
+                if(totalInfant <= 4  && totalInfant >= 0) {
                     txtInfantTotal.setText(Integer.toString(totalInfant));
                     blockInfant = false;
                     blockInfantNumber = false;
+                    Log.e("?",Integer.toString(totalInfant));
+
                 }
-                else if(totalInfant == 9) {
-                    Utils.toastNotification(getActivity(), "Limit is 9");
+                else if(totalInfant == 5) {
+                    Utils.toastNotification(getActivity(), "Infant limit is 4");
+                    Log.e("??", Integer.toString(totalInfant));
                     blockInfant = true;
                 }
                 else
                 {
+                    Log.e("???",Integer.toString(totalInfant));
                     blockInfantNumber = true;
                 }
             }

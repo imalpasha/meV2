@@ -177,6 +177,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             else if (item.getTag().equals("Logout"))
             {
                 pref.setLoginStatus("N");
+                Controller.clearAll(this);
                 Intent login = new Intent(this, HomeActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(login);

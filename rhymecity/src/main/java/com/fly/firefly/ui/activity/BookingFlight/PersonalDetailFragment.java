@@ -30,6 +30,7 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.PersonalDetailModule;
 import com.fly.firefly.ui.object.CachedResult;
+import com.fly.firefly.ui.object.DefaultPassengerObj;
 import com.fly.firefly.ui.object.InfantInfo;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.Passenger;
@@ -139,6 +140,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     private String storeUsername;
     private String storePassword;
     private AlertDialog dialog;
+    private ArrayList<PassengerInfo> passengerObj = new ArrayList<PassengerInfo>();
+    private ArrayList<InfantInfo> infantObj = new ArrayList<InfantInfo>();
+    //private DefaultPassengerObj defaultObj = new DefaultPassengerObj();
+    private ArrayList<DefaultPassengerObj> defaultObj = new ArrayList<DefaultPassengerObj>();
 
     public static PersonalDetailFragment newInstance(Bundle bundle) {
 
@@ -165,8 +170,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         view = inflater.inflate(R.layout.personal_detail, container, false);
         ButterKnife.inject(this, view);
-        final ArrayList<PassengerInfo> passengerObj = new ArrayList<PassengerInfo>();
-        final ArrayList<InfantInfo> infantObj = new ArrayList<InfantInfo>();
 
         /*Retrieve bundle data*/
         Bundle bundle = getArguments();
@@ -304,8 +307,11 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 int intTotalAdult = 0;
 
                 formContinue = true;
+                passengerObj = new ArrayList<PassengerInfo>();
+                infantObj = new ArrayList<InfantInfo>();
+                defaultObj = new ArrayList<DefaultPassengerObj>();
 
-                /*Manual Validation*/
+                                /*Manual Validation*/
                 for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
                     PassengerInfo passengerInfo = new PassengerInfo();
@@ -363,6 +369,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                     if(formContinue){
 
+                        DefaultPassengerObj adultDefault = new DefaultPassengerObj();
+
                         int intTotalAdult2 = 0;
                         //GET ADULT PASSENGER INFO
                         for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
@@ -419,6 +427,15 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                             passengerInfo.setBonusLink(enrich.getText().toString());
 
                             passengerObj.add(passengerInfo);
+
+
+                            adultDefault = new DefaultPassengerObj();
+                            adultDefault.setTitle(passengerObj.get(adultInc-1).getTitle());
+                            adultDefault.setFirstname(passengerObj.get(adultInc-1).getFirst_name());
+                            adultDefault.setLastname(passengerObj.get(adultInc-1).getLast_name());
+                            adultDefault.setIssuingCountry(passengerObj.get(adultInc-1).getIssuing_country());
+                            defaultObj.add(adultDefault);
+
                         }
 
                         for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
@@ -484,7 +501,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         obj.setPassengers(passengerObj);
                         obj.setInfant(infantObj);
 
+                        //if((Integer.parseInt(adult) + Integer.parseInt(infant)) == 1){
+
+
+                        //}
+
                         runPassengerInfo(obj);
+
 
                     }else{
                         croutonAlert(getActivity(), "Please fill empty field");
@@ -699,6 +722,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
             intent.putExtra("INSURANCE_STATUS", (new Gson()).toJson(obj));
+            //intent.putExtra("DEFAULT_PASSENGER_INFO", (new Gson()).toJson(defaultObj));
+            intent.putParcelableArrayListExtra("DEFAULT_PASSENGER_INFO", defaultObj);
             getActivity().startActivity(intent);
 
         }

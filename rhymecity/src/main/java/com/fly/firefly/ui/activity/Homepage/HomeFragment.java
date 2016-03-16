@@ -1,11 +1,15 @@
 package com.fly.firefly.ui.activity.Homepage;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -15,8 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.fly.firefly.AlarmReceiver;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
@@ -160,14 +166,27 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         /* ------------ */
 
         /*GET PREF DATA*/
-        HashMap<String, String> initPromoBanner = pref.getDefaultBanner();
+        HashMap<String, String> initPromoBanner = pref.getPromoBanner();
         String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
+        Log.e("banner",banner);
+
         if(banner == null || banner == ""){
             HashMap<String, String> initDefaultBanner = pref.getDefaultBanner();
             banner = initDefaultBanner.get(SharedPrefManager.DEFAULT_BANNER);
+            Log.e("banner",banner);
+        }
+
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+        if (currentapiVersion <= Build.VERSION_CODES.JELLY_BEAN){
+            // Do your code for froyo and above versions
+            Log.e("NOTE1","TRUE");
+        } else{
+            Log.e("NOTE2","TRUE");
+            // do your code for before froyo versions
         }
 
         aq.id(R.id.bannerImg).image(banner);
+
         HashMap<String, String> initBannerModule = pref.getBannerModule();
         final String bannerModule = initBannerModule.get(SharedPrefManager.BANNER_MODULE);
 
@@ -219,8 +238,10 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         homeManageFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 AnalyticsApplication.sendEvent("Click", "homeManageFlight");
                 goToManageFlight();
+                //trySetAlarm();
             }
         });
 
@@ -239,6 +260,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //        goToBeacon();
         //    }
         //});
+
 
         homeMobileBoardingPass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,11 +322,20 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         });
 
         //setUpMap();
-        getScreenSize();
+        trySetAlarm();
 
         return view;
     }
 
+    public void trySetAlarm(){
+
+            AlarmManager am=(AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
+            Intent intent = new Intent(getActivity(), AlarmReceiver.class);
+            intent.putExtra("ONE_TIME", Boolean.FALSE);
+            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
+            //After after 30 seconds
+            am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 15 , pi);
+    }
 
     public void getScreenSize(){
 
@@ -408,6 +439,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
                     public void onClick(SweetAlertDialog sDialog) {
 
                         getActivity().finish();
+                        System.exit(0);
 
                     }
                 })

@@ -677,8 +677,8 @@
 
 
     <string name="register_title">Title </string>
-    <string name="register_firstname">First Name </string>
-    <string name="register_lastname">Last Name </string>
+    <string name="register_firstname">First Name / Given Name </string>
+    <string name="register_lastname">Last Name / Family Name </string>
     <string name="register_dob">Date Of Birth </string>
 
     <string name="register_basic_information">Basic Information</string>
@@ -701,7 +701,7 @@
 
     <string name="register_fax">Fax</string>
     <string name="register_city">Town/City</string>
-    <string name="register_password_hint">The given password violates the password policy of domain WWW. Policy: Password must be at least 8 characters, no more than 16 characters, must include at least one upper case letter, one lower case letter, one numeric digit, and one non-alphanumeric. The password cannot contain a period(.) comma(,) or tilde(~).</string>
+    <string name="register_password_hint">Password must be at least 8 characters, no more than 16 characters, must include at least one upper case letter, one lower case letter, one numeric digit, and one non-alphanumeric. The password cannot contain a period(.) comma(,) or tilde(~).</string>
     <string name="register_password_policy">Password Policy</string>
 
     <string name="title_register">REGISTER</string>
@@ -753,9 +753,9 @@
     <string name="manage_flight_change_flight">CHANGE FLIGHT</string>
     <string name="manage_flight_change_seat">CHANGE SEAT</string>
     <string name="manage_flight_add_payment">ADD PAYMENT</string>
-    <string name="manage_flight_send_itinenary">SEND ITINENARY</string>
+    <string name="manage_flight_send_itinenary">SEND ITINERARY</string>
     <string name="manage_flight_contact_detail">CONTACT DETAIL</string>
-    <string name="manage_flight_sent_itinenary">SEND ITINENARY</string>
+    <string name="manage_flight_sent_itinenary">SEND ITINERARY</string>
     <string name="manage_flight_seat_optional">Seat Selection (Optional)</string>
 
 

@@ -63,7 +63,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        RealmObjectController.deleteRealmFile(getActivity());
+        //RealmObjectController.deleteRealmFile(getActivity());
 
         View view = inflater.inflate(R.layout.splash_screen, container, false);
         ButterKnife.inject(this, view);
@@ -122,7 +122,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void connectionRetry(String msg){
 
         pDialog.setTitleText("Connection Error");
-        pDialog.setCancelable(true);
+        pDialog.setCancelable(false);
         pDialog.setContentText(msg);
         pDialog.setConfirmText("Retry");
         pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {

@@ -62,8 +62,6 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     @InjectView(R.id.returnFlightBlock)LinearLayout returnFlightBlock;
     @InjectView(R.id.goingFlightBlock)LinearLayout goingFlightBlock;
     @InjectView(R.id.returnBasicPremier)LinearLayout returnBasicPremier;
-    @InjectView(R.id.returnFlightAvailable)LinearLayout returnFlightAvailable;
-    @InjectView(R.id.goingFlightAvailable)LinearLayout goingFlightAvailable;
 
     @InjectView(R.id.txtDepartAirport)TextView txtDepartAirport;
     @InjectView(R.id.txtFlightType)TextView txtFlightType;
@@ -79,6 +77,10 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
     @InjectView(R.id.premierFlightDeparture)ExpandAbleGridView premierFlightDeparture;
     @InjectView(R.id.premierFlightArrival)ExpandAbleGridView premierFlightArrival;
+
+    @InjectView(R.id.returnFlightNA)LinearLayout returnFlightNA;
+    @InjectView(R.id.goingFlightNA)LinearLayout goingFlightNA;
+    @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
 
     private int fragmentContainerId;
     private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
@@ -141,6 +143,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         ButterKnife.inject(this, view);
 
 
+
           /*Preference Manager*/
         pref = new SharedPrefManager(getActivity());
 
@@ -178,13 +181,13 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         //Check From ManageFlight
         if(obj.getJourneys().get(0).getFlights().size() == 0){
-            goingFlightAvailable.setVisibility(View.VISIBLE);
-        }else
-        {
-            goingFlightAvailable.setVisibility(View.GONE);
-
+            //goingFlightBlock.setVisibility(View.GONE);
+            goingFlightNA.setVisibility(View.VISIBLE);
+            basicPremierLayout.setVisibility(View.GONE);
+        }else{
+            goingFlightNA.setVisibility(View.GONE);
+            basicPremierLayout.setVisibility(View.VISIBLE);
         }
-
         /*Departure*/
         List<FlightInfo> departFlight = obj.getJourneys().get(0).getFlights();
 
@@ -217,17 +220,26 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         /*Return If Available*/
         if(obj.getJourneys().size() > 1){
-          List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
-          returnFlightBlock.setVisibility(View.VISIBLE);
-          returnBasicPremier.setVisibility(View.VISIBLE);
 
+            //Check From ManageFlight
+            if(obj.getJourneys().get(1).getFlights().size() == 0){
+                //goingFlightBlock.setVisibility(View.GONE);
+                returnFlightNA.setVisibility(View.VISIBLE);
+                returnBasicPremier.setVisibility(View.GONE);
+            }else{
+                returnFlightNA.setVisibility(View.GONE);
+                returnBasicPremier.setVisibility(View.VISIBLE);
+            }
 
-          //Return Airport
-          returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
-          returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
-          String returnType = "("+obj.getJourneys().get(1).getType()+")";
-          txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
-          txtReturnType.setText(returnType);
+            List<FlightInfo> returnFlight = obj.getJourneys().get(1).getFlights();
+            returnFlightBlock.setVisibility(View.VISIBLE);
+
+            //Return Airport
+            returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
+            returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
+            String returnType = "("+obj.getJourneys().get(1).getType()+")";
+            txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
+            txtReturnType.setText(returnType);
 
             //Reformat Date
             String returnDate = obj.getJourneys().get(1).getDeparture_date();
@@ -239,8 +251,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             returnListPremier = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,PREMIER,RETURN,this);
             premierFlightArrival.setAdapter(returnListPremier);
 
-        } else{
-            returnFlightAvailable.setVisibility(View.VISIBLE);
+        }else{
+            returnBasicPremier.setVisibility(View.GONE);
         }
 
         btnListFlight.setOnClickListener(new View.OnClickListener() {
@@ -250,13 +262,13 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                 //check if flight checked
                 if(flightType.equals("0")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight 1");
+                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else{
                         proceed = true;
                     }
                 }else if(flightType.equals("1")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight 2");
+                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Return Flight");
                     }else{
@@ -285,16 +297,16 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                 }
                 if(proceed){
 
-                  if(pnr == null){
-                      if(loginStatus == null || loginStatus.equals("N")) {
-                          continueAs();
-                      }else{
-                          goPersonalDetail();
-                      }
+                    if(pnr == null){
+                        if(loginStatus == null || loginStatus.equals("N")) {
+                            continueAs();
+                        }else{
+                            goPersonalDetail();
+                        }
 
-                  }  else{
-                      changeFlight();
-                  }
+                    }  else{
+                        changeFlight();
+                    }
                 }
             }
         });
@@ -330,6 +342,10 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                 switchFare(RETURN_PREMIER);
             }
         });
+
+        //Premium Flight Button Disable
+        basicPremierLayout.setVisibility(View.GONE);
+        returnBasicPremier.setVisibility(View.GONE);
 
         return view;
     }
@@ -612,9 +628,9 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         }
     }
 
-        public void alertNotAvailable(){
-            Utils.toastNotification(getActivity(),"Not Available");
-        }
+    public void alertNotAvailable(){
+        Utils.toastNotification(getActivity(),"Not Available");
+    }
 
 
     @Override

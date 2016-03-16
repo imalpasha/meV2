@@ -127,11 +127,19 @@ public class FlightDetailAdapter extends BaseAdapter {
 
         String totalFare = "";
         if(flightClass.equals("PREMIER")){
-            totalFare = "SOLD OUT";
-            //totalFare = obj.get(position).getFlexObj().getTotal_fare();
-
+            if(obj.get(position).getFlexObj().getTotal_fare() == null){
+                totalFare = "Sold Out";
+                vh.checkBox.setVisibility(View.GONE);
+            }else{
+                totalFare = "MYR "+obj.get(position).getFlexObj().getTotal_fare();
+            }
         }else{
-            totalFare = "MYR "+obj.get(position).getBasicObj().getTotal_fare();
+            if(obj.get(position).getBasicObj().getTotal_fare() == null){
+                totalFare = "Sold Out";
+                vh.checkBox.setVisibility(View.GONE);
+            }else{
+                totalFare = "MYR "+obj.get(position).getBasicObj().getTotal_fare();
+            }
         }
 
         vh.txtFlightNo.setText("FLIGHT NO. FY "+ obj.get(position).getFlight_number());

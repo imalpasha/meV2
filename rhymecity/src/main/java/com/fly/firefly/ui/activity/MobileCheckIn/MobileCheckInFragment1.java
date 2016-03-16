@@ -183,6 +183,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "txtDeparture");
                 popupSelection(dataFlightDeparture, getActivity(), txtDeparture,true,view);
+                txtArrive.setText("");
                 //txtDeparture.setText("ARRIVAL AIRPORT");
             }
         });
