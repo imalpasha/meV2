@@ -361,6 +361,200 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/fareRuleLayout">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="FARE RULES"
+                                android:id="@+id/textView353"
+                                android:textSize="@dimen/font20sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/drawable_login_bottom_border"
+                            android:padding="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="1."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView373" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="This fare is capacity controlled. Seats offered at this fare are limited and may not be available on all flights. All fares are subject to change until purchased."
+                                        android:id="@+id/textView374" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="2."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView371" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Name Change is not permitted."
+                                        android:id="@+id/textView372" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="3."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView367" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Date Change is permitted with payment of fee and fare difference more than 2 hours prior to departure"
+                                        android:id="@+id/textView368" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="4."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView354" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Route Change is not permitted."
+                                        android:id="@+id/textView366" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="5."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView369" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Refund is not permitted. Reservations cannot be cancelled once confirmed."
+                                        android:id="@+id/textView370" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="6."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView375" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="For full set of applicable fees, taxes and surcharges, please visit our &apos;Fees&apos; webpage."
+                                        android:id="@+id/textView376" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="7."
+                                        android:layout_marginRight="2dp"
+                                        android:id="@+id/textView377" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="For general term and conditions, please refer to Firefly General Conditions of Carriage."
+                                        android:id="@+id/textView378" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/drawable_login_bottom_border"
+                            android:id="@+id/linearLayout40" >
+
+                            <CheckBox
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="I confirm, understand and accept Firefly's General Conditions of Carriage. Fare Rules and confirm that the passenger(s) in my reservation does not require Special Assistance and are not categorised as Unaccompanied Minor(s)."
+                                android:id="@+id/fareRulesChkBox"
+                                android:padding="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:checked="false"
+                                android:textSize="14dp"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout

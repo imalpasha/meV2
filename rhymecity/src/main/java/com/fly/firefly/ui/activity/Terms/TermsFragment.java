@@ -1,9 +1,6 @@
 package com.fly.firefly.ui.activity.Terms;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +10,6 @@ import android.webkit.WebViewClient;
 
 import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.ui.activity.BookingFlight.FlightSummaryActivity2;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActionActivity;
 import com.fly.firefly.ui.presenter.TermsPresenter;
 
 import javax.inject.Inject;

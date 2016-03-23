@@ -2,8 +2,6 @@ package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
 import com.fly.firefly.ui.activity.ManageFlight.CommitChangeFragment;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActionFragment;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightFragment;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.squareup.otto.Bus;
 

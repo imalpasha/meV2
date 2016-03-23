@@ -123,7 +123,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @NotEmpty
     @Order(6)
     @InjectView(R.id.txtCountry)
-    EditText txtCountry;
+    TextView txtCountry;
 
     @NotEmpty
     @Order(7)
@@ -142,13 +142,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     TextView txtPostCode;
 
     @NotEmpty
-    @Length(min = 6,max = 14, message = "Invalid phone number")
+    @Length(min = 7,max = 14, message = "Invalid phone number")
     @Order(10)
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
     @NotEmpty
-    @Length(min = 6,max = 14, message = "Invalid phone number")
+    @Length(min = 7,max = 14, message = "Invalid phone number")
     @Order(11)
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
@@ -183,7 +183,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.checkAsPassenger)
     CheckBox checkAsPassenger;
 
+    @InjectView(R.id.txtCountryBusiness)
+    TextView txtCountryBusiness;
 
+    @InjectView(R.id.countryBlock)
+    LinearLayout countryBlock;
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -205,6 +209,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
     private String selectedCountryCode;
+    private String dialingCode;
     private String selectedState;
     private Validator mValidator;
     private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
@@ -235,6 +240,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         mValidator.setValidationMode(Validator.Mode.BURST);
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -280,12 +287,15 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             txtCity.setText(loginObj.getContact_city());
             selectedCountryCode = loginObj.getContact_country();
             txtCountry.setTag(loginObj.getContact_country());
-            txtCountry.setText(getCountryName(getActivity(),loginObj.getContact_country()));
-            txtPostCode.setText(loginObj.getContact_postcode());
+            txtCountry.setText(getCountryName(getActivity(), loginObj.getContact_country()));
 
+            txtCountryBusiness.setTag(loginObj.getContact_country());
+            txtCountryBusiness.setText(getCountryName(getActivity(), loginObj.getContact_country()));
+
+            txtPostCode.setText(loginObj.getContact_postcode());
+            dialingCode = getDialingCode(loginObj.getContact_country(),getActivity());
         }
         /* ---------------------------------------------------------- */
-
 
         checkAsPassenger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -315,6 +325,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                         txtLastName.setText(defaultObj.get(0).getLastname());
                         txtCountry.setTag(defaultObj.get(0).getIssuingCountry());
                         txtCountry.setText(getCountryName(getActivity(), defaultObj.get(0).getIssuingCountry()));
+                        selectedCountryCode = defaultObj.get(0).getIssuingCountry();
+                        txtCountryBusiness.setTag(defaultObj.get(0).getIssuingCountry());
+                        txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(0).getIssuingCountry()));
                     }
                 }else{
                     txtTitle.setText("");
@@ -323,18 +336,21 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     txtLastName.setText("");
                     txtCountry.setTag("");
                     txtCountry.setText("");
+
+                    txtCountryBusiness.setTag("");
+                    txtCountryBusiness.setText("");
                 }
             }
         });
 
-        String insuranceStatus = obj.getObj().getInsuranceObj().getStatus();
+        String insuranceStatus = obj.getInsuranceObj().getStatus();
         if(insuranceStatus.equals("Y")){
             insuranceBlock.setVisibility(View.VISIBLE);
 
-            insuranceTxt1 = obj.getObj().getInsuranceObj().getHtml().get(0).toString();
-            insuranceTxt2 = obj.getObj().getInsuranceObj().getHtml().get(1).toString();
-            insuranceTxt3 = obj.getObj().getInsuranceObj().getHtml().get(2).toString();
-            insuranceTxt4 = obj.getObj().getInsuranceObj().getHtml().get(3).toString();
+            insuranceTxt1 = obj.getInsuranceObj().getHtml().get(0).toString();
+            insuranceTxt2 = obj.getInsuranceObj().getHtml().get(1).toString();
+            insuranceTxt3 = obj.getInsuranceObj().getHtml().get(2).toString();
+            insuranceTxt4 = obj.getInsuranceObj().getHtml().get(3).toString();
 
 
             txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
@@ -357,25 +373,34 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-
-
          /*Get Data From BaseFragment*/
         purposeList = getPurpose(getActivity());
         titleList = getStaticTitle(getActivity());
         countrysList = getStaticCountry(getActivity());
 
+        txtPurpose.setText(purposeList.get(0).getText());
+        txtPurpose.setTag(purposeList.get(0).getCode());
 
         /* -------------------------- Select Country --------------------------------*/
-        txtCountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*txtCountry.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
                     Utils.hideKeyboard(getActivity(),view);
                     showCountrySelector(getActivity(), countrysList);
                 }
             }
-        });
+        });*/
 
         txtCountry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.hideKeyboard(getActivity(),view);
+                showCountrySelector(getActivity(),countrysList);
+            }
+        });
+
+
+        txtCountryBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Utils.hideKeyboard(getActivity(),view);
@@ -398,7 +423,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtPurpose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure");
+                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure",countryBlock);
             }
         });
         /* --------------------------- End Purpose ----------------------------------- */
@@ -471,6 +496,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     txtLastName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getLastname());
                     txtCountry.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
                     txtCountry.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
+                    txtCountryBusiness.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
+                    txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
+                    selectedCountryCode = defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry();
 
                     index = which;
                     dialog.dismiss();
@@ -516,7 +544,15 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
                 if (selectedCountry.getTag() == "Country") {
                     txtCountry.setText(selectedCountry.getText());
-                    selectedCountryCode = selectedCountry.getCode();
+                    txtCountryBusiness.setText(selectedCountry.getText());
+
+                    //split country code with dialing code
+                    String toCountryCode =  selectedCountry.getCode();
+                    String[] splitCountryCode = toCountryCode.split("/");
+                    selectedCountryCode = splitCountryCode[0];
+                    dialingCode = splitCountryCode[1];
+                    txtPhone.setText(dialingCode);
+                    txtAlternatePhone.setText(dialingCode);
 
                    /*Each country click - reset state obj*/
                     stateList = new ArrayList<DropDownItem>();
@@ -548,7 +584,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @Override
     public void onContactInfo(ContactInfoReceive obj){
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
             if(withSeat){
@@ -589,8 +625,22 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @Override
     public void onValidationSucceeded() {
 
-        requestContacInfo();
-        Log.e("Success", "True");
+        //checkDialingCode
+        boolean cont = true;
+        if(validateDialingCode(dialingCode, txtPhone.getText().toString())) {
+            txtPhone.setError("Mobile phone must start with country code.");
+            setShake(txtPhone);
+            cont = false;
+        }
+        if(validateDialingCode(dialingCode,txtAlternatePhone.getText().toString())) {
+            txtAlternatePhone.setError("Alternate phone must start with country code.");
+            setShake(txtAlternatePhone);
+            cont = false;
+        }
+
+        if(cont){
+            requestContacInfo();
+        }
     }
 
     @Override

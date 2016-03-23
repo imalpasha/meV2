@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightFragment;
+import com.fly.firefly.ui.activity.ManageFlight.MF_Fragment;
 import com.fly.firefly.ui.object.BoardingPassObj;
 import com.google.gson.Gson;
 
@@ -25,7 +25,7 @@ public class OfflineBookingListAdapter extends BaseAdapter {
     private String arrivalAirport;
     private String flightClass;
     private Integer selected_position = -1;
-    private ManageFlightFragment fragment;
+    private MF_Fragment fragment;
     private String flightWay;
     private Boolean active = false;
 

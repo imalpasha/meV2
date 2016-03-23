@@ -1,10 +1,8 @@
 package com.fly.firefly.ui.activity.ManageFlight;
 
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +18,11 @@ import com.fly.firefly.api.obj.ManageRequestIntinenary;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ManageFlightItinenary;
-import com.fly.firefly.ui.object.ManageSeatInfo;
-import com.fly.firefly.ui.object.SeatSelect;
 import com.fly.firefly.ui.object.SendItinenaryObj;
-import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -101,7 +95,7 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ManageFlightActionActivity.class);
+                Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra("AlertDialog", "Y");
                 getActivity().startActivity(intent);

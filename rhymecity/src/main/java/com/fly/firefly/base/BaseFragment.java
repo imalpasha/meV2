@@ -2,27 +2,34 @@ package com.fly.firefly.base;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.MainFragmentActivity;
@@ -44,9 +51,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
@@ -65,9 +75,121 @@ public class BaseFragment extends Fragment {
 	private static Country obj = new Country();
 	private static SpotsDialog mProgressDialog;
 	private static SweetAlertDialog pDialog;
+	private static Dialog dialog;
+
+
 	private static Boolean status;
 	Boolean manualValidationStatus = true;
 	private static int staticIndex = -1;
+
+	public String getDialingCode(String coutryCode,Activity act){
+
+		String dialingCode = null;
+
+		JSONArray jsonCountry = getCountry(act);
+		for(int x = 0 ; x < jsonCountry.length() ; x++) {
+
+			JSONObject row = (JSONObject) jsonCountry.opt(x);
+			if(coutryCode.equals(row.optString("country_code"))) {
+				dialingCode = row.optString("dialing_code");
+			}
+		}
+
+		return dialingCode;
+	}
+
+	public boolean validateDialingCode(String dialingCode, String mobilePhone){
+
+		boolean status = false;
+
+		String twoChar  = mobilePhone.substring(0,2);
+		Log.e("two",twoChar);
+		if(!dialingCode.equals(twoChar)){
+			status = true;
+		}
+		return status;
+	}
+	public boolean timeCompare(String arrivalTime,String returnDepartureTime){
+
+		boolean status = false;
+
+		SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+
+		Date arrival = null;
+		Date departureReturn = null;
+
+		try {
+			arrival = parseFormat.parse(arrivalTime);
+			departureReturn = parseFormat.parse(returnDepartureTime);
+		}catch (Exception e){
+		}
+		Log.e("xxxxxxxxxxxxxxx", Long.toString(departureReturn.getTime()));
+		Log.e("yyyyyyyyyyyyyy", Long.toString(arrival.getTime()));
+
+		if(arrival.getTime() > departureReturn.getTime() ){
+			status = true;
+		}
+
+		return status;
+	}
+
+	public boolean compare90Minute(String arrivalTime,String returnDepartureTime){
+
+		boolean status = false;
+
+		SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+
+		Date arrival = null;
+		Date departureReturn = null;
+
+		try {
+			arrival = parseFormat.parse(arrivalTime);
+			departureReturn = parseFormat.parse(returnDepartureTime);
+		}catch (Exception e){
+		}
+
+		long count90minute = arrival.getTime() - departureReturn.getTime();
+
+		Log.e("abc", Long.toString(TimeUnit.MILLISECONDS.toMinutes(count90minute)));
+
+		if(Math.abs(TimeUnit.MILLISECONDS.toMinutes(count90minute)) < 90 ){
+			status = true;
+		}
+
+		return status;
+	}
+
+	public boolean travellerAgeValidation(ArrayList<Integer> ageOfTraveller){
+
+		boolean lessThan12 = true;
+		//checkAgeOfTraveller
+		for(int y = 0 ; y < ageOfTraveller.size() ; y++){
+			if(ageOfTraveller.get(y) > 12){
+				lessThan12 = false;
+			}
+		}
+		return lessThan12;
+
+	}
+
+	public int travellerAge(String dob){
+
+		int age;
+
+		String[] splitDOB = dob.split("/");
+		String dobYear = splitDOB[2];
+
+		boolean status = false;
+
+		Calendar now = Calendar.getInstance();   // Gets the current date and time
+		int currentYear = now.get(Calendar.YEAR);
+
+		age = currentYear - Integer.parseInt(dobYear);
+
+		return age;
+	}
 
 	/* ------------------ Mobile Check-In ------------------- */
 	public static ArrayList<DropDownItem> getTravelDoc(Context context) {
@@ -151,9 +273,8 @@ public class BaseFragment extends Fragment {
 
 			DropDownItem itemCountry = new DropDownItem();
 			itemCountry.setText(row.optString("country_name"));
-			itemCountry.setCode(row.optString("country_code"));
+			itemCountry.setCode(row.optString("country_code") + "/" + row.optString("dialing_code"));
 			itemCountry.setTag("Country");
-			itemCountry.setId(i);
 			countrys.add(itemCountry);
 		}
 
@@ -177,6 +298,7 @@ public class BaseFragment extends Fragment {
 
 			DropDownItem itemDoc = new DropDownItem();
 			itemDoc.setText(splitDoc[0]);
+			itemDoc.setCode(splitDoc[1]);
 			travelDocList.add(itemDoc);
 		}
 
@@ -310,6 +432,7 @@ public class BaseFragment extends Fragment {
 						@Override
 						public void onClick(SweetAlertDialog sDialog) {
 							Intent explicitIntent = new Intent(act, cls);
+							explicitIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 							explicitIntent.putExtra("AlertDialog", "Y");
 							act.startActivity(explicitIntent);
 							act.finish();
@@ -321,10 +444,13 @@ public class BaseFragment extends Fragment {
 	}
 
 	public static void setAlertDialog(Activity act,String msg){
-		new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-				.setTitleText("Error!")
-				.setContentText(msg)
-				.show();
+
+		if(act != null){
+			new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
+					.setTitleText("Error!")
+					.setContentText(msg)
+					.show();
+		}
 	}
 
 	public static void setNormalDialog(Context act,String msg,String title){
@@ -423,7 +549,7 @@ public class BaseFragment extends Fragment {
 	public static void croutonAlert(Activity act,String msg){
 		Crouton.makeText(act, msg, Style.ALERT)
 				.setConfiguration(new Configuration.Builder()
-				.setDuration(Configuration.DURATION_LONG).build())
+						.setDuration(Configuration.DURATION_LONG).build())
 				.show();
 	}
 
@@ -450,32 +576,70 @@ public class BaseFragment extends Fragment {
 
 	public static void initiateLoading(Activity act){
 
-		pDialog = new SweetAlertDialog(act, SweetAlertDialog.PROGRESS_TYPE);
-		pDialog.getProgressHelper().setBarColor(Color.parseColor("#CCff6a4d"));
-		pDialog.setTitleText("Loading");
-		pDialog.setCancelable(false);
-		pDialog.show();
+		dialog = new Dialog(act,R.style.DialogTheme);
 
-		/*mProgressDialog = new SpotsDialog(act);
-		//mProgressDialog.setIndeterminate(false);
-		mProgressDialog.setCancelable(true);
-		mProgressDialog.setMessage("Loading");
-
-		WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-		//lp.copyFrom(mProgressDialog.getWindow().getAttributes());
-		lp.width = 50;
-		lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-		mProgressDialog.getWindow().setAttributes(lp);
-
-		mProgressDialog.show();*/
+		LayoutInflater li = LayoutInflater.from(act);
+		final View myView = li.inflate(R.layout.loading_screen, null);
 
 
+			Log.e("Hello","OK");
+			/*pDialog = new SweetAlertDialog(act, SweetAlertDialog.PROGRESS_TYPE);
+			pDialog.getProgressHelper().setBarColor(Color.parseColor("#CCff6a4d"));
+			pDialog.setTitleText("Loading");
+			pDialog.setCustomImage(R.drawable.load);
+			pDialog.setCancelable(false);
+			pDialog.show();*/
+
+			//ContextThemeWrapper wrapper = new ContextThemeWrapper(act, R.style.DialogTheme);
+			//final LayoutInflater inflater = (LayoutInflater) wrapper.getSystemService(act.LAYOUT_INFLATER_SERVICE);
+
+
+		AlertDialog.Builder builder = new AlertDialog.Builder(act);
+		builder.setView(myView);
+
+
+		if(!dialog.isShowing()){
+
+
+			dialog.setContentView(myView);
+			dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CCFFFFFF")));
+			dialog.setCancelable(false);
+			//dialog.show();
+
+
+
+
+			/*Dialog dialog2 = new Dialog(getActivity(),R.style.DialogTheme);
+			dialog2.setContentView(myView);
+			dialog2.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+			dialog2.show();
+
+
+				//LayoutInflater li = LayoutInflater.from(act);
+				//final View myView = inflater.inflate(R.layout.loading_screen, null);
+
+				AlertDialog.Builder builder = new AlertDialog.Builder(wrapper);
+				builder.setView(myView);
+
+				dialog = builder.create();
+				//dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+			*/
+
+			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+			lp.copyFrom(dialog.getWindow().getAttributes());
+			lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+			//lp.height = 570;
+			dialog.getWindow().setAttributes(lp);
+			dialog.show();
+		}
 	}
 
 	public static void dismissLoading(){
 
-		if(pDialog.isShowing()){
-			pDialog.dismiss();
+		if(dialog.isShowing()){
+			dialog.dismiss();
 		}
 	}
 
@@ -541,7 +705,7 @@ public class BaseFragment extends Fragment {
 	}
 
 	/*Global PoPup*/
-	public void popupSelectionExtra(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,final LinearLayout txt2,final String indicate){
+	public void popupSelectionExtra(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,final LinearLayout txt2,final String indicate,final LinearLayout country){
 
 		prefManager = new SharedPrefManager(act);
 
@@ -558,10 +722,17 @@ public class BaseFragment extends Fragment {
 				String selected = a.get(which).getText();
 				String selectedCode = a.get(which).getCode();
 				txt.setText(selected);
-				if(!selected.equals(indicate)){
+				if(selectedCode.equals(indicate)){
 					txt2.setVisibility(View.VISIBLE);
+					if(country != null){
+						country.setVisibility(View.GONE);
+					}
+
 				}else{
 					txt2.setVisibility(View.GONE);
+					if(country != null){
+						country.setVisibility(View.VISIBLE);
+					}
 				}
 				if(tagStatus){
 					txt.setTag(selectedCode);
@@ -643,8 +814,7 @@ public class BaseFragment extends Fragment {
 				travelDocCode = splitDoc[1];
 			}
 		}
-		Log.e("travelDocData",travelDocData);
-		Log.e("travelDocCode",travelDocCode);
+
 		return travelDocCode;
 	}
 

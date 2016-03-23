@@ -65,9 +65,6 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     @Inject
     BookingPresenter presenter;
 
-    @InjectView(R.id.paymentChannelList)
-    LinearLayout paymentChannelList;
-
     @Order(1) @NotEmpty
     @InjectView(R.id.txtCardType)
     TextView txtCardType;
@@ -102,6 +99,9 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtIssuingBank)
     EditText txtIssuingBank;
 
+    @InjectView(R.id.txtTotalDue)
+    TextView txtTotalDue;
+
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private String signature;
@@ -117,6 +117,7 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     private Validator mValidator;
     private String bookingId;
     private String paymentFrom;
+    private String totalDue;
 
     public static PaymentFlightFragment newInstance(Bundle bundle) {
 
@@ -147,6 +148,13 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
         Bundle bundle = getArguments();
         paymentFrom = bundle.getString("PAYMENT_FROM");
+
+        try {
+            totalDue = bundle.getString("TOTAL_DUE");
+            txtTotalDue.setText("TOTAL DUE: " +totalDue);
+        }catch (Exception e){
+            Log.e("E",e.getMessage());
+        }
         //paymentFrom = "NORMAL";
 
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
@@ -237,7 +245,8 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
         paymentObj.setCvv(txtCardCVV.getText().toString());
         paymentObj.setExpirationDateMonth(txtPaymentMonth.getText().toString());
         paymentObj.setExpirationDateYear(txtPaymentYear.getText().toString());
-        paymentObj.setIssuingBank(txtIssuingBank.getText().toString());
+        //paymentObj.setIssuingBank(txtIssuingBank.getText().toString());
+        paymentObj.setIssuingBank(txtCardType.getText().toString());
         paymentObj.setBookingID(bookingId);
 
         presenter.paymentRequest(paymentObj);
@@ -275,11 +284,11 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     public void onPaymentReceive(PaymentReceive obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             //Open Secure Site At Browser
-            String sanitizeUrl = obj.getObj().getPass().replaceAll("[/]", "");
-            String url = obj.getObj().getLink()+"/android/"+sanitizeUrl;
+            String sanitizeUrl = obj.getPass().replaceAll("[/]", "");
+            String url = obj.getLink()+"/android/"+sanitizeUrl;
 
             Intent intent = new Intent(getActivity(), PaymentWebViewActivity.class);
             intent.putExtra("PAYMENT_URL", url);
@@ -346,6 +355,9 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
         }*/
         }
+
+        LinearLayout paymentChannelList = (LinearLayout) getActivity().findViewById(R.id.paymentChannelList);
+        paymentChannelList.removeAllViews();
 
         for(int totalPaymentChannel = 0 ; totalPaymentChannel < channelType.size() ; totalPaymentChannel++){
 

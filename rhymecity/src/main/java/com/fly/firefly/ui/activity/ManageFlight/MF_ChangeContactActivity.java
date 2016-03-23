@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class ManageFlight_ChangeContact extends MainFragmentActivity implements FragmentContainerActivity {
+public class MF_ChangeContactActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     private FragmentManager fragmentManager;
 
@@ -23,7 +23,7 @@ public class ManageFlight_ChangeContact extends MainFragmentActivity implements 
         Bundle bundle = getIntent().getExtras();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, ManageFlightChangeContactFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, MF_ChangeContactFragment.newInstance(bundle)).commit();
 
         hideTitle();
     }

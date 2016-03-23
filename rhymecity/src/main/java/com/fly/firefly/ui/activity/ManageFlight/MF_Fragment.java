@@ -4,35 +4,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.CheckInListReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ListBookingReceive;
-import com.fly.firefly.api.obj.ManageFlightReceive;
+import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.BookingListAdapter;
-import com.fly.firefly.ui.adapter.FlightDetailAdapter;
 import com.fly.firefly.ui.module.ManageFlightModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageFlightObj;
-import com.fly.firefly.ui.object.PasssengerInfoV2;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
-import com.fly.firefly.utils.ExpandAbleGridView;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -40,7 +36,6 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,8 +43,9 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
-public class ManageFlightFragment extends BaseFragment implements Validator.ValidationListener,ManageFlightPrenter.ManageFlightView{
+public class MF_Fragment extends BaseFragment implements Validator.ValidationListener,ManageFlightPrenter.ManageFlightView{
 
     @Inject
     ManageFlightPrenter presenter;
@@ -81,10 +77,11 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     private BookingListAdapter adapter;
     private String storeUsername;
     private String loginStatus;
+    private boolean cache_login = false;
 
-    public static ManageFlightFragment newInstance() {
+    public static MF_Fragment newInstance() {
 
-        ManageFlightFragment fragment = new ManageFlightFragment();
+        MF_Fragment fragment = new MF_Fragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -96,6 +93,7 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
 
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ManageFlightModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -120,6 +118,7 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
         String storePassword = initPassword.get(SharedPrefManager.PASSWORD);
 
         if(loginStatus != null && loginStatus.equals("Y")) {
+            cache_login = true;
             if(Controller.connectionAvailable(getActivity())){
                 initiateLoading(getActivity());
                 presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
@@ -129,6 +128,7 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
             btnManageFlightContinue.setVisibility(View.GONE);
 
         }else{
+            cache_login = false;
             pnrLayout.setVisibility(View.VISIBLE);
         }
 
@@ -187,18 +187,20 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     public void onGetFlightFromPNR(FlightSummaryReceive obj){
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
             //Gson gsonUserInfo = new Gson();
             //String userInfo = gsonUserInfo.toJson(obj);
-            Log.e("booking id", obj.getObj().getBooking_id());
+            Log.e("booking id", obj.getBooking_id());
 
-            pref.setBookingID(obj.getObj().getBooking_id());
+            pref.setBookingID(obj.getBooking_id());
+            //pref.setUserID(obj.getObj().getUse());
+
             if(loginStatus != null){
                 if(loginStatus.equals("Y")){
                     //Log.e("PNR",obj.getObj().getPnr());
-                    pref.setPNR(obj.getObj().getItenerary_information().getPnr() + "," + storeUsername);
+                    pref.setPNR(obj.getItenerary_information().getPnr() + "," + storeUsername);
                 }else{
                     pref.setPNR(txtPNR.getText().toString() + "," + txtUsername.getText().toString());
                 }
@@ -210,7 +212,7 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
             String pnrUserEmail = initUsername.get(SharedPrefManager.PNR);
             Log.e("XXX",pnrUserEmail);
 
-            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
+            pref.setSignatureToLocalStorage(obj.getSignature());
 
             /*SaveAllInPref*/
             displayActionSelection(obj);
@@ -222,11 +224,13 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        pref.setUserID(obj.getUser_id());
+
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
+            adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
             listView.setAdapter(adapter);
-            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
+            pref.setSignatureToLocalStorage(obj.getSignature());
             //pnrLayout.setVisibility(View.GONE);
         }
 
@@ -244,8 +248,8 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
                 ManageFlightObj manageFlightObj = new ManageFlightObj();
                 manageFlightObj.setPnr(selectedFromList.getPnr());
                 manageFlightObj.setUsername(storeUsername);
-                manageFlightObj.setUser_id(obj.getObj().getUser_id());
-                manageFlightObj.setSignature(obj.getObj().getSignature());
+                manageFlightObj.setUser_id(obj.getUser_id());
+                manageFlightObj.setSignature(obj.getSignature());
 
                 presenter.onSendPNRV1(manageFlightObj);
             }
@@ -260,7 +264,7 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
 
 
     public void displayActionSelection(FlightSummaryReceive obj){
-        Intent actionSelection = new Intent(getActivity(), ManageFlightActionActivity.class);
+        Intent actionSelection = new Intent(getActivity(), MF_ActionActivity.class);
         actionSelection.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
         getActivity().startActivity(actionSelection);
     }
@@ -275,6 +279,30 @@ public class ManageFlightFragment extends BaseFragment implements Validator.Vali
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+
+       if(!cache_login){
+           if(result.size() > 0){
+               Log.e("x","1");
+               Gson gson = new Gson();
+               FlightSummaryReceive obj = gson.fromJson(result.get(0).getCachedResult(), FlightSummaryReceive.class);
+               onGetFlightFromPNR(obj);
+           }else {
+               Log.e("x", "2");
+           }
+       }else{
+           if(result.size() > 0){
+               Log.e("x","1");
+               Gson gson = new Gson();
+               ListBookingReceive obj = gson.fromJson(result.get(0).getCachedResult(), ListBookingReceive.class);
+               onUserPnrList(obj);
+           }else {
+               Log.e("x", "2");
+           }
+       }
+
+
     }
 
     @Override

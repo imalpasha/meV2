@@ -667,16 +667,6 @@
                                     android:background="@drawable/drawable_login_bottom_border"
                                     android:layout_marginBottom="10dp">
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textAppearance="?android:attr/textAppearanceSmall"
-                                        android:text="@string/asterik"
-                                        android:textColor="@color/red"
-                                        android:textStyle="bold"
-                                        android:layout_marginRight="2dp"
-                                        android:id="@+id/textView346" />
-
                                     <EditText
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
@@ -685,6 +675,7 @@
                                         android:paddingBottom="8dp"
                                         android:hint="@string/register_alternate_phone"
                                         android:textSize="@dimen/font16sp"
+                                        android:paddingLeft="8dp"
                                         android:textColorHint="@color/loginFontTxt"
                                         android:id="@+id/editTextAlternatePhone"
                                         android:maxLength="16"/>

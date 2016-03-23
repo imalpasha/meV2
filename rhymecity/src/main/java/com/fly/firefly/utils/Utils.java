@@ -268,6 +268,30 @@ public class Utils {
 
     }
 
+    public static void toastNotificationLong(Activity activity, String msg) {
+        Context context = activity;
+        CharSequence text = msg;
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast1 = Toast.makeText(context, text, duration);
+        toast1.show();
+
+        /*final Toast toast2 = Toast.makeText(context, text, duration);
+        toast2.show();
+
+        Handler toast_handler = new Handler();
+        toast_handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                toast2.show();
+            }
+        }, duration - 50);
+        */
+
+
+
+    }
+
 
 
     public static String getRandomImageUrl() {

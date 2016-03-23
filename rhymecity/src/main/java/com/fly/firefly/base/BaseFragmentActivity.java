@@ -2,6 +2,7 @@ package com.fly.firefly.base;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -29,15 +30,16 @@ public class BaseFragmentActivity extends FragmentActivity {
         aq = new com.fly.firefly.base.AQuery(this);
 
 
-       /*if ((getApplicationContext().getResources().getConfiguration().screenLayout &
+       if ((getApplicationContext().getResources().getConfiguration().screenLayout &
                 android.content.res.Configuration.SCREENLAYOUT_SIZE_MASK) >= android.content.res.Configuration.SCREENLAYOUT_SIZE_LARGE){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-            getApplicationContext().getResources().getConfiguration().orientation = 2;
+            //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+           setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+           getApplicationContext().getResources().getConfiguration().orientation = 2;
 
         }else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             getApplicationContext().getResources().getConfiguration().orientation = 1;
-        }*/
+        }
 
 
         try

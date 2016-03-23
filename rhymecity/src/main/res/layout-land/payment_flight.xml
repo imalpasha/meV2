@@ -579,10 +579,25 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Payment"
+                                android:text="PAYMENT"
                                 android:id="@+id/textView65"
                                 android:textSize="@dimen/font20sp"
                                 android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp"
+                            android:layout_marginTop="10dp" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/txtTotalDue"
+                                android:textColor="@color/red"
                                 android:textStyle="bold" />
                         </LinearLayout>
 
@@ -852,6 +867,7 @@
                                             android:ems="10"
                                             android:padding="5dp"
                                             android:id="@+id/txtCardCVV"
+                                            android:maxLength="4"
                                             android:background="@null" />
                                     </LinearLayout>
                                 </LinearLayout>

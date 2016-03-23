@@ -13,266 +13,274 @@
         android:weightSum="1">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
-            android:gravity="center"
-            android:background="@drawable/grey_with_white_gradient">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:padding="2dp"
-                android:id="@+id/bannerImg"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.42"
-            android:background="@color/dark_lvl1"
-            android:weightSum="1">
+            android:layout_weight="0.91"
+            android:gravity="center">
 
             <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/homepage_white_with_gradient"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:weightSum="1"
-                android:id="@+id/homeBookFlight">
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:background="@drawable/grey_with_white_gradient">
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
+                <ImageView
+                    android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
-                    android:padding="8dp">
+                    android:padding="2dp"
+                    android:id="@+id/bannerImg"
+                    android:scaleType="fitXY"
+                    android:adjustViewBounds="true"/>
+            </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/imageView2"
-                        android:layout_gravity="right"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/fly_book_flight"/>
-                </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:background="@color/dark_lvl1"
+                android:weightSum="1">
 
                 <LinearLayout
+                    android:clickable="true"
+                    android:background="@drawable/homepage_white_with_gradient"
                     android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp">
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:weightSum="1"
+                    android:id="@+id/homeBookFlight">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/home_book_flight"
-                        android:id="@+id/textView10"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/font21sp"
-                        android:textColor="@color/dark_gray"/>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center_vertical"
+                        android:layout_height="fill_parent"
+                        android:padding="8dp">
 
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/imageView2"
+                            android:layout_gravity="right"
+                            android:adjustViewBounds="true"
+                            android:src="@drawable/fly_book_flight"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center"
+                        android:paddingLeft="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="@string/home_book_flight"
+                            android:id="@+id/textView10"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/font21sp"
+                            android:textColor="@color/dark_gray"/>
+
+                    </LinearLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:background="@drawable/homepage_white_with_gradient"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:id="@+id/homeManageFlight">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:gravity="center_vertical"
+                        android:layout_height="fill_parent"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/imageView3"
+                            android:layout_gravity="right"
+                            android:src="@drawable/fly_manage_flight"
+                            android:adjustViewBounds="true"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center"
+                        android:paddingLeft="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="@string/home_manage_flight"
+                            android:id="@+id/textView11"
+                            android:textStyle="bold"
+                            android:textSize="@dimen/font21sp"
+                            android:textColor="@color/dark_gray"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/homeMobileCheckIn"
+                    android:clickable="true"
+                    android:background="@drawable/homepage_white_with_gradient"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/imageView4"
+                            android:layout_gravity="right"
+                            android:src="@drawable/fly_mobile_checkin"
+                            android:adjustViewBounds="true"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center"
+                        android:paddingLeft="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="@string/home_mobile_check_in"
+                            android:id="@+id/textView12"
+                            android:textSize="@dimen/font21sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/dark_gray"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:background="@drawable/homepage_white_with_gradient"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.25"
+                    android:gravity="center"
+                    android:id="@+id/homeMobileBoardingPass">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="fill_parent"
+                        android:gravity="center_vertical"
+                        android:padding="8dp">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:id="@+id/imageView5"
+                            android:layout_gravity="right"
+                            android:src="@drawable/boarding_pass_logo"
+                            android:adjustViewBounds="true"/>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center"
+                        android:paddingLeft="8dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:textSize="@dimen/font21sp"
+                            android:text="@string/home_boarding_pass"
+                            android:id="@+id/textView13"
+                            android:textStyle="bold"
+                            android:textColor="@color/dark_gray"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:clickable="true"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.2"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:id="@+id/homeBeacon" >
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:layout_height="fill_parent"
+                        android:gravity="right"
+                        android:padding="8dp" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView16"
+                            android:src="@drawable/vrsm__ic_social"
+                            android:adjustViewBounds="true" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.7"
+                        android:layout_height="fill_parent"
+                        android:gravity="left|center"
+                        android:paddingLeft="8dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Fly Smart-Assist"
+                            android:textSize="18dp"
+                            android:id="@+id/textView91"
+                            android:textStyle="bold|italic"
+                            android:textColor="@color/dark_gray"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
             </LinearLayout>
-
-            <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/homepage_white_with_gradient"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:id="@+id/homeManageFlight">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:gravity="center_vertical"
-                    android:layout_height="fill_parent"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/imageView3"
-                        android:layout_gravity="right"
-                        android:src="@drawable/fly_manage_flight"
-                        android:adjustViewBounds="true"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/home_manage_flight"
-                        android:id="@+id/textView11"
-                        android:textStyle="bold"
-                        android:textSize="@dimen/font21sp"
-                        android:textColor="@color/dark_gray"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/homeMobileCheckIn"
-                android:clickable="true"
-                android:background="@drawable/homepage_white_with_gradient"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/imageView4"
-                        android:layout_gravity="right"
-                        android:src="@drawable/fly_mobile_checkin"
-                        android:adjustViewBounds="true"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="@string/home_mobile_check_in"
-                        android:id="@+id/textView12"
-                        android:textSize="@dimen/font21sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/dark_gray"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:clickable="true"
-                android:background="@drawable/homepage_white_with_gradient"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.25"
-                android:gravity="center"
-                android:id="@+id/homeMobileBoardingPass">
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="fill_parent"
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:id="@+id/imageView5"
-                        android:layout_gravity="right"
-                        android:src="@drawable/boarding_pass_logo"
-                        android:adjustViewBounds="true"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textSize="@dimen/font21sp"
-                        android:text="@string/home_boarding_pass"
-                        android:id="@+id/textView13"
-                        android:textStyle="bold"
-                        android:textColor="@color/dark_gray"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"
-                android:gravity="center"
-                android:visibility="gone"
-                android:id="@+id/homeBeacon" >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="fill_parent"
-                    android:gravity="right"
-                    android:padding="8dp" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView16"
-                        android:src="@drawable/vrsm__ic_social"
-                        android:adjustViewBounds="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Fly Smart-Assist"
-                        android:textSize="18dp"
-                        android:id="@+id/textView91"
-                        android:textStyle="bold|italic"
-                        android:textColor="@color/dark_gray"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
         </LinearLayout>
 
         <LinearLayout

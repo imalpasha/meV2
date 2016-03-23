@@ -348,13 +348,6 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center">
 
-                                    <ImageView
-                                        android:layout_marginRight="3dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/adult_icon"
-                                        android:adjustViewBounds="true"/>
-
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -578,11 +571,6 @@
                                     android:layout_height="match_parent"
                                     android:gravity="center" >
 
-                                    <ImageView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/infant_icon"
-                                        android:adjustViewBounds="true"/>
                                 </LinearLayout>
                             </LinearLayout>
 

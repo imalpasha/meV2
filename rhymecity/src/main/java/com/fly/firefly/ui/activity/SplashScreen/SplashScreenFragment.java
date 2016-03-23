@@ -81,7 +81,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setDeviceId(deviceId);
         info.setBrand(Build.BRAND);
         info.setModel(Build.MODEL);
-        info.setDataVersion("");
+        info.setDataVersion("0");
         info.setSignature("");
         info.setUsername("");
         info.setPassword("");
@@ -144,59 +144,84 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void loadingSuccess(DeviceInfoSuccess obj) {
 
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
-        if(status) {
-            String signature = obj.getObj().getSignature();
-            String bannerUrl = obj.getObj().getBanner_default();
-            String promoBannerUrl = obj.getObj().getBanner_promo();
-            String dataVersion = obj.getObj().getData_version();
-            String bannerModule = obj.getObj().getBanner_module();
-            DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
-            Log.e("Facebook", socialMediaObj.getFacebook());
+        if (status) {
+
+            Log.e("Object",obj.toString());
+
             HashMap<String, String> initLogin = pref.getDataVesion();
             String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
-            Log.e(localDataVersion,dataVersion);
+            String dataVersion = obj.getObj().getData_version();
 
-           // if (localDataVersion == null || !localDataVersion.equals(dataVersion)){
+            if (localDataVersion == null) {
+                update(obj);
+            }else{
 
-                Log.e("localDataVersion","Update");
+                if(!localDataVersion.equals(dataVersion)){
+                    update(obj);
+                }else{
+                    Log.e("No Update","True");
+                }
 
-                /*Save All to pref for reference*/
-                Gson gson = new Gson();
-                String title = gson.toJson(obj.getObj().getData_title());
-                pref.setUserTitle(title);
+            }
 
-                String country = gson.toJson(obj.getObj().getData_country());
-                pref.setCountry(country);
 
-                String state = gson.toJson(obj.getObj().getData_state());
-                pref.setState(state);
+            }
+            //Redirect to homepage after success loading splashscreen
+            if (true) {
+                //forceUpdate();
+                goHomepage();
 
-                String flight = gson.toJson(obj.getObj().getData_market());
-                pref.setFlight(flight);
+            }
 
-                String socialMedia = gson.toJson(socialMediaObj);
-                Log.e("socialMedia",socialMedia);
-                pref.setSocialMedia(socialMedia);
+    }
+
+    public void update(DeviceInfoSuccess obj){
+
+        String signature = obj.getObj().getSignature();
+        String bannerUrl = obj.getObj().getBanner_default();
+        String promoBannerUrl = obj.getObj().getBanner_promo();
+        String bannerModule = obj.getObj().getBanner_module();
+        String dataVersion = obj.getObj().getData_version();
+        DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
+        Log.e("Facebook", socialMediaObj.getFacebook());
+
+
+        /*Save All to pref for reference*/
+        Gson gson = new Gson();
+        String title = gson.toJson(obj.getObj().getData_title());
+        pref.setUserTitle(title);
+
+        String country = gson.toJson(obj.getObj().getData_country());
+        pref.setCountry(country);
+
+        String state = gson.toJson(obj.getObj().getData_state());
+        pref.setState(state);
+
+        String flight = gson.toJson(obj.getObj().getData_market());
+        pref.setFlight(flight);
+
+        String socialMedia = gson.toJson(socialMediaObj);
+        Log.e("socialMedia", socialMedia);
+        pref.setSocialMedia(socialMedia);
                 /*End*/
 
                 /*Save Signature to local storage*/
-                pref.setSignatureToLocalStorage(signature);
-                pref.setBannerUrl(bannerUrl);
-                pref.setPromoBannerUrl(promoBannerUrl);
-                pref.setBannerModule(bannerModule);
-                pref.setDataVersion(dataVersion);
+        pref.setSignatureToLocalStorage(signature);
+        pref.setBannerUrl(bannerUrl);
+        pref.setPromoBannerUrl(promoBannerUrl);
+        pref.setBannerModule(bannerModule);
+        pref.setDataVersion(dataVersion);
 
-           // }else{
-           //    Log.e("localDataVersion","No Update");
-          //  }
-            //Redirect to homepage after success loading splashscreen
-            goHomepage();
-
-        }
     }
 
     public void goHomepage(){
         Intent home = new Intent(getActivity(), HomeActivity.class);
+        getActivity().startActivity(home);
+        getActivity().finish();
+    }
+
+    public void forceUpdate(){
+        Intent home = new Intent(getActivity(), ForceUpdateActivity.class);
         getActivity().startActivity(home);
         getActivity().finish();
     }

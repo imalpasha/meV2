@@ -17,6 +17,49 @@ public class ContactInfoReceive {
     private ContactInfoReceive obj;
     private List<PasssengerInfo> passengers = new ArrayList<PasssengerInfo>();
     private List<Journeys> journeys = new ArrayList<Journeys>();
+    private String message;
+
+    //itinerary
+    private List<FlightDetails> flight_details;
+    private List<PriceDetails> price_details;
+    private List<Services> services;
+    private String total_price;
+    private String total_due;
+
+    public ContactInfoReceive(ContactInfoReceive param_obj){
+        this.obj = param_obj;
+        pnr = param_obj.getPnr();
+        booking_status = param_obj.getBooking_status();
+        status = param_obj.getStatus();
+        booking_id = param_obj.getBooking_id();
+        passengers = param_obj.getPassengers();
+        journeys = param_obj.getJourneys();
+        message = param_obj.getMessage();
+
+        flight_details = param_obj.getFlight_details();
+        price_details = param_obj.getPrice_details();
+        services = param_obj.getServices();
+        total_price = param_obj.getTotal_price();
+        total_due =  param_obj.getTotal_due();
+    }
+
+
+    public String getTotal_due() {
+        return total_due;
+    }
+
+    public void setTotal_due(String total_due) {
+        this.total_due = total_due;
+    }
+
+
+    public List<Services> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Services> services) {
+        this.services = services;
+    }
 
     public String getMessage() {
         return message;
@@ -26,13 +69,7 @@ public class ContactInfoReceive {
         this.message = message;
     }
 
-    private String message;
 
-    //itinerary
-    private List<FlightDetails> flight_details;
-    private List<PriceDetails> price_details;
-    private List<Services> services;
-    private  String total_price;
 
     public String getPnr() {
         return pnr;
@@ -552,9 +589,6 @@ public class ContactInfoReceive {
         this.booking_id = booking_id;
     }
 
-    public ContactInfoReceive(ContactInfoReceive param_obj){
-        this.obj = param_obj;
-    }
 
     public String getStatus() {
         return status;

@@ -51,6 +51,15 @@ public class FlightInfo{
         private String discount;
         private String total_fare;
         private String status;
+        private String before_discount_fare;
+
+        public String getNon_discounted_fare() {
+            return before_discount_fare;
+        }
+
+        public void setNon_discounted_fare(String non_discounted_fare) {
+            this.before_discount_fare = non_discounted_fare;
+        }
 
         public Boolean getChecked() {
             return checked;
@@ -131,6 +140,16 @@ public class FlightInfo{
         private String total_fare;
         private String status;
 
+        public String getBefore_discounted_fare() {
+            return before_discount_fare;
+        }
+
+        public void setBefore_discounted_fare(String before_discounted_fare) {
+            this.before_discount_fare = before_discounted_fare;
+        }
+
+        private String before_discount_fare;
+
         public String getStatus() {
             return status;
         }
@@ -198,6 +217,16 @@ public class FlightInfo{
         private String discount;
         private String total_fare;
         private String status;
+
+        public String getBefore_discounted_fare() {
+            return before_discount_fare;
+        }
+
+        public void setBefore_discounted_fare(String before_discounted_fare) {
+            this.before_discount_fare = before_discounted_fare;
+        }
+
+        private String before_discount_fare;
 
         public String getStatus() {
             return status;

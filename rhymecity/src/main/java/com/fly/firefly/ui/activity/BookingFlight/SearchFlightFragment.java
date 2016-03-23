@@ -36,6 +36,7 @@ import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.LocalNotification;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
@@ -48,8 +49,10 @@ import com.squareup.otto.Bus;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -173,12 +176,14 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         final View view = inflater.inflate(R.layout.search_flight, container, false);
         ButterKnife.inject(this, view);
 
-
         /*DatePicker Setup - Failed to make it global*/
         final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        final DatePickerDialog datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setYearRange(year, year + 1);
+        final int year = calendar.get(Calendar.YEAR);
+
+        //NEED TO CREATE DIFFERENT INSTANCE FOR EACH CALENDAR TO AVOID DISPLAYING PREVIOUS SELECTED.
+        final DatePickerDialog datePickerDialog1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        final DatePickerDialog datePickerDialog2 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
 
         /*Preference Manager*/
         pref = new SharedPrefManager(getActivity());
@@ -188,8 +193,6 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         bookFlightDepartureDate.setTag(DEPARTURE_FLIGHT_DATE);
         bookFlightReturnDate.setTag(ARRIVAL_FLIGHT_DATE);
-
-
 
         /*Retrieve All Flight Data From Preference Manager - Display Flight Data*/
         JSONArray jsonFlight = getFlight(getActivity());
@@ -202,7 +205,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         Set<String> hs = new LinkedHashSet<>();
         for (int i = 0; i < jsonFlight.length(); i++) {
             JSONObject row = (JSONObject) jsonFlight.opt(i);
-            al.add(row.optString("location")+"-"+row.optString("location_code"));
+            Log.e("status", row.optString("status"));
+            if(!row.optString("status").equals("N")){
+                al.add(row.optString("location")+"-"+row.optString("location_code"));
+            }
         }
         hs.addAll(al);
         al.clear();
@@ -217,7 +223,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             String p2 = str1[1];
 
             DropDownItem itemFlight = new DropDownItem();
-            itemFlight.setText(p1);
+            itemFlight.setText(p1+ " ("+p2+")");
             itemFlight.setCode(p2);
             itemFlight.setTag("FLIGHT");
             dataFlightDeparture.add(itemFlight);
@@ -253,7 +259,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "departureBlock");
-                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+
+                datePickerDialog1.setYearRange(year, year + 1);
+                datePickerDialog1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+
                 PICKER = DEPARTURE_DATE_PICKER;
             }
         });
@@ -262,7 +271,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         returnDateBlock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+
+                datePickerDialog2.setYearRange(year, year + 1);
+                datePickerDialog2.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+
                 PICKER = RETURN_DATE_PICKER;
                 AnalyticsApplication.sendEvent("Click", "returnDateblock");
 
@@ -445,6 +457,17 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
                     popupAlert(ARRIVAL_FLIGHT_DATE);
 
+                }else if(LocalNotification.dateCompare(d1)){
+                    Utils.toastNotification(getActivity(), "Departure date should not be earlier than today.");
+                }else if(!d2.equals(ARRIVAL_FLIGHT_DATE) && LocalNotification.dateCompare(d2) && flightType.equals("1")){
+                        Utils.toastNotification(getActivity(), "Return date should not be earlier than today.");
+                }else if(!d1.equals(DEPARTURE_FLIGHT_DATE) && !d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")){
+                    if(LocalNotification.compare(d1,d2)){
+                        Utils.toastNotification(getActivity(), "Return date cannot be earlier than departure date");
+                    }else{
+                        searchFlight();
+                    }
+                    Log.e("3","3");
                 }else{
                     searchFlight();
                 }
@@ -523,10 +546,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             {
                 JSONObject row = (JSONObject) jsonFlight.opt(i);
                 if(code.equals(row.optString("location_code")) && row.optString("status").equals("Y")) {
-                    Log.e(code,row.optString("location_code"));
+                    Log.e(code, row.optString("location_code"));
 
                     DropDownItem itemFlight = new DropDownItem();
-                    itemFlight.setText(row.optString("travel_location"));
+                    itemFlight.setText(row.optString("travel_location")+" ("+row.optString("travel_location_code")+")");
                     itemFlight.setCode(row.optString("travel_location_code" +""));
                     itemFlight.setTag("FLIGHT_DEPARTURE");
                     dataFlightArrival.add(itemFlight);
@@ -554,6 +577,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             returnDateBlock.setVisibility(View.VISIBLE);
             btnReturn.setBackgroundColor(getResources().getColor(R.color.white));
             btnOneWay.setBackgroundColor(getResources().getColor(R.color.grey));
+
             flightType = "1";
         }else {
             returnDateBlock.setVisibility(View.GONE);

@@ -8,6 +8,7 @@ import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
+import com.fly.firefly.ui.activity.Homepage.HomeFragment;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
@@ -24,13 +25,17 @@ public class FlightSummaryActivity2 extends MainFragmentActivity implements Frag
         ButterKnife.inject(this);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, FlightSummaryFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, FlightSummaryFragment.newInstance(),"FlightSummary").commit();
 
     }
 
+
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public void onBackPressed(){
+
+        final FragmentManager manager = getSupportFragmentManager();
+        FlightSummaryFragment fragment = (FlightSummaryFragment) manager.findFragmentByTag("FlightSummary");
+        fragment.backButton();
     }
 
     @Override

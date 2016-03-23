@@ -1,79 +1,47 @@
 package com.fly.firefly.ui.activity.Homepage;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import com.fly.firefly.AlarmReceiver;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
-import com.fly.firefly.api.obj.LoginReceive;
-import com.fly.firefly.api.obj.MobileCheckinReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.Beacon.BeaconRanging;
 import com.fly.firefly.ui.activity.BoardingPass.BoardingPassActivity;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.activity.GeoFencing.GenFencingActivity;
 import com.fly.firefly.ui.activity.GeoFencing.GeoFencingFragment;
-import com.fly.firefly.ui.activity.GeoFencing.GeofenceTransitionReceiver;
-import com.fly.firefly.ui.activity.GeoFencing.MyPlaces;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActivity;
+import com.fly.firefly.ui.activity.ManageFlight.MF_Activity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity1;
-import com.fly.firefly.ui.activity.PushNotification.MainActivity;
 import com.fly.firefly.ui.activity.PushNotification.PushNotificationActivity;
-import com.fly.firefly.ui.activity.PushNotification.RegisterActivity;
-import com.fly.firefly.ui.activity.SlidePage.NearKioskActivity;
 import com.fly.firefly.ui.module.HomeModule;
-import com.fly.firefly.ui.object.BoardingPassObj;
 import com.fly.firefly.ui.presenter.HomePresenter;
+import com.fly.firefly.utils.LocalNotification;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.Tracker;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 //import com.estimote.sdk.BeaconManager;
 
@@ -168,12 +136,10 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         /*GET PREF DATA*/
         HashMap<String, String> initPromoBanner = pref.getPromoBanner();
         String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
-        Log.e("banner",banner);
 
         if(banner == null || banner == ""){
             HashMap<String, String> initDefaultBanner = pref.getDefaultBanner();
             banner = initDefaultBanner.get(SharedPrefManager.DEFAULT_BANNER);
-            Log.e("banner",banner);
         }
 
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -322,20 +288,12 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         });
 
         //setUpMap();
-        trySetAlarm();
-
+        //trySetAlarm();
+        //LocalNotification.convert(getActivity());
         return view;
     }
 
-    public void trySetAlarm(){
 
-            AlarmManager am=(AlarmManager)getActivity().getSystemService(Context.ALARM_SERVICE);
-            Intent intent = new Intent(getActivity(), AlarmReceiver.class);
-            intent.putExtra("ONE_TIME", Boolean.FALSE);
-            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, intent, 0);
-            //After after 30 seconds
-            am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 1000 * 15 , pi);
-    }
 
     public void getScreenSize(){
 
@@ -376,7 +334,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     }
 
     public void goToManageFlight() {
-        Intent loginPage = new Intent(getActivity(), ManageFlightActivity.class);
+        Intent loginPage = new Intent(getActivity(), MF_Activity.class);
         getActivity().startActivity(loginPage);
 
     }

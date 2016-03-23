@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,6 +82,10 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     @InjectView(R.id.returnFlightNA)LinearLayout returnFlightNA;
     @InjectView(R.id.goingFlightNA)LinearLayout goingFlightNA;
     @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
+
+    @InjectView(R.id.fareRulesChkBox)CheckBox fareRulesChkBox;
+    //@InjectView(R.id.fareRuleLayout)LinearLayout fareRuleLayout;
+
 
     private int fragmentContainerId;
     private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
@@ -258,9 +263,17 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         btnListFlight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                proceed = false;
+                boolean minute90 = true;
+
                 AnalyticsApplication.sendEvent("Click", "Select Flight");
                 //check if flight checked
-                if(flightType.equals("0")){
+                int a = 1;
+
+                if(!fareRulesChkBox.isChecked()){
+                    croutonAlert(getActivity(), "You must agree to the terms and conditions.");
+                }else if(flightType.equals("0")){
                     if(departFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else{
@@ -271,8 +284,16 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                         Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                    }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
+                            Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
+                            proceed = false;
+                            minute90 = false;
+                    }else if(departDatePlain.equals(returnDatePlain) && compare90Minute(departFlightArrivalTime,returnFlightDepartureTime)){
+                            Utils.toastNotificationLong(getActivity(), " In order to select flights that travel on the same day, you must allow at least 90 minutes between flights. Please select a different pair of flights.!");
+                            proceed = false;
                     }else{
                         proceed = true;
+                        Log.e("3","3");
                     }
                 }else{
 
@@ -283,7 +304,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                     Log.e("status2",status2);
                     if(status1.equals("Y")){
                         if(departFlightNumber == null){
-                            Utils.toastNotification(getActivity(),"Please Check Departure Flight 3");
+                            Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                             proceed = false;
                         }
                     }
@@ -531,7 +552,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         dismissLoading();
         pref.setBookingID(obj.getFlightObj().getBookingId());
-        Log.e("BookingID",obj.getFlightObj().getBookingId());
+        Log.e("BOOKING ID",obj.getFlightObj().getBookingId());
 
         Boolean status = Controller.getRequestStatus(obj.getFlightObj().getStatus(), obj.getFlightObj().getMessage(), getActivity());
         if (status

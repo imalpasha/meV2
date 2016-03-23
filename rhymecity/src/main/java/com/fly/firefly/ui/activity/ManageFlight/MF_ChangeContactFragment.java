@@ -19,9 +19,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.ui.activity.BookingFlight.ContactInfoActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
-import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ManageChangeContactModule;
 import com.fly.firefly.ui.object.ContactInfo;
@@ -49,9 +47,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
-import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class ManageFlightChangeContactFragment extends BaseFragment implements Validator.ValidationListener,ManageFlightPrenter.ChangeContactView {
+public class MF_ChangeContactFragment extends BaseFragment implements Validator.ValidationListener,ManageFlightPrenter.ChangeContactView {
 
     @Inject
     ManageFlightPrenter presenter;
@@ -112,7 +109,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     @NotEmpty
     @Order(6)
     @InjectView(R.id.txtCountry)
-    EditText txtCountry;
+    TextView txtCountry;
 
     @NotEmpty
     @Order(7)
@@ -170,11 +167,21 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     @InjectView(R.id.txtCompanyName)
     EditText txtCompanyName;
 
+    @InjectView(R.id.txtCountryBusiness)
+    TextView txtCountryBusiness;
+
+    @InjectView(R.id.countryBlock)
+    LinearLayout countryBlock;
+
+    @InjectView(R.id.checkAsPassengerLayout)
+    LinearLayout checkAsPassengerLayout;
+
     private ArrayList<DropDownItem> countrysList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> titleList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> stateList = new ArrayList<DropDownItem>();
     private String selectedCountryCode;
+    private String dialingCode;
     private Validator mValidator;
     private String selectedState;
     private int fragmentContainerId;
@@ -183,9 +190,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
     private String pnr,username,bookingId,signature;
     private String travelPurpose;
 
-    public static ManageFlightChangeContactFragment newInstance(Bundle bundle) {
+    public static MF_ChangeContactFragment newInstance(Bundle bundle) {
 
-        ManageFlightChangeContactFragment fragment = new ManageFlightChangeContactFragment();
+        MF_ChangeContactFragment fragment = new MF_ChangeContactFragment();
         fragment.setArguments(bundle);
         return fragment;
 
@@ -207,6 +214,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         view = inflater.inflate(R.layout.passenger_contact_info, container, false);
         ButterKnife.inject(this, view);
 
+        //hide
+        checkAsPassengerLayout.setVisibility(View.GONE);
+
         Bundle bundle = getArguments();
         String flightSummary = bundle.getString("ITINENARY_INFORMATION");
         pref = new SharedPrefManager(getActivity());
@@ -219,7 +229,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
         contactInfoContinueBtn.setVisibility(View.GONE);
         changeContactInfoBtn.setVisibility(View.VISIBLE);
-        travelPurpose = obj.getObj().getContact_information().getTravel_purpose();
+
+        //travelPurpose = obj.getObj().getContact_information().getTravel_purpose();
+        txtPurpose.setTag(obj.getObj().getContact_information().getTravel_purpose());
 
         /*Travelling Purpose*/
         /*final String[] purpose = getResources().getStringArray(R.array.purpose);
@@ -270,6 +282,15 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
                 showCountrySelector(getActivity(),countrysList);
             }
         });
+
+        txtCountryBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.hideKeyboard(getActivity(), view);
+                showCountrySelector(getActivity(),countrysList);
+            }
+        });
+
         /* ---------------------------- End Country ----------------------------------*/
 
           /* ---------------------------- Select State -------------------------------- */
@@ -287,7 +308,8 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         txtPurpose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure");
+                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure",countryBlock);
+
             }
         });
         /* --------------------------- End Purpose ----------------------------------- */
@@ -305,8 +327,8 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         /*Assign value to field*/
         txtFirstName.setText(obj.getObj().getContact_information().getFirst_name());
         txtLastName.setText(obj.getObj().getContact_information().getLast_name());
-        txtPurpose.setTag(obj.getObj().getContact_information().getPurpose());
-        txtPurpose.setText(getFlightPurpose(obj.getObj().getContact_information().getPurpose()));
+        txtPurpose.setTag(obj.getObj().getContact_information().getTravel_purpose());
+        txtPurpose.setText(getFlightPurpose(obj.getObj().getContact_information().getTravel_purpose()));
         txtEmailAddress.setText(obj.getObj().getContact_information().getEmail());
         txtTitle.setTag(obj.getObj().getContact_information().getTitle());
         txtTitle.setText(obj.getObj().getContact_information().getTitle());
@@ -315,14 +337,14 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         txtAlternatePhone.setText(obj.getObj().getContact_information().getAlternate_phone());
         txtPhone.setText(obj.getObj().getContact_information().getMobile_phone());
 
-
+        dialingCode = getDialingCode(obj.getObj().getContact_information().getCountry(),getActivity());
 
         pnr = obj.getObj().getItenerary_information().getPnr();
         bookingId = obj.getObj().getBooking_id();
         username = obj.getObj().getContact_information().getEmail();
 
 
-        if(travelPurpose.equals("2")){
+        if(txtPurpose.getTag().equals("2")){
 
             companyBlock.setVisibility(View.VISIBLE);
             txtCity.setText(obj.getObj().getContact_information().getCity());
@@ -333,6 +355,15 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
             txtCompanyName.setText(obj.getObj().getContact_information().getCompany_name());
             txtState.setTag(obj.getObj().getContact_information().getState());
             txtState.setText(getStateName(getActivity(), obj.getObj().getContact_information().getState()));
+
+            countryBlock.setVisibility(View.GONE);
+
+            txtCountry.setText(getCountryName(getActivity(), obj.getObj().getContact_information().getCountry()));
+            txtCountry.setTag(obj.getObj().getContact_information().getCountry());
+
+            txtCountryBusiness.setText(getCountryName(getActivity(), obj.getObj().getContact_information().getCountry()));
+            txtCountryBusiness.setTag(obj.getObj().getContact_information().getCountry());
+
 
         }
 
@@ -386,11 +417,25 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         }
     }
 
-
     @Override
     public void onValidationSucceeded() {
 
-        requestContactInfoChange();
+
+        //checkDialingCode
+        boolean cont = true;
+        if(validateDialingCode(dialingCode, txtPhone.getText().toString())) {
+            txtPhone.setError("Mobile phone must start with country code.");
+            setShake(txtPhone);
+            cont = false;
+        }
+        if(validateDialingCode(dialingCode,txtAlternatePhone.getText().toString())) {
+            txtAlternatePhone.setError("Alternate phone must start with country code.");
+            setShake(txtAlternatePhone);
+            cont = false;
+        }
+        if(cont){
+            requestContactInfoChange();
+        }
 
         //CONFIRM UPDATE?
        /* new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
@@ -429,12 +474,13 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
         obj.setContact_title(txtTitle.getTag().toString());
         obj.setContact_first_name(txtFirstName.getText().toString());
         obj.setContact_last_name(txtLastName.getText().toString());
-        obj.setContact_country(txtCountry.getTag().toString());
+
+
         obj.setContact_email(txtEmailAddress.getText().toString());
         obj.setContact_mobile_phone(txtPhone.getText().toString());
         obj.setContact_alternate_phone(txtAlternatePhone.getText().toString());
 
-        if(travelPurpose.equals("2")) {
+        if(txtPurpose.getTag().equals("2")){
            obj.setContact_company_name(txtCompanyName.getText().toString());
            obj.setContact_address1(txtCompanyAddress1.getText().toString());
            obj.setContact_address2(txtCompanyAddress2.getText().toString());
@@ -442,6 +488,9 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
            obj.setContact_state(txtState.getTag().toString());
            obj.setContact_city(txtCity.getText().toString());
            obj.setContact_postcode(txtPostCode.getText().toString());
+           obj.setContact_country(txtCountryBusiness.getTag().toString());
+        }else{
+            obj.setContact_country(txtCountry.getTag().toString());
         }
 
             //contact_title
@@ -489,7 +538,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
                 CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
-                countryListDialogFragment.setTargetFragment(ManageFlightChangeContactFragment.this, 0);
+                countryListDialogFragment.setTargetFragment(MF_ChangeContactFragment.this, 0);
                 countryListDialogFragment.show(fm, "countryListDialogFragment");
 
             } catch (Exception e) {
@@ -508,7 +557,18 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
                 if (selectedCountry.getTag() == "Country") {
                     txtCountry.setText(selectedCountry.getText());
-                    selectedCountryCode = selectedCountry.getCode();
+                    txtCountryBusiness.setText(selectedCountry.getText());
+
+                    //split country code with dialing code
+                    String toCountryCode =  selectedCountry.getCode();
+                    String[] splitCountryCode = toCountryCode.split("/");
+                    selectedCountryCode = splitCountryCode[0];
+                    dialingCode = splitCountryCode[1];
+                    txtPhone.setText(dialingCode);
+                    txtAlternatePhone.setText(dialingCode);
+
+                    txtCountry.setTag(selectedCountryCode);
+                    txtCountryBusiness.setTag(selectedCountryCode);
 
                    /*Each country click - reset state obj*/
                     stateList = new ArrayList<DropDownItem>();
@@ -529,6 +589,7 @@ public class ManageFlightChangeContactFragment extends BaseFragment implements V
 
                 } else {
                     txtState.setText(selectedCountry.getText());
+                    txtState.setTag(selectedCountry.getCode());
                     selectedState = selectedCountry.getCode();
                 }
 

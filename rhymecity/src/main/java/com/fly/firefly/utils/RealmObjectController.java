@@ -101,7 +101,7 @@ public class RealmObjectController extends BaseFragment{
         Realm realm = Realm.getInstance(act);
         realm.beginTransaction();
         RealmFlightObj realmObject = realm.createObject(RealmFlightObj.class);
-        realmObject.setPnr(obj.getObj().getPnr());
+        realmObject.setPnr(obj.getPnr());
         realmObject.setUsername(username);
         realmObject.setFlightObj(flightSummaryReceive);
         realm.commitTransaction();

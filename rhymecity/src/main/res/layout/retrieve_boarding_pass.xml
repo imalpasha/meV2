@@ -113,7 +113,6 @@
                                         android:padding="5dp"
                                         android:textSize="15dp"
                                         android:hint="PNR Code"
-                                        android:text="Z3Y3RY"
                                         android:id="@+id/editPnr"
                                         android:inputType="text"
                                         android:background="@null" />

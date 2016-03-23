@@ -269,9 +269,11 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
             if(editEmail.getText().toString().equals("")) {
                 Toast.makeText(getActivity(), "Email is required", Toast.LENGTH_LONG).show();
 
-            }else if (!editEmail.getText().toString().matches(emailPattern)) {
-                Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
-            }else{
+            }
+            //else if (!editEmail.getText().toString().matches(emailPattern)) {
+             //   Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
+            //}
+            else{
                     requestForgotPassword(editEmail.getText().toString(),"");
                     dialog.dismiss();
                 }

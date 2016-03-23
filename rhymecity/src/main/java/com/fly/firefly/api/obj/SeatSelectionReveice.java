@@ -17,6 +17,22 @@ public class SeatSelectionReveice {
     private SeatSelectionReveice obj;
     private List<PasssengerInfo> passengers = new ArrayList<PasssengerInfo>();
     private List<Journeys> journeys = new ArrayList<Journeys>();
+    private String message;
+
+    //itinerary
+    private List<FlightDetails> flight_details;
+    private List<PriceDetails> price_details;
+    private  String total_price;
+    private List<Services> services;
+
+    public List<Services> getServices() {
+        return services;
+    }
+
+    public void setServices(List<Services> services) {
+        this.services = services;
+    }
+
 
     public String getMessage() {
         return message;
@@ -25,14 +41,6 @@ public class SeatSelectionReveice {
     public void setMessage(String message) {
         this.message = message;
     }
-
-    private String message;
-
-    //itinerary
-    private List<FlightDetails> flight_details;
-    private List<PriceDetails> price_details;
-    private List<Services> services;
-    private  String total_price;
 
     public String getPnr() {
         return pnr;
@@ -53,7 +61,6 @@ public class SeatSelectionReveice {
     public String getTotal_price() {return total_price;}
 
     public void setTotal_price(String total_price) {this.total_price = total_price;}
-
 
     public List<FlightDetails> getFlight_details() {
         return flight_details;
@@ -498,8 +505,22 @@ public class SeatSelectionReveice {
         this.booking_id = booking_id;
     }
 
+
     public SeatSelectionReveice(SeatSelectionReveice param_obj){
         this.obj = param_obj;
+        pnr = param_obj.getPnr();
+        booking_status = param_obj.getBooking_status();
+        status = param_obj.getStatus();
+        booking_id = param_obj.getBooking_id();
+        passengers = param_obj.getPassengers();
+        journeys = param_obj.getJourneys();
+        message = param_obj.getMessage();
+
+        flight_details = param_obj.getFlight_details();
+        price_details = param_obj.getPrice_details();
+        services = param_obj.getServices();
+        total_price = param_obj.getTotal_price();
+
     }
 
     public String getStatus() {

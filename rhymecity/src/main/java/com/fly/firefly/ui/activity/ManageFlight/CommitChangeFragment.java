@@ -214,6 +214,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     private String flightSummary;
     private ManageChangeContactReceive obj = null;
     private String pnr,bookingId,signature;
+    private String totalDue;
 
     public static CommitChangeFragment newInstance(Bundle bundle) {
 
@@ -293,7 +294,8 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
         cancelUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent changeContact = new Intent(getActivity(), ManageFlightActionActivity.class);
+                Intent changeContact = new Intent(getActivity(), MF_ActionActivity.class);
+                changeContact.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 changeContact.putExtra("AlertDialog", "True");
                 getActivity().startActivity(changeContact);
                 getActivity().finish();
@@ -328,10 +330,11 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(),obj.getObj().getMessage(), getActivity());
         if (status) {
-           setSuccessDialog(getActivity(),"Information Updated!", ManageFlightActionActivity.class);
+           setSuccessDialog(getActivity(),"Information Updated!", MF_ActionActivity.class);
         }else if (obj.getObj().getStatus().equals("need_payment")){
             Intent intent = new Intent(getActivity(), PaymentFlightActivity.class);
             intent.putExtra("PAYMENT_FROM","CHANGE");
+            intent.putExtra("TOTAL_DUE",totalDue);
             getActivity().startActivity(intent);
         }
 
@@ -508,7 +511,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
         // txtPaymentFromCard.setText(cardPaymentType);
 
         //Total Price
-        String totalDue = obj.getObj().getTotal_due();
+        totalDue = obj.getObj().getTotal_due();
         String totalPaid = obj.getObj().getTotal_paid();
         String totalPrice = obj.getObj().getTotal_price();
 
@@ -564,7 +567,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
 
     public void goToChangeContactPage(FlightSummaryReceive obj)
     {
-        Intent changeContact = new Intent(getActivity(), ManageFlight_ChangeContact.class);
+        Intent changeContact = new Intent(getActivity(), MF_ChangeContactActivity.class);
         changeContact.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
         getActivity().startActivity(changeContact);
     }

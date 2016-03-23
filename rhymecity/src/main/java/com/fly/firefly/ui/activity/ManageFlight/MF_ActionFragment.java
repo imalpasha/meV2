@@ -24,6 +24,7 @@ import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.module.ManageFlightActionModule;
 import com.fly.firefly.ui.object.ManageFlightObj;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
@@ -34,7 +35,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-public class ManageFlightActionFragment extends BaseFragment implements ManageFlightPrenter.ManageFlightView {
+public class MF_ActionFragment extends BaseFragment implements ManageFlightPrenter.ManageFlightView {
 
     @Inject
     ManageFlightPrenter presenter;
@@ -231,9 +232,9 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
     private String flightSummary;
     private FlightSummaryReceive obj = null;
 
-    public static ManageFlightActionFragment newInstance(Bundle bundle) {
+    public static MF_ActionFragment newInstance(Bundle bundle) {
 
-        ManageFlightActionFragment fragment = new ManageFlightActionFragment();
+        MF_ActionFragment fragment = new MF_ActionFragment();
         fragment.setArguments(bundle);
         return fragment;
 
@@ -244,6 +245,8 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ManageFlightActionModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -276,6 +279,9 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
             HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
             String signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
+            HashMap<String, String> initUserID = pref.getUserID();
+            String userID = initUserID.get(SharedPrefManager.USER_ID);
+
             String[] parts = pnrAndEmail.split(",");
             String part1 = parts[0];
             String part2 = parts[1];
@@ -286,6 +292,7 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
             manageFlightObj.setSignature(signature);
             manageFlightObj.setUsername(part2);
             manageFlightObj.setPnr(part1);
+            manageFlightObj.setUser_id(userID);
 
             presenter.onSendPNRV1(manageFlightObj);
         }
@@ -295,6 +302,7 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PaymentFlightActivity.class);
                 intent.putExtra("PAYMENT_FROM","CHANGE");
+                intent.putExtra("TOTAL_DUE",obj.getTotal_due());
                 getActivity().startActivity(intent);
             }
         });
@@ -662,7 +670,7 @@ public class ManageFlightActionFragment extends BaseFragment implements ManageFl
 
     public void goToChangeContactPage(FlightSummaryReceive obj)
     {
-        Intent changeContact = new Intent(getActivity(), ManageFlight_ChangeContact.class);
+        Intent changeContact = new Intent(getActivity(), MF_ChangeContactActivity.class);
         changeContact.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
         getActivity().startActivity(changeContact);
     }

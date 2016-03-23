@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class ManageFlightActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class MF_Activity extends MainFragmentActivity implements FragmentContainerActivity {
 
     private FragmentManager fragmentManager;
 
@@ -21,7 +21,7 @@ public class ManageFlightActivity extends MainFragmentActivity implements Fragme
         ButterKnife.inject(this);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, ManageFlightFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, MF_Fragment.newInstance()).commit();
 
         hideTitle();
     }

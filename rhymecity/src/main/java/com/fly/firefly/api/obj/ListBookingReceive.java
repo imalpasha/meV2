@@ -11,6 +11,8 @@ public class ListBookingReceive {
     private String status;
     private String signature;
     private String message;
+    private String user_id;
+    private ListBookingReceive obj;
 
     /* ------------------------------------ */
 
@@ -22,10 +24,13 @@ public class ListBookingReceive {
         this.user_id = user_id;
     }
 
-    private String user_id;
-
     public ListBookingReceive(ListBookingReceive param_obj){
         this.obj = param_obj;
+        list_booking = param_obj.getList_booking();
+        status = param_obj.getStatus();
+        signature = param_obj.getSignature();
+        message = param_obj.getMessage();
+        user_id = param_obj.getUser_id();
     }
 
     public ListBookingReceive getObj() {
@@ -35,8 +40,6 @@ public class ListBookingReceive {
     public void setObj(ListBookingReceive obj) {
         this.obj = obj;
     }
-
-    private ListBookingReceive obj;
 
     public String getMessage() {
         return message;
@@ -108,6 +111,7 @@ public class ListBookingReceive {
         private String departure_station_code;
         private String arrival_station_code;
         private String date;
+        private String check_in;
 
         public String getCheck_in() {
             return check_in;
@@ -117,7 +121,6 @@ public class ListBookingReceive {
             this.check_in = check_in;
         }
 
-        private String check_in;
 
         public List<Passenger> getPassengers() {
             return passengers;

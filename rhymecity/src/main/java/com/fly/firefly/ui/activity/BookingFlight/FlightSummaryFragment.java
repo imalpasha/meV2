@@ -61,6 +61,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.RealmResults;
 
 public class FlightSummaryFragment extends BaseFragment implements BookingPresenter.FlightSummaryView {
@@ -201,23 +202,14 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtTotalDue)
     TextView txtTotalDue;
 
-    @InjectView(R.id.passengerList)
-    LinearLayout passengerList;
-
     @InjectView(R.id.paymentList)
     LinearLayout paymentList;
-
-    @InjectView(R.id.paymentListMain)
-    LinearLayout paymentListMain;
 
     @InjectView(R.id.insuranceBlock)
     LinearLayout insuranceBlock;
 
     @InjectView(R.id.txtTotalPriceAll)
     TextView txtTotalPriceAll;
-
-    @InjectView(R.id.servicesList)
-    LinearLayout servicesList;
 
     @InjectView(R.id.txtConfInsurance)
     TextView txtConfInsurance;
@@ -343,12 +335,11 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         //Gson gsonFlight = new Gson();
         //String seat = gsonFlight.toJson(obj);
         //pref.setSeat(seat);
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
             setSummary(obj);
             //Save Object To Local DB(realm.io)
-
             RealmObjectController.saveFlight(getActivity(), obj, storeUsername);
 
         }
@@ -356,18 +347,18 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
     public void setSummary(FlightSummaryReceive obj){
 
-        txtPNR.setText(obj.getObj().getItenerary_information().getPnr());
-        txtBookingStatus.setText(obj.getObj().getItenerary_information().getBooking_status());
-        txtBookingDate.setText(obj.getObj().getItenerary_information().getBooking_date());
+        txtPNR.setText(obj.getItenerary_information().getPnr());
+        txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
+        txtBookingDate.setText(obj.getItenerary_information().getBooking_date());
 
-        int flightLoop = obj.getObj().getFlight_details().size();
+        int flightLoop = obj.getFlight_details().size();
 
         //Going Flight Information
-        String goingFlightType = obj.getObj().getFlight_details().get(0).getType();
-        String goingFlightDate = obj.getObj().getFlight_details().get(0).getDate();
-        String goingFlightStation = obj.getObj().getFlight_details().get(0).getStation();
-        String goingFlightNumber = obj.getObj().getFlight_details().get(0).getFlight_number();
-        String goingFlightTime = obj.getObj().getFlight_details().get(0).getTime();
+        String goingFlightType = obj.getFlight_details().get(0).getType();
+        String goingFlightDate = obj.getFlight_details().get(0).getDate();
+        String goingFlightStation = obj.getFlight_details().get(0).getStation();
+        String goingFlightNumber = obj.getFlight_details().get(0).getFlight_number();
+        String goingFlightTime = obj.getFlight_details().get(0).getTime();
 
         txtGoingFlightType.setText(goingFlightType);
         txtGoingFlightDate.setText(goingFlightDate);
@@ -376,20 +367,20 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         txtGoingFlightTime.setText(goingFlightTime);
 
         //Going Flight Price
-        String goingFlightPriceTitle = obj.getObj().getPrice_details().get(0).getTitle();
-        String goingFlightPriceGuest = obj.getObj().getPrice_details().get(0).getGuest();
-        String goingFlightPriceGuestTotal = obj.getObj().getPrice_details().get(0).getTotal_guest();
+        String goingFlightPriceTitle = obj.getPrice_details().get(0).getTitle();
+        String goingFlightPriceGuest = obj.getPrice_details().get(0).getGuest();
+        String goingFlightPriceGuestTotal = obj.getPrice_details().get(0).getTotal_guest();
 
         txtGoingFlightPriceTitle.setText(goingFlightPriceTitle);
         txtGoingFlightPriceGuest.setText(goingFlightPriceGuest);
         txtGoingFlightPriceTotalGuest.setText(goingFlightPriceGuestTotal);
 
         //Going Flight Price
-        String goingFlightAdminFee = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
-        String goingFlightAirportTax = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAirport_tax();
-        String goingFlightFuelSurcharge = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge();
-        String goingFlightGST = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax();
-        String goingFlightDetailTotal= obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal();
+        String goingFlightAdminFee = obj.getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
+        String goingFlightAirportTax = obj.getPrice_details().get(0).getTaxes_or_fees().getAirport_tax();
+        String goingFlightFuelSurcharge = obj.getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge();
+        String goingFlightGST = obj.getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax();
+        String goingFlightDetailTotal= obj.getPrice_details().get(0).getTaxes_or_fees().getTotal();
 
         txtGoingFlightAdminFee.setText(goingFlightAdminFee);
         txtGoingFlightAirportTax.setText(goingFlightAirportTax);
@@ -399,15 +390,15 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         txtGoingFlightFeeTotal.setText(goingFlightDetailTotal);
 
         //Contact Information
-        String title = obj.getObj().getContact_information().getTitle();
-        String first_name = obj.getObj().getContact_information().getFirst_name();
-        String last_name = obj.getObj().getContact_information().getLast_name();
+        String title = obj.getContact_information().getTitle();
+        String first_name = obj.getContact_information().getFirst_name();
+        String last_name = obj.getContact_information().getLast_name();
         String contactName = getTitleCode(getActivity(),title,"name") + " " + first_name + " " + last_name;
 
-        String contactCountry = obj.getObj().getContact_information().getCountry();
-        String contactMobilePhone = obj.getObj().getContact_information().getMobile_phone();
-        String contactAlternatPhone = obj.getObj().getContact_information().getAlternate_phone();
-        String contactEmail= obj.getObj().getContact_information().getEmail();
+        String contactCountry = obj.getContact_information().getCountry();
+        String contactMobilePhone = obj.getContact_information().getMobile_phone();
+        String contactAlternatPhone = obj.getContact_information().getAlternate_phone();
+        String contactEmail= obj.getContact_information().getEmail();
 
         txtContactName.setText(contactName);
         txtContactCountry.setText("Country : "+contactCountry);
@@ -417,11 +408,11 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
         //Insurance
         //checkInsuranceStatus
-        if(obj.getObj().getInsurance_details().getStatus().equals("Y")){
+        if(obj.getInsurance_details().getStatus().equals("Y")){
             insuranceBlock.setVisibility(View.VISIBLE);
 
-            String insuranceConf = obj.getObj().getInsurance_details().getConf_number();
-            String insuranceRate = obj.getObj().getInsurance_details().getRate();
+            String insuranceConf = obj.getInsurance_details().getConf_number();
+            String insuranceRate = obj.getInsurance_details().getRate();
 
             txtConfInsurance.setText(insuranceConf);
             txtInsuranceRate.setText(insuranceRate);
@@ -432,11 +423,14 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
         LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
-        for(int services = 0 ; services < obj.getObj().getPrice_details().size() ; services++){
-            if(obj.getObj().getPrice_details().get(services).getStatus().equals("Services and Fees") && obj.getObj().getPrice_details().get(services).getServices().size() > 0){
+        LinearLayout servicesList = (LinearLayout) getActivity().findViewById(R.id.servicesList);
+        servicesList.removeAllViews();
+
+        for(int services = 0 ; services < obj.getPrice_details().size() ; services++){
+            if(obj.getPrice_details().get(services).getStatus().equals("Services and Fees") && obj.getPrice_details().get(services).getServices().size() > 0){
                 serviceAndFeesLayout.setVisibility(View.VISIBLE);
 
-                for(int servicesLoop = 0 ; servicesLoop < obj.getObj().getPrice_details().get(services).getServices().size() ; servicesLoop++){
+                for(int servicesLoop = 0 ; servicesLoop < obj.getPrice_details().get(services).getServices().size() ; servicesLoop++){
 
                     LinearLayout servicesRow = new LinearLayout(getActivity());
                     servicesRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -444,8 +438,8 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
                     servicesRow.setWeightSum(1);
                     servicesRow.setLayoutParams(matchParent);
 
-                    String servicesName = obj.getObj().getPrice_details().get(services).getServices().get(servicesLoop).getService_name();
-                    String servicePrice = obj.getObj().getPrice_details().get(services).getServices().get(servicesLoop).getService_price();
+                    String servicesName = obj.getPrice_details().get(services).getServices().get(servicesLoop).getService_name();
+                    String servicePrice = obj.getPrice_details().get(services).getServices().get(servicesLoop).getService_price();
 
                     TextView txtServicesName = new TextView(getActivity());
                     txtServicesName.setText(servicesName);
@@ -465,10 +459,13 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
             }
         }
-        txtTotalPriceAll.setText(obj.getObj().getTotal_price());
+        txtTotalPriceAll.setText(obj.getTotal_price());
 
         //Passsenger Information
-        int totalPassenger = obj.getObj().getPassenger_lists().size();
+        int totalPassenger = obj.getPassenger_lists().size();
+
+        LinearLayout passengerList = (LinearLayout) getActivity().findViewById(R.id.passengerList);
+        passengerList.removeAllViews();
 
         for(int passenger = 0 ; passenger < totalPassenger ; passenger++){
 
@@ -478,16 +475,19 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             //String titleTxt = getTitleCode(getActivity(),splitPassengerName[0],"name");
 
             TextView txtPassenger = new TextView(getActivity());
-            txtPassenger.setText(obj.getObj().getPassenger_lists().get(passenger).getPassengerName());
+            txtPassenger.setText(obj.getPassenger_lists().get(passenger).getPassengerName());
             txtPassenger.setPadding(3, 3, 3, 3);
             passengerList.addView(txtPassenger);
         }
 
         //Payment Information
-        int totalPaymentCard = obj.getObj().getPayment_details().size();
+        int totalPaymentCard = obj.getPayment_details().size();
         LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT, 0.33f);
+
+        LinearLayout paymentListMain = (LinearLayout) getActivity().findViewById(R.id.paymentListMain);
+        paymentListMain.removeAllViews();
 
         for(int payment = 0 ; payment < totalPaymentCard ; payment++){
 
@@ -496,20 +496,20 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             paymentRow.setWeightSum(1);
 
             TextView txtMethod = new TextView(getActivity());
-            txtMethod.setText(obj.getObj().getPayment_details().get(payment).getPayment_method());
+            txtMethod.setText(obj.getPayment_details().get(payment).getPayment_method());
             txtMethod.setPadding(2, 2, 2, 2);
             txtMethod.setLayoutParams(param);
             paymentRow.addView(txtMethod);
 
 
             TextView txtStatus = new TextView(getActivity());
-            txtStatus.setText(obj.getObj().getPayment_details().get(payment).getPayment_status());
+            txtStatus.setText(obj.getPayment_details().get(payment).getPayment_status());
             txtStatus.setPadding(2, 2, 2, 2);
             txtStatus.setLayoutParams(param);
             paymentRow.addView(txtStatus);
 
             TextView txtAmount = new TextView(getActivity());
-            txtAmount.setText(obj.getObj().getPayment_details().get(payment).getPayment_amount());
+            txtAmount.setText(obj.getPayment_details().get(payment).getPayment_amount());
             txtAmount.setPadding(2, 2, 2, 2);
             txtAmount.setLayoutParams(param);
             paymentRow.addView(txtAmount);
@@ -527,9 +527,9 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
        // txtPaymentFromCard.setText(cardPaymentType);
 
         //Total Price
-        String totalDue = obj.getObj().getTotal_due();
-        String totalPaid = obj.getObj().getTotal_paid();
-        String totalPrice = obj.getObj().getTotal_price();
+        String totalDue = obj.getTotal_due();
+        String totalPaid = obj.getTotal_paid();
+        String totalPrice = obj.getTotal_price();
 
         txtTotalDue.setText("Total Due: "+totalDue);
         txtTotalPaid.setText("Total Paid: "+totalPaid);
@@ -542,11 +542,11 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             returnFlightPrice.setVisibility(View.VISIBLE);
 
             //Going Flight Information
-            String returnFlightType = obj.getObj().getFlight_details().get(1).getType();
-            String returnFlightDate = obj.getObj().getFlight_details().get(1).getDate();
-            String returnFlightStation = obj.getObj().getFlight_details().get(1).getStation();
-            String returnFlightNumber = obj.getObj().getFlight_details().get(1).getFlight_number();
-            String returnFlightTime = obj.getObj().getFlight_details().get(1).getTime();
+            String returnFlightType = obj.getFlight_details().get(1).getType();
+            String returnFlightDate = obj.getFlight_details().get(1).getDate();
+            String returnFlightStation = obj.getFlight_details().get(1).getStation();
+            String returnFlightNumber = obj.getFlight_details().get(1).getFlight_number();
+            String returnFlightTime = obj.getFlight_details().get(1).getTime();
 
             txtReturnFlightType.setText(returnFlightType);
             txtReturnFlightDate.setText(returnFlightDate);
@@ -555,20 +555,20 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             txtReturnFlightTime.setText(returnFlightTime);
 
             //Going Flight Price
-            String returnFlightPriceTitle = obj.getObj().getPrice_details().get(1).getTitle();
-            String returnFlightPriceGuest = obj.getObj().getPrice_details().get(1).getGuest();
-            String returnFlightPriceGuestTotal = obj.getObj().getPrice_details().get(1).getTotal_guest();
+            String returnFlightPriceTitle = obj.getPrice_details().get(1).getTitle();
+            String returnFlightPriceGuest = obj.getPrice_details().get(1).getGuest();
+            String returnFlightPriceGuestTotal = obj.getPrice_details().get(1).getTotal_guest();
 
             txtReturnFlightPriceTitle.setText(returnFlightPriceTitle);
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);
             txtReturnFlightPriceTotalGuest.setText(returnFlightPriceGuestTotal);
 
             //Going Flight Price
-            String returnFlightAdminFee = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee();
-            String returnFlightAirportTax = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAirport_tax();
-            String returnFlightFuelSurcharge = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge();
-            String returnFlightGST = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax();
-            String returnFlightDetailTotal= obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal();
+            String returnFlightAdminFee = obj.getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee();
+            String returnFlightAirportTax = obj.getPrice_details().get(1).getTaxes_or_fees().getAirport_tax();
+            String returnFlightFuelSurcharge = obj.getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge();
+            String returnFlightGST = obj.getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax();
+            String returnFlightDetailTotal= obj.getPrice_details().get(1).getTaxes_or_fees().getTotal();
 
             txtReturnFlightAdminFee.setText(returnFlightAdminFee);
             txtReturnFlightAirportTax.setText(returnFlightAirportTax);
@@ -644,5 +644,13 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     public void onPause() {
         super.onPause();
         presenter.onPause();
+    }
+
+    public void backButton() {
+
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        getActivity().startActivity(intent);
+
     }
 }

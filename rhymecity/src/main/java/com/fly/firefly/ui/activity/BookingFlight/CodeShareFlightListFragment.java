@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -86,6 +87,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     @InjectView(R.id.returnFlightNA)LinearLayout returnFlightNA;
     @InjectView(R.id.goingFlightNA)LinearLayout goingFlightNA;
     @InjectView(R.id.basicPremierLayout)LinearLayout basicPremierLayout;
+
+    @InjectView(R.id.fareRulesChkBox)CheckBox fareRulesChkBox;
 
     private int fragmentContainerId;
     private CodeShareAdapter codeShareDepart,departListPremier, returnListBasic,returnListPremier;
@@ -261,7 +264,10 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "Select Flight");
                 //check if flight checked
-                if(flightType.equals("0")){
+
+                if(!fareRulesChkBox.isChecked()){
+                        croutonAlert(getActivity(), "You must agree to the terms and conditions.");
+                }else if(flightType.equals("0")){
                     if(departFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else{
@@ -272,8 +278,15 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                         Utils.toastNotification(getActivity(),"Please Check Departure Flight");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                    }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
+                        Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
+                        proceed = false;
+                    }else if(departDatePlain.equals(returnDatePlain) && compare90Minute(departFlightArrivalTime,returnFlightDepartureTime)){
+                        Utils.toastNotificationLong(getActivity(), " In order to select flights that travel on the same day, you must allow at least 90 minutes between flights. Please select a different pair of flights.!");
+                        proceed = false;
                     }else{
                         proceed = true;
+                        Log.e("3","3");
                     }
                 }else{
 
@@ -468,8 +481,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         Log.e("BookingID",obj.getFlightObj().getBookingId());
 
         Boolean status = Controller.getRequestStatus(obj.getFlightObj().getStatus(), obj.getFlightObj().getMessage(), getActivity());
-        if (status
-                ) {
+        if (status) {
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
             passengerInfo.putExtra(ADULT, adult);
             passengerInfo.putExtra(INFANT, infant);

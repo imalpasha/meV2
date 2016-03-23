@@ -33,6 +33,8 @@ public class PaymentWebViewActivity extends MainFragmentActivity implements Frag
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, PaymentWebViewFragment.newInstance(bundle)).commit();
 
+        hideMenuButton();
+        lockDrawer();
         hideTitle();
         BaseFragment.removeLogoHeader(this);
 

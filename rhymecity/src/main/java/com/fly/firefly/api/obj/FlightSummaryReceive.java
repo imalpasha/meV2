@@ -14,6 +14,35 @@ public class FlightSummaryReceive {
     private String signature;
     private ItinenaryInformation itinerary_information;
     private ContactInformation contact_information;
+    private String message;
+    private Insurance insurance_details;
+    private List<PaymentDetail> payment_details;
+    private List<FlightDetails> flight_details;
+    private List<PriceDetails> price_details;
+    private List<PassengerList> passenger_information;
+    private String total_price;
+    private String total_paid;
+    private String total_due;
+    private String booking_id;
+    private FlightSummaryReceive obj;
+
+    public FlightSummaryReceive(FlightSummaryReceive param_obj){
+        this.obj = param_obj;
+        status = param_obj.getStatus();
+        signature = param_obj.getSignature();
+        itinerary_information = param_obj.getItenerary_information();
+        contact_information = param_obj.getContact_information();
+        message = param_obj.getMessage();
+        insurance_details = param_obj.getInsurance_details();
+        payment_details = param_obj.getPayment_details();
+        flight_details = param_obj.getFlight_details();
+        price_details = param_obj.getPrice_details();
+        passenger_information = param_obj.getPassenger_information();
+        total_price = param_obj.getTotal_price();
+        total_paid = param_obj.getTotal_paid();
+        total_due = param_obj.getTotal_due();
+        booking_id = param_obj.getBooking_id();
+    }
 
     public String getMessage() {
         return message;
@@ -21,22 +50,6 @@ public class FlightSummaryReceive {
     public void setMessage(String message) {
         this.message = message;
     }
-    private String message;
-    private Insurance insurance_details;
-
-    private List<PaymentDetail> payment_details;
-    private List<FlightDetails> flight_details;
-    private List<PriceDetails> price_details;
-    private List<PassengerList> passenger_information;
-
-    private String total_price;
-    private String total_paid;
-    private String total_due;
-    private String booking_id;
-
-
-
-
 
     public String getSignature() {
         return signature;
@@ -199,7 +212,6 @@ public class FlightSummaryReceive {
         this.total_due = total_due;
     }
 
-    private FlightSummaryReceive obj;
 
     public class FlightDetails {
 
@@ -650,14 +662,6 @@ public class FlightSummaryReceive {
             this.state = state;
         }
 
-        public String getPurpose() {
-            return travel_purpose;
-        }
-
-        public void setPurpose(String purpose) {
-            this.travel_purpose = purpose;
-        }
-
         public String getTitle() {
             return title;
         }
@@ -780,9 +784,7 @@ public class FlightSummaryReceive {
     }
 
 
-    public FlightSummaryReceive(FlightSummaryReceive param_obj){
-        this.obj = param_obj;
-    }
+
 
     public String getStatus() {
         return status;

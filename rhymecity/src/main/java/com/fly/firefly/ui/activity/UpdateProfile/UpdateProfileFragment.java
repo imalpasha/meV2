@@ -143,7 +143,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     EditText txtPostCode;
 
     @Order(12)@NotEmpty
-    @Length(sequence = 1, min = 6,max = 14, message = "Invalid phone number")
+    @Length(sequence = 1, min = 7,max = 14, message = "Invalid phone number")
     @InjectView(R.id.txtMobilePhone)
     EditText txtMobilePhone;
 

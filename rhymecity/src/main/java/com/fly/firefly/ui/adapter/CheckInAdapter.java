@@ -123,7 +123,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         v2.checkInPassengerTravelDoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BaseFragment.staticPopup(BaseFragment.getTravelDoc(context), context, v2.checkInPassengerTravelDoc, false, v2.linearCheckInExpireDate, "Malaysia IC", CheckInAdapter.this);
+                BaseFragment.staticPopup(BaseFragment.getTravelDoc(context), context, v2.checkInPassengerTravelDoc, false, v2.linearCheckInExpireDate, "P", CheckInAdapter.this);
                 selectedPosition = groupPosition;
 
             }

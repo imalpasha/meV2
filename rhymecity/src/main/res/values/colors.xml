@@ -43,6 +43,9 @@
     <color name="red">#ee4d34</color>
     <color name="light_grey">#7A7A7A</color>
 
+    <color name="desired_seat">#95C94A</color>
+    <color name="preferred_seat">#FFFF00</color>
+    <color name="standard_seat">#FFA500</color>
 
     <!-- SEAT -->
 

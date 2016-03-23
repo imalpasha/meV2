@@ -9,10 +9,24 @@
 
     <style name="MyActionBarTheme" parent="@android:style/Widget.Holo.Light.ActionBar">
         <item name="android:background">@color/actionBarColour_default_theme</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
+    <style name="landingTheme" parent="android:Theme.Holo.NoActionBar">
+        <item name="android:windowBackground">@color/actionBarColour_default_theme</item>
+    </style>
+
+    <style name="DialogTheme" parent="android:Theme.Dialog">
+
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
 
 
+        <!-- No backgrounds, titles or window float -->
+        <!-- <item name="android:windowBackground">@null</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
 
     <style name="Theme1" parent="android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/Theme1.ActionBar</item>

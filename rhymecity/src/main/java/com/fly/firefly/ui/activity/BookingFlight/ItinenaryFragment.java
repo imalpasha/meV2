@@ -192,18 +192,18 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         Log.e("itinenary", itinenary);
 
         Gson gson = new Gson();
-        ContactInfoReceive obj = gson.fromJson(itinenary, ContactInfoReceive.class);
+        final ContactInfoReceive obj = gson.fromJson(itinenary, ContactInfoReceive.class);
         setSummary(obj);
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(goingFlightDetailTxt){
+                if (goingFlightDetailTxt) {
                     goingFlightPriceDetail.setVisibility(View.VISIBLE);
                     txtGoingFlightPriceDetail.setText("Hide");
                     txtGoingTotalFee.setVisibility(View.GONE);
                     goingFlightDetailTxt = false;
-                }else{
+                } else {
                     goingFlightPriceDetail.setVisibility(View.GONE);
                     txtGoingFlightPriceDetail.setText("[Details]");
                     txtGoingTotalFee.setVisibility(View.VISIBLE);
@@ -234,6 +234,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             public void onClick(View v) {
                 Intent seatSelection = new Intent(getActivity(), PaymentFlightActivity.class);
                 seatSelection.putExtra("PAYMENT_FROM","NORMAL");
+                seatSelection.putExtra("TOTAL_DUE",obj.getTotal_price());
                 getActivity().startActivity(seatSelection);
             }
         });
@@ -243,14 +244,14 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
     public void setSummary(ContactInfoReceive obj){
 
-        int flightLoop = obj.getObj().getFlight_details().size();
+        int flightLoop = obj.getFlight_details().size();
 
         //Going Flight Information
-        String goingFlightType = obj.getObj().getFlight_details().get(0).getType();
-        String goingFlightDate = obj.getObj().getFlight_details().get(0).getDate();
-        String goingFlightStation = obj.getObj().getFlight_details().get(0).getStation();
-        String goingFlightNumber = obj.getObj().getFlight_details().get(0).getFlight_number();
-        String goingFlightTime = obj.getObj().getFlight_details().get(0).getTime();
+        String goingFlightType = obj.getFlight_details().get(0).getType();
+        String goingFlightDate = obj.getFlight_details().get(0).getDate();
+        String goingFlightStation = obj.getFlight_details().get(0).getStation();
+        String goingFlightNumber = obj.getFlight_details().get(0).getFlight_number();
+        String goingFlightTime = obj.getFlight_details().get(0).getTime();
 
         txtGoingFlightType.setText(goingFlightType);
         txtGoingFlightDate.setText(goingFlightDate);
@@ -259,20 +260,20 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         txtGoingFlightTime.setText(goingFlightTime);
 
         //Going Flight Price
-        String goingFlightPriceTitle = obj.getObj().getPrice_details().get(0).getTitle();
-        String goingFlightPriceGuest = obj.getObj().getPrice_details().get(0).getGuest();
-        String goingFlightPriceGuestTotal = obj.getObj().getPrice_details().get(0).getTotal_guest();
+        String goingFlightPriceTitle = obj.getPrice_details().get(0).getTitle();
+        String goingFlightPriceGuest = obj.getPrice_details().get(0).getGuest();
+        String goingFlightPriceGuestTotal = obj.getPrice_details().get(0).getTotal_guest();
 
         txtGoingFlightPriceTitle.setText(goingFlightPriceTitle);
         txtGoingFlightPriceGuest.setText(goingFlightPriceGuest);
         txtGoingFlightPriceTotalGuest.setText(goingFlightPriceGuestTotal);
 
         //Going Flight Price
-        String goingFlightAdminFee = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
-        String goingFlightAirportTax = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getAirport_tax();
-        String goingFlightFuelSurcharge = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge();
-        String goingFlightGST = obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax();
-        String goingFlightDetailTotal= obj.getObj().getPrice_details().get(0).getTaxes_or_fees().getTotal();
+        String goingFlightAdminFee = obj.getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
+        String goingFlightAirportTax = obj.getPrice_details().get(0).getTaxes_or_fees().getAirport_tax();
+        String goingFlightFuelSurcharge = obj.getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge();
+        String goingFlightGST = obj.getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax();
+        String goingFlightDetailTotal= obj.getPrice_details().get(0).getTaxes_or_fees().getTotal();
 
         txtGoingFlightAdminFee.setText(goingFlightAdminFee);
         txtGoingFlightAirportTax.setText(goingFlightAirportTax);
@@ -286,10 +287,10 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
         LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
-        for(int services = 0 ; services < obj.getObj().getPrice_details().size() ; services++){
-            if(obj.getObj().getPrice_details().get(services).getStatus().equals("Services and Fees") && obj.getObj().getPrice_details().get(services).getServices().size() > 0){
+        for(int services = 0 ; services < obj.getPrice_details().size() ; services++){
+            if(obj.getPrice_details().get(services).getStatus().equals("Services and Fees") && obj.getPrice_details().get(services).getServices().size() > 0){
                 serviceAndFeesLayout.setVisibility(View.VISIBLE);
-                for(int servicesLoop = 0 ; servicesLoop < obj.getObj().getPrice_details().get(services).getServices().size() ; servicesLoop++){
+                for(int servicesLoop = 0 ; servicesLoop < obj.getPrice_details().get(services).getServices().size() ; servicesLoop++){
 
                     LinearLayout servicesRow = new LinearLayout(getActivity());
                     servicesRow.setOrientation(LinearLayout.HORIZONTAL);
@@ -297,8 +298,8 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
                     servicesRow.setWeightSum(1);
                     servicesRow.setLayoutParams(matchParent);
 
-                    String servicesName = obj.getObj().getPrice_details().get(services).getServices().get(servicesLoop).getService_name();
-                    String servicePrice = obj.getObj().getPrice_details().get(services).getServices().get(servicesLoop).getService_price();
+                    String servicesName = obj.getPrice_details().get(services).getServices().get(servicesLoop).getService_name();
+                    String servicePrice = obj.getPrice_details().get(services).getServices().get(servicesLoop).getService_price();
 
                     TextView txtServicesName = new TextView(getActivity());
                     txtServicesName.setText(servicesName);
@@ -318,7 +319,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
             }
         }
-        txtTotalPriceAll.setText(obj.getObj().getTotal_price());
+        txtTotalPriceAll.setText(obj.getTotal_price());
 
         //If more than 1 - mean booking with going & return flight
         if(flightLoop > 1){
@@ -326,11 +327,11 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             returnFlightPrice.setVisibility(View.VISIBLE);
 
             //Going Flight Information
-            String returnFlightType = obj.getObj().getFlight_details().get(1).getType();
-            String returnFlightDate = obj.getObj().getFlight_details().get(1).getDate();
-            String returnFlightStation = obj.getObj().getFlight_details().get(1).getStation();
-            String returnFlightNumber = obj.getObj().getFlight_details().get(1).getFlight_number();
-            String returnFlightTime = obj.getObj().getFlight_details().get(1).getTime();
+            String returnFlightType = obj.getFlight_details().get(1).getType();
+            String returnFlightDate = obj.getFlight_details().get(1).getDate();
+            String returnFlightStation = obj.getFlight_details().get(1).getStation();
+            String returnFlightNumber = obj.getFlight_details().get(1).getFlight_number();
+            String returnFlightTime = obj.getFlight_details().get(1).getTime();
 
             txtReturnFlightType.setText(returnFlightType);
             txtReturnFlightDate.setText(returnFlightDate);
@@ -339,20 +340,20 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             txtReturnFlightTime.setText(returnFlightTime);
 
             //Going Flight Price
-            String returnFlightPriceTitle = obj.getObj().getPrice_details().get(1).getTitle();
-            String returnFlightPriceGuest = obj.getObj().getPrice_details().get(1).getGuest();
-            String returnFlightPriceGuestTotal = obj.getObj().getPrice_details().get(1).getTotal_guest();
+            String returnFlightPriceTitle = obj.getPrice_details().get(1).getTitle();
+            String returnFlightPriceGuest = obj.getPrice_details().get(1).getGuest();
+            String returnFlightPriceGuestTotal = obj.getPrice_details().get(1).getTotal_guest();
 
             txtReturnFlightPriceTitle.setText(returnFlightPriceTitle);
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);
             txtReturnFlightPriceTotalGuest.setText(returnFlightPriceGuestTotal);
 
             //Going Flight Price
-            String returnFlightAdminFee = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee();
-            String returnFlightAirportTax = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getAirport_tax();
-            String returnFlightFuelSurcharge = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge();
-            String returnFlightGST = obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax();
-            String returnFlightDetailTotal= obj.getObj().getPrice_details().get(1).getTaxes_or_fees().getTotal();
+            String returnFlightAdminFee = obj.getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee();
+            String returnFlightAirportTax = obj.getPrice_details().get(1).getTaxes_or_fees().getAirport_tax();
+            String returnFlightFuelSurcharge = obj.getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge();
+            String returnFlightGST = obj.getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax();
+            String returnFlightDetailTotal= obj.getPrice_details().get(1).getTaxes_or_fees().getTotal();
 
             txtReturnFlightAdminFee.setText(returnFlightAdminFee);
             txtReturnFlightAirportTax.setText(returnFlightAirportTax);
@@ -367,7 +368,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @Override
     public void onContactInfo(ContactInfoReceive obj) {
 
-        String status = obj.getObj().getStatus();
+        String status = obj.getStatus();
         Log.e("Receive", "success");
      }
 

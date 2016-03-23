@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +17,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActionActivity;
+import com.fly.firefly.ui.activity.ManageFlight.MF_ActionActivity;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,6 +30,8 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
 
     private int fragmentContainerId;
+    boolean loadingFinished = true;
+    boolean redirect = false;
 
     public static PaymentWebViewFragment newInstance(Bundle bundle) {
 
@@ -56,12 +59,17 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
         //Gson gson = new Gson();
         //PassengerInfoReveice obj = gson.fromJson(insurance, PassengerInfoReveice.class);
-        initiateLoading(getActivity());
         webview.getSettings().setJavaScriptEnabled(true);
         webview.addJavascriptInterface(new PaymentWebViewFragment(), "Android");
         webview.loadUrl(url);
         webview.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                if (!loadingFinished) {
+                    redirect = true;
+                }
+
+                loadingFinished = false;
 
                 Boolean status;
 
@@ -78,12 +86,12 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
                     if(paymentFrom.equals("NORMAL")){
                         Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         getActivity().startActivity(intent);
                         getActivity().finish();
                     }else {
-                        Intent intent = new Intent(getActivity(), ManageFlightActionActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("AlertDialog", "Y");
                         getActivity().startActivity(intent);
                         getActivity().finish();
@@ -92,10 +100,27 @@ public class PaymentWebViewFragment extends BaseFragment  {
                 }
                 return true ;
             }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap facIcon) {
+                //SHOW LOADING IF IT ISNT ALREADY VISIBLE
+                loadingFinished = false;
+                initiateLoading(getActivity());
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
-                dismissLoading();
+                if(!redirect){
+                    loadingFinished = true;
+                }
+
+                if(loadingFinished && !redirect){
+                    dismissLoading();
+                } else{
+                    redirect = false;
+                }
             }
+
         });
 
         return view;

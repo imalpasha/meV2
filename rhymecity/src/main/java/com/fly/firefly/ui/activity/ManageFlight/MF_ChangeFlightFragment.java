@@ -19,6 +19,7 @@ import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.activity.BookingFlight.CodeShareFlightListActivity;
 import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ManageChangeFlightDate;
@@ -132,9 +133,9 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         Gson gson = new Gson();
         final FlightSummaryReceive obj = gson.fromJson(flightSummary, FlightSummaryReceive.class);
 
-        pnr = obj.getObj().getItenerary_information().getPnr();
-        bookingId = obj.getObj().getBooking_id();
-        username = obj.getObj().getContact_information().getEmail();
+        pnr = obj.getItenerary_information().getPnr();
+        bookingId = obj.getBooking_id();
+        username = obj.getContact_information().getEmail();
 
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
@@ -268,19 +269,25 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
-            String flightType = obj.getType();
-            SearchFlightReceive passObj = new SearchFlightReceive(obj);
-            Intent flight = new Intent(getActivity(), FireflyFlightListActivity.class);
+            //String flightType = obj.getType();
+            Intent flight = null;
+            Log.e("TYPE",obj.getType());
+            if(obj.getFlight_type().equals("MH")){
+                flight = new Intent(getActivity(), CodeShareFlightListActivity.class);
+            }else{
+                flight = new Intent(getActivity(), FireflyFlightListActivity.class);
+            }
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
             flight.putExtra("FLIGHT_TYPE", "" );
             flight.putExtra("ADULT", "" );
             flight.putExtra("INFANT", "" );
             flight.putExtra("PNR", pnr );
             flight.putExtra("BOOKING_ID", bookingId );
-
             flight.putExtra("DEPARTURE_DATE", txtDepartureDate.getTag().toString() );
             String date;
-            if(flightType.equals("0")){
+
+            //String flightType = "0";
+            if(obj.getType().equals("0")){
                 date = "";
             }else{
                 date = txtReturnDepartureDate.getTag().toString();

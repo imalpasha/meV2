@@ -28,7 +28,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/shape_stroke">
@@ -228,7 +228,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 1"
-                                    android:id="@+id/textView32"
+                                    android:tag="txtPassenger1"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold"/>
@@ -430,7 +430,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="3dp"
-                                            android:inputType="textPersonName"
+                                            android:inputType="text"
                                             android:id="@+id/textView19"
                                             android:background="@drawable/block_with_border"
                                             android:tag="passenger1_first_name"/>
@@ -728,6 +728,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger1_doc_no"
@@ -786,14 +787,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout5" >
+                                android:background="@color/actionBarColour_default_theme" >
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 2"
-                                    android:id="@+id/textView162"
+                                    android:tag="txtPassenger2"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -803,8 +803,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout10" >
+                                android:padding="5dp">
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -825,7 +824,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -834,8 +832,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -843,14 +840,12 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp" >
 
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger2_travelling_with"
                                             android:tag="passenger2_travelling_with"/>
@@ -877,7 +872,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -886,8 +880,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -895,8 +888,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -926,7 +918,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -935,8 +926,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -944,8 +934,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -974,7 +963,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -1297,6 +1285,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger2_doc_no"
                                             android:tag="passenger2_doc_no"/>
@@ -1362,7 +1351,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 3"
-                                    android:id="@+id/textView78"
+                                    android:tag="txtPassenger3"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -1419,7 +1408,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger3_travelling_with"
                                             android:tag="passenger3_travelling_with" />
@@ -1859,6 +1847,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger3_doc_no"
                                             android:tag="passenger3_doc_no" />
@@ -1924,7 +1913,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 4"
-                                    android:id="@+id/textView192"
+                                    android:tag="txtPassenger4"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -1981,7 +1970,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger4_travelling_with"
                                             android:tag="passenger4_travelling_with" />
@@ -2421,6 +2409,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger4_doc_no"
                                             android:tag="passenger4_doc_no" />
@@ -2486,7 +2475,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 5"
-                                    android:id="@+id/textView212"
+                                    android:tag="txtPassenger5"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -2543,7 +2532,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger5_travelling_with"
                                             android:tag="passenger5_travelling_with" />
@@ -2981,6 +2969,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger5_doc_no"
                                             android:tag="passenger5_doc_no" />
@@ -3045,6 +3034,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 6"
+                                    android:tag="txtPassenger6"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -3098,7 +3088,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger6_travelling_with"
                                             android:tag="passenger6_travelling_with"/>
@@ -3535,6 +3524,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger6_doc_no"
@@ -3601,6 +3591,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 7"
                                     android:textSize="@dimen/font20sp"
+                                    android:tag="txtPassenger7"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -3652,7 +3643,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger7_travelling_with"
                                             android:tag="passenger7_travelling_with"/>
@@ -4081,6 +4071,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
+                                            android:maxLength="20"
                                             android:inputType="textPhonetic"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger7_doc_no"
@@ -4146,6 +4137,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 8"
                                     android:textSize="@dimen/font20sp"
+                                    android:tag="txtPassenger8"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -4197,7 +4189,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger8_travelling_with"
                                             android:tag="passenger8_travelling_with"/>
@@ -4627,6 +4618,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger8_doc_no"
                                             android:tag="passenger8_doc_no"/>
@@ -4690,6 +4682,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 9"
+                                    android:tag="txtPassenger9"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -4742,7 +4735,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger9_travelling_with"
                                             android:tag="passenger9_travelling_with"/>
@@ -5172,6 +5164,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger9_doc_no"
                                             android:tag="passenger9_doc_no"/>
@@ -5229,14 +5222,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout5" >
+                                android:background="@color/actionBarColour_default_theme">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 10"
-                                    android:id="@+id/textView1610"
+                                    android:tag="txtPassenger10"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -5246,8 +5238,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout10" >
+                                android:padding="5dp" >
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -5293,7 +5284,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger10_travelling_with"
                                             android:tag="passenger10_travelling_with"/>
@@ -5740,6 +5730,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger10_doc_no"
                                             android:tag="passenger10_doc_no"/>
@@ -5798,14 +5789,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout5" >
+                                android:background="@color/actionBarColour_default_theme">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 11"
-                                    android:id="@+id/textView162"
+                                    android:tag="txtPassenger11"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -5815,8 +5805,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout10" >
+                                android:padding="5dp">
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -5862,7 +5851,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger11_travelling_with"
                                             android:tag="passenger11_travelling_with"/>
@@ -6309,6 +6297,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger11_doc_no"
                                             android:tag="passenger11_doc_no"/>
@@ -6367,14 +6356,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout5" >
+                                android:background="@color/actionBarColour_default_theme">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 12"
-                                    android:id="@+id/textView162"
+                                    android:tag="txtPassenger12"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -6384,8 +6372,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout10" >
+                                android:padding="5dp">
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -6406,7 +6393,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6415,8 +6401,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6431,7 +6416,6 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger12_travelling_with"
                                             android:tag="passenger12_travelling_with"/>
@@ -6878,6 +6862,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger12_doc_no"
                                             android:tag="passenger12_doc_no"/>
@@ -6936,14 +6921,13 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="5dp"
-                                android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/linearLayout5" >
+                                android:background="@color/actionBarColour_default_theme">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Passenger 13"
-                                    android:id="@+id/textView162"
+                                    android:tag="txtPassenger13"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -6953,8 +6937,7 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:id="@+id/linearLayout10" >
+                                android:padding="5dp">
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -6975,7 +6958,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6984,8 +6966,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6993,14 +6974,12 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp" >
 
                                         <TextView
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
-                                            android:text="0"
                                             android:textStyle="bold"
                                             android:id="@+id/passenger13_travelling_with"
                                             android:tag="passenger13_travelling_with"/>
@@ -7027,7 +7006,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -7036,8 +7014,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -7045,8 +7022,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -7076,7 +7052,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -7085,8 +7060,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -7094,8 +7068,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -7124,7 +7097,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -7133,8 +7105,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -7172,7 +7143,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -7181,8 +7151,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -7220,7 +7189,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -7229,8 +7197,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -7246,8 +7213,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border">
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -7447,6 +7413,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:inputType="textPhonetic"
+                                            android:maxLength="20"
                                             android:background="@drawable/block_with_border"
                                             android:id="@+id/passenger13_doc_no"
                                             android:tag="passenger13_doc_no"/>

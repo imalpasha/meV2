@@ -10,7 +10,7 @@ public class PassengerInfoReveice {
 
     private String status;
     private String message;
-    private PassengerInfoReveice Obj;
+    private PassengerInfoReveice obj;
     private insurance insurance;
 
     public String getMessage() {
@@ -80,14 +80,18 @@ public class PassengerInfoReveice {
         }
     }
     public PassengerInfoReveice(PassengerInfoReveice param_obj){
-        this.Obj = param_obj;
+
+        status  = param_obj.getStatus();
+        message = param_obj.getMessage();
+        insurance = param_obj.getInsuranceObj();
+        this.obj = param_obj;
     }
     public PassengerInfoReveice getObj() {
-        return Obj;
+        return obj;
     }
 
     public void setObj(PassengerInfoReveice obj) {
-        Obj = obj;
+        obj = obj;
     }
 
     public String getStatus() {

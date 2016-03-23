@@ -31,6 +31,7 @@
                 android:layout_weight="0.66"
                 android:layout_height="fill_parent"
                 android:paddingLeft="10dp"
+                android:paddingBottom="10dp"
                 android:paddingTop="5dp"
                 android:paddingRight="10dp">
 
@@ -335,6 +336,127 @@
                                 android:text="Blocked"
                                 android:id="@+id/textView39" android:gravity="center" android:textSize="10dp"/>
 
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:layout_marginTop="3dp" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginRight="3dp"
+                                android:background="@color/standard_seat" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Standard Seat"
+                                android:id="@+id/textView360"
+                                android:textSize="10dp" />
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="15.90 MYR"
+                                    android:textSize="11dp"
+                                    android:id="@+id/textView361" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginTop="3dp"
+                            android:layout_marginBottom="3dp" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginRight="3dp"
+                                android:background="@color/preferred_seat" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Preferred Seat"
+                                android:id="@+id/textView362"
+                                android:textSize="10dp" />
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="21.20 MYR"
+                                    android:textSize="11dp"
+                                    android:id="@+id/textView363" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center" >
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_marginRight="3dp"
+                                android:background="@color/desired_seat" />
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Desired Seat"
+                                    android:id="@+id/textView364"
+                                    android:textSize="10dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="42.40 MYR"
+                                    android:textSize="11dp"
+                                    android:id="@+id/textView365" />
+                            </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
 

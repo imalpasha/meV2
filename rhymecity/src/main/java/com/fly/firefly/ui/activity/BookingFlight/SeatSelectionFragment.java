@@ -127,8 +127,8 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
 
-        HashMap<String, String> init = pref.getSeat();
-        String seatHash = init.get(SharedPrefManager.SEAT);
+        //HashMap<String, String> init = pref.getSeat();
+        //String seatHash = init.get(SharedPrefManager.SEAT);
         /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
@@ -136,18 +136,18 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-       // Bundle bundle = getArguments();
-       // String seatGSON = bundle.getString("SEAT_INFORMATION");
+        Bundle bundle = getArguments();
+        String seatGSON = bundle.getString("SEAT_INFORMATION");
 
         /*Initiate Seat Row*/
         Gson gson = new Gson();
-        contactObj = gson.fromJson(seatHash, ContactInfoReceive.class);
+        contactObj = gson.fromJson(seatGSON, ContactInfoReceive.class);
 
-        seatInfoDepart = contactObj.getObj().getJourneys().get(0).getSeat_info();
-        List<ContactInfoReceive.Journeys> journeys = contactObj.getObj().getJourneys();
+        seatInfoDepart = contactObj.getJourneys().get(0).getSeat_info();
+        List<ContactInfoReceive.Journeys> journeys = contactObj.getJourneys();
 
         /*Set Passenger to adapter*/
-        final List<ContactInfoReceive.PasssengerInfo> passengers = contactObj.getObj().getPassengers();
+        final List<ContactInfoReceive.PasssengerInfo> passengers = contactObj.getPassengers();
 
         /*Create New Passenger Obj*/
         final List<PasssengerInfoV2> objV2 = new ArrayList<PasssengerInfoV2>();
@@ -180,7 +180,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
             Log.e("ReturnSeat","True");
             twoWay = true;
-            seatInfoReturn = contactObj.getObj().getJourneys().get(1).getSeat_info();
+            seatInfoReturn = contactObj.getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
             setSeat2(seatListReturn, seatInfoReturn);
             passengerSeatListReturn.setVisibility(View.VISIBLE);
@@ -814,7 +814,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     @Override
     public void onSeatSelect(SeatSelectionReveice obj){
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
            Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
            intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));

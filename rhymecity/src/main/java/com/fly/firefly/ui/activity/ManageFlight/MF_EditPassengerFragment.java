@@ -110,6 +110,41 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     private int totalAdult,totalInfant;
     private String pnr,username,bookingId;
 
+    private Calendar calendar = Calendar.getInstance();
+    private int year = calendar.get(Calendar.YEAR);
+    private int adultInc;
+    private ArrayList<Integer> ageOfTraveller = new ArrayList<Integer>();
+
+    //different object for different field.
+    private DatePickerDialog datePickerYear1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear2 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear3 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear4 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear5 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear6 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear7 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear8 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear9 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear10 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear11 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear12 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear13 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+    //different object for different field.
+    private DatePickerDialog datePickerYearE1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE2 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE3 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE4 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE5 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE6 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE7 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE8 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE9 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE10 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE11 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE12 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYearE13 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
     View view;
 
     public static MF_EditPassengerFragment newInstance(Bundle bundle) {
@@ -161,12 +196,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         setupPassengerBlock(adult, infant, obj);
 
         /*DatePicker Setup - Failed to make it global*/
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        final DatePickerDialog datePickerYear = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         final DatePickerDialog datePickerExpire = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-        datePickerYear.setYearRange(year - 100, year);
         datePickerExpire.setYearRange(year, year+20);
 
         titleList = new ArrayList<DropDownItem>();
@@ -286,7 +317,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             btnTravelDoc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"Malaysia IC");
+                    popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"P",null);
                 }
             });
 
@@ -304,9 +335,10 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             txtDob.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    datePickerYear.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                    createDatePickerObject(selectedPassenger);
                     clickedPassenger = selectedPassenger;
                     boolDob = true;
+                    boolExpireDate = false;
                 }
             });
 
@@ -314,13 +346,32 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             txtExpireDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    datePickerExpire.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                    creatExpiredDatePickerObject(selectedPassenger);
                     clickedPassenger = selectedPassenger;
+                    boolDob = false;
                     boolExpireDate = true;
                 }
             });
             Log.e("adultInc--", Integer.toString(adultInc));
 
+        }
+
+
+        //set adult passenger header
+        for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
+
+            TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
+            txtPassengerType.setText("Adult "+adultInc);
+
+        }
+        //auto set infant travelling with
+        for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
+
+            TextView travellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + Integer.parseInt(adult)) + "_travelling_with");
+            travellingWith.setText(adultPassengerList.get(infantInc - 1).getText());
+
+            TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + Integer.parseInt(adult)));
+            txtPassengerType.setText("Infant " +infantInc);
         }
 
 
@@ -360,6 +411,15 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     checkEditTextNull(lastname);
                     checkEditTextNull(docNo);
 
+                    String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                    if(infantTravelDocCode != null){
+                        if(infantTravelDocCode.equals("P")){
+                            checkTextViewNull(expireDate);
+                        }
+                    }
+
+                    ageOfTraveller.add(travellerAge(dob.getText().toString()));
+
                 }
 
 
@@ -388,8 +448,21 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     checkEditTextNull(lastname);
                     checkEditTextNull(docNo);
 
+                    String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                    if(infantTravelDocCode != null){
+                        if(infantTravelDocCode.equals("P")){
+                            checkTextViewNull(expireDate);
+                        }
+                    }
+
+                    ageOfTraveller.add(travellerAge(dob.getText().toString()));
                 }
 
+                //age validation
+                if(travellerAgeValidation(ageOfTraveller)){
+                    croutonAlert(getActivity(), "There must be at least one(1) passenger above 12 years old at the date(s) of travel");
+                    formContinue = false;
+                }
 
                 if(formContinue){
 
@@ -431,7 +504,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         //Travel Doc
                         String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                         passengerInfo.setTravel_document(travelDocCode);
-                        if (!travelDocCode.equals("NRIC")) {
+                        if (travelDocCode.equals("P")) {
 
                             //ExpireDate
                             String fullExpireDate = expireDate.getText().toString();
@@ -492,7 +565,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         //Travel Doc
                         String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                         infantInfo.setTravel_document(travelDocCode);
-                        if (!travelDocCode.equals("NRIC")) {
+                        if (travelDocCode.equals("P")) {
 
                             String fullExpireDate = expireDate.getText().toString();
                             String[] splitExpireDate = fullExpireDate.split("/");
@@ -526,6 +599,96 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         });
 
         return view;
+    }
+
+    public void creatExpiredDatePickerObject(Integer currentPosition){
+
+        if(currentPosition.equals(1)){
+            datePickerYearE1.setYearRange(year, year+10);
+            datePickerYearE1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(2)){
+            datePickerYearE2.setYearRange(year, year+10);
+            datePickerYearE2.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(3)){
+            datePickerYearE3.setYearRange(year, year+10);
+            datePickerYearE3.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(4)){
+            datePickerYearE4.setYearRange(year, year+10);
+            datePickerYearE4.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(5)){
+            datePickerYearE5.setYearRange(year, year+10);
+            datePickerYearE5.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(6)){
+            datePickerYearE6.setYearRange(year, year+10);
+            datePickerYearE6.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(7)){
+            datePickerYearE7.setYearRange(year, year+10);
+            datePickerYearE7.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(8)){
+            datePickerYearE8.setYearRange(year, year+10);
+            datePickerYearE8.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(9)){
+            datePickerYearE9.setYearRange(year, year+10);
+            datePickerYearE9.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(10)){
+            datePickerYearE10.setYearRange(year, year+10);
+            datePickerYearE10.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(11)){
+            datePickerYearE11.setYearRange(year, year+10);
+            datePickerYearE11.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(12)){
+            datePickerYearE12.setYearRange(year, year+10);
+            datePickerYearE12.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(13)){
+            datePickerYearE13.setYearRange(year, year+10);
+            datePickerYearE13.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }
+
+    }
+
+    public void createDatePickerObject(Integer currentPosition){
+
+        if(currentPosition.equals(1)){
+            datePickerYear1.setYearRange(year - 100, year);
+            datePickerYear1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(2)){
+            datePickerYear2.setYearRange(year - 100, year);
+            datePickerYear2.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(3)){
+            datePickerYear3.setYearRange(year - 100, year);
+            datePickerYear3.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(4)){
+            datePickerYear4.setYearRange(year - 100, year);
+            datePickerYear4.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(5)){
+            datePickerYear5.setYearRange(year - 100, year);
+            datePickerYear5.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(6)){
+            datePickerYear6.setYearRange(year - 100, year);
+            datePickerYear6.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(7)){
+            datePickerYear7.setYearRange(year - 100, year);
+            datePickerYear7.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(8)){
+            datePickerYear8.setYearRange(year - 100, year);
+            datePickerYear8.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(9)){
+            datePickerYear9.setYearRange(year - 100, year);
+            datePickerYear9.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(10)){
+            datePickerYear10.setYearRange(year - 100, year);
+            datePickerYear10.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(11)){
+            datePickerYear11.setYearRange(year - 100, year);
+            datePickerYear11.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(12)){
+            datePickerYear12.setYearRange(year - 100, year);
+            datePickerYear12.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }else if(currentPosition.equals(13)){
+            datePickerYear13.setYearRange(year - 100, year);
+            datePickerYear13.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+        }
+
     }
 
     public void checkTextViewNull(TextView txtView){

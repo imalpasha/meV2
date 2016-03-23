@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,9 @@ public class FlightDetailAdapter extends BaseAdapter {
         @InjectView(R.id.txtFarePrice) TextView txtFarePrice;
         @InjectView(R.id.listFlightIcon) ImageView listFlightIcon;
         @InjectView(R.id.checkBox) CheckBox checkBox;
+        @InjectView(R.id.txtBeforeDiscounted) TextView txtBeforeDiscounted;
+
+
     }
 
     @Override
@@ -126,19 +130,35 @@ public class FlightDetailAdapter extends BaseAdapter {
         });
 
         String totalFare = "";
+        String beforeDiscount = "";
+
         if(flightClass.equals("PREMIER")){
             if(obj.get(position).getFlexObj().getTotal_fare() == null){
                 totalFare = "Sold Out";
+                beforeDiscount = obj.get(position).getFlexObj().getBefore_discounted_fare()+" MYR";
+                vh.txtBeforeDiscounted.setVisibility(View.GONE);
                 vh.checkBox.setVisibility(View.GONE);
             }else{
-                totalFare = "MYR "+obj.get(position).getFlexObj().getTotal_fare();
+                totalFare = obj.get(position).getFlexObj().getTotal_fare()+" MYR";
+                if(obj.get(position).getFlexObj().getBefore_discounted_fare() == null){
+                    vh.txtBeforeDiscounted.setVisibility(View.GONE);
+                }else{
+                    beforeDiscount = obj.get(position).getFlexObj().getBefore_discounted_fare()+" MYR";
+                }
             }
         }else{
             if(obj.get(position).getBasicObj().getTotal_fare() == null){
                 totalFare = "Sold Out";
+                beforeDiscount = obj.get(position).getBasicObj().getBefore_discounted_fare()+" MYR";
+                vh.txtBeforeDiscounted.setVisibility(View.GONE);
                 vh.checkBox.setVisibility(View.GONE);
             }else{
-                totalFare = "MYR "+obj.get(position).getBasicObj().getTotal_fare();
+                totalFare = obj.get(position).getBasicObj().getTotal_fare()+" MYR";
+                if(obj.get(position).getBasicObj().getBefore_discounted_fare() == null){
+                    vh.txtBeforeDiscounted.setVisibility(View.GONE);
+                }else{
+                    beforeDiscount = obj.get(position).getBasicObj().getBefore_discounted_fare()+" MYR";
+                }
             }
         }
 
@@ -149,6 +169,8 @@ public class FlightDetailAdapter extends BaseAdapter {
         vh.txtDepartureAirport.setText(departureAirport);
         vh.txtArrivalAirport.setText(arrivalAirport);
         vh.txtFarePrice.setText(totalFare);
+        vh.txtBeforeDiscounted.setText(beforeDiscount);
+        vh.txtBeforeDiscounted.setPaintFlags(vh.txtBeforeDiscounted.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         if(flightWay.equals("DEPART")){
            vh.listFlightIcon.setBackgroundResource(R.drawable.departure_icon);

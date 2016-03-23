@@ -6,6 +6,21 @@ package com.fly.firefly.api.obj;
 public class PaymentReceive {
 
     private String status;
+    private String securesite;
+    private String link;
+    private String message;
+    private PaymentReceive obj;
+    private String pass;
+
+    public PaymentReceive(PaymentReceive returnObj) {
+
+        this.obj = returnObj;
+        status = returnObj.getStatus();
+        securesite = returnObj.getSecureSite();
+        link = returnObj.getLink();
+        message = returnObj.getMessage();
+        pass = returnObj.getPass();
+    }
 
     public String getSecureSite() {
         return securesite;
@@ -14,12 +29,6 @@ public class PaymentReceive {
     public void setSecureSite(String secureSite) {
         this.securesite = secureSite;
     }
-
-    private String securesite;
-    private String link;
-    private String message;
-    private PaymentReceive obj;
-    private String pass;
 
     public String getPass() {
         return pass;
@@ -35,11 +44,6 @@ public class PaymentReceive {
 
     public void setObj(PaymentReceive obj) {
         this.obj = obj;
-    }
-
-
-    public PaymentReceive(PaymentReceive returnObj) {
-        this.obj = returnObj;
     }
 
     public String getStatus() {

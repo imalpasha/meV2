@@ -39,6 +39,8 @@ public class SharedPrefManager {
     public static final String BANNER_MODULE = "BM";
 
     public static final String FLIGHT_TYPE ="FT";
+    public static final String USER_ID ="UI";
+
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -50,6 +52,12 @@ public class SharedPrefManager {
         _prefsEditor = _sharedPrefs.edit();
     }
 
+    /*user id*/
+    public HashMap<String, String> getUserID() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(USER_ID, _sharedPrefs.getString(USER_ID, null));
+        return init;
+    }
 
     /*SOCIAL MEDIA*/
     public HashMap<String, String> getFlightType() {
@@ -231,6 +239,11 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*Set Booking ID*/
+    public void setUserID(String id) {
+        _prefsEditor.putString(USER_ID, id);
+        _prefsEditor.apply();
+    }
 
     /*Set Booking ID*/
     public void setFlightType(String type) {
@@ -401,6 +414,12 @@ public class SharedPrefManager {
 
     }
 
+    /*Clear Checkin Value*/
+    public void removeUserID() {
+        // Clearing All URL
+        _sharedPrefs.edit().remove(USER_ID).apply();
+
+    }
     /*Clear Checkin Value*/
     public void removeSeat() {
         // Clearing All URL

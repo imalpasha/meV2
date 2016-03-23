@@ -103,9 +103,9 @@
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity3" />
         <activity android:name=".ui.activity.MobileCheckIn.MobileCheckInActivity4" />
 
-        <activity android:name=".ui.activity.ManageFlight.ManageFlightActivity" />
-        <activity android:name=".ui.activity.ManageFlight.ManageFlightActionActivity" />
-        <activity android:name=".ui.activity.ManageFlight.ManageFlight_ChangeContact" />
+        <activity android:name=".ui.activity.ManageFlight.MF_Activity" />
+        <activity android:name=".ui.activity.ManageFlight.MF_ActionActivity" />
+        <activity android:name=".ui.activity.ManageFlight.MF_ChangeContactActivity" />
         <activity android:name=".ui.activity.ManageFlight.MF_EditPassengerActivity" />
         <activity android:name=".ui.activity.ManageFlight.MF_ChangeFlightActivity" />
         <activity android:name=".ui.activity.ManageFlight.MF_SeatSelectionActivity" >
@@ -135,9 +135,13 @@
         <!-- LocalNotification -->
         <receiver android:name=".AlarmReceiver" ></receiver>
 
+        <!-- ForceUpdate -->
+        <activity android:name=".ui.activity.SplashScreen.ForceUpdateActivity">
+        </activity>
 
         <!-- SPLASH SCREEN -->
-        <activity android:name=".ui.activity.SplashScreen.SplashScreenActivity">
+        <activity
+            android:name=".ui.activity.SplashScreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

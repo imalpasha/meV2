@@ -14,12 +14,21 @@ public class SearchFlightReceive {
     private String status;
     private String message;
     private String type;
+    private String flight_type;
     private GoingFlight going_flight;
     private GoingFlight return_flight;
     private String pnr;
     private String booking_id;
     private List<JourneyInfo> journeys = new ArrayList<JourneyInfo>();
     private SearchFlightReceive journeyObj;
+
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
+    }
 
     public String getSignature() {
         return signature;
@@ -147,6 +156,7 @@ public class SearchFlightReceive {
         booking_id = obj.getBooking_id();
         journeys = obj.getJourneys();
         signature = obj.getSignature();
+        flight_type = obj.getFlight_type();
     }
 
     public String getStatus() {

@@ -32,6 +32,8 @@ public class PaymentFlightActivity extends MainFragmentActivity implements Fragm
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, PaymentFlightFragment.newInstance(bundle)).commit();
 
+        hideMenuButton();
+        lockDrawer();
         hideTitle();
     }
 

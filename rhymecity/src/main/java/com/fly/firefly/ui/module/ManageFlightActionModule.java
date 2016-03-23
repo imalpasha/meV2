@@ -1,8 +1,7 @@
 package com.fly.firefly.ui.module;
 
 import com.fly.firefly.AppModule;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightActionFragment;
-import com.fly.firefly.ui.activity.ManageFlight.ManageFlightFragment;
+import com.fly.firefly.ui.activity.ManageFlight.MF_ActionFragment;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.squareup.otto.Bus;
 
@@ -12,7 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module(
-        injects = ManageFlightActionFragment.class,
+        injects = MF_ActionFragment.class,
         addsTo = AppModule.class,
         complete = false
 )

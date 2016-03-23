@@ -91,7 +91,6 @@ public class ApiRequestHandler {
     public ApiRequestHandler(Bus bus, ApiService apiService) {
         this.bus = bus;
         this.apiService = apiService;
-        inc = 0;
         retry = true;
     }
 
@@ -109,14 +108,21 @@ public class ApiRequestHandler {
 
                bus.post(new PushNotificationReceive(retroResponse));
                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+               resetInc();
 
            }
 
            @Override
            public void failure(RetrofitError error) {
 
-               BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+               Log.e("inc", Integer.toString(inc));
+               if (retry) {
+                   onRegisterNotification(event);
+                   loop();
+               } else {
+                   resetInc();
+                   BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+               }
            }
 
        });
@@ -134,6 +140,7 @@ public class ApiRequestHandler {
 
                 bus.post(new DeviceInfoSuccess(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
@@ -158,6 +165,7 @@ public class ApiRequestHandler {
 
                 bus.post(new LoginReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
 
 
             }
@@ -165,8 +173,14 @@ public class ApiRequestHandler {
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onLoginRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -185,14 +199,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ForgotPasswordReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onPasswordRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -209,14 +230,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ChangePasswordReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onChangePasswordRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -268,13 +296,21 @@ public class ApiRequestHandler {
 
                 bus.post(new UpdateProfileReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
+
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onUpdateProfileRequest(data);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -294,13 +330,21 @@ public class ApiRequestHandler {
 
                 bus.post(new RegisterReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
+
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onRegisterRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -317,14 +361,21 @@ public class ApiRequestHandler {
 
                 bus.post(new SearchFlightReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onSearchFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -344,6 +395,7 @@ public class ApiRequestHandler {
 
                 bus.post(new MobileCheckinReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
 
             }
 
@@ -355,6 +407,7 @@ public class ApiRequestHandler {
                     onMobileCheckin(event);
                     loop();
                 } else {
+                    resetInc();
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }
 
@@ -374,14 +427,21 @@ public class ApiRequestHandler {
 
                     bus.post(new MobileCheckInPassengerReceive(rhymesResponse));
                     RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                    resetInc();
 
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
 
-                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                    Log.e("inc", Integer.toString(inc));
+                    if (retry) {
+                        onPassengerCheckIn(event);
+                        loop();
+                    } else {
+                        resetInc();
+                        BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                    }
                 }
 
             });
@@ -397,14 +457,21 @@ public class ApiRequestHandler {
 
                        bus.post(new MobileConfirmCheckInPassengerReceive(rhymesResponse));
                        RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                       resetInc();
 
                    }
 
                    @Override
                    public void failure(RetrofitError error) {
 
-                       BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                       Log.e("inc", Integer.toString(inc));
+                       if (retry) {
+                           onConfirmPassengerCheckIn(event);
+                           loop();
+                       } else {
+                           resetInc();
+                           BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                       }
 
                    }
 
@@ -422,14 +489,21 @@ public class ApiRequestHandler {
 
                 bus.post(new SelectFlightReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onSearchFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
         });
@@ -445,14 +519,21 @@ public class ApiRequestHandler {
 
                 bus.post(new PassengerInfoReveice(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onPassengerInfo(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -460,7 +541,7 @@ public class ApiRequestHandler {
     }
 
     @Subscribe
-    public void onPassengerInfo(final ContactInfo event) {
+    public void onContactInfo(final ContactInfo event) {
 
         apiService.onContactInfo(event, new Callback<ContactInfoReceive>() {
 
@@ -469,14 +550,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ContactInfoReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onContactInfo(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -493,13 +581,21 @@ public class ApiRequestHandler {
 
                 bus.post(new TermsReceive(rhymesResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(rhymesResponse));
+                resetInc();
+
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onTermsRequest(data);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -516,14 +612,21 @@ public class ApiRequestHandler {
 
                 bus.post(new SeatSelectionReveice(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onSeatSelection(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -539,15 +642,22 @@ public class ApiRequestHandler {
             public void success(PaymentInfoReceive retroResponse, Response response) {
 
                 bus.post(new PaymentInfoReceive(retroResponse));
-                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                //RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onPaymentInfo(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -565,14 +675,21 @@ public class ApiRequestHandler {
 
                 bus.post(new PaymentReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onPaymentRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -589,14 +706,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ItineraryInfoReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onItineraryRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -613,14 +737,21 @@ public class ApiRequestHandler {
 
                 bus.post(new FlightSummaryReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onFlightSummary(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -638,14 +769,21 @@ public class ApiRequestHandler {
 
                 bus.post(new FlightSummaryReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onManageFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -661,17 +799,19 @@ public class ApiRequestHandler {
 
                 bus.post(new ListBookingReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                Log.e("inc",Integer.toString(inc));
+                Log.e("inc", Integer.toString(inc));
                 if (retry) {
                     onManageFlight(event);
                     loop();
                 } else {
+                    resetInc();
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }
             }
@@ -689,14 +829,21 @@ public class ApiRequestHandler {
 
                 bus.post(new CheckInListReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onManageFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -705,7 +852,7 @@ public class ApiRequestHandler {
 
 
     @Subscribe
-    public void onManageFlight(final ManageContactInfo event) {
+    public void onManageContactInfo(final ManageContactInfo event) {
 
         apiService.onChangeContactInfo(event, new Callback<ManageChangeContactReceive>() {
 
@@ -714,14 +861,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ManageChangeContactReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onManageContactInfo(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -738,14 +892,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ConfirmUpdateReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onConfirmUpdate(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -761,14 +922,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ManageChangeContactReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onChangePassenger(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -786,14 +954,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ContactInfoReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onSeatRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -810,15 +985,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ManageChangeContactReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onChangeSeat(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
             }
 
         });
@@ -834,14 +1015,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ManageRequestIntinenary(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onRequestItinenary(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -858,14 +1046,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ChangeSearchFlightReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onGetFlightRequest(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -882,14 +1077,21 @@ public class ApiRequestHandler {
 
                 bus.post(new SearchFlightReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onGetChangeFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -898,7 +1100,7 @@ public class ApiRequestHandler {
 
 
     @Subscribe
-    public void onGetChangeFlight(final SelectChangeFlight event) {
+    public void onSelectChangeFlight(final SelectChangeFlight event) {
 
         apiService.onSelectChangeFlight(event, new Callback<ManageChangeContactReceive>() {
 
@@ -907,14 +1109,21 @@ public class ApiRequestHandler {
 
                 bus.post(new ManageChangeContactReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
             @Override
             public void failure(RetrofitError error) {
 
-                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
-
+                Log.e("inc", Integer.toString(inc));
+                if (retry) {
+                    onSelectChangeFlight(event);
+                    loop();
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
 
             }
 
@@ -931,6 +1140,7 @@ public class ApiRequestHandler {
 
                 bus.post(new RetrieveBoardingPassReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
@@ -941,6 +1151,7 @@ public class ApiRequestHandler {
                     loop();
                     onRetrieveBoardingPass(event);
                 } else {
+                    resetInc();
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }
 
@@ -959,6 +1170,7 @@ public class ApiRequestHandler {
 
                 bus.post(new AboutUsReceive(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
 
             }
 
@@ -968,6 +1180,7 @@ public class ApiRequestHandler {
                     loop();
                     onRetrieveAboutUs(event);
                 } else {
+                    resetInc();
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }
 
@@ -976,6 +1189,10 @@ public class ApiRequestHandler {
         });
     }
 
+    public void resetInc(){
+        inc = 0;
+        retry = true;
+    }
 
     public void loop(){
         inc++;

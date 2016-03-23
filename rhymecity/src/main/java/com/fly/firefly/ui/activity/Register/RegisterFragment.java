@@ -168,6 +168,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private String[] state_val;
     private String selectedState;
     private String selectedCountryCode;
+    private String dialingCode;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
     private static final String SCREEN_LABEL = "Register";
@@ -272,11 +273,24 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 //Multiple Manual Validation - Library Problem (failed to validate optional field)
                 resetManualValidationStatus();
                 manualValidation(txtBonusLink, "bonuslink");
+                if(editTextMobilePhone.getText().toString().length() != 2){
+                    manualValidation(txtAlternatePhoneNumber, "phoneNumber");
+                }else{
+                    txtAlternatePhoneNumber.setText("");
+                }
+                if(txtFaqNumber.getText().toString().length() != 2){
+                    manualValidation(txtFaqNumber,"faxNumber");
+                }else{
+                    txtFaqNumber.setText("");
+                }
+
                 manualValidation(editTextMobilePhone, "phoneNumber");
-                manualValidation(txtAlternatePhoneNumber, "phoneNumber");
-                manualValidation(txtFaqNumber,"faxNumber");
                 validateStatus = getManualValidationStatus();
 
+                //get mobile phone dialing code
+                if(validateDialingCode(dialingCode,editTextMobilePhone.getText().toString())){
+                    editTextMobilePhone.setError("Mobile phone must start with country code.");
+                }
                 mValidator.validate();
             }
         });
@@ -326,7 +340,15 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
                if (selectedCountry.getTag() == "Country") {
                    editTextCountry.setText(selectedCountry.getText());
-                   selectedCountryCode = selectedCountry.getCode();
+
+                   //split country code with dialing code
+                   String toCountryCode =  selectedCountry.getCode();
+                   String[] splitCountryCode = toCountryCode.split("/");
+                   selectedCountryCode = splitCountryCode[0];
+                   dialingCode = splitCountryCode[1];
+                   editTextMobilePhone.setText(dialingCode);
+                   txtAlternatePhoneNumber.setText(dialingCode);
+                   txtFaqNumber.setText(dialingCode);
 
                    /*Each country click - reset state obj*/
                    state = new ArrayList<DropDownItem>();
@@ -336,7 +358,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                    for(int x = 0 ; x < jsonState.length() ; x++) {
 
                        JSONObject row = (JSONObject) jsonState.opt(x);
-                       if(selectedCountryCode.equals(row.optString("country_code"))) {
+                       if (selectedCountryCode.equals(row.optString("country_code"))) {
                            DropDownItem itemCountry = new DropDownItem();
                            itemCountry.setText(row.optString("state_name"));
                            itemCountry.setCode(row.optString("state_code"));

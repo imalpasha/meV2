@@ -213,7 +213,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 String p2 = str1[1];
 
                 DropDownItem itemFlight = new DropDownItem();
-                itemFlight.setText(p1);
+                itemFlight.setText(p1+ " ("+p2+")");
                 itemFlight.setCode(p2);
                 itemFlight.setTag("FLIGHT");
                 dataFlightDeparture.add(itemFlight);
@@ -298,7 +298,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 Log.e(code,row.optString("location_code"));
 
                 DropDownItem itemFlight = new DropDownItem();
-                itemFlight.setText(row.optString("travel_location"));
+                itemFlight.setText(row.optString("travel_location")+" ("+row.optString("travel_location_code")+")");
                 itemFlight.setCode(row.optString("travel_location_code" + ""));
                 itemFlight.setTag("FLIGHT_DEPARTURE");
                 dataFlightArrival.add(itemFlight);

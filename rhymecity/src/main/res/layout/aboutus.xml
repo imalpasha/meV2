@@ -9,40 +9,13 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:weightSum="1">
-
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:orientation="vertical"
-            android:layout_height="0dp"
-            android:layout_weight="0.15"
-            android:background="@color/dark_lvl1" >
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView12"
-                android:scaleType="fitXY"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_plain" />
-
-            <ImageView
-                android:layout_width="fill_parent"
-                android:layout_height="80dp"
-                android:id="@+id/imageView13"
-                android:layout_centerVertical="true"
-                android:padding="10dp"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"
-                android:src="@drawable/flyfirefly_logo_text" />
-        </RelativeLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.85"
+            android:layout_height="match_parent"
             android:background="@drawable/grey_with_white_gradient">
 
             <LinearLayout
@@ -56,7 +29,7 @@
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
+                    android:layout_height="match_parent"
                     android:padding="5dp"
                     android:layout_marginBottom="5dp"
                     android:background="@drawable/shape_stroke">

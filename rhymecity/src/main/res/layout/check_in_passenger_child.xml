@@ -180,6 +180,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:inputType="textPhonetic"
+                    android:maxLength="20"
                     android:background="@drawable/block_with_border"
                     android:id="@+id/checkInPassengerDocNo"
                     android:tag="passenger1_doc_no" />
