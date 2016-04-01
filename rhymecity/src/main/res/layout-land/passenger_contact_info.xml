@@ -884,9 +884,8 @@
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingTop="5dp"
-                                    android:paddingBottom="10dp"
+                                    android:layout_marginTop="5dp"
+                                    android:padding="10dp"
                                     android:background="@drawable/drawable_login_bottom_border"
                                     android:layout_gravity="top"
                                     android:gravity="top">
@@ -894,7 +893,7 @@
                                     <LinearLayout
                                         android:orientation="vertical"
                                         android:layout_width="0dp"
-                                        android:layout_weight="0.20"
+                                        android:layout_weight="0.15"
                                         android:layout_height="match_parent"
                                         android:gravity="top|right"
                                         android:paddingRight="15dp">
@@ -905,7 +904,6 @@
                                             android:layout_height="45dp"
                                             android:textSize="15dp"
                                             android:id="@+id/insuranceCheckBox"
-                                            android:padding="10dp"
                                             android:gravity="top"
                                             android:adjustViewBounds="true"
                                             />
@@ -914,7 +912,7 @@
                                     <LinearLayout
                                         android:orientation="vertical"
                                         android:layout_width="0dp"
-                                        android:layout_weight="0.80"
+                                        android:layout_weight="0.85"
                                         android:layout_height="match_parent"
                                         android:gravity="center|left">
 

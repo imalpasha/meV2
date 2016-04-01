@@ -162,6 +162,31 @@
 
                                     <LinearLayout
                                         android:orientation="horizontal"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:padding="5dp">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textAppearance="?android:attr/textAppearanceSmall"
+                                            android:text="@string/asterik"
+                                            android:textColor="@color/red"
+                                            android:textStyle="bold"
+                                            android:layout_marginRight="2dp"
+                                            android:id="@+id/textView356" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/only_fill"
+                                            android:textSize="12dp"
+                                            android:textColor="@color/dark_lvl5"
+                                            android:id="@+id/textView346" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="horizontal"
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/drawable_login_bottom_border"
@@ -789,7 +814,7 @@
                                 <Button
                                     android:layout_width="fill_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/update_profile_btn"
+                                    android:text="@string/ctn_profile_btn"
                                     android:background="@drawable/login_login_button_clicked"
                                     android:textColor="@color/white"
                                     android:textStyle="bold"

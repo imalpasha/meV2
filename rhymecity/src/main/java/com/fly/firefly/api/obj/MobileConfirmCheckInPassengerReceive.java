@@ -253,6 +253,9 @@ public class MobileConfirmCheckInPassengerReceive {
 
     public void setObj(MobileConfirmCheckInPassengerReceive obj) {
         this.obj = obj;
+        status = obj.getStatus();
+        message = obj.getMessage();
+        boarding_pass = obj.getBoarding_pass();
     }
 
     public String getStatus() {

@@ -124,6 +124,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     private String storePassword;
     private SelectFlight selectFlightObj;
     private String loginStatus;
+    private boolean normalFlightList = false;
 
     public static FireflyFlightListFragment newInstance(Bundle bundle) {
 
@@ -193,6 +194,16 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             goingFlightNA.setVisibility(View.GONE);
             basicPremierLayout.setVisibility(View.VISIBLE);
         }
+
+        //mix change flight availability
+        if(pnr != null){
+            if (obj.getGoing_flight().getStatus().equals("N")) {
+                goingFlightBlock.setVisibility(View.GONE);
+                goingFlightNA.setVisibility(View.GONE);
+            }
+        }
+
+
         /*Departure*/
         List<FlightInfo> departFlight = obj.getJourneys().get(0).getFlights();
 
@@ -206,7 +217,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         String type = "("+obj.getJourneys().get(0).getType()+")";
         Log.e("FlightType",type);
 
-        txtDepartAirport.setText(departPort+" - "+arrivalPort);
+        txtDepartAirport.setText(departPort.toUpperCase()+" - "+arrivalPort.toUpperCase());
         txtFlightType.setText(type);
 
         //Reformat Date
@@ -243,7 +254,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
             returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
             String returnType = "("+obj.getJourneys().get(1).getType()+")";
-            txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
+            txtReturnAirport.setText(returnDepartPort.toUpperCase() + " - " + returnArrivalPort.toUpperCase());
             txtReturnType.setText(returnType);
 
             //Reformat Date
@@ -255,6 +266,15 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
             returnListPremier = new FlightDetailAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,PREMIER,RETURN,this);
             premierFlightArrival.setAdapter(returnListPremier);
+
+            //mix change flight availability
+            if(pnr != null){
+                if(obj.getReturn_flight().getStatus().equals("N")){
+                    returnFlightBlock.setVisibility(View.GONE);
+                    returnFlightNA.setVisibility(View.GONE);
+                    Log.e("You Here","OK");
+                }
+            }
 
         }else{
             returnBasicPremier.setVisibility(View.GONE);
@@ -271,19 +291,17 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                 //check if flight checked
                 int a = 1;
 
-                if(!fareRulesChkBox.isChecked()){
-                    croutonAlert(getActivity(), "You must agree to the terms and conditions.");
-                }else if(flightType.equals("0")){
+                if(flightType.equals("0")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else{
                         proceed = true;
                     }
                 }else if(flightType.equals("1")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else if(returnFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
                     }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
                             Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
                             proceed = false;
@@ -301,33 +319,38 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                     changeFlightType = obj.getType();
                     status1 = obj.getGoing_flight().getStatus();
                     status2 = obj.getReturn_flight().getStatus();
-                    Log.e("status2",status2);
+                    Log.e("status2", status2);
                     if(status1.equals("Y")){
                         if(departFlightNumber == null){
-                            Utils.toastNotification(getActivity(),"Please Check Departure Flight");
+                            Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                             proceed = false;
                         }
                     }
-                    if(status2.equals("Y")){
+                    else if(status2.equals("Y")){
                         if(returnFlightNumber == null){
-                            Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                            Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
                             proceed = false;
                         }
                     }
 
                 }
                 if(proceed){
+                    if(!fareRulesChkBox.isChecked()){
+                        proceed = false;
+                        croutonAlert(getActivity(), "You must agree to the terms and conditions.");
+                    }else{
+                        if(pnr == null){
+                            if(loginStatus == null || loginStatus.equals("N")) {
+                                continueAs();
+                            }else{
+                                goPersonalDetail();
+                            }
 
-                    if(pnr == null){
-                        if(loginStatus == null || loginStatus.equals("N")) {
-                            continueAs();
-                        }else{
-                            goPersonalDetail();
+                        }  else{
+                            changeFlight();
                         }
-
-                    }  else{
-                        changeFlight();
                     }
+
                 }
             }
         });
@@ -492,7 +515,14 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         selectFlightObj.setReturn_date(returnDatePlain);
         selectFlightObj.setAdult(adult);
         selectFlightObj.setInfant(infant);
-        selectFlightObj.setUsername(""); //Get Username from Pref manager
+
+        HashMap<String, String> initUserEmail = pref.getUserEmail();
+        String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
+        if( userEmail == null){
+            userEmail = "";
+        }
+
+        selectFlightObj.setUsername(userEmail); //Get Username from Pref manager
 
         selectFlightObj.setFlight_number_1(departFlightNumber);
         selectFlightObj.setDeparture_time_1(departFlightDepartureTime);
@@ -515,6 +545,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
         initiateLoading(getActivity());
 
+        normalFlightList = true;
         SelectChangeFlight changeFlightObj = new SelectChangeFlight();
 
         changeFlightObj.setPnr(pnr);
@@ -527,6 +558,19 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         changeFlightObj.setArrival_station(arrivalPortCode);
         changeFlightObj.setDeparture_date(departDatePlain);
         changeFlightObj.setReturn_date(returnDatePlain);
+
+        //SENT EMPTY VALUE
+        if(departFlightNumber == null){
+            departFlightNumber = "";
+        }if(departFlightDepartureTime == null){
+            departFlightDepartureTime = "";
+        }if(departFlightArrivalTime == null){
+            departFlightArrivalTime = "";
+        }if(departFlightJourneyKey == null){
+            departFlightJourneyKey = "";
+        }if(departFlightFareSellKey == null){
+            departFlightFareSellKey = "";
+        }
 
         changeFlightObj.setStatus_1(status1);
         changeFlightObj.setFlight_number_1(departFlightNumber);
@@ -551,10 +595,9 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     public void onSeletFlightReceive(SelectFlightReceive obj) {
 
         dismissLoading();
-        pref.setBookingID(obj.getFlightObj().getBookingId());
-        Log.e("BOOKING ID",obj.getFlightObj().getBookingId());
+        pref.setBookingID(obj.getBookingId());
 
-        Boolean status = Controller.getRequestStatus(obj.getFlightObj().getStatus(), obj.getFlightObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status
                 ) {
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
@@ -568,8 +611,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     public void onChangeFlightSuccess(ManageChangeContactReceive obj) {
 
         dismissLoading();
-
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Log.e("Success","true");
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
@@ -668,14 +710,25 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
-            Log.e("x","1");
-            Gson gson = new Gson();
-            SelectFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SelectFlightReceive.class);
-            onSeletFlightReceive(obj);
+
+        if(!normalFlightList){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                SelectFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SelectFlightReceive.class);
+                onSeletFlightReceive(obj);
+             }
         }else{
-            Log.e("x","2");
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+                onChangeFlightSuccess(obj);
+            }else {
+                Log.e("x", "2");
+            }
         }
+
     }
 
     @Override

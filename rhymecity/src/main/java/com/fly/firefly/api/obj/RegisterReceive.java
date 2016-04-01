@@ -15,6 +15,8 @@ public class RegisterReceive {
 
     public RegisterReceive(RegisterReceive param_userObj) {
         this.userObj = param_userObj;
+        status = param_userObj.getStatus();
+        message = param_userObj.getMessage();
     }
 
     public RegisterReceive getUserObj() {

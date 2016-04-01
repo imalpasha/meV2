@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
@@ -22,9 +23,11 @@ import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ManageChangeContactModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
@@ -47,6 +50,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.Optional;
+import io.realm.RealmResults;
 
 public class MF_ChangeContactFragment extends BaseFragment implements Validator.ValidationListener,ManageFlightPrenter.ChangeContactView {
 
@@ -163,7 +167,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
     @InjectView(R.id.insuranceBlock)
     LinearLayout insuranceBlock;
 
-    @Optional
+    @NotEmpty
     @InjectView(R.id.txtCompanyName)
     EditText txtCompanyName;
 
@@ -204,6 +208,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
         mValidator.setValidationMode(Validator.Mode.BURST);
+        RealmObjectController.clearCachedResult(getActivity());
 
         FireFlyApplication.get(getActivity()).createScopedGraph(new ManageChangeContactModule(this)).inject(this);
     }
@@ -231,7 +236,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
         changeContactInfoBtn.setVisibility(View.VISIBLE);
 
         //travelPurpose = obj.getObj().getContact_information().getTravel_purpose();
-        txtPurpose.setTag(obj.getObj().getContact_information().getTravel_purpose());
+        txtPurpose.setTag(obj.getContact_information().getTravel_purpose());
 
         /*Travelling Purpose*/
         /*final String[] purpose = getResources().getStringArray(R.array.purpose);
@@ -308,7 +313,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
         txtPurpose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure",countryBlock);
+                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "2",countryBlock);
 
             }
         });
@@ -325,44 +330,47 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
 
 
         /*Assign value to field*/
-        txtFirstName.setText(obj.getObj().getContact_information().getFirst_name());
-        txtLastName.setText(obj.getObj().getContact_information().getLast_name());
-        txtPurpose.setTag(obj.getObj().getContact_information().getTravel_purpose());
-        txtPurpose.setText(getFlightPurpose(obj.getObj().getContact_information().getTravel_purpose()));
-        txtEmailAddress.setText(obj.getObj().getContact_information().getEmail());
-        txtTitle.setTag(obj.getObj().getContact_information().getTitle());
-        txtTitle.setText(obj.getObj().getContact_information().getTitle());
-        txtCountry.setTag(obj.getObj().getContact_information().getCountry());
-        txtCountry.setText(getCountryName(getActivity(), obj.getObj().getContact_information().getCountry()));
-        txtAlternatePhone.setText(obj.getObj().getContact_information().getAlternate_phone());
-        txtPhone.setText(obj.getObj().getContact_information().getMobile_phone());
+        txtFirstName.setText(obj.getContact_information().getFirst_name());
+        txtLastName.setText(obj.getContact_information().getLast_name());
+        txtPurpose.setTag(obj.getContact_information().getTravel_purpose());
+        txtPurpose.setText(getFlightPurpose(obj.getContact_information().getTravel_purpose()));
+        txtEmailAddress.setText(obj.getContact_information().getEmail());
+        txtTitle.setTag(obj.getContact_information().getTitle());
+        txtTitle.setText(getTitleCode(getActivity(), obj.getContact_information().getTitle(), "name"));
+        txtCountry.setTag(obj.getContact_information().getCountry());
+        txtCountry.setText(getCountryName(getActivity(), obj.getContact_information().getCountry()));
+        txtAlternatePhone.setText(obj.getContact_information().getAlternate_phone());
+        txtPhone.setText(obj.getContact_information().getMobile_phone());
 
-        dialingCode = getDialingCode(obj.getObj().getContact_information().getCountry(),getActivity());
+        txtCountryBusiness.setText(getCountryName(getActivity(), obj.getContact_information().getCountry()));
+        txtCountryBusiness.setTag(obj.getContact_information().getCountry());
 
-        pnr = obj.getObj().getItenerary_information().getPnr();
-        bookingId = obj.getObj().getBooking_id();
-        username = obj.getObj().getContact_information().getEmail();
+        dialingCode = getDialingCode(obj.getContact_information().getCountry(),getActivity());
 
+        pnr = obj.getItenerary_information().getPnr();
+        bookingId = obj.getBooking_id();
+        username = obj.getContact_information().getEmail();
+        setState(obj.getContact_information().getCountry());
 
         if(txtPurpose.getTag().equals("2")){
 
             companyBlock.setVisibility(View.VISIBLE);
-            txtCity.setText(obj.getObj().getContact_information().getCity());
-            txtPostCode.setText(obj.getObj().getContact_information().getPostcode());
-            txtCompanyAddress1.setText(obj.getObj().getContact_information().getAddress1());
-            txtCompanyAddress2.setText(obj.getObj().getContact_information().getAddress2());
-            txtCompanyAddress3.setText(obj.getObj().getContact_information().getAddress3());
-            txtCompanyName.setText(obj.getObj().getContact_information().getCompany_name());
-            txtState.setTag(obj.getObj().getContact_information().getState());
-            txtState.setText(getStateName(getActivity(), obj.getObj().getContact_information().getState()));
+            txtCity.setText(obj.getContact_information().getCity());
+            txtPostCode.setText(obj.getContact_information().getPostcode());
+            txtCompanyAddress1.setText(obj.getContact_information().getAddress1());
+            txtCompanyAddress2.setText(obj.getContact_information().getAddress2());
+            txtCompanyAddress3.setText(obj.getContact_information().getAddress3());
+            txtCompanyName.setText(obj.getContact_information().getCompany_name());
+            txtState.setTag(obj.getContact_information().getState());
+            txtState.setText(getStateName(getActivity(), obj.getContact_information().getState()));
 
             countryBlock.setVisibility(View.GONE);
 
-            txtCountry.setText(getCountryName(getActivity(), obj.getObj().getContact_information().getCountry()));
-            txtCountry.setTag(obj.getObj().getContact_information().getCountry());
+            txtCountry.setText(getCountryName(getActivity(), obj.getContact_information().getCountry()));
+            txtCountry.setTag(obj.getContact_information().getCountry());
 
-            txtCountryBusiness.setText(getCountryName(getActivity(), obj.getObj().getContact_information().getCountry()));
-            txtCountryBusiness.setTag(obj.getObj().getContact_information().getCountry());
+            txtCountryBusiness.setText(getCountryName(getActivity(), obj.getContact_information().getCountry()));
+            txtCountryBusiness.setTag(obj.getContact_information().getCountry());
 
 
         }
@@ -409,11 +417,12 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
     public void onGetChangeContact(ManageChangeContactReceive obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
             intent.putExtra("COMMIT_UPDATE", (new Gson()).toJson(obj));
             getActivity().startActivity(intent);
+        }else{
         }
     }
 
@@ -504,8 +513,14 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
+        boolean firstView = true;
+
+
         for (ValidationError error : errors) {
             View view = error.getView();
+            view.setFocusable(true);
+
             setShake(view);
 
              /* Split Error Message. Display first sequence only */
@@ -521,10 +536,13 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
             }
             else if (view instanceof CheckBox){
                 ((CheckBox) view).setError(splitErrorMsg[0]);
-                 croutonAlert(getActivity(), "Fill empty field");
+
             }
 
-            Log.e("Validation Failed",splitErrorMsg[0]);
+            if(firstView){
+                view.requestFocus();
+            }
+            firstView = false;
 
         }
 
@@ -570,22 +588,8 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
                     txtCountry.setTag(selectedCountryCode);
                     txtCountryBusiness.setTag(selectedCountryCode);
 
-                   /*Each country click - reset state obj*/
-                    stateList = new ArrayList<DropDownItem>();
+                    setState(selectedCountryCode);
 
-                    /* Set state from selected Country Code*/
-                    JSONArray jsonState = getState(getActivity());
-                    for(int x = 0 ; x < jsonState.length() ; x++) {
-
-                        JSONObject row = (JSONObject) jsonState.opt(x);
-                        if(selectedCountryCode.equals(row.optString("country_code"))) {
-                            DropDownItem itemCountry = new DropDownItem();
-                            itemCountry.setText(row.optString("state_name"));
-                            itemCountry.setCode(row.optString("state_code"));
-                            itemCountry.setTag("State");
-                            stateList.add(itemCountry);
-                        }
-                    }
 
                 } else {
                     txtState.setText(selectedCountry.getText());
@@ -593,6 +597,27 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
                     selectedState = selectedCountry.getCode();
                 }
 
+            }
+        }
+    }
+
+
+    public void setState(String selectedCode){
+
+        /*Each country click - reset state obj*/
+        stateList = new ArrayList<DropDownItem>();
+
+                    /* Set state from selected Country Code*/
+        JSONArray jsonState = getState(getActivity());
+        for(int x = 0 ; x < jsonState.length() ; x++) {
+
+            JSONObject row = (JSONObject) jsonState.opt(x);
+            if(selectedCode.equals(row.optString("country_code"))) {
+                DropDownItem itemCountry = new DropDownItem();
+                itemCountry.setText(row.optString("state_name"));
+                itemCountry.setCode(row.optString("state_code"));
+                itemCountry.setTag("State");
+                stateList.add(itemCountry);
             }
         }
     }
@@ -607,6 +632,14 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+                onGetChangeContact(obj);
+            }
     }
 
     @Override

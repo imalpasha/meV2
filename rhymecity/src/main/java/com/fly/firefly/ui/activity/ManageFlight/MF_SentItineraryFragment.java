@@ -3,6 +3,7 @@ package com.fly.firefly.ui.activity.ManageFlight;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +13,18 @@ import android.widget.TextView;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
+import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.ManageRequestIntinenary;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ManageFlightItinenary;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.SendItinenaryObj;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
@@ -28,6 +33,7 @@ import java.util.HashMap;
 import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class MF_SentItineraryFragment extends BaseFragment implements ManageFlightPrenter.SendItinenary {
 
@@ -80,9 +86,9 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
         Gson gson = new Gson();
         final FlightSummaryReceive obj = gson.fromJson(flightSummary, FlightSummaryReceive.class);
 
-        pnr = obj.getObj().getItenerary_information().getPnr();
-        bookingId = obj.getObj().getBooking_id();
-        username = obj.getObj().getContact_information().getEmail();
+        pnr = obj.getItenerary_information().getPnr();
+        bookingId = obj.getBooking_id();
+        username = obj.getContact_information().getEmail();
 
         SendItinenaryObj requestObj = new SendItinenaryObj();
         requestObj.setPnr(pnr);
@@ -95,10 +101,10 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
         btnClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("AlertDialog", "Y");
-                getActivity().startActivity(intent);
+                //Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.putExtra("AlertDialog", "Y");
+                //getActivity().startActivity(intent);
                 getActivity().finish();
             }
         });
@@ -109,7 +115,7 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
     public void onSuccessRequest(ManageRequestIntinenary obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             txtEmail.setText(username);
             messageLayout.setVisibility(View.VISIBLE);
@@ -125,6 +131,15 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x", "1");
+            Gson gson = new Gson();
+            ManageRequestIntinenary obj = gson.fromJson(result.get(0).getCachedResult(), ManageRequestIntinenary.class);
+            onSuccessRequest(obj);
+        }
+
     }
 
     @Override

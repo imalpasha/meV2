@@ -57,6 +57,25 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/boardingPassNA"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:padding="35dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/boardingPassNA"
+                            android:textSize="21dp"
+                            android:gravity="center"
+                            android:textColor="@color/dark_lvl5"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:weightSum="1"
                         android:id="@+id/pnrLayout"
@@ -112,9 +131,11 @@
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
                                         android:textSize="15dp"
-                                        android:hint="PNR Code"
+                                        android:hint="@string/manage_flight_confirmation_number"
                                         android:id="@+id/editPnr"
                                         android:inputType="text"
+                                        android:maxLength="6"
+                                        android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                         android:background="@null" />
 
                                 </LinearLayout>
@@ -222,9 +243,11 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="visible"
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" >
+                        android:layout_height="match_parent"
+                        android:id="@+id/listviewLayout">
 
                         <ListView
                             android:layout_width="match_parent"

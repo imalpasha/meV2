@@ -115,7 +115,9 @@
                                         android:layout_width="fill_parent"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                         android:textSize="15dp"
+                                        android:maxLength="6"
                                         android:hint="@string/manage_flight_confirmation_number"
                                         android:id="@+id/txtPNR"
                                         android:background="@null" />
@@ -181,7 +183,27 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:id="@+id/manageFlightNA"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:padding="35dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/manage_flight_na"
+                            android:textSize="21dp"
+                            android:gravity="center"
+                            android:textColor="@color/dark_lvl5"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/listviewLayout">
 
                         <ListView
                             android:layout_width="match_parent"

@@ -36,6 +36,8 @@
     <color name="product_list_click_grey">#E8E8E8</color>
 
     <color name="black">#000000</color>
+    <color name="blackv2">#595959</color>
+
     <color name="darkgrey">#535353</color>
     <color name="grey_background">#aaaaaa</color>
     <color name="normal_grey">#dadada</color>
@@ -46,6 +48,9 @@
     <color name="desired_seat">#95C94A</color>
     <color name="preferred_seat">#FFFF00</color>
     <color name="standard_seat">#FFA500</color>
+
+    <color name="selected_passenger">#FFD504</color>
+
 
     <!-- SEAT -->
 

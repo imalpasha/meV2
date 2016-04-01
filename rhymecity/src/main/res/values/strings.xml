@@ -654,8 +654,8 @@
 
     <!-- LOGIN FIREFLY -->
 
-    <string name="login_enter_email">Enter Email :</string>
-    <string name="login_enter_password">Enter Password :</string>
+    <string name="login_enter_email">User ID (Email) :</string>
+    <string name="login_enter_password">Password</string>
 
     <string name="login_login_txt">Log in</string>
     <string name="login_register_txt">Register</string>
@@ -681,11 +681,12 @@
     <string name="register_lastname">Last Name / Family Name </string>
     <string name="register_dob">Date Of Birth </string>
 
-    <string name="register_basic_information">Basic Information</string>
-    <string name="register_personal_information">Personal Information</string>
-    <string name="register_address_information">Address Information</string>
-    <string name="register_contact_information">Contact Information</string>
-    <string name="register_loyalty_information">Loyalty Programme</string>
+    <string name="register_basic_information">LOGIN INFORMATION</string>
+    <string name="register_basic_informationV2">BASIC INFORMATION</string>
+    <string name="register_personal_information">PERSONAL INFORMATION</string>
+    <string name="register_address_information">ADDRESS INFORMATION</string>
+    <string name="register_contact_information">CONTACT INFORMATION</string>
+    <string name="register_loyalty_information">LOYALTY PROGRAMME</string>
 
     <string name="register_address_1">Address Line 1</string>
     <string name="register_address_2">Address Line 2</string>
@@ -695,8 +696,8 @@
     <string name="register_town">Town/City</string>
     <string name="register_state">State</string>
     <string name="register_postcode">Postcode</string>
-    <string name="register_mobile_phone">Mobile Phone</string>
-    <string name="register_alternate_phone">Alternate Phone</string>
+    <string name="register_mobile_phone">Mobile / Home</string>
+    <string name="register_alternate_phone">Alternate</string>
     <string name="register_bonuslink">BonusLink Card No:</string>
 
     <string name="register_fax">Fax</string>
@@ -734,7 +735,8 @@
 
 
     <!-- BOOKING FLIGHT - SEARCH FLIGHT -->
-    <string name="book_flight_availability">Flight Not Available</string>
+    <string name="book_flight_availability">Sorry, no flights available. Please
+select another date or station and try again.</string>
 
     <!-- BOOKING FLIGHT - LIST FLIGHT -->
     <string name="book_flight_basic">BASIC</string>
@@ -744,6 +746,9 @@
     <string name="mobile_checkin">MOBILE CHECK-IN</string>
 
     <!-- MANAGE FLIGHT -->
+
+    <string name="manage_flight_na">No Flight Available</string>
+
     <string name="manage_flight">MANAGE FLIGHT</string>
     <string name="manage_flight_contact_email">Contact Email</string>
     <string name="manage_flight_confirmation_number">Confirmation Number</string>
@@ -768,10 +773,17 @@
     <string name="subscribe">Yes, I do not want to receive promotional information from Firefly and its partners</string>
     <string name="alertTNC">You must agree to the terms.</string>
     <string name="bonuslink_hint">e.g. 6018XXXXXXXXXXXX</string>
+    <string name="yes_proceed">Yes, I want to be protected during my trip</string>
+    <string name="no_thank">No, Thank You.</string>
+
+
 
 
 
     <!-- Boarding Pass -->
+    <string name="boardingPassNA">No Boarding Pass Available</string>
+
+
     <string name="boarding_pass">BOARDING PASS</string>
 
     <!-- Forgot Password -->
@@ -785,9 +797,14 @@
     <string name="update_profile_logininfo">Login Information</string>
     <string name="update_profile_contactinfo">Contact Information</string>
     <string name="update_profile_btn">Update</string>
+    <string name="ctn_profile_btn">CONTINUE</string>
+
+    <string name="only_fill">Only fill in this section if you wish to change your password</string>
 
 
     <!-- Mobile Check in -->
+    <string name="mobile_checkin_na">No Flight Available For Check-In</string>
+
     <string name="mobile_checkin_check1">Yes, I am aware that the dangerous good above are not permitted in my bag, luggage has been in my possession at all times and i am aware of the contents in my bag.</string>
     <string name="mobile_checkin_check2">Yes, I have read and agree with the important information.</string>
     <string name="mobile_checkin_check3">Yes, I have access to a printer and print the mobile check-in boarding pass from my email if my departing station is NOT Subang(SZB), Penang(PEN), Johor Bharu(JHB) or Kota Bharu(KBR).</string>
@@ -844,12 +861,11 @@
     <string name="options_clear">Clear</string>
     <string name="options_exit">Exit</string>
 
-    <!-- Drawer -->
-    <string name="x_lbl">X</string>
 
     <!-- General -->
     <string name="searchCountryHint">Search</string>
     <string name="dob">DOB: </string>
+    <string name="date_ob">Date Of Birth</string>
     <string name="dob_">DOB</string>
     <string name="textview_placeholder_lbl">TextView</string>
     <string name="action_settings">FIREFLY</string>
@@ -858,4 +874,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="countryListDialogTitle">Please select country</string>
     <string name="stateListDialogTitle">Please select state</string>
+
+
+    <!-- Drawer/Version -->
+    <string name="x_lbl">V30/3_1</string>
+
 </resources>

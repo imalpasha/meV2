@@ -70,10 +70,26 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         pref = new SharedPrefManager(getActivity());
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
 
+
+        HashMap<String, String> initUserEmail = pref.getUserEmail();
+        String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
+
+        HashMap<String, String> initUserPassword = pref.getUserPassword();
+        String userPassword = initUserPassword.get(SharedPrefManager.PASSWORD);
+        if( userEmail == null && userPassword == null){
+            userEmail = "";
+            userPassword = "";
+        }
         //retrieve data
         String deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
         String version = android.os.Build.VERSION.RELEASE;
         int sdkVersion = android.os.Build.VERSION.SDK_INT;
+
+        HashMap<String, String> initLogin = pref.getDataVesion();
+        String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
+        if(localDataVersion == null){
+            localDataVersion = "0";
+        }
 
         info = new DeviceInformation();
         info.setSdkVersion(Integer.toString(sdkVersion));
@@ -83,11 +99,8 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setModel(Build.MODEL);
         info.setDataVersion("0");
         info.setSignature("");
-        info.setUsername("");
-        info.setPassword("");
-
-        HashMap<String, String> initLogin = pref.getDataVesion();
-        String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
+        info.setUsername(userEmail);
+        info.setPassword(userPassword);
 
         if(localDataVersion == null){
            sendDeviceInformationToServer(info);
@@ -112,10 +125,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         }
         if(Controller.connectionAvailable(getActivity())){
             presenter.deviceInformation(info);
-            Log.e("Internet", "Ok");
+
         }else{
-            Log.e("Internet", "X");
             connectionRetry("No Internet Connection");
+            Log.e("X","XX");
         }
     }
 
@@ -152,26 +165,23 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
             String dataVersion = obj.getObj().getData_version();
 
-            if (localDataVersion == null) {
-                update(obj);
-            }else{
-
-                if(!localDataVersion.equals(dataVersion)){
+                if (localDataVersion == null) {
+                    update(obj);
+                }else if(localDataVersion != null && !localDataVersion.equals(dataVersion)) {
                     update(obj);
                 }else{
-                    Log.e("No Update","True");
+                    //Log.e("No Update","True");
+                    update(obj);
+
                 }
 
             }
-
-
-            }
             //Redirect to homepage after success loading splashscreen
-            if (true) {
-                //forceUpdate();
-                goHomepage();
-
-            }
+            //if (true) {
+            //    //forceUpdate();
+            //    goHomepage();
+//
+//            }
 
     }
 
@@ -184,7 +194,6 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         String dataVersion = obj.getObj().getData_version();
         DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
         Log.e("Facebook", socialMediaObj.getFacebook());
-
 
         /*Save All to pref for reference*/
         Gson gson = new Gson();
@@ -199,6 +208,8 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         String flight = gson.toJson(obj.getObj().getData_market());
         pref.setFlight(flight);
+        Log.e("data MARKKER", flight);
+
 
         String socialMedia = gson.toJson(socialMediaObj);
         Log.e("socialMedia", socialMedia);
@@ -211,6 +222,9 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         pref.setPromoBannerUrl(promoBannerUrl);
         pref.setBannerModule(bannerModule);
         pref.setDataVersion(dataVersion);
+
+        goHomepage();
+
 
     }
 

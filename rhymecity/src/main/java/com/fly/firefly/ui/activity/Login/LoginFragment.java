@@ -18,9 +18,11 @@ import android.widget.Toast;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -28,11 +30,13 @@ import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.PasswordExpired.ChangePasswordActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
 import com.fly.firefly.ui.module.LoginModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.PasswordRequest;
 import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.google.android.gms.analytics.Tracker;
@@ -53,6 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import io.realm.RealmResults;
 
 public class LoginFragment extends BaseFragment implements LoginPresenter.LoginView,Validator.ValidationListener {
 
@@ -98,6 +103,8 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new LoginModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
         // Validator
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -180,6 +187,10 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         //Log.e("STATUS",obj.getStatus());
         /*Dismiss Loading*/
         dismissLoading();
+
+        pref.setUserEmail(storeUsername);
+        pref.setUserPassword(storePassword);
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
@@ -190,9 +201,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
             Log.e("signature",obj.getUser_info().getSignature());
             Log.e(storeUsername,storePassword);
-
-            pref.setUserEmail(storeUsername);
-            pref.setUserPassword(storePassword);
 
             Gson gsonUserInfo = new Gson();
             String userInfo = gsonUserInfo.toJson(obj.getUser_info());
@@ -206,7 +214,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     @Override
     public void onLoginFailed(String obj) {
         Crouton.makeText(getActivity(), obj, Style.ALERT).show();
-        setAlertDialog(getActivity(),obj);
+        setAlertDialog(getActivity(),obj,"Login Error");
 
     }
 
@@ -217,7 +225,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            setSuccessDialog(getActivity(), obj.getMessage(),null);
+            setSuccessDialog(getActivity(), obj.getMessage(),null,"Success!");
         }
 
     }
@@ -251,7 +259,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     }
 
     /*Popup Forgot Password*/
-
     public void forgotPassword(){
 
         LayoutInflater li = LayoutInflater.from(getActivity());
@@ -320,7 +327,14 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         super.onResume();
         presenter.onResume();
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Gson gson = new Gson();
+            LoginReceive obj = gson.fromJson(result.get(0).getCachedResult(), LoginReceive.class);
+            onLoginSuccess(obj);
+        }
+
     }
 
     @Override

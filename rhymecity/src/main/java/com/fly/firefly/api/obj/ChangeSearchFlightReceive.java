@@ -18,6 +18,9 @@ public class ChangeSearchFlightReceive {
 
     public ChangeSearchFlightReceive(ChangeSearchFlightReceive param_obj){
         this.journeyObj = param_obj;
+        status = param_obj.getStatus();
+        message = param_obj.getMessage();
+        journeys = param_obj.getJourneys();
     }
 
     public String getStatus() {

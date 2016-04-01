@@ -11,6 +11,8 @@ public class ManageRequestIntinenary{
 
     public ManageRequestIntinenary (ManageRequestIntinenary data) {
         obj = data;
+        status = data.getStatus();
+        message = data.getMessage();
     }
 
     public ManageRequestIntinenary getObj() {
@@ -20,7 +22,6 @@ public class ManageRequestIntinenary{
     public void setObj(ManageRequestIntinenary obj) {
         this.obj = obj;
     }
-
 
     public String getMessage() {
         return message;

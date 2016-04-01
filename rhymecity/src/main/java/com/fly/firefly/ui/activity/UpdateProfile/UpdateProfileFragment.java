@@ -270,11 +270,12 @@ public class UpdateProfileFragment extends BaseFragment implements
 
         txtCountry.setText(getCountryName(getActivity(),countryCode));
         txtCountry.setTag(countryCode);
-        Log.e("Title",title);
-        txtTitle.setText(getTitleCode(getActivity(),title,"name"));
+        Log.e("Title", title);
+        txtTitle.setText(getTitleCode(getActivity(), title, "name"));
         txtTitle.setTag(title);
         txtState.setText(getStateName(getActivity(), stateCode));
         txtState.setTag(stateCode);
+        setState(countryCode);
 
         /*Select dropdown list*/
         txtCountry.setOnClickListener(new View.OnClickListener() {
@@ -362,24 +363,11 @@ public class UpdateProfileFragment extends BaseFragment implements
 
                 if (selectedCountry.getTag() == "Country") {
                     txtCountry.setText(selectedCountry.getText());
-                    selectedCountryCode = selectedCountry.getCode();
 
-                   /*Each country click - reset state obj*/
-                    state = new ArrayList<DropDownItem>();
-
-                    /* Set state from selected Country Code*/
-                    JSONArray jsonState = getState(getActivity());
-                    for(int x = 0 ; x < jsonState.length() ; x++) {
-
-                        JSONObject row = (JSONObject) jsonState.opt(x);
-                        if(selectedCountryCode.equals(row.optString("country_code"))) {
-                            DropDownItem itemCountry = new DropDownItem();
-                            itemCountry.setText(row.optString("state_name"));
-                            itemCountry.setCode(row.optString("state_code"));
-                            itemCountry.setTag("State");
-                            state.add(itemCountry);
-                        }
-                    }
+                    String toCountryCode =  selectedCountry.getCode();
+                    String[] splitCountryCode = toCountryCode.split("/");
+                    selectedCountryCode = splitCountryCode[0];
+                    setState(selectedCountryCode);
 
                 } else {
                     txtState.setText(selectedCountry.getText());
@@ -389,6 +377,29 @@ public class UpdateProfileFragment extends BaseFragment implements
             }
         }
     }
+
+
+    public void setState(String selectedCode){
+
+        /*Each country click - reset state obj*/
+        state = new ArrayList<DropDownItem>();
+
+                    /* Set state from selected Country Code*/
+        JSONArray jsonState = getState(getActivity());
+        for(int x = 0 ; x < jsonState.length() ; x++) {
+
+            JSONObject row = (JSONObject) jsonState.opt(x);
+            if(selectedCode.equals(row.optString("country_code"))) {
+                DropDownItem itemCountry = new DropDownItem();
+                itemCountry.setText(row.optString("state_name"));
+                itemCountry.setCode(row.optString("state_code"));
+                itemCountry.setTag("State");
+                state.add(itemCountry);
+            }
+        }
+    }
+
+
 
     public void requestUpdateProfile() {
 
@@ -487,7 +498,7 @@ public class UpdateProfileFragment extends BaseFragment implements
          pref.setUserInfo(userInfo);
          pref.setUsername(obj.getUserInfo().getFirst_name());
 
-         setSuccessDialog(getActivity(), obj.getMessage(), HomeActivity.class);
+         setSuccessDialog(getActivity(), obj.getMessage(), HomeActivity.class,"Information successfully updated!");
 
        }
     }

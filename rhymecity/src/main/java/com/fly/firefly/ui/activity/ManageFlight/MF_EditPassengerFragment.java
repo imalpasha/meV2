@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ConfirmUpdateReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
@@ -28,6 +29,7 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.module.ChangeSeatModule;
 import com.fly.firefly.ui.module.PersonalDetailModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.InfantInfo;
 import com.fly.firefly.ui.object.ManagePassengerInfo;
 import com.fly.firefly.ui.object.Passenger;
@@ -35,6 +37,7 @@ import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
@@ -52,6 +55,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import io.realm.RealmResults;
 
 public class MF_EditPassengerFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,ManageFlightPrenter.ChangePassengerInfoView {
 
@@ -160,6 +164,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ChangeSeatModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -179,13 +185,13 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         Gson gson = new Gson();
         final FlightSummaryReceive obj = gson.fromJson(flightSummary, FlightSummaryReceive.class);
 
-        pnr = obj.getObj().getItenerary_information().getPnr();
-        bookingId = obj.getObj().getBooking_id();
-        username = obj.getObj().getContact_information().getEmail();
+        pnr = obj.getItenerary_information().getPnr();
+        bookingId = obj.getBooking_id();
+        username = obj.getContact_information().getEmail();
 
-        int totalPassengerList = obj.getObj().getPassenger_information().size();
+        int totalPassengerList = obj.getPassenger_information().size();
         for(int passenger = 0 ; passenger < totalPassengerList ; passenger++){
-            if(obj.getObj().getPassenger_information().get(passenger).getType().equals("Adult")){
+            if(obj.getPassenger_information().get(passenger).getType().equals("Adult")){
             totalAdult++;
             }else{
                 totalInfant++;
@@ -217,7 +223,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         for (int i = 1; i < Integer.parseInt(adult)+1 ; i++)
         {
             DropDownItem itemTitle = new DropDownItem();
-            itemTitle.setText("Passenger" + " " + i);
+            itemTitle.setText("Adult" + " " + i);
             itemTitle.setCode(Integer.toString(i));
             adultPassengerList.add(itemTitle);
         }
@@ -361,7 +367,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
-            txtPassengerType.setText("Adult "+adultInc);
+            txtPassengerType.setText("ADULT "+adultInc);
 
         }
         //auto set infant travelling with
@@ -371,7 +377,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             travellingWith.setText(adultPassengerList.get(infantInc - 1).getText());
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + Integer.parseInt(adult)));
-            txtPassengerType.setText("Infant " +infantInc);
+            txtPassengerType.setText("INFANT " +infantInc);
         }
 
 
@@ -694,6 +700,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     public void checkTextViewNull(TextView txtView){
         if(txtView.getText().toString() == "") {
             txtView.setError("Field Required");
+            setShake(txtView);
+            txtView.requestFocus();
             formContinue = false;
         }else{
             formContinue = true;
@@ -704,6 +712,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
 
         if (editText.getText().toString().matches("")) {
             editText.setError("Field Required");
+            setShake(editText);
+            editText.requestFocus();
             formContinue = false;
         }else{
             formContinue = true;
@@ -730,7 +740,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     public void onChangePassengerInfo(ManageChangeContactReceive obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
             intent.putExtra("COMMIT_UPDATE", (new Gson()).toJson(obj));
@@ -872,21 +882,21 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
             EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
 
-            if(!obj.getObj().getPassenger_information().get(adultInc - 1).getTravel_document().equals("NRIC")){
+            if(!obj.getPassenger_information().get(adultInc - 1).getTravel_document().equals("NRIC")){
                 expireDateBlock.setVisibility(View.VISIBLE);
             }
             //passenger1_gender_block.setVisibility(View.GONE);
-            gender.setText(obj.getObj().getPassenger_information().get(adultInc - 1).getGender());
-            title.setText(getTitleCode(getActivity(), obj.getObj().getPassenger_information().get(adultInc - 1).getTitle(), "name"));
+            gender.setText(obj.getPassenger_information().get(adultInc - 1).getGender());
+            title.setText(getTitleCode(getActivity(), obj.getPassenger_information().get(adultInc - 1).getTitle(), "name"));
             //title.setTag(obj.getObj().getPassenger_information().get(adultInc - 1).getTitle());
-            firstName.setText(obj.getObj().getPassenger_information().get(adultInc - 1).getFirst_name());
-            lastname.setText(obj.getObj().getPassenger_information().get(adultInc - 1).getLast_name());
-            dob.setText(reformatDOB(obj.getObj().getPassenger_information().get(adultInc - 1).getDob()));
-            travelDoc.setText(getTravelDocument(getActivity(), obj.getObj().getPassenger_information().get(adultInc - 1).getTravel_document()));
-            expireDate.setText(reformatDOB(obj.getObj().getPassenger_information().get(adultInc - 1).getExpiration_date()));
-            issuingCountry.setText(getCountryName(getActivity(), obj.getObj().getPassenger_information().get(adultInc - 1).getIssuing_country()));
-            docNo.setText(obj.getObj().getPassenger_information().get(adultInc-1).getDocument_number());
-            enrich.setText(obj.getObj().getPassenger_information().get(adultInc-1).getEnrich_loyalty_number());
+            firstName.setText(obj.getPassenger_information().get(adultInc - 1).getFirst_name());
+            lastname.setText(obj.getPassenger_information().get(adultInc - 1).getLast_name());
+            dob.setText(reformatDOB(obj.getPassenger_information().get(adultInc - 1).getDob()));
+            travelDoc.setText(getTravelDocument(getActivity(), obj.getPassenger_information().get(adultInc - 1).getTravel_document()));
+            expireDate.setText(reformatDOB(obj.getPassenger_information().get(adultInc - 1).getExpiration_date()));
+            issuingCountry.setText(getCountryName(getActivity(), obj.getPassenger_information().get(adultInc - 1).getIssuing_country()));
+            docNo.setText(obj.getPassenger_information().get(adultInc-1).getDocument_number());
+            enrich.setText(obj.getPassenger_information().get(adultInc-1).getBonuslink());
 
             firstName.setEnabled(false);
             lastname.setEnabled(false);
@@ -910,20 +920,20 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_issuing_country");
             EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_doc_no");
 
-            if(!obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2) - 1).getTravel_document().equals("NRIC")){
+            if(!obj.getPassenger_information().get((infantInc + intTotalAdult2) - 1).getTravel_document().equals("NRIC")){
                 expireDateBlock.setVisibility(View.VISIBLE);
             }
 
-            int travellingWIthValue = Integer.parseInt(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2) - 1).getTravelling_with());
-            travellingWith.setText("Passsenger "+ (travellingWIthValue+1));
-            gender.setText(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2) - 1).getGender());
-            firstName.setText(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getFirst_name());
-            lastname.setText(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getLast_name());
-            dob.setText(reformatDOB(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getDob()));
-            travelDoc.setText(getTravelDocument(getActivity(), obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getTravel_document()));
-            expireDate.setText(reformatDOB(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getExpiration_date()));
-            issuingCountry.setText(getCountryName(getActivity(), obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getIssuing_country()));
-            docNo.setText(obj.getObj().getPassenger_information().get((infantInc + intTotalAdult2)-1).getDocument_number());
+            int travellingWIthValue = Integer.parseInt(obj.getPassenger_information().get((infantInc + intTotalAdult2) - 1).getTravelling_with());
+            travellingWith.setText("ADULT "+ (travellingWIthValue+1));
+            gender.setText(obj.getPassenger_information().get((infantInc + intTotalAdult2) - 1).getGender());
+            firstName.setText(obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getFirst_name());
+            lastname.setText(obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getLast_name());
+            dob.setText(reformatDOB(obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getDob()));
+            travelDoc.setText(getTravelDocument(getActivity(), obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getTravel_document()));
+            expireDate.setText(reformatDOB(obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getExpiration_date()));
+            issuingCountry.setText(getCountryName(getActivity(), obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getIssuing_country()));
+            docNo.setText(obj.getPassenger_information().get((infantInc + intTotalAdult2)-1).getDocument_number());
 
             firstName.setEnabled(false);
             lastname.setEnabled(false);
@@ -942,6 +952,14 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Log.e("x","1");
+            Gson gson = new Gson();
+            ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+            onChangePassengerInfo(obj);
+        }
     }
 
     @Override

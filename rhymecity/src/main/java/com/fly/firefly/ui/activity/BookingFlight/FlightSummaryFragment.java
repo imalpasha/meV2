@@ -226,6 +226,24 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtReturnFlightFeeTotal)
     TextView txtReturnFlightFeeTotal;
 
+    @InjectView(R.id.infantLayout)
+    LinearLayout infantLayout;
+
+    @InjectView(R.id.txtInfant)
+    TextView txtInfant;
+
+    @InjectView(R.id.txtInfantTotal)
+    TextView txtInfantTotal;
+
+    @InjectView(R.id.infantLayoutReturn)
+    LinearLayout infantLayoutReturn;
+
+    @InjectView(R.id.txtInfantReturn)
+    TextView txtInfantReturn;
+
+    @InjectView(R.id.txtInfantTotalReturn)
+    TextView txtInfantTotalReturn;
+
     private SharedPrefManager pref;
     private int fragmentContainerId;
     private Boolean goingFlightDetailTxt = true;
@@ -371,9 +389,18 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         String goingFlightPriceGuest = obj.getPrice_details().get(0).getGuest();
         String goingFlightPriceGuestTotal = obj.getPrice_details().get(0).getTotal_guest();
 
+        String goingFlightInfant = obj.getPrice_details().get(0).getInfant();
+        String goingFlightInfantTotal = obj.getPrice_details().get(0).getTotal_infant();
+
         txtGoingFlightPriceTitle.setText(goingFlightPriceTitle);
         txtGoingFlightPriceGuest.setText(goingFlightPriceGuest);
         txtGoingFlightPriceTotalGuest.setText(goingFlightPriceGuestTotal);
+
+        if(goingFlightInfant != null){
+            txtInfant.setText(goingFlightInfant);
+            txtInfantTotal.setText(goingFlightInfantTotal);
+            infantLayout.setVisibility(View.VISIBLE);
+        }
 
         //Going Flight Price
         String goingFlightAdminFee = obj.getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
@@ -558,6 +585,15 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             String returnFlightPriceTitle = obj.getPrice_details().get(1).getTitle();
             String returnFlightPriceGuest = obj.getPrice_details().get(1).getGuest();
             String returnFlightPriceGuestTotal = obj.getPrice_details().get(1).getTotal_guest();
+
+            String returnFlightInfant = obj.getPrice_details().get(0).getInfant();
+            String returnFlightInfantTotal = obj.getPrice_details().get(0).getTotal_infant();
+
+            if(returnFlightInfant != null){
+                txtInfantReturn.setText(goingFlightInfant);
+                txtInfantTotalReturn.setText(returnFlightInfantTotal);
+                infantLayoutReturn.setVisibility(View.VISIBLE);
+            }
 
             txtReturnFlightPriceTitle.setText(returnFlightPriceTitle);
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);

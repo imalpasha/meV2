@@ -162,7 +162,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             {
                 item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent homepage = new Intent(this, HomeActivity.class);
-                homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(homepage);
 
             }
@@ -170,7 +170,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             {
 
                 Intent login = new Intent(this, LoginActivity.class);
-                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(login);
 
             }
@@ -179,7 +179,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 pref.setLoginStatus("N");
                 Controller.clearAll(this);
                 Intent login = new Intent(this, HomeActivity.class);
-                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(login);
 
             }
@@ -187,21 +187,21 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             {
                 item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent register = new Intent(this, RegisterActivity.class);
-                register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(register);
 
             }
             else if (item.getTag().equals("Information_Update"))
             {
                 Intent register = new Intent(this, UpdateProfileActivity.class);
-                register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(register);
 
             }
             else if (item.getTag().equals("About"))
             {
                 Intent about = new Intent(this, AboutUsActivity.class);
-                about.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                about.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(about);
                 Log.e("xx",item.getTag().toString());
 
@@ -209,7 +209,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             else if (item.getTag().equals("FAQ"))
             {
                 Intent terms = new Intent(this, Terms.class);
-                terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(terms);
 
             }

@@ -118,6 +118,9 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     private String bookingId;
     private String paymentFrom;
     private String totalDue;
+    private boolean getPaymentList;
+    private boolean getPayment;
+    private boolean paymentVendorGenerated = false;
 
     public static PaymentFlightFragment newInstance(Bundle bundle) {
 
@@ -220,7 +223,8 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     public void debitCard(){
 
         initiateLoading(getActivity());
-        //paymentRequest();
+        getPaymentList = false;
+
         Payment paymentObj = new Payment();
         paymentObj.setSignature(signature);
         paymentObj.setChannelCode(part2);
@@ -249,6 +253,7 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
         paymentObj.setIssuingBank(txtCardType.getText().toString());
         paymentObj.setBookingID(bookingId);
 
+        getPaymentList = false;
         presenter.paymentRequest(paymentObj);
 
 
@@ -257,8 +262,12 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
+        boolean firstView = true;
+
         for (ValidationError error : errors) {
             View view = error.getView();
+            view.setFocusable(true);
             setShake(view);
 
              /* Split Error Message. Display first sequence only */
@@ -272,10 +281,11 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
             else if (view instanceof TextView){
                 ((TextView) view).setError(splitErrorMsg[0]);
             }
-            croutonAlert(getActivity(), "Please fill empty field");
 
-            Log.e("Validation Failed",splitErrorMsg[0]);
-
+            if(firstView){
+                view.requestFocus();
+            }
+            firstView = false;
         }
 
     }
@@ -304,7 +314,7 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
         dismissLoading();
 
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             generatePaymentVendorList(obj);
         }
@@ -317,33 +327,36 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
     public void generatePaymentVendorList(final PaymentInfoReceive obj){
 
-        for(int a = 0 ; a <  obj.getObj().getPayment_channel().size() ; a++){
+        Log.e("paymentVendorGenerated",Boolean.toString(paymentVendorGenerated));
+       if(!paymentVendorGenerated){
 
-            String paymentType = obj.getObj().getPayment_channel().get(a).getChannel_type();
-            String paymentCode = obj.getObj().getPayment_channel().get(a).getChannel_code();
+           for(int a = 0 ; a <  obj.getPayment_channel().size() ; a++){
 
-            Log.e("PaymentType",paymentType);
-            if (channelType.contains(paymentType)){
+               String paymentType = obj.getPayment_channel().get(a).getChannel_type();
+               String paymentCode = obj.getPayment_channel().get(a).getChannel_code();
+
+               Log.e("PaymentType",paymentType);
+               if (channelType.contains(paymentType)){
                 /*SKIP*/
-                if(paymentType.equals("2")){
-                    channelType.add(paymentType);
-                    channelCode.add(paymentCode);
-                }
-            }else {
-                channelType.add(paymentType);
-                channelCode.add(paymentCode);
-            }
+                   if(paymentType.equals("2")){
+                       channelType.add(paymentType);
+                       channelCode.add(paymentCode);
+                   }
+               }else {
+                   channelType.add(paymentType);
+                   channelCode.add(paymentCode);
+               }
 
-            if(obj.getObj().getPayment_channel().get(a).getChannel_type().equals("1")){
-                DropDownItem itemTitle = new DropDownItem();
-                itemTitle.setText(obj.getObj().getPayment_channel().get(a).getChannel_name());
-                itemTitle.setCode(obj.getObj().getPayment_channel().get(a).getChannel_code());
-                itemTitle.setTag("Title");
-                cardType.add(itemTitle);
-            }
+               if(obj.getPayment_channel().get(a).getChannel_type().equals("1")) {
+                   DropDownItem itemTitle = new DropDownItem();
+                   itemTitle.setText(obj.getPayment_channel().get(a).getChannel_name());
+                   itemTitle.setCode(obj.getPayment_channel().get(a).getChannel_code());
+                   itemTitle.setTag("Title");
+                   cardType.add(itemTitle);
+               }
 
 
-            //List<String> imageURLCreditCard = new ArrayList<String>();
+               //List<String> imageURLCreditCard = new ArrayList<String>();
 
 /*            if(obj.getPayment_channel().get(a).getChannel_type().equals("1")){
                 imageURL.add(obj.getPayment_channel().get(a).getChannel_logo());
@@ -354,132 +367,139 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
 
         }*/
-        }
+           }
 
-        LinearLayout paymentChannelList = (LinearLayout) getActivity().findViewById(R.id.paymentChannelList);
-        paymentChannelList.removeAllViews();
+           LinearLayout paymentChannelList = (LinearLayout) getActivity().findViewById(R.id.paymentChannelList);
+           paymentChannelList.removeAllViews();
 
-        for(int totalPaymentChannel = 0 ; totalPaymentChannel < channelType.size() ; totalPaymentChannel++){
+           for(int totalPaymentChannel = 0 ; totalPaymentChannel < channelType.size() ; totalPaymentChannel++){
 
-            LinearLayout seatRow = new LinearLayout(getActivity());
-            seatRow.setOrientation(LinearLayout.HORIZONTAL);
-            seatRow.setPadding(0,5,0,5);
-           // seatRow.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
+               LinearLayout seatRow = new LinearLayout(getActivity());
+               seatRow.setOrientation(LinearLayout.HORIZONTAL);
+               seatRow.setPadding(0,5,0,5);
+               // seatRow.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
 
-            final LinearLayout imageRow = new LinearLayout(getActivity());
-            imageRow.setOrientation(LinearLayout.VERTICAL);
-            imageRow.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
+               final LinearLayout imageRow = new LinearLayout(getActivity());
+               imageRow.setOrientation(LinearLayout.VERTICAL);
+               imageRow.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
 
-            final RadioButton selectPaymentChannel = new RadioButton(getActivity());
-            selectPaymentChannel.setId(totalPaymentChannel + 1);
-            selectPaymentChannel.setTag(channelType.get(totalPaymentChannel).toString()+"/"+channelCode.get(totalPaymentChannel).toString());
-            if(channelType.get(totalPaymentChannel).toString().equals("1")){
-                selectPaymentChannel.setText("Credit Card ");
-            }
+               final RadioButton selectPaymentChannel = new RadioButton(getActivity());
+               selectPaymentChannel.setId(totalPaymentChannel + 1);
+               selectPaymentChannel.setTag(channelType.get(totalPaymentChannel).toString()+"/"+channelCode.get(totalPaymentChannel).toString());
+               if(channelType.get(totalPaymentChannel).toString().equals("1")){
+                   selectPaymentChannel.setText("Credit Card ");
+               }
 
-            seatRow.addView(selectPaymentChannel);
-
-
-            for(int totalImage = 0 ; totalImage < obj.getObj().getPayment_channel().size() ; totalImage++){
-
-                //if(channelType.get(totalPaymentChannel).toString().equals(obj.getObj().getPayment_channel().get(totalImage).getChannel_type())){
-                if(channelType.get(totalPaymentChannel).toString().equals("1") && obj.getObj().getPayment_channel().get(totalImage).getChannel_type().equals("1")) {
-                    Log.e(channelType.get(totalPaymentChannel), obj.getObj().getPayment_channel().get(totalImage).getChannel_type());
-
-                    //Need to move this later
-                    final AjaxCallback<Bitmap> cb = new AjaxCallback<Bitmap>() {
-                        @Override
-                        public void callback(String url, Bitmap bm, AjaxStatus status) {
-                            // do whatever you want with bm (the image)
-                            ImageView image = new ImageView(getActivity());
-                            image.setImageBitmap(bm);
-                            imageRow.addView(image);
-
-                        }
-                    };
-                    final AQuery aq = new AQuery(getActivity());
-                    aq.ajax(obj.getObj().getPayment_channel().get(totalImage).getChannel_logo(), Bitmap.class, 0, cb);
-
-                    seatRow.addView(imageRow);
-                    break;
-                }else if(channelType.get(totalPaymentChannel).toString().equals("2") && obj.getObj().getPayment_channel().get(totalImage).getChannel_type().equals("2")){
-                    //Need to move this later
-                    if(channelCode.get(totalPaymentChannel).toString().equals(obj.getObj().getPayment_channel().get(totalImage).getChannel_code())){
-
-                        final LinearLayout oneImage = new LinearLayout(getActivity());
-                        oneImage.setOrientation(LinearLayout.HORIZONTAL);
-                        oneImage.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
-
-                        final AjaxCallback<Bitmap> cb = new AjaxCallback<Bitmap>() {
-                            @Override
-                            public void callback(String url, Bitmap bm, AjaxStatus status) {
-                                // do whatever you want with bm (the image)
-                                ImageView image = new ImageView(getActivity());
-                                image.setImageBitmap(bm);
-                                oneImage.addView(image);
+               seatRow.addView(selectPaymentChannel);
 
 
-                            }
-                        };
-                        final AQuery aq = new AQuery(getActivity());
-                        aq.ajax(obj.getObj().getPayment_channel().get(totalImage).getChannel_logo(), Bitmap.class, 0, cb);
+               for(int totalImage = 0 ; totalImage < obj.getPayment_channel().size() ; totalImage++){
 
-                        seatRow.addView(oneImage);
-                        break;
+                   //if(channelType.get(totalPaymentChannel).toString().equals(obj.getPayment_channel().get(totalImage).getChannel_type())){
+                   if(channelType.get(totalPaymentChannel).toString().equals("1") && obj.getPayment_channel().get(totalImage).getChannel_type().equals("1")) {
+                       Log.e(channelType.get(totalPaymentChannel), obj.getPayment_channel().get(totalImage).getChannel_type());
 
-                    }
-                }
-            }
+                       //Need to move this later
+                       final AjaxCallback<Bitmap> cb = new AjaxCallback<Bitmap>() {
+                           @Override
+                           public void callback(String url, Bitmap bm, AjaxStatus status) {
+                               // do whatever you want with bm (the image)
+                               ImageView image = new ImageView(getActivity());
+                               image.setImageBitmap(bm);
+                               imageRow.addView(image);
+
+                           }
+                       };
+                       final AQuery aq = new AQuery(getActivity());
+                       aq.ajax(obj.getPayment_channel().get(totalImage).getChannel_logo(), Bitmap.class, 0, cb);
+
+                       seatRow.addView(imageRow);
+                       break;
+                   }else if(channelType.get(totalPaymentChannel).toString().equals("2") && obj.getPayment_channel().get(totalImage).getChannel_type().equals("2")){
+                       //Need to move this later
+                       if (channelCode.get(totalPaymentChannel).toString().equals(obj.getPayment_channel().get(totalImage).getChannel_code())){
+
+                           final LinearLayout oneImage = new LinearLayout(getActivity());
+                           oneImage.setOrientation(LinearLayout.HORIZONTAL);
+                           oneImage.setGravity(LinearLayout.TEXT_ALIGNMENT_GRAVITY);
+
+                           final AjaxCallback<Bitmap> cb = new AjaxCallback<Bitmap>() {
+                               @Override
+                               public void callback(String url, Bitmap bm, AjaxStatus status) {
+                                   // do whatever you want with bm (the image)
+                                   ImageView image = new ImageView(getActivity());
+                                   image.setImageBitmap(bm);
+                                   oneImage.addView(image);
 
 
-            paymentChannelList.addView(seatRow);
+                               }
+                           };
+                           final AQuery aq = new AQuery(getActivity());
+                           aq.ajax(obj.getPayment_channel().get(totalImage).getChannel_logo(), Bitmap.class, 0, cb);
 
-        }
-        //set first checkbox checked
-        final RadioButton checkBox = (RadioButton) view.findViewWithTag(channelType.get(0).toString()+"/"+channelCode.get(0).toString());
-        checkBox.setChecked(true);
+                           seatRow.addView(oneImage);
+                           break;
 
-        for(int y = 0 ; y < channelType.size() ; y++){
+                       }
+                   }
+               }
 
-            final RadioButton checkToRemove = (RadioButton) view.findViewWithTag(channelType.get(y).toString()+"/"+channelCode.get(y).toString());
 
-            checkToRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                                                         @Override
-                                                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               paymentChannelList.addView(seatRow);
 
-                                                             if (isChecked) {
-                                                                 selectedCheckBoxTag = checkToRemove.getTag().toString();
-                                                                //Log.e("selectedCheckBoxTag",selectedCheckBoxTag);
-                                                                 String[] parts = selectedCheckBoxTag.split("/");
-                                                                 part1 = parts[0]; // 004
-                                                                 part2 = parts[1]; // 004
+           }
+           //set first checkbox checked
+           final RadioButton checkBox = (RadioButton) view.findViewWithTag(channelType.get(0).toString()+"/"+channelCode.get(0).toString());
+           checkBox.setChecked(true);
 
-                                                                 if (part1.equals("1")) {
-                                                                     creditCardFormLayout.setVisibility(View.VISIBLE);
-                                                                 } else {
-                                                                     creditCardFormLayout.setVisibility(View.GONE);
-                                                                 }
+           for(int y = 0 ; y < channelType.size() ; y++){
 
-                                                                 for (int b = 0; b < channelType.size(); b++) {
-                                                                     if (selectedCheckBoxTag.equals(channelType.get(b).toString()+"/"+channelCode.get(b).toString())) {
+               final RadioButton checkToRemove = (RadioButton) view.findViewWithTag(channelType.get(y).toString()+"/"+channelCode.get(y).toString());
 
-                                                                     }else{
-                                                                         Log.e("-"+selectedCheckBoxTag,channelType.get(b).toString()+"/"+channelCode.get(b).toString());
-                                                                         RadioButton checkToRemove = (RadioButton) view.findViewWithTag(channelType.get(b).toString()+"/"+channelCode.get(b).toString());
-                                                                         checkToRemove.setChecked(false);
-                                                                     }
-                                                                 }
-                                                             }
-                                                         }
-                                                     }
-            );
-        }
+               checkToRemove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                            @Override
+                                                            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                                                                if (isChecked) {
+                                                                    selectedCheckBoxTag = checkToRemove.getTag().toString();
+                                                                    //Log.e("selectedCheckBoxTag",selectedCheckBoxTag);
+                                                                    String[] parts = selectedCheckBoxTag.split("/");
+                                                                    part1 = parts[0]; // 004
+                                                                    part2 = parts[1]; // 004
+
+                                                                    if (part1.equals("1")) {
+                                                                        creditCardFormLayout.setVisibility(View.VISIBLE);
+                                                                    } else {
+                                                                        creditCardFormLayout.setVisibility(View.GONE);
+                                                                    }
+
+                                                                    for (int b = 0; b < channelType.size(); b++) {
+                                                                        if (selectedCheckBoxTag.equals(channelType.get(b).toString()+"/"+channelCode.get(b).toString())) {
+
+                                                                        }else{
+                                                                            Log.e("-"+selectedCheckBoxTag,channelType.get(b).toString()+"/"+channelCode.get(b).toString());
+                                                                            RadioButton checkToRemove = (RadioButton) view.findViewWithTag(channelType.get(b).toString()+"/"+channelCode.get(b).toString());
+                                                                            checkToRemove.setChecked(false);
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+               );
+           }
+
+           paymentVendorGenerated = true;
+           getPayment = true;
+       }
+
+
 
 
     }
 
     public void getPaymentInfo(Signature baseObj){
         initiateLoading(getActivity());
+        getPaymentList = true;
         presenter.paymentInfo(baseObj);
     }
 
@@ -495,13 +515,27 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
         presenter.onResume();
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
-            Log.e("x","1");
-            Gson gson = new Gson();
-            PaymentReceive obj = gson.fromJson(result.get(0).getCachedResult(), PaymentReceive.class);
-            onPaymentReceive(obj);
-        }else{
-            Log.e("x","2");
+        if(getPaymentList){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                PaymentInfoReceive obj = gson.fromJson(result.get(0).getCachedResult(), PaymentInfoReceive.class);
+                onPaymentInfoReceive(obj);
+                Log.e("paymentVendorGenerated", Boolean.toString(paymentVendorGenerated));
+
+            }else{
+             Log.e("X","x");
+            }
+        }
+        else{
+            Log.e("E",Boolean.toString(getPayment));
+            Log.e("Y","Y");
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                PaymentReceive obj = gson.fromJson(result.get(0).getCachedResult(), PaymentReceive.class);
+                onPaymentReceive(obj);
+            }
         }
     }
 

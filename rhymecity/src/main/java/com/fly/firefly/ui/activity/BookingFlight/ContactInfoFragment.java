@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Html;
+import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +22,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
@@ -33,6 +36,7 @@ import com.fly.firefly.ui.activity.BoardingPass.BoardingPassFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInFragment1;
 import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
+import com.fly.firefly.ui.activity.Picker.StateListDialogFragment;
 import com.fly.firefly.ui.module.ContactInfoModule;
 import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
@@ -189,6 +193,15 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.countryBlock)
     LinearLayout countryBlock;
 
+    @InjectView(R.id.insuranceCheckBoxLayout)
+    LinearLayout insuranceCheckBoxLayout;
+
+    @InjectView(R.id.wantToBeProtected)
+    LinearLayout wantToBeProtected;
+
+    @InjectView(R.id.wantToBeProtectedBtn)
+    Button wantToBeProtectedBtn;
+
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
 
@@ -220,6 +233,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private ArrayList<DefaultPassengerObj> defaultObj = new ArrayList<DefaultPassengerObj>();
     private ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
     private int index = -1;
+    private AlertDialog dialog;
+    private String insuranceStatus = "N";
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
 
@@ -253,6 +268,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         Bundle xxx = getActivity().getIntent().getExtras();
         String insurance = bundle.getString("INSURANCE_STATUS");
+
+        //HashMap<String, String> init = pref.getSeat();
+        //String seatHash = init.get(SharedPrefManager.SEAT);
 
         String defaultPassenger = "";
         try {
@@ -288,6 +306,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             selectedCountryCode = loginObj.getContact_country();
             txtCountry.setTag(loginObj.getContact_country());
             txtCountry.setText(getCountryName(getActivity(), loginObj.getContact_country()));
+
+            //set state
+            setState(selectedCountryCode);
 
             txtCountryBusiness.setTag(loginObj.getContact_country());
             txtCountryBusiness.setText(getCountryName(getActivity(), loginObj.getContact_country()));
@@ -328,6 +349,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                         selectedCountryCode = defaultObj.get(0).getIssuingCountry();
                         txtCountryBusiness.setTag(defaultObj.get(0).getIssuingCountry());
                         txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(0).getIssuingCountry()));
+                        dialingCode = getDialingCode(defaultObj.get(0).getIssuingCountry(),getActivity());
+                        setState(selectedCountryCode);
+
                     }
                 }else{
                     txtTitle.setText("");
@@ -343,8 +367,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             }
         });
 
-        String insuranceStatus = obj.getInsuranceObj().getStatus();
-        if(insuranceStatus.equals("Y")){
+        insuranceStatus = obj.getInsuranceObj().getStatus();
+        if(insuranceStatus.equals("Y")) {
             insuranceBlock.setVisibility(View.VISIBLE);
 
             insuranceTxt1 = obj.getInsuranceObj().getHtml().get(0).toString();
@@ -352,18 +376,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             insuranceTxt3 = obj.getInsuranceObj().getHtml().get(2).toString();
             insuranceTxt4 = obj.getInsuranceObj().getHtml().get(3).toString();
 
-
-            txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
-            txtInsurance2.setText(Html.fromHtml(insuranceTxt2.replaceAll("</br>","<p>")));
-            txtInsurance2.setMovementMethod(LinkMovementMethod.getInstance());
-
-            txtInsurance3.setText(Html.fromHtml(insuranceTxt3));
-            txtInsurance3.setMovementMethod(LinkMovementMethod.getInstance());
-
-            txtInsurance4.setText(Html.fromHtml(insuranceTxt4));
-
-           //txtInsuranceDetail.setText(Html.fromHtml("<html><b>Be sure to protect yourself with Firefly Travel Protection!</b></br><p></p></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br><p></p></br>>>Comprehensive coverage at phenomenal rates</br> <p></p>>>Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br><p></p>>>Medical Coverage includes hospital admission and emergency medical evacuation*</br><p></p>>>24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br><p></p><p></p></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br><p></p></br><b>The following passenger(s) are eligible for travel insurance:</b></br><p></p><li>Ggjji Gghjj</li><p></p></br><b>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</b></br><p></p></br></html>"));
-           // txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
+            setInsuranceText();
         }
 
         /*Booking Id*/
@@ -395,7 +408,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             @Override
             public void onClick(View v) {
                 Utils.hideKeyboard(getActivity(),view);
-                showCountrySelector(getActivity(),countrysList);
+                showCountrySelector(getActivity(), countrysList,"country");
+
             }
         });
 
@@ -403,8 +417,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtCountryBusiness.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.hideKeyboard(getActivity(),view);
-                showCountrySelector(getActivity(),countrysList);
+                Utils.hideKeyboard(getActivity(), view);
+                showCountrySelector(getActivity(),countrysList,"country");
+
             }
         });
         /* ---------------------------- End Country ----------------------------------*/
@@ -414,7 +429,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             @Override
             public void onClick(View v) {
                 Utils.hideKeyboard(getActivity(),view);
-                showCountrySelector(getActivity(), stateList);
+                showCountrySelector(getActivity(), stateList,"state");
+
             }
         });
         /* ---------------------------- End Select State -------------------------------- */
@@ -423,7 +439,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtPurpose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "Leisure",countryBlock);
+
+                //Log.e(purposeList.get(0).getCode().toString(),purposeList.get(1).getCode().toString());
+                popupSelectionExtra(purposeList, getActivity(), txtPurpose, true, companyBlock, "2", countryBlock);
             }
         });
         /* --------------------------- End Purpose ----------------------------------- */
@@ -468,10 +486,111 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             }
         });
 
+         /*Onclick Continue*/
+        wantToBeProtectedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e("BTN CLICKED","TRUE");
+                txtInsurance1.setVisibility(View.VISIBLE);
+                txtInsurance2.setVisibility(View.VISIBLE);
+                txtInsurance3.setVisibility(View.VISIBLE);
+                txtInsurance4.setVisibility(View.VISIBLE);
+                insuranceCheckBoxLayout.setVisibility(View.VISIBLE);
+
+                setInsuranceText();
+                wantToBeProtected.setVisibility(View.GONE);
+            }
+        });
+
+
+
 
         return view;
     }
 
+    public void setInsuranceText(){
+
+        txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
+        txtInsurance2.setMovementMethod(LinkMovementMethod.getInstance());
+        txtInsurance2.setText(Html.fromHtml(insuranceTxt2.replaceAll("</br>", "<p>")), TextView.BufferType.SPANNABLE);
+        txtInsurance3.setText(Html.fromHtml(insuranceTxt3),TextView.BufferType.SPANNABLE);
+
+        String insurance3 = txtInsurance3.getText().toString();
+        int i1 = insurance3.indexOf("[R");
+        int i2 = insurance3.indexOf("e]");
+
+        Spannable mySpannable = (Spannable)txtInsurance3.getText();
+        ClickableSpan myClickableSpan = new ClickableSpan()
+        {
+            @Override
+            public void onClick(View widget) {
+                    /* do something */
+                removeInsurance();
+            }
+        };
+        mySpannable.setSpan(myClickableSpan, i1, i2 + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        //
+
+        txtInsurance3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        txtInsurance4.setText(Html.fromHtml(insuranceTxt4));
+
+        //txtInsuranceDetail.setText(Html.fromHtml("<html><b>Be sure to protect yourself with Firefly Travel Protection!</b></br><p></p></br>You got a good deal on our promo fares - but don't risk unexpected expenses!</br><p></p></br>>>Comprehensive coverage at phenomenal rates</br> <p></p>>>Added flexibility via the Trip Cancellation benefit if you are unable to proceed with your travels</br><p></p>>>Medical Coverage includes hospital admission and emergency medical evacuation*</br><p></p>>>24 Hour Worldwide Travel Assistance by our travel partner, AIG Travel</br><p></p><p></p></br>* For the full list of benefits, please refer to the <a href='https://www.aig.my/Chartis/internet/Malaysia/English/Firefly%20Travel%20Protection%20Product%20Disclosure%20Sheet_tcm4009-671123.pdf' target='_blank'>Terms and Conditions</a></br><p></p></br><b>The following passenger(s) are eligible for travel insurance:</b></br><p></p><li>Ggjji Gghjj</li><p></p></br><b>Firefly Travel Protection's Promo Plan is only 17.00 MYR MYR (inclusive of GST, when applicable)</b></br><p></p></br></html>"));
+        // txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
+
+    }
+       /*Popup Forgot Password*/
+
+    public void removeInsurance(){
+
+        LayoutInflater li = LayoutInflater.from(getActivity());
+        final View myView = li.inflate(R.layout.remove_insurance_opt, null);
+        Button confirmRemove = (Button)myView.findViewById(R.id.confirmRemove);
+        Button continueRemove = (Button)myView.findViewById(R.id.continueInsurance);
+
+
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(myView);
+
+        dialog = builder.create();
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //lp.height = 570;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+        confirmRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtInsurance1.setText("Firefly Travel Protection protects you against unexpected events during your trip. From unfortunate accidents to lost travel documents, Firefly Travel Protection will take care of you (details).");
+                txtInsurance2.setVisibility(View.GONE);
+                txtInsurance3.setVisibility(View.GONE);
+                txtInsurance4.setVisibility(View.GONE);
+                wantToBeProtected.setVisibility(View.VISIBLE);
+
+                insuranceCheckBoxLayout.setVisibility(View.GONE);
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        continueRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                insuranceCheckBoxLayout.setVisibility(View.GONE);
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+    }
 
      /*Global PoPup*/
      public void customPopupForContactInfo(final ArrayList array,Activity act){
@@ -499,6 +618,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     txtCountryBusiness.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
                     txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
                     selectedCountryCode = defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry();
+                    dialingCode = getDialingCode(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry(), getActivity());
+                    setState(selectedCountryCode);
 
                     index = which;
                     dialog.dismiss();
@@ -518,15 +639,21 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
 
     /*Country selector - > need to move to main activity*/
-    public void showCountrySelector(Activity act,ArrayList constParam)
+    public void showCountrySelector(Activity act,ArrayList constParam,String data)
     {
         if(act != null) {
             try {
 
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-                CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
-                countryListDialogFragment.setTargetFragment(ContactInfoFragment.this, 0);
-                countryListDialogFragment.show(fm, "countryListDialogFragment");
+                if(data.equals("state")){
+                    StateListDialogFragment countryListDialogFragment = StateListDialogFragment.newInstance(constParam);
+                    countryListDialogFragment.setTargetFragment(ContactInfoFragment.this, 0);
+                    countryListDialogFragment.show(fm, "countryListDialogFragment");
+                }else{
+                    CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
+                    countryListDialogFragment.setTargetFragment(ContactInfoFragment.this, 0);
+                    countryListDialogFragment.show(fm, "countryListDialogFragment");
+                }
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -554,22 +681,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     txtPhone.setText(dialingCode);
                     txtAlternatePhone.setText(dialingCode);
 
-                   /*Each country click - reset state obj*/
-                    stateList = new ArrayList<DropDownItem>();
-
-                    /* Set state from selected Country Code*/
-                    JSONArray jsonState = getState(getActivity());
-                    for(int x = 0 ; x < jsonState.length() ; x++) {
-
-                        JSONObject row = (JSONObject) jsonState.opt(x);
-                        if(selectedCountryCode.equals(row.optString("country_code"))) {
-                            DropDownItem itemCountry = new DropDownItem();
-                            itemCountry.setText(row.optString("state_name"));
-                            itemCountry.setCode(row.optString("state_code"));
-                            itemCountry.setTag("State");
-                            stateList.add(itemCountry);
-                        }
-                    }
+                    setState(selectedCountryCode);
 
                 } else {
                     txtState.setText(selectedCountry.getText());
@@ -577,6 +689,26 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     selectedState = selectedCountry.getCode();
                 }
 
+            }
+        }
+    }
+
+    public void setState(String selectedCode){
+
+        /*Each country click - reset state obj*/
+        stateList = new ArrayList<DropDownItem>();
+
+                    /* Set state from selected Country Code*/
+        JSONArray jsonState = getState(getActivity());
+        for(int x = 0 ; x < jsonState.length() ; x++) {
+
+            JSONObject row = (JSONObject) jsonState.opt(x);
+            if(selectedCode.equals(row.optString("country_code"))) {
+                DropDownItem itemCountry = new DropDownItem();
+                itemCountry.setText(row.optString("state_name"));
+                itemCountry.setCode(row.optString("state_code"));
+                itemCountry.setTag("State");
+                stateList.add(itemCountry);
             }
         }
     }
@@ -639,14 +771,26 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         }
 
         if(cont){
-            requestContacInfo();
+            if(insuranceStatus.equals("Y") && !insuranceCheckBox.isChecked()){
+                setAlertDialog(getActivity(),"To proceed, you need to agree with the Insurance Declaration.","Insurance Declaration");
+                cont = false;
+            }else{
+                requestContacInfo();
+            }
         }
+
     }
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
+        boolean firstView = true;
+
         for (ValidationError error : errors) {
+
             View view = error.getView();
+            view.setFocusable(true);
+
             setShake(view);
 
              /* Split Error Message. Display first sequence only */
@@ -665,9 +809,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                // croutonAlert(getActivity(), splitErrorMsg[0]);
             }
 
+            if(firstView){
+                view.requestFocus();
+            }
+            firstView = false;
         }
-        croutonAlert(getActivity(), "Fill empty field");
-
 
     }
 

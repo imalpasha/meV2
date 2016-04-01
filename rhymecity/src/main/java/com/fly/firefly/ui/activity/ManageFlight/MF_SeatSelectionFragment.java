@@ -16,9 +16,11 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.ContactInfoReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
+import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.ItinenaryActivity;
@@ -30,6 +32,7 @@ import com.fly.firefly.ui.adapter.PassengerSeatAdapterV3;
 import com.fly.firefly.ui.adapter.PassengerSeatAdapterV4;
 import com.fly.firefly.ui.module.ManageChangeSeatModule;
 import com.fly.firefly.ui.module.SeatSelectionModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageSeatInfo;
 import com.fly.firefly.ui.object.PasssengerInfoV2;
 import com.fly.firefly.ui.object.SeatAvailabilityRequest;
@@ -40,6 +43,7 @@ import com.fly.firefly.ui.object.SeatSetup;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.ExpandAbleGridView;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 
@@ -53,6 +57,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
+import io.realm.RealmResults;
 
 public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlightPrenter.ChangeSeatView{
 
@@ -96,7 +101,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     //newLogin2/22
     private int passengerNoV1 = 0;
     private int passengerNoV2;
-    private Boolean next1 = false;
+    private Boolean next1 = true;
     private Boolean next2 = false;
     private int passengerSize;
 
@@ -106,6 +111,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     private List<SeatInfo> seatInfoDepart;
     private boolean twoWay = false;
     private String pnr,username,bookingId;
+    private boolean retrieveSeat = false;
 
     List<ContactInfoReceive.PasssengerInfo> passengers =  new ArrayList<ContactInfoReceive.PasssengerInfo>();
     List<PasssengerInfoV2> objV2 = new ArrayList<PasssengerInfoV2>();
@@ -123,6 +129,8 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ManageChangeSeatModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -743,6 +751,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     public void seatSelect(ManageSeatInfo obj){
 
         initiateLoading(getActivity());
+        retrieveSeat = true;
         presenter.seatSelect(obj,pnr,username,signature);
 
     }
@@ -752,12 +761,12 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
         dismissLoading();
 
-        seatInfoDepart = obj.getObj().getJourneys().get(0).getSeat_info();
+        seatInfoDepart = obj.getJourneys().get(0).getSeat_info();
 
-        List<ContactInfoReceive.Journeys> journeys = obj.getObj().getJourneys();
+        List<ContactInfoReceive.Journeys> journeys = obj.getJourneys();
 
         /*Set Passenger to adapter*/
-            passengers = obj.getObj().getJourneys().get(0).getPassengers();
+            passengers = obj.getJourneys().get(0).getPassengers();
             for(int v = 0 ; v < passengers.size() ; v++){
                 PasssengerInfoV2 obj2 = new PasssengerInfoV2();
                 obj2.setFirst_name(passengers.get(v).getFirst_name());
@@ -772,8 +781,8 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         passengerSize = objV2.size();
         Log.e("passengerSize",Integer.toString(passengerSize));
 
-        if(obj.getObj().getJourneys().size() > 1){
-            passengers = obj.getObj().getJourneys().get(1).getPassengers();
+        if(obj.getJourneys().size() > 1){
+            passengers = obj.getJourneys().get(1).getPassengers();
             for(int v = 0 ; v < passengers.size() ; v++){
                 PasssengerInfoV2 obj3 = new PasssengerInfoV2();
                 obj3.setFirst_name(passengers.get(v).getFirst_name());
@@ -797,7 +806,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         if(journeys.size() > 1){
 
             twoWay = true;
-            seatInfoReturn = obj.getObj().getJourneys().get(1).getSeat_info();
+            seatInfoReturn = obj.getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
             setSeat2(seatListReturn, seatInfoReturn);
             passengerSeatListReturn.setVisibility(View.VISIBLE);
@@ -809,7 +818,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     @Override
     public void onSeatChange(ManageChangeContactReceive obj) {
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
             intent.putExtra("COMMIT_UPDATE", (new Gson()).toJson(obj));
@@ -827,6 +836,23 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(!retrieveSeat){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ContactInfoReceive obj = gson.fromJson(result.get(0).getCachedResult(), ContactInfoReceive.class);
+                onRequestSeat(obj);
+            }
+        }else{
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+                onSeatChange(obj);
+            }
+        }
     }
 
     @Override

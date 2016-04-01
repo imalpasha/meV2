@@ -19,16 +19,20 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
+import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.BookingListAdapter;
 import com.fly.firefly.ui.module.MobileCheckInModule1;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageFlightObj;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.presenter.MobileCheckInPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -48,6 +52,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckInPresenter.MobileCheckInView,Validator.ValidationListener {
 
@@ -71,6 +76,12 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     @InjectView(R.id.listView)
     ListView listView;
 
+    @InjectView(R.id.mobileCheckInNA)
+    LinearLayout mobileCheckInNA;
+
+    @InjectView(R.id.listviewLayout)
+    LinearLayout listviewLayout;
+
     private ArrayList<DropDownItem> dataFlightDeparture;
     private static ArrayList<DropDownItem> dataFlightArrival;
     private SharedPrefManager pref;
@@ -83,6 +94,8 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     private int fragmentContainerId;
     private BookingListAdapter adapter;
     private String signatureFromLocal;
+    private boolean cache_login = false;
+    private boolean retrieveCheckIn = false;
 
     public static MobileCheckInFragment1 newInstance() {
 
@@ -97,6 +110,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new MobileCheckInModule1(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -150,7 +164,9 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             Set<String> hs = new LinkedHashSet<>();
             for (int i = 0; i < jsonFlight.length(); i++) {
                 JSONObject row = (JSONObject) jsonFlight.opt(i);
-                al.add(row.optString("location")+"-"+row.optString("location_code"));
+                if(!row.optString("status").equals("N")){
+                    al.add(row.optString("location")+"/-"+row.optString("location_code"));
+                }
             }
             hs.addAll(al);
             al.clear();
@@ -160,7 +176,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             for (int i = 0; i < al.size(); i++)
             {
                 String flightSplit = al.get(i).toString();
-                String[] str1 = flightSplit.split("-");
+                String[] str1 = flightSplit.split("/-");
                 String p1 = str1[0];
                 String p2 = str1[1];
 
@@ -175,7 +191,13 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
         }
 
         /*Set PNR auto caps*/
-        editPnr.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        InputFilter[] FilterArray = new InputFilter[2];
+        FilterArray[0] = new InputFilter.LengthFilter(6);
+        FilterArray[1] = new InputFilter.AllCaps();
+        editPnr.setFilters(FilterArray);
+
+        //editPnr.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        //editPnr.setFilters(new InputFilter[]{new InputFilter.LengthFilter(6)});
 
        /*Departure Flight Clicked*/
         txtDeparture.setOnClickListener(new View.OnClickListener() {
@@ -216,12 +238,18 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
-            listView.setAdapter(adapter);
-            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
-            //pnrLayout.setVisibility(View.GONE);
+
+            if (obj.getList_booking().size() == 0) {
+                mobileCheckInNA.setVisibility(View.VISIBLE);
+                listviewLayout.setVisibility(View.GONE);
+            } else {
+                adapter = new BookingListAdapter(getActivity(), obj.getList_booking());
+                listView.setAdapter(adapter);
+                pref.setSignatureToLocalStorage(obj.getSignature());
+                //pnrLayout.setVisibility(View.GONE);
+            }
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -242,10 +270,10 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
                 MobileCheckinObj flightObj = new MobileCheckinObj();
                 flightObj.setPnr(selectedFromList.getPnr());
-                flightObj.setUser_id(obj.getObj().getUser_id());
+                flightObj.setUser_id(obj.getUser_id());
                 flightObj.setDeparture_station(selectedFromList.getDeparture_station_code());
                 flightObj.setArrival_station(selectedFromList.getArrival_station_code());
-                flightObj.setSignature(obj.getObj().getSignature());
+                flightObj.setSignature(obj.getSignature());
 
                 searchFlightFragment(flightObj);
 
@@ -253,6 +281,9 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
         });
 
     }
+
+
+
 
 
     @Override
@@ -288,8 +319,6 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
         initiateLoading(getActivity());
 
-
-
         MobileCheckinObj flightObj = new MobileCheckinObj();
         flightObj.setPnr(editPnr.getText().toString());
         flightObj.setDeparture_station(txtDeparture.getTag().toString());
@@ -305,7 +334,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     }
 
     public void searchFlightFragment(MobileCheckinObj flightObj){
-
+        retrieveCheckIn = true;
         presenter.checkinFlight(flightObj);
     }
 
@@ -339,7 +368,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     public void onCheckindataReceive(MobileCheckinReceive obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent flight = new Intent(getActivity(), MobileCheckInActivity2.class);
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
@@ -362,9 +391,28 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         Log.e("RESUME", "TRUE");
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         Log.e("Tracker", SCREEN_LABEL);
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if (!retrieveCheckIn) {
+            if (result.size() > 0) {
+                Log.e("x", "1");
+                Gson gson = new Gson();
+                ListBookingReceive obj = gson.fromJson(result.get(0).getCachedResult(), ListBookingReceive.class);
+                onUserPnrList(obj);
+            }
+        }else {
+                if (result.size() > 0) {
+                    Log.e("x", "1");
+                    Gson gson = new Gson();
+                    MobileCheckinReceive obj = gson.fromJson(result.get(0).getCachedResult(), MobileCheckinReceive.class);
+                    onCheckindataReceive(obj);
+                }
+        }
+
     }
 
     @Override

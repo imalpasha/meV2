@@ -49,6 +49,7 @@
             android:background="@color/dark_lvl1"
             android:weightSum="1">
 
+
             <LinearLayout
                 android:clickable="true"
                 android:background="@drawable/homepage_white_with_gradient"
@@ -284,6 +285,7 @@
                         />
                 </LinearLayout>
             </LinearLayout>
+
 
         </LinearLayout>
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.text.InputFilter;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,9 @@ import android.widget.TextView;
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.LoginReceive;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -27,15 +30,18 @@ import com.fly.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.fly.firefly.ui.activity.Picker.DatePickerFragment;
 import com.fly.firefly.ui.activity.Picker.StateListDialogFragment;
 import com.fly.firefly.ui.module.RegisterModule;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.DatePickerObj;
 import com.fly.firefly.ui.object.RegisterObj;
 import com.fly.firefly.ui.presenter.RegisterPresenter;
 import com.fly.firefly.utils.AESCBC;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
@@ -58,6 +64,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class RegisterFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,RegisterPresenter.RegisterView,Validator.ValidationListener {
 
@@ -194,6 +201,8 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new RegisterModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
         // Validator
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -206,6 +215,16 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         final View view = inflater.inflate(R.layout.register, container, false);
         ButterKnife.inject(this, view);
 
+        //set textview focusable for error
+        //txtTitle.setFocusable(true);
+        //txtTitle.setFocusableInTouchMode(true);
+       // txtRegisterDatePicker
+       //         editTextCountry
+       //         editTextState
+
+        //set only capital
+        txtFirstName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+        txtLastName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
         calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -273,7 +292,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 //Multiple Manual Validation - Library Problem (failed to validate optional field)
                 resetManualValidationStatus();
                 manualValidation(txtBonusLink, "bonuslink");
-                if(editTextMobilePhone.getText().toString().length() != 2){
+                if(txtAlternatePhoneNumber.getText().toString().length() != 2){
                     manualValidation(txtAlternatePhoneNumber, "phoneNumber");
                 }else{
                     txtAlternatePhoneNumber.setText("");
@@ -288,8 +307,10 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                 validateStatus = getManualValidationStatus();
 
                 //get mobile phone dialing code
-                if(validateDialingCode(dialingCode,editTextMobilePhone.getText().toString())){
-                    editTextMobilePhone.setError("Mobile phone must start with country code.");
+                if(dialingCode != null){
+                    if(validateDialingCode(dialingCode,editTextMobilePhone.getText().toString())){
+                        editTextMobilePhone.setError("Mobile phone must start with country code.");
+                    }
                 }
                 mValidator.validate();
             }
@@ -426,7 +447,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            setSuccessDialog(getActivity(), obj.getMessage(), LoginActivity.class);
+            Intent loginPage = new Intent(getActivity(), LoginActivity.class);
+            getActivity().startActivity(loginPage);
+            getActivity().finish();
         }
 
     }
@@ -454,9 +477,14 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
         boolean fieldError = false;
         String errorMessage = null;
+        boolean firstView = true;
 
         for (ValidationError error : errors) {
+
+
             View view = error.getView();
+            view.setFocusable(true);
+
             setShake(view);
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
@@ -469,13 +497,19 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             {
                 ((TextView) view).setError(splitErrorMsg[0]);
             }
-            fieldError = true;
-            errorMessage = splitErrorMsg[0];
+
+            if(firstView){
+
+                view.requestFocus();
+            }
+            firstView = false;
         }
 
-        if(fieldError){
-            //croutonAlert(getActivity(), errorMessage);
-        }
+
+
+        //if(fieldError){
+        //    croutonAlert(getActivity(), errorMessage);
+        //}
 
 
     }
@@ -491,7 +525,13 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         super.onResume();
         presenter.onResume();
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Gson gson = new Gson();
+            RegisterReceive obj = gson.fromJson(result.get(0).getCachedResult(), RegisterReceive.class);
+            onSuccessRegister(obj);
+        }
     }
 
     @Override

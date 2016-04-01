@@ -83,7 +83,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ITINENARY INFORMATION"
+                            android:text="ITINERARY INFORMATION"
                             android:id="@+id/textView84"
                             android:textSize="@dimen/font20sp"
                             android:textColor="@color/white"
@@ -396,6 +396,44 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="1"
+                            android:padding="2dp"
+                            android:id="@+id/infantLayout"
+                            android:visibility="gone" >
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.6"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1 Guest(s) @ 394.95 MYR"
+                                    android:id="@+id/txtInfant"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.4"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="123.90 MYR"
+                                    android:layout_gravity="right"
+                                    android:id="@+id/txtInfantTotal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:weightSum="1"
                             android:padding="3dp" >
@@ -570,7 +608,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Goods amp; Sevices Tax"
+                                        android:text="Goods &amp; Sevices Tax"
                                         android:textSize="13dp" />
                                 </LinearLayout>
 
@@ -703,6 +741,44 @@
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:weightSum="1"
+                            android:padding="2dp"
+                            android:id="@+id/infantLayoutReturn"
+                            android:visibility="gone" >
+
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.6"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="1 Guest(s) @ 394.95 MYR"
+                                    android:id="@+id/txtInfantReturn"
+                                    android:textSize="14dp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.4"
+                                android:layout_height="match_parent" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="123.90 MYR"
+                                    android:layout_gravity="right"
+                                    android:id="@+id/txtInfantTotalReturn" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:weightSum="1"
                             android:padding="3dp" >
@@ -725,6 +801,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="[Details]"
+                                    android:textColor="@color/blue"
                                     android:id="@+id/txtReturnFlightPriceDetail"
                                     android:textSize="14dp" />
                             </LinearLayout>
@@ -876,7 +953,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Goods amp; Sevices Tax"
+                                        android:text="Goods &amp; Sevices Tax"
                                         android:textSize="13dp" />
                                 </LinearLayout>
 
@@ -1165,7 +1242,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="PASSENGER INFO"
+                            android:text="PASSENGER INFORMATION"
                             android:id="@+id/textView321"
                             android:textSize="@dimen/font20sp"
                             android:textColor="@color/white"

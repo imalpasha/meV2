@@ -757,7 +757,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:id="@+id/textView156"
                                         android:textStyle="bold"/>
 
@@ -1315,8 +1315,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
-                                        android:id="@+id/textView176"
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -1877,7 +1876,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"
                                         android:id="@+id/textView191" />
 
@@ -2439,7 +2438,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"
                                         android:id="@+id/textView211" />
 
@@ -2999,7 +2998,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"
                                         android:id="@+id/textView231" />
 
@@ -3555,7 +3554,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -4102,7 +4101,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -4648,7 +4647,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -5194,7 +5193,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -5760,8 +5759,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
-                                        android:id="@+id/textView176"
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -6327,8 +6325,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
-                                        android:id="@+id/textView176"
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -6892,8 +6889,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
-                                        android:id="@+id/textView176"
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -7443,8 +7439,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Bonuslink Card No."
-                                        android:id="@+id/textView176"
+                                        android:text="BonusLink Card No."
                                         android:textStyle="bold"/>
 
                                     <LinearLayout

@@ -41,6 +41,11 @@ public class PaymentInfoReceive {
 
     public PaymentInfoReceive(PaymentInfoReceive returnObj) {
         this.obj = returnObj;
+        status = returnObj.getStatus();
+        message = returnObj.getMessage();
+        amount_due = returnObj.getAmount_due();
+        payment_channel = returnObj.getPayment_channel();
+
     }
 
     public PaymentInfoReceive getObj() {

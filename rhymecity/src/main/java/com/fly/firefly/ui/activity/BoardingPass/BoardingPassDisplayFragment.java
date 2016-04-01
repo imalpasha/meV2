@@ -36,6 +36,7 @@ import com.fly.firefly.ui.object.RetrieveBoardingPassObj;
 import com.fly.firefly.ui.presenter.BoardingPassPresenter;
 import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -82,6 +83,7 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RealmObjectController.clearCachedResult(getActivity());
     }
 
     @Override
@@ -121,34 +123,34 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     public void startPagination(RetrieveBoardingPassReceive passObj){
 
         ArrayList<PagerBoardingPassObj> listProductImages = new ArrayList<PagerBoardingPassObj>();
-        for (int i = 0; i < passObj.getObj().getBoarding_pass().size(); i++) {
+        for (int i = 0; i < passObj.getBoarding_pass().size(); i++) {
             PagerBoardingPassObj boardingPass = new PagerBoardingPassObj();
 
-            boardingPass.setQRCodeURL(passObj.getObj().getBoarding_pass().get(i).getQRCodeURL());
-            boardingPass.setQRCode(passObj.getObj().getBoarding_pass().get(i).getQRCode());
-            boardingPass.setSSR(passObj.getObj().getBoarding_pass().get(i).getSSR());
-            boardingPass.setName(passObj.getObj().getBoarding_pass().get(i).getName());
-            boardingPass.setFlightNumber(passObj.getObj().getBoarding_pass().get(i).getFlightNumber());
-            boardingPass.setSeat(passObj.getObj().getBoarding_pass().get(i).getSeat());
-            boardingPass.setFare(passObj.getObj().getBoarding_pass().get(i).getFare());
-            boardingPass.setArrivalDateTime(passObj.getObj().getBoarding_pass().get(i).getArrivalDateTime());
-            boardingPass.setArrivalStation(passObj.getObj().getBoarding_pass().get(i).getArrivalStation());
-            boardingPass.setArrivalStationCode(passObj.getObj().getBoarding_pass().get(i).getArrivalStationCode());
-            boardingPass.setArrivalTime(passObj.getObj().getBoarding_pass().get(i).getArrivalTime());
-            boardingPass.setBarCodeData(passObj.getObj().getBoarding_pass().get(i).getBarCodeData());
-            boardingPass.setBarCodeURL(passObj.getObj().getBoarding_pass().get(i).getBarCodeURL());
-            boardingPass.setBoardingSequence(passObj.getObj().getBoarding_pass().get(i).getBoardingSequence());
-            boardingPass.setBoardingTime(passObj.getObj().getBoarding_pass().get(i).getBoardingTime());
-            boardingPass.setDepartureDate(passObj.getObj().getBoarding_pass().get(i).getDepartureDate());
-            boardingPass.setDepartureDateTime(passObj.getObj().getBoarding_pass().get(i).getDepartureDateTime());
-            boardingPass.setDepartureGate(passObj.getObj().getBoarding_pass().get(i).getDepartureGate());
-            boardingPass.setDepartureStation(passObj.getObj().getBoarding_pass().get(i).getDepartureStation());
-            boardingPass.setDepartureStationCode(passObj.getObj().getBoarding_pass().get(i).getDepartureStationCode());
-            boardingPass.setDepartureTime(passObj.getObj().getBoarding_pass().get(i).getDepartureTime());
-            boardingPass.setRecordLocator(passObj.getObj().getBoarding_pass().get(i).getRecordLocator());
-            boardingPass.setDepartureDayDate(passObj.getObj().getBoarding_pass().get(i).getDepartureDayDate());
+            boardingPass.setQRCodeURL(passObj.getBoarding_pass().get(i).getQRCodeURL());
+            boardingPass.setQRCode(passObj.getBoarding_pass().get(i).getQRCode());
+            boardingPass.setSSR(passObj.getBoarding_pass().get(i).getSSR());
+            boardingPass.setName(passObj.getBoarding_pass().get(i).getName());
+            boardingPass.setFlightNumber(passObj.getBoarding_pass().get(i).getFlightNumber());
+            boardingPass.setSeat(passObj.getBoarding_pass().get(i).getSeat());
+            boardingPass.setFare(passObj.getBoarding_pass().get(i).getFare());
+            boardingPass.setArrivalDateTime(passObj.getBoarding_pass().get(i).getArrivalDateTime());
+            boardingPass.setArrivalStation(passObj.getBoarding_pass().get(i).getArrivalStation());
+            boardingPass.setArrivalStationCode(passObj.getBoarding_pass().get(i).getArrivalStationCode());
+            boardingPass.setArrivalTime(passObj.getBoarding_pass().get(i).getArrivalTime());
+            boardingPass.setBarCodeData(passObj.getBoarding_pass().get(i).getBarCodeData());
+            boardingPass.setBarCodeURL(passObj.getBoarding_pass().get(i).getBarCodeURL());
+            boardingPass.setBoardingSequence(passObj.getBoarding_pass().get(i).getBoardingSequence());
+            boardingPass.setBoardingTime(passObj.getBoarding_pass().get(i).getBoardingTime());
+            boardingPass.setDepartureDate(passObj.getBoarding_pass().get(i).getDepartureDate());
+            boardingPass.setDepartureDateTime(passObj.getBoarding_pass().get(i).getDepartureDateTime());
+            boardingPass.setDepartureGate(passObj.getBoarding_pass().get(i).getDepartureGate());
+            boardingPass.setDepartureStation(passObj.getBoarding_pass().get(i).getDepartureStation());
+            boardingPass.setDepartureStationCode(passObj.getBoarding_pass().get(i).getDepartureStationCode());
+            boardingPass.setDepartureTime(passObj.getBoarding_pass().get(i).getDepartureTime());
+            boardingPass.setRecordLocator(passObj.getBoarding_pass().get(i).getRecordLocator());
+            boardingPass.setDepartureDayDate(passObj.getBoarding_pass().get(i).getDepartureDayDate());
 
-            boardingPass.setBoardingPosition((i+1)+" / "+(passObj.getObj().getBoarding_pass().size()));
+            boardingPass.setBoardingPosition((i+1)+" / "+(passObj.getBoarding_pass().size()));
             listProductImages.add(boardingPass);
         }
 

@@ -26,6 +26,7 @@ import com.fly.firefly.ui.object.MobileCheckInPassenger;
 import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.MobileCheckInPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -68,6 +69,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new MobileCheckInModule2(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
     }
 
     @Override
@@ -87,26 +89,26 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
             Gson gson = new Gson();
             obj = gson.fromJson(flightSummary, MobileCheckinReceive.class);
 
-            PNR = obj.getObj().getPnr();
-            departureCode = obj.getObj().getDeparture_station_code();
-            arrivalCode = obj.getObj().getArrival_station_code();
+            PNR = obj.getPnr();
+            departureCode = obj.getDeparture_station_code();
+            arrivalCode = obj.getArrival_station_code();
 
-            Log.e("Status",obj.getObj().getStatus());
+            Log.e("Status",obj.getStatus());
 
             TextView flightdate = (TextView) header.findViewById(R.id.flightdate);
             TextView flightnumber = (TextView) header.findViewById(R.id.flightnumber);
             TextView stationcode = (TextView) header.findViewById(R.id.stationcode);
             TextView departuretime = (TextView) header.findViewById(R.id.departuretime);
 
-            stationcode.setText(obj.getObj().getFlight_detail().getStation_code());
-            flightdate.setText(obj.getObj().getFlight_detail().getFlight_date());
-            flightnumber.setText(obj.getObj().getFlight_detail().getFlight_number());
-            departuretime.setText(obj.getObj().getFlight_detail().getDeparture_time());
+            stationcode.setText(obj.getFlight_detail().getStation_code());
+            flightdate.setText(obj.getFlight_detail().getFlight_date());
+            flightnumber.setText(obj.getFlight_detail().getFlight_number());
+            departuretime.setText(obj.getFlight_detail().getDeparture_time());
 
         }
 
         //adapter = new CheckInPassengerListAdapter(getActivity(),obj.getObj().getPassengers(),this,getActivity().getSupportFragmentManager());
-        adapter = new CheckInAdapter(getActivity(),obj.getObj().getPassengers(),this,getActivity().getSupportFragmentManager());
+        adapter = new CheckInAdapter(getActivity(),obj.getPassengers(),this,getActivity().getSupportFragmentManager());
         listview.setAdapter(adapter);
         listview.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         listview.setGroupIndicator(null);
@@ -114,16 +116,28 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         mobileCheckInNext2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean goNext = false;
 
                 mobileCheckInNext2.requestFocus();
-                next();
+                //validate atleast one passenger is selected
+                for(int i = 0 ; i < obj.getPassengers().size() ; i++) {
+                    if(obj.getPassengers().get(i).getChecked() != null){
+                        goNext = true;
+                    }
+                }
+
+                if(goNext){
+                    next();
+                }else{
+                    setAlertDialog(getActivity(),"Atleast one passenger selected","Check - In.");
+                }
 
             }
         });
 
 
-        for(int y = 0 ; y < obj.getObj().getPassengers().size() ; y++){
-            if(obj.getObj().getPassengers().get(y).getStatus().equals("Checked In")){
+        for(int y = 0 ; y < obj.getPassengers().size() ; y++){
+            if(obj.getPassengers().get(y).getStatus().equals("Checked In")){
                 allCheckIn = true;
             }else{
                 allCheckIn = false;
@@ -136,39 +150,33 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     }
 
     /*Public-Inner Func*/
-    public void next()
-    {
+    public void next() {
         ArrayList<PassengerInfo> mainObj = new ArrayList<PassengerInfo>();
 
         initiateLoading(getActivity());
-        Log.e("xx", Integer.toString(obj.getObj().getPassengers().size()));
-        for(int i = 0 ; i < obj.getObj().getPassengers().size() ; i++){
+        for(int i = 0 ; i < obj.getPassengers().size() ; i++){
 
             PassengerInfo passengerObj = new PassengerInfo();
-            passengerObj.setExpiration_date(obj.getObj().getPassengers().get(i).getExpiration_date());
-            passengerObj.setDocument_number(obj.getObj().getPassengers().get(i).getDocument_number());
-            passengerObj.setIssuing_country(obj.getObj().getPassengers().get(i).getIssuing_country());
-            passengerObj.setTravel_document(obj.getObj().getPassengers().get(i).getTravel_document());
-            passengerObj.setPassenger_number(obj.getObj().getPassengers().get(i).getPassenger_number());
+            passengerObj.setExpiration_date(obj.getPassengers().get(i).getExpiration_date());
+            passengerObj.setDocument_number(obj.getPassengers().get(i).getDocument_number());
+            passengerObj.setIssuing_country(obj.getPassengers().get(i).getIssuing_country());
+            passengerObj.setTravel_document(obj.getPassengers().get(i).getTravel_document());
+            passengerObj.setPassenger_number(obj.getPassengers().get(i).getPassenger_number());
 
             String bonuslink;
-            if(obj.getObj().getPassengers().get(i).getBonuslink() == null){
+            if(obj.getPassengers().get(i).getBonuslink() == null){
                 bonuslink = null;
             }else{
-                bonuslink = obj.getObj().getPassengers().get(i).getBonuslink();
+                bonuslink = obj.getPassengers().get(i).getBonuslink();
             }
             passengerObj.setBonusLink(bonuslink);
 
-            if(obj.getObj().getPassengers().get(i).getChecked() == null){
+            if(obj.getPassengers().get(i).getChecked() == null){
                 passengerObj.setStatus("N");
             }else{
-                passengerObj.setStatus(obj.getObj().getPassengers().get(i).getChecked());
+                passengerObj.setStatus(obj.getPassengers().get(i).getChecked());
             }
             mainObj.add(passengerObj);
-
-
-            Log.e("Doc No", obj.getObj().getPassengers().get(i).getDocument_number());
-            //Log.e("Bonuslink No",obj.getObj().getPassengers().get(i).getBonuslink());
 
         }
 
@@ -177,7 +185,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         obj2.setPnr(PNR);
         obj2.setDeparture_station_code(departureCode);
         obj2.setArrival_station_code(arrivalCode);
-        obj2.setSignature(obj.getObj().getSignature());
+        obj2.setSignature(obj.getSignature());
 
         presenter.checkInPassenger(obj2);
 

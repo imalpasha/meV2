@@ -233,6 +233,9 @@ public class RetrieveBoardingPassReceive {
 
     public RetrieveBoardingPassReceive(RetrieveBoardingPassReceive dataObj) {
         obj = dataObj;
+        status = dataObj.getStatus();
+        message = dataObj.getMessage();
+        boarding_pass = dataObj.getBoarding_pass();
     }
 
     public String getMessage() {

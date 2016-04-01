@@ -545,7 +545,8 @@
                                     android:layout_width="0dp"
                                     android:layout_weight="0.6"
                                     android:layout_height="fill_parent"
-                                    android:gravity="left|top">
+                                    android:gravity="left|top"
+                                    android:layout_marginBottom="5dp">
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -564,14 +565,6 @@
                                         android:ellipsize="end"/>
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="0dp"
-                                    android:layout_weight="0.2"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center" >
-
-                                </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout

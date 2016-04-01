@@ -161,7 +161,7 @@ public class NavigationDrawerFragment extends Fragment {
                 // Set Hi
                 DrawerItem vrsm = new DrawerItem();
                 vrsm.setId(0);
-                vrsm.setTitle("Hi " + userName);
+                vrsm.setTitle("Hi, " + userName);
                 vrsm.setTag("HEADER");
                 vrsm.setLayoutId(DrawerViewType.HEADER_CLOSEBTN);
                 vrsm.setBackgroundColor(getResources().getColor(R.color.black));

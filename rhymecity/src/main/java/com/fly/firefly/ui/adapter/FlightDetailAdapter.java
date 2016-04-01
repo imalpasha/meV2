@@ -140,7 +140,7 @@ public class FlightDetailAdapter extends BaseAdapter {
                 vh.checkBox.setVisibility(View.GONE);
             }else{
                 totalFare = obj.get(position).getFlexObj().getTotal_fare()+" MYR";
-                if(obj.get(position).getFlexObj().getBefore_discounted_fare() == null){
+                if(obj.get(position).getFlexObj().getBefore_discounted_fare() == ""){
                     vh.txtBeforeDiscounted.setVisibility(View.GONE);
                 }else{
                     beforeDiscount = obj.get(position).getFlexObj().getBefore_discounted_fare()+" MYR";
@@ -154,7 +154,7 @@ public class FlightDetailAdapter extends BaseAdapter {
                 vh.checkBox.setVisibility(View.GONE);
             }else{
                 totalFare = obj.get(position).getBasicObj().getTotal_fare()+" MYR";
-                if(obj.get(position).getBasicObj().getBefore_discounted_fare() == null){
+                if(obj.get(position).getBasicObj().getBefore_discounted_fare() == ""){
                     vh.txtBeforeDiscounted.setVisibility(View.GONE);
                 }else{
                     beforeDiscount = obj.get(position).getBasicObj().getBefore_discounted_fare()+" MYR";

@@ -2,6 +2,9 @@ package me.mattlogan.rhymecity;
 
 import com.fly.firefly.AppModule;
 import com.fly.firefly.api.ApiService;
+import com.squareup.okhttp.OkHttpClient;
+
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -11,6 +14,7 @@ import me.mattlogan.rhymecity.log.DebugLogger;
 import retrofit.Endpoint;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.client.OkClient;
 
 @Module(
         overrides = true,
@@ -28,9 +32,15 @@ public class DebugAppModule {
     @Singleton
     ApiService provideApiService(RequestInterceptor requestInterceptor, RestAdapter.Log logger,
                                  Endpoint endpoint) {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(90, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(90, TimeUnit.SECONDS);
+
         return new RestAdapter.Builder()
                 .setEndpoint(endpoint)
                 .setRequestInterceptor(requestInterceptor)
+                .setClient(new OkClient(okHttpClient))
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setLog(logger)
                 .build()

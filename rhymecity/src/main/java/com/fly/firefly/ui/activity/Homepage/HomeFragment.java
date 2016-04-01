@@ -2,15 +2,23 @@ package com.fly.firefly.ui.activity.Homepage;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
@@ -84,6 +92,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @InjectView(R.id.instagramLink)
     LinearLayout igLink;
 
+
     private static final String SCREEN_LABEL = "Home";
     private String facebookUrl,twitterUrl,instagramUrl;
     private int fragmentContainerId;
@@ -127,11 +136,38 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
         RealmObjectController.clearCachedResult(getActivity());
 
+        //TextView myTextView = new TextView(getActivity());
+
+
+
         /*Realm Obj Test*/
 //        Realm realm = Realm.getInstance(getActivity());
 //        RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
 //        Log.e("Result",result2.toString());
         /* ------------ */
+
+        //insurance clickable
+       /* SpannableString ss = new SpannableString("Android is a Software stack");
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                //startActivity(new Intent(MyActivity.this, NextActivity.class));
+                Log.e("CLICKED","TRUE");
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 22, 27, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView textView = (TextView) findViewById(R.id.hello);
+        textView.setText(ss);
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setHighlightColor(Color.TRANSPARENT);*/
+        //
+
 
         /*GET PREF DATA*/
         HashMap<String, String> initPromoBanner = pref.getPromoBanner();
@@ -290,6 +326,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //setUpMap();
         //trySetAlarm();
         //LocalNotification.convert(getActivity());
+
         return view;
     }
 

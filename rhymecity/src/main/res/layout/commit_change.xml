@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/grey_with_white_gradient">
 
 
     <ScrollView
@@ -26,26 +27,52 @@
 
 
                 <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="15dp"
+                    android:gravity="center"
+                    android:background="@null">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        android:text="Are you sure want to update?"
+                        android:id="@+id/txtAreSure" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:gravity="center"
                     android:weightSum="1"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp">
 
                     <Button
+                        android:layout_marginRight="1dp"
                         android:layout_width="0dp"
-                        android:layout_weight="0.5"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="Confirm Update"
-                        android:id="@+id/confirmUpdate" />
+                        android:layout_weight="0.45"
+                        android:padding="2dp"
+                        android:layout_height="40dp"
+                        android:text="Confirm"
+                        android:id="@+id/confirmUpdate"
+                        android:textColor="@color/orange_firefly"
+                        android:textStyle="bold"
+                        android:background="@drawable/login_register_button_clicked"/>
 
                     <Button
+                        android:layout_marginLeft="1dp"
                         android:layout_width="0dp"
-                        android:layout_weight="0.5"
-                        android:padding="5dp"
-                        android:layout_height="wrap_content"
-                        android:text="Cancel Update"
+                        android:layout_weight="0.45"
+                        android:padding="2dp"
+                        android:layout_height="40dp"
+                        android:text="Cancel"
+                        android:textColor="@color/orange_firefly"
+                        android:textStyle="bold"
+                        android:background="@drawable/login_register_button_clicked"
                         android:id="@+id/cancelUpdate" />
                 </LinearLayout>
 
@@ -370,6 +397,44 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:padding="2dp"
+                        android:id="@+id/infantLayout"
+                        android:visibility="gone" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.6"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 Guest(s) @ 394.95 MYR"
+                                android:id="@+id/txtInfant"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="123.90 MYR"
+                                android:layout_gravity="right"
+                                android:id="@+id/txtInfantTotal" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:weightSum="1"
                         android:padding="3dp" >
@@ -544,7 +609,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Goods amp; Sevices Tax"
+                                    android:text="Goods &amp; Sevices Tax"
                                     android:textSize="13dp" />
                             </LinearLayout>
 
@@ -614,7 +679,7 @@
                     android:padding="5dp"
                     android:background="@drawable/drawable_login_bottom_border"
                     android:id="@+id/returnFlightPrice"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:orientation="horizontal"
@@ -677,6 +742,44 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="1"
+                        android:padding="2dp"
+                        android:id="@+id/infantLayoutReturn"
+                        android:visibility="gone" >
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.6"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="1 Guest(s) @ 394.95 MYR"
+                                android:id="@+id/txtInfantReturn"
+                                android:textSize="14dp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.4"
+                            android:layout_height="match_parent" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="123.90 MYR"
+                                android:layout_gravity="right"
+                                android:id="@+id/txtInfantTotalReturn" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:weightSum="1"
                         android:padding="3dp" >
@@ -699,6 +802,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="[Details]"
+                                android:textColor="@color/blue"
                                 android:id="@+id/txtReturnFlightPriceDetail"
                                 android:textSize="14dp" />
                         </LinearLayout>
@@ -850,7 +954,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Goods amp; Sevices Tax"
+                                    android:text="Goods &amp; Sevices Tax"
                                     android:textSize="13dp" />
                             </LinearLayout>
 
@@ -1139,7 +1243,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="PASSENGER INFO"
+                        android:text="PASSENGER INFORMATION"
                         android:id="@+id/textView321"
                         android:textSize="@dimen/font20sp"
                         android:textColor="@color/white"

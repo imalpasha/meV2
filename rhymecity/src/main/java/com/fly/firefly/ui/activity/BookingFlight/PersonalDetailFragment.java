@@ -339,7 +339,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
-            txtPassengerType.setText("Adult "+adultInc);
+            txtPassengerType.setText("ADULT "+adultInc);
 
         }
         //auto set infant travelling with
@@ -349,7 +349,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             travellingWith.setText(adultPassengerList.get(infantInc - 1).getText());
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + Integer.parseInt(adult)));
-            txtPassengerType.setText("Infant " +infantInc);
+            txtPassengerType.setText("INFANT " +infantInc);
         }
 
 
@@ -379,6 +379,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
                     EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
                     EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
+
+                    title.setFocusable(true);
 
                     checkTextViewNull(title);
                     checkTextViewNull(dob);
@@ -596,9 +598,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         runPassengerInfo(obj);
 
 
-                    }else{
-                        croutonAlert(getActivity(), "Please fill empty field");
                     }
+                    //else{
+                    //    croutonAlert(getActivity(), "Please fill empty field");
+                    //}
 
             }
         });
@@ -776,7 +779,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            setSuccessDialog(getActivity(), obj.getMessage(),null);
+            setSuccessDialog(getActivity(), obj.getMessage(),null,"Success!");
         }
 
     }
@@ -784,6 +787,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     public void checkTextViewNull(TextView txtView){
         if(txtView.getText().toString() == "") {
             txtView.setError("Field Required");
+            setShake(txtView);
+            txtView.requestFocus();
             formContinue = false;
         }
     }
@@ -792,6 +797,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         if (editText.getText().toString().matches("")) {
             editText.setError("Field Required");
+            setShake(editText);
+            editText.requestFocus();
             formContinue = false;
         }
 
@@ -802,6 +809,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         if (!bonuslink.getText().toString().matches("")) {
             if(bonuslink.length() < 16 || bonuslink.length() > 16){
                 bonuslink.setError("Invalid bonuslink card number");
+                setShake(bonuslink);
+                bonuslink.requestFocus();
             }
             formContinue = false;
         }
@@ -899,6 +908,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getStatus(),obj.getMessage() , getActivity());
         if (status) {
+            Gson gsonFlight = new Gson();
+            String seat = gsonFlight.toJson(obj);
+            pref.setSeat(seat);
+
             Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
             intent.putExtra("INSURANCE_STATUS", (new Gson()).toJson(obj));
             //intent.putExtra("DEFAULT_PASSENGER_INFO", (new Gson()).toJson(defaultObj));

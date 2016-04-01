@@ -15,6 +15,9 @@ public class LoginReceive {
 
     public LoginReceive(LoginReceive param_userObj) {
         this.userObj = param_userObj;
+        user_info = param_userObj.getUser_info();
+        message = param_userObj.getMessage();
+        status = param_userObj.getStatus();
     }
 
     public LoginReceive getUserObj() {

@@ -32,6 +32,20 @@ public class ManageChangeContactReceive {
     private String total_paid;
     private String total_due;
     private String booking_id;
+    private String pnr;
+    private ManageChangeContactReceive obj;
+
+
+
+    public void setObj(ManageChangeContactReceive obj) {
+        this.obj = obj;
+
+
+    }
+
+    public String getStatus() {
+        return status;
+    }
 
     public String getBooking_id() {
         return booking_id;
@@ -49,7 +63,6 @@ public class ManageChangeContactReceive {
         this.pnr = pnr;
     }
 
-    private String pnr;
 
     public Insurance getInsurance_details() {
         return insurance_details;
@@ -90,17 +103,6 @@ public class ManageChangeContactReceive {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public List<PaymentDetail> getPayment_details() {
         return payment_details;
@@ -144,24 +146,6 @@ public class ManageChangeContactReceive {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public List<PassengerList> getPassenger_information() {
         return passenger_information;
     }
@@ -186,7 +170,6 @@ public class ManageChangeContactReceive {
         this.total_due = total_due;
     }
 
-    private ManageChangeContactReceive obj;
 
     public class FlightDetails {
 
@@ -412,7 +395,6 @@ public class ManageChangeContactReceive {
 
     }
 
-
     public ContactInformation getContact_information() {
         return contact_information;
     }
@@ -420,7 +402,6 @@ public class ManageChangeContactReceive {
     public void setContact_information(ContactInformation contact_information) {
         this.contact_information = contact_information;
     }
-
 
     public ItinenaryInformation getItenerary_information() {
         return itinerary_information;
@@ -539,7 +520,6 @@ public class ManageChangeContactReceive {
 
     }
 
-
     public List<PassengerList> getPassenger_lists() {
         return passenger_information;
     }
@@ -547,8 +527,6 @@ public class ManageChangeContactReceive {
     public void setPassenger_lists(List<PassengerList> passenger_lists) {
         this.passenger_information = passenger_lists;
     }
-
-
 
     public String getTotal_price() {return total_price;}
 
@@ -573,11 +551,24 @@ public class ManageChangeContactReceive {
 
     public ManageChangeContactReceive(ManageChangeContactReceive param_obj){
         this.obj = param_obj;
+        status = obj.getStatus();
+        itinerary_information = obj.getItenerary_information();
+        contact_information = obj.getContact_information();
+        message = obj.getMessage();
+        insurance_details = obj.getInsurance_details();
+        payment_details = obj.getPayment_details();
+        flight_details = obj.getFlight_details();
+        price_details = obj.getPrice_details();
+        passenger_information = obj.getPassenger_information();
+
+        total_price = obj.getTotal_price();
+        total_paid = obj.getTotal_paid();
+        total_due = obj.getTotal_due();
+        booking_id = obj.getBooking_id();
+        pnr = obj.getPnr();
     }
 
-    public String getStatus() {
-        return status;
-    }
+
 
     public void setStatus(String status) {
         this.status = status;
@@ -587,9 +578,7 @@ public class ManageChangeContactReceive {
         return obj;
     }
 
-    public void setObj(ManageChangeContactReceive obj) {
-        this.obj = obj;
-    }
+
 
 }
 

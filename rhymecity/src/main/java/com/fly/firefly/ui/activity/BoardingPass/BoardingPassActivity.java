@@ -37,13 +37,13 @@ public class BoardingPassActivity extends MainFragmentActivity implements Fragme
         hideTitle();
     }
 
-    @Override
-    public void onBackPressed(){
+   // @Override
+   // public void onBackPressed(){
 
-        final FragmentManager manager = getSupportFragmentManager();
-        BoardingPassFragment fragment = (BoardingPassFragment) manager.findFragmentByTag("Boarding");
-        fragment.onBackPressed();
-    }
+     //   final FragmentManager manager = getSupportFragmentManager();
+     //   BoardingPassFragment fragment = (BoardingPassFragment) manager.findFragmentByTag("Boarding");
+     //   fragment.onBackPressed();
+   // }
 
     @Override
     public void onResume() {

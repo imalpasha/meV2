@@ -114,11 +114,27 @@
             android:id="@+id/linearCheckInExpireDate"
             android:background="@drawable/drawable_login_bottom_border">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Expiration Date:*"
-                android:textStyle="bold"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Expiration Date:"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/asterik"
+                    android:textColor="@color/red"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="3dp"
+                    android:id="@+id/textView394" />
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -198,7 +214,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bonuslink Card No"
+                android:text="BonusLink Card No."
                 android:id="@+id/textView29"
                 android:textStyle="bold" />
 

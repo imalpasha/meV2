@@ -131,6 +131,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     private String storePassword;
     private SelectFlight selectFlightObj;
     private String loginStatus;
+    private boolean normalFlightList = false;
 
     public static CodeShareFlightListFragment newInstance(Bundle bundle) {
 
@@ -197,6 +198,15 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             goingFlightNA.setVisibility(View.GONE);
             basicPremierLayout.setVisibility(View.VISIBLE);
         }
+
+        //mix change flight availability
+        if(pnr != null){
+            if (obj.getGoing_flight().getStatus().equals("N")) {
+                goingFlightBlock.setVisibility(View.GONE);
+                goingFlightNA.setVisibility(View.GONE);
+            }
+        }
+
         //Depart Airport ----------------------------------
         departPort = obj.getJourneys().get(0).getDeparture_station_name();
         arrivalPort = obj.getJourneys().get(0).getArrival_station_name();
@@ -204,7 +214,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         String type = "("+obj.getJourneys().get(0).getType()+")";
         Log.e("FlightType",type);
 
-        txtDepartAirport.setText(departPort+" - "+arrivalPort);
+        txtDepartAirport.setText(departPort.toUpperCase()+" - "+arrivalPort.toUpperCase());
         txtFlightType.setText(type);
 
         //Reformat Date
@@ -227,6 +237,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         if(obj.getJourneys().size() > 1){
 
 
+
             //Check From ManageFlight
             if(obj.getJourneys().get(1).getFlights().size() == 0){
                 //goingFlightBlock.setVisibility(View.GONE);
@@ -244,7 +255,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             returnDepartPort = obj.getJourneys().get(1).getDeparture_station_name();
             returnArrivalPort = obj.getJourneys().get(1).getArrival_station_name();
             String returnType = obj.getJourneys().get(1).getType();
-            txtReturnAirport.setText(returnDepartPort + " - " + returnArrivalPort);
+            txtReturnAirport.setText(returnDepartPort.toUpperCase() + " - " + returnArrivalPort.toUpperCase());
             txtReturnType.setText(returnType);
 
             //Reformat Date
@@ -254,6 +265,13 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             returnListBasic = new CodeShareAdapter(getActivity(),returnFlight,returnDepartPort,returnArrivalPort,RETURN,this);
             flightArrival.setAdapter(returnListBasic);
 
+            //mix change flight availability
+            if(pnr != null){
+                if(obj.getReturn_flight().getStatus().equals("N")){
+                    returnFlightBlock.setVisibility(View.GONE);
+                    returnFlightNA.setVisibility(View.GONE);
+                }
+            }
         }
         //else{
         //    returnFlightAvailable.setVisibility(View.VISIBLE);
@@ -265,19 +283,17 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                 AnalyticsApplication.sendEvent("Click", "Select Flight");
                 //check if flight checked
 
-                if(!fareRulesChkBox.isChecked()){
-                        croutonAlert(getActivity(), "You must agree to the terms and conditions.");
-                }else if(flightType.equals("0")){
+                if(flightType.equals("0")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else{
                         proceed = true;
                     }
                 }else if(flightType.equals("1")){
                     if(departFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Departure Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else if(returnFlightNumber == null){
-                        Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                        Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
                     }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
                         Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
                         proceed = false;
@@ -297,30 +313,38 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                     Log.e("status2",status2);
                     if(status1.equals("Y")){
                         if(departFlightNumber == null){
-                            Utils.toastNotification(getActivity(),"Please Check Departure Flight 3");
+                            Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                             proceed = false;
                         }
                     }
-                    if(status2.equals("Y")){
+                    else if(status2.equals("Y")){
                         if(returnFlightNumber == null){
-                            Utils.toastNotification(getActivity(),"Please Check Return Flight");
+                            Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
                             proceed = false;
                         }
                     }
 
                 }
+
+
                 if(proceed){
 
-                    if(pnr == null){
-                        if(loginStatus == null || loginStatus.equals("N")) {
-                            continueAs();
-                        }else{
-                            goPersonalDetail();
-                        }
+                    if(!fareRulesChkBox.isChecked()){
+                        proceed = false;
+                        croutonAlert(getActivity(), "You must agree to the terms and conditions.");
+                    }else{
+                        if(pnr == null){
+                            if(loginStatus == null || loginStatus.equals("N")) {
+                                continueAs();
+                            }else{
+                                goPersonalDetail();
+                            }
 
-                    }  else{
-                        changeFlight();
+                        }  else{
+                            changeFlight();
+                        }
                     }
+
                 }
             }
         });
@@ -454,8 +478,14 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         selectFlightObj.setReturn_date(returnDatePlain);
         selectFlightObj.setAdult(adult);
         selectFlightObj.setInfant(infant);
-        selectFlightObj.setUsername(""); //Get Username from Pref manager
 
+        HashMap<String, String> initUserEmail = pref.getUserEmail();
+        String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
+        if( userEmail == null){
+            userEmail = "";
+        }
+
+        selectFlightObj.setUsername(userEmail); //Get Username from Pref manager
         selectFlightObj.setFlight_number_1(departFlightNumber);
         selectFlightObj.setDeparture_time_1(departFlightDepartureTime);
         selectFlightObj.setArrival_time_1(departFlightArrivalTime);
@@ -477,10 +507,9 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     public void onSeletFlightReceive(SelectFlightReceive obj) {
 
         dismissLoading();
-        pref.setBookingID(obj.getFlightObj().getBookingId());
-        Log.e("BookingID",obj.getFlightObj().getBookingId());
+        pref.setBookingID(obj.getBookingId());
 
-        Boolean status = Controller.getRequestStatus(obj.getFlightObj().getStatus(), obj.getFlightObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
             passengerInfo.putExtra(ADULT, adult);
@@ -494,7 +523,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
         dismissLoading();
 
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Log.e("Success", "true");
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
@@ -535,9 +564,9 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     public void changeFlight() {
 
         initiateLoading(getActivity());
+        normalFlightList = true;
 
         SelectChangeFlight changeFlightObj = new SelectChangeFlight();
-
         changeFlightObj.setPnr(pnr);
         changeFlightObj.setBooking_id(bookingId);
         changeFlightObj.setSignature(obj.getSignature());
@@ -586,13 +615,23 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
-            Log.e("x","1");
-            Gson gson = new Gson();
-            SelectFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SelectFlightReceive.class);
-            onSeletFlightReceive(obj);
+
+        if(!normalFlightList){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                SelectFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SelectFlightReceive.class);
+                onSeletFlightReceive(obj);
+            }
         }else{
-            Log.e("x","2");
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+                onChangeFlightSuccess(obj);
+            }else {
+                Log.e("x", "2");
+            }
         }
     }
 

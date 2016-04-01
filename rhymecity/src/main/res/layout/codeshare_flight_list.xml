@@ -202,6 +202,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/economyPromoCheckBox"
+                android:buttonTint="@color/actionBarColour_default_theme"
                 android:scaleX="1.5"
                 android:scaleY="1.5" />
 
@@ -227,6 +228,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/economyCheckBox"
+                android:buttonTint="@color/actionBarColour_default_theme"
                 android:scaleX="1.5"
                 android:scaleY="1.5" />
 
@@ -252,6 +254,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/businessCheckBox"
+                android:buttonTint="@color/actionBarColour_default_theme"
                 android:scaleX="1.5"
                 android:scaleY="1.5" />
 

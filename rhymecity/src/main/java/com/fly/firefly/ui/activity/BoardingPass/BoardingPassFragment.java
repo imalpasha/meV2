@@ -36,6 +36,7 @@ import com.fly.firefly.ui.adapter.BookingListAdapter;
 import com.fly.firefly.ui.adapter.OfflineBookingListAdapter;
 import com.fly.firefly.ui.module.BoardingPassModule;
 import com.fly.firefly.ui.object.BoardingPassObj;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageFlightObj;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.ProductImage;
@@ -43,6 +44,7 @@ import com.fly.firefly.ui.object.RetrieveBoardingPassObj;
 import com.fly.firefly.ui.presenter.BoardingPassPresenter;
 import com.fly.firefly.ui.presenter.LoginPresenter;
 import com.fly.firefly.utils.DropDownItem;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -91,6 +93,12 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     @InjectView(R.id.listView)
     ListView listView;
 
+    @InjectView(R.id.boardingPassNA)
+    LinearLayout boardingPassNA;
+
+    @InjectView(R.id.listviewLayout)
+    LinearLayout listviewLayout;
+
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
     private ArrayList<DropDownItem> dataFlightDeparture;
@@ -107,6 +115,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     private String storeUsername;
     private String loginStatus;
     private String signatureFromLocal;
+    private boolean retrieveBoardingPass = false;
 
     public static BoardingPassFragment newInstance() {
 
@@ -121,6 +130,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new BoardingPassModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
@@ -182,7 +192,10 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             pnrLayout.setVisibility(View.VISIBLE);
 
             /*Set PNR auto caps*/
-            editPnr.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+            InputFilter[] FilterArray = new InputFilter[2];
+            FilterArray[0] = new InputFilter.LengthFilter(6);
+            FilterArray[1] = new InputFilter.AllCaps();
+            editPnr.setFilters(FilterArray);
 
             txtDeparture.setTag(DEPARTURE_FLIGHT);
             txtArrive.setTag(ARRIVAL_FLIGHT);
@@ -198,8 +211,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             Set<String> hs = new LinkedHashSet<>();
             for (int i = 0; i < jsonFlight.length(); i++) {
                 JSONObject row = (JSONObject) jsonFlight.opt(i);
-                al.add(row.optString("location")+"-"+row.optString("location_code"));
-            }
+                if(!row.optString("status").equals("N")){
+                    al.add(row.optString("location")+"/-"+row.optString("location_code"));
+                }            }
             hs.addAll(al);
             al.clear();
             al.addAll(hs);
@@ -208,7 +222,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             for (int i = 0; i < al.size(); i++)
             {
                 String flightSplit = al.get(i).toString();
-                String[] str1 = flightSplit.split("-");
+                String[] str1 = flightSplit.split("/-");
                 String p1 = str1[0];
                 String p2 = str1[1];
 
@@ -262,7 +276,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onBoardingPassReceive(RetrieveBoardingPassReceive obj) {
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Log.e("Success", "True");
             //startPagination();
@@ -317,6 +331,8 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
 
     public void retrieveBoardingPass(){
 
+        retrieveBoardingPass = true;
+
         initiateLoading(getActivity());
 
         HashMap<String, String> init = pref.getSignatureFromLocalStorage();
@@ -358,11 +374,17 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onUserPnrList(final ListBookingReceive obj){
 
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            adapter = new BookingListAdapter(getActivity(),obj.getObj().getList_booking());
-            listView.setAdapter(adapter);
-            pref.setSignatureToLocalStorage(obj.getObj().getSignature());
+
+            if(obj.getList_booking().size() == 0){
+                boardingPassNA.setVisibility(View.VISIBLE);
+                listviewLayout.setVisibility(View.GONE);
+            }else{
+                adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
+                listView.setAdapter(adapter);
+                pref.setSignatureToLocalStorage(obj.getSignature());
+            }
             //pnrLayout.setVisibility(View.GONE);
         }
 
@@ -374,19 +396,26 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 Log.e("Username", pref.getUserEmail().toString());
                 initiateLoading(getActivity());
 
-                RetrieveBoardingPassObj flightObj = new RetrieveBoardingPassObj();
-                flightObj.setUser_id(obj.getObj().getUser_id());
-                flightObj.setPnr(selectedFromList.getPnr());
-                flightObj.setDeparture_station(selectedFromList.getDeparture_station_code());
-                flightObj.setArrival_station(selectedFromList.getArrival_station_code());
-                flightObj.setSignature(obj.getObj().getSignature());
-
-                presenter.retrieveBoardingPass(flightObj);
+                retrieveBoardingPass(selectedFromList,obj);
             }
         });
 
     }
 
+    public void retrieveBoardingPass(ListBookingReceive.ListBooking selectedFromList,ListBookingReceive obj){
+
+        RetrieveBoardingPassObj flightObj = new RetrieveBoardingPassObj();
+        flightObj.setUser_id(obj.getUser_id());
+        flightObj.setPnr(selectedFromList.getPnr());
+        flightObj.setDeparture_station(selectedFromList.getDeparture_station_code());
+        flightObj.setArrival_station(selectedFromList.getArrival_station_code());
+        flightObj.setSignature(obj.getSignature());
+        retrieveBoardingPass = true;
+
+
+        presenter.retrieveBoardingPass(flightObj);
+
+    }
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -397,6 +426,29 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+
+        if(!retrieveBoardingPass){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ListBookingReceive obj = gson.fromJson(result.get(0).getCachedResult(), ListBookingReceive.class);
+                onUserPnrList(obj);
+            }else {
+                Log.e("x", "2");
+            }
+        }else{
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                RetrieveBoardingPassReceive obj = gson.fromJson(result.get(0).getCachedResult(), RetrieveBoardingPassReceive.class);
+                onBoardingPassReceive(obj);
+            }else {
+                Log.e("x", "2");
+            }
+        }
+
     }
 
     @Override

@@ -69,6 +69,13 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
     @InjectView(R.id.pnrLayout)
     LinearLayout pnrLayout;
 
+    @InjectView(R.id.listviewLayout)
+    LinearLayout listviewLayout;
+
+    @InjectView(R.id.manageFlightNA)
+    LinearLayout manageFlightNA;
+
+
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private String signature;
@@ -132,7 +139,12 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
             pnrLayout.setVisibility(View.VISIBLE);
         }
 
-        txtPNR.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
+         /*Set PNR auto caps*/
+        InputFilter[] FilterArray = new InputFilter[2];
+        FilterArray[0] = new InputFilter.LengthFilter(6);
+        FilterArray[1] = new InputFilter.AllCaps();
+        txtPNR.setFilters(FilterArray);
+
         btnManageFlightContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -228,10 +240,16 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
-            listView.setAdapter(adapter);
-            pref.setSignatureToLocalStorage(obj.getSignature());
-            //pnrLayout.setVisibility(View.GONE);
+
+            if(obj.getList_booking().size() == 0){
+                manageFlightNA.setVisibility(View.VISIBLE);
+                listviewLayout.setVisibility(View.GONE);
+            }else{
+                adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
+                listView.setAdapter(adapter);
+                pref.setSignatureToLocalStorage(obj.getSignature());
+            }
+
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -251,6 +269,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                 manageFlightObj.setUser_id(obj.getUser_id());
                 manageFlightObj.setSignature(obj.getSignature());
 
+                cache_login = false;
                 presenter.onSendPNRV1(manageFlightObj);
             }
         });

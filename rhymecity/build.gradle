@@ -176,4 +176,9 @@ dependencies {
     compile "com.dev.sacot41:scviewpager:0.0.4"
     compile 'me.relex:circleindicator:1.1.8@aar'
 
+    compile 'com.inthecheesefactory.thecheeselibrary:adjustable-imageview:1.0.0'
+
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
+
+
 }

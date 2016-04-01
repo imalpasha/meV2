@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -90,7 +91,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     //newLogin2/22
     private int passengerNoV1 = 0;
     private int passengerNoV2;
-    private Boolean next1 = false;
+    private Boolean next1 = true;
     private Boolean next2 = false;
 
     private int passengerSize;
@@ -127,8 +128,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         /*Preference Manager*/
         pref = new SharedPrefManager(MainFragmentActivity.getContext());
 
-        //HashMap<String, String> init = pref.getSeat();
-        //String seatHash = init.get(SharedPrefManager.SEAT);
+        HashMap<String, String> init = pref.getSeat();
+        String seatHash = init.get(SharedPrefManager.SEAT);
+
         /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingID = initBookingID.get(SharedPrefManager.BOOKING_ID);
@@ -136,12 +138,12 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-        Bundle bundle = getArguments();
-        String seatGSON = bundle.getString("SEAT_INFORMATION");
+        //Bundle bundle = getArguments();
+        //String seatGSON = bundle.getString("SEAT_INFORMATION");
 
         /*Initiate Seat Row*/
         Gson gson = new Gson();
-        contactObj = gson.fromJson(seatGSON, ContactInfoReceive.class);
+        contactObj = gson.fromJson(seatHash, ContactInfoReceive.class);
 
         seatInfoDepart = contactObj.getJourneys().get(0).getSeat_info();
         List<ContactInfoReceive.Journeys> journeys = contactObj.getJourneys();
@@ -170,7 +172,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         //set total passenger
         passengerSize = objV2.size();
-        Log.e("passengerSize",Integer.toString(passengerSize));
 
         setSeat1(seatListDepart, seatInfoDepart);
         setPassenger1("DEPART", listPassengerDepart, txtSeatDeparture, objV2, journeys.get(0).getDeparture_station(), journeys.get(0).getArrival_station());
@@ -178,7 +179,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         if(journeys.size() > 1){
 
-            Log.e("ReturnSeat","True");
             twoWay = true;
             seatInfoReturn = contactObj.getJourneys().get(1).getSeat_info();
             setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
@@ -204,15 +204,21 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                 if(myItemInt < passengerSize-1){
                     next1 = false;
+                    Log.e("Clicked","A");
                 }else{
+                    Log.e("Clicked","B");
                     next1 = true;
                 }
 
                 passengerNoV1 = myItemInt;
-                Log.e("passengerNoV1",Integer.toString(passengerNoV1));
                 //Set selected
                 LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
-                clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                clickedPassenger.setBackgroundColor(Color.parseColor("#FFD504"));
+                // clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                //clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                // clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+
+
                 selectedFromList.setSelected(true);
                 selectedFromList.setActive(true);
 
@@ -338,7 +344,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         //   Log.e(type, type);
 
         //}
-        Log.e("Seaat","return");
         txtSeat.setText(depart + " - " + arrival);
         passengerSeatListV2 = new PassengerSeatAdapterV2(getActivity(),passengers,this);
         list.setAdapter(passengerSeatListV2);
@@ -453,7 +458,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                             //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
                             //selectedSeatTag.add(txtDetailList.getText().toString());
-                            Log.e("X","X");
                         } else {
 
                             if(passengerSeatListV1.getSelected(passengerNoV1) != null) {
@@ -469,43 +473,37 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                             passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
                             passengerSeatListV1.setSelectedCompartmentSeat(compartment);
 
-                            Log.e("Y","Y");
-
                         }
 
                         //newLogic
                         //move to next passenger
-                        //if(passengerSize < passengerNoV1 ){
                             if(next1){
-                                Log.e(Integer.toString(passengerNoV1),Integer.toString(passengerSize));
-
+                                Log.e("HRERE","A");
                                 if(passengerNoV1 < passengerSize-1){
                                     passengerSeatListV1.setNextPassengerSelected(passengerNoV1+1);
+
+                                    //AUTO SELECT IF ONE PASSENGER
+                                    Log.e("auto select", "1");
                                 }else{
+                                    Log.e("auto select","2");
                                     if(twoWay){
+                                        Log.e("auto select", "3");
                                         autoSelectReturnPassenger();
                                         passengerSeatListV2.autoSelectReturnPassenger();
-                                        Log.e("Error", "True");
                                     }
                                 }
                             }else{
+                                Log.e("HRERE","B");
                                 if(passengerNoV1 < passengerSize-1){
                                     passengerSeatListV1.setNextPassengerSelected(passengerNoV1+1);
                                 }
                             }
-                        //}else{
-                        //}
 
-                        //seatTag1 = new ArrayList<>(1);
-                        //selectedSeatTag = new ArrayList<>(2);
                     }
 
                 });
 
-
-                //"seat_type":"standard",
                 //Set color and clickable
-
                 if(seatType.equals("standard")){
                     txtDetailList.setClickable(true);
                     seatRow.setBackgroundColor(getResources().getColor(R.color.seat_standard));
@@ -549,9 +547,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
     }
 
     public void setSeat2(LinearLayout seatList,List<SeatInfo> seatInfo){
-
-
-        Log.e("Seatt","Return");
 
         int seatSize = seatInfo.size();
         int seatCount = 0;
@@ -665,7 +660,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                             //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
                             //selectedSeatTag.add(txtDetailList.getText().toString());
-                            Log.e("X","X");
                         } else {
 
                             if(passengerSeatListV2.getSelected(passengerNoV2) != null){
@@ -681,10 +675,8 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                             passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
                             passengerSeatListV2.setSelectedCompartmentSeat(compartment);
-                            Log.e("Y", "Y");
 
                             if(next2){
-                                Log.e(Integer.toString(passengerNoV2),Integer.toString(passengerSize));
 
                                 if(passengerNoV2 < passengerSize-1){
                                     passengerSeatListV2.setNextPassengerSelected(passengerNoV2+1);
@@ -739,7 +731,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
                 seatRow.addView(txtDetailList);
             }
 
-            //Log.e("seatTag", seatTag.toString());
             seatList.addView(seatRow);
 
         }
@@ -775,7 +766,6 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
     public void clearSeatTag2(int passed){
 
-        Log.e("passed",Integer.toString(passed));
         seatTag2 = new ArrayList<>(1);
         passengerNoV2 = passed;
         next2 = true;
@@ -835,12 +825,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){
-            Log.e("x","1");
             Gson gson = new Gson();
             SeatSelectionReveice obj = gson.fromJson(result.get(0).getCachedResult(), SeatSelectionReveice.class);
             onSeatSelect(obj);
-        }else{
-            Log.e("x","2");
         }
     }
 

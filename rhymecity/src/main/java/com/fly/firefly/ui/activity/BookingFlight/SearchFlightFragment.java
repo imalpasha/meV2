@@ -207,7 +207,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             JSONObject row = (JSONObject) jsonFlight.opt(i);
             Log.e("status", row.optString("status"));
             if(!row.optString("status").equals("N")){
-                al.add(row.optString("location")+"-"+row.optString("location_code"));
+                al.add(row.optString("location")+"/-"+row.optString("location_code"));
             }
         }
         hs.addAll(al);
@@ -218,7 +218,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         for (int i = 0; i < al.size(); i++)
         {
             String flightSplit = al.get(i).toString();
-            String[] str1 = flightSplit.split("-");
+            String[] str1 = flightSplit.split("/-");
             String p1 = str1[0];
             String p2 = str1[1];
 
@@ -545,6 +545,8 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             for (int i = 0; i < jsonFlight.length(); i++)
             {
                 JSONObject row = (JSONObject) jsonFlight.opt(i);
+                Log.e("SelectedCode:"+code,"LandingCode:"+row.optString("location_code")+ " " + row.optString("status"));
+
                 if(code.equals(row.optString("location_code")) && row.optString("status").equals("Y")) {
                     Log.e(code, row.optString("location_code"));
 

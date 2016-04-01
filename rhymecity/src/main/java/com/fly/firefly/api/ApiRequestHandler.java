@@ -91,7 +91,7 @@ public class ApiRequestHandler {
     public ApiRequestHandler(Bus bus, ApiService apiService) {
         this.bus = bus;
         this.apiService = apiService;
-        retry = true;
+        retry = false;
     }
 
     // ------------------------------------------------------------------------------ //
@@ -642,7 +642,7 @@ public class ApiRequestHandler {
             public void success(PaymentInfoReceive retroResponse, Response response) {
 
                 bus.post(new PaymentInfoReceive(retroResponse));
-                //RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
                 resetInc();
 
             }
@@ -1191,15 +1191,15 @@ public class ApiRequestHandler {
 
     public void resetInc(){
         inc = 0;
-        retry = true;
+        retry = false;
     }
 
     public void loop(){
         inc++;
-        if(inc > 5){
+        if(inc > 4){
             retry = false;
         }else{
-            retry = true;
+            retry = false;
         }
     }
 

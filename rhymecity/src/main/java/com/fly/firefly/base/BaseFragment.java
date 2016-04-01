@@ -226,7 +226,7 @@ public class BaseFragment extends Fragment {
 				Log.e(selected,selectedCode);
 
 				txt.setText(selected);
-				if(!selected.equals(indicate)){
+				if(selectedCode.equals(indicate)){
 					txt2.setVisibility(View.VISIBLE);
 					adapt.returnNotifyDataChanged(selectedCode);
 				}else{
@@ -417,16 +417,16 @@ public class BaseFragment extends Fragment {
 		return documentType;
 	}
 
-	public static void setSuccessDialog(final Activity act,String msg,final Class<?> cls) {
+	public static void setSuccessDialog(final Activity act,String msg,final Class<?> cls,String message) {
 
 		if (cls == null) {
 			new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE)
-					.setTitleText("Success!")
+					.setTitleText(message)
 					.setContentText(msg)
 					.show();
 		} else {
 			new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE)
-					.setTitleText("Success!")
+					.setTitleText(message)
 					.setContentText(msg)
 					.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 						@Override
@@ -443,15 +443,17 @@ public class BaseFragment extends Fragment {
 		}
 	}
 
-	public static void setAlertDialog(Activity act,String msg){
+	public static void setAlertDialog(Activity act,String msg,String title){
 
 		if(act != null){
 			new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-					.setTitleText("Error!")
+					.setTitleText(title)
 					.setContentText(msg)
 					.show();
 		}
 	}
+
+
 
 	public static void setNormalDialog(Context act,String msg,String title){
 		new SweetAlertDialog(act, SweetAlertDialog.NORMAL_TYPE)
@@ -576,6 +578,15 @@ public class BaseFragment extends Fragment {
 
 	public static void initiateLoading(Activity act){
 
+		//if(dialog.isShowing()) {
+		//	Log.e("Currenlt","showing");
+		//}
+
+		try {
+			dialog.dismiss();
+		}catch (Exception e){
+		}
+
 		dialog = new Dialog(act,R.style.DialogTheme);
 
 		LayoutInflater li = LayoutInflater.from(act);
@@ -598,7 +609,6 @@ public class BaseFragment extends Fragment {
 		builder.setView(myView);
 
 
-		if(!dialog.isShowing()){
 
 
 			dialog.setContentView(myView);
@@ -633,7 +643,7 @@ public class BaseFragment extends Fragment {
 			//lp.height = 570;
 			dialog.getWindow().setAttributes(lp);
 			dialog.show();
-		}
+
 	}
 
 	public static void dismissLoading(){
@@ -1054,9 +1064,9 @@ public class BaseFragment extends Fragment {
 	public static void setAlertNotification(Activity act){
 
 		if(Controller.connectionAvailable(act)){
-			setAlertDialog(MainFragmentActivity.getContext(), "Unable to connect to server");
+			setAlertDialog(MainFragmentActivity.getContext(), "Unable to connect to server","Connection Error");
 		}else{
-			setAlertDialog(MainFragmentActivity.getContext(), "No Internet Connection");
+			setAlertDialog(MainFragmentActivity.getContext(), "No Internet Connection","Connection Error");
 		}
 		dismissLoading();
 	}
@@ -1204,16 +1214,19 @@ public class BaseFragment extends Fragment {
 				if (editText.getText().toString().length() < 16 || editText.getText().toString().length() > 16) {
 					editText.setError("Invalid bonuslink card number");
 					manualValidationStatus = false;
+					setShake(editText);
 				}
 			}else if(validationRule.equals("phoneNumber")){
 				if (editText.getText().toString().length() < 6 || editText.getText().toString().length() > 16) {
 					editText.setError("Invalid phone number");
 					manualValidationStatus = false;
+					setShake(editText);
 				}
 			}else if(validationRule.equals("faxNumber")){
 				if (editText.getText().toString().length() < 6 || editText.getText().toString().length() > 16) {
 					editText.setError("Invalid fax number");
 					manualValidationStatus = false;
+					setShake(editText);
 				}
 			}
 

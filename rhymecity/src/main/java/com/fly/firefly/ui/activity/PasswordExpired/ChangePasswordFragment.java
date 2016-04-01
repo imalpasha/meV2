@@ -176,7 +176,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            setSuccessDialog(getActivity(), obj.getMessage(), HomeActivity.class);
+            setSuccessDialog(getActivity(), obj.getMessage(), HomeActivity.class,"Password Changed!");
          }
 
     }

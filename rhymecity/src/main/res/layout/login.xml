@@ -85,7 +85,16 @@
                                 android:paddingBottom="10dp"
                                 android:textSize="@dimen/font16sp"/>-->
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/red"
+                                android:textStyle="bold"
+                                android:id="@+id/textView395" />
+
                             <EditText
+                                android:layout_marginLeft="3dp"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textEmailAddress"
@@ -100,11 +109,19 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:orientation="vertical"
+                            android:orientation="horizontal"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:id="@+id/edit_area2"
                             android:background="@drawable/drawable_login_bottom_border">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="*"
+                                android:textColor="@color/red"
+                                android:textStyle="bold"
+                                android:id="@+id/textView396" />
 
                             <EditText
                                 android:layout_width="fill_parent"
@@ -112,6 +129,7 @@
                                 android:background="@null"
                                 android:paddingBottom="10dp"
                                 android:hint="@string/login_enter_password"
+                                android:layout_marginLeft="3dp"
                                 android:textSize="@dimen/font17sp"
                                 android:imeOptions="actionDone"
                                 android:textColorHint="@color/loginFontTxt"

@@ -18,6 +18,20 @@ public class MobileCheckinReceive {
     private List<Passenger> passengers;
     private MobileCheckinReceive obj;
 
+
+    public MobileCheckinReceive(MobileCheckinReceive data) {
+        this.obj = data;
+        status = data.getStatus();
+        message = data.getMessage();
+        flight_detail = data.getFlight_detail();
+        signature = data.getSignature();
+        pnr = data.getPnr();
+        departure_station_code = data.getDeparture_station_code();
+        arrival_station_code = data.getArrival_station_code();
+        passengers = data.getPassengers();
+
+    }
+
     public String getArrival_station_code() {
         return arrival_station_code;
     }
@@ -249,7 +263,4 @@ public class MobileCheckinReceive {
         this.obj = obj;
     }
 
-    public MobileCheckinReceive(MobileCheckinReceive data) {
-        this.obj = data;
-    }
 }

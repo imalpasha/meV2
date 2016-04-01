@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -77,7 +78,7 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
         }
 
         if(obj.get(position).isSelected()){
-            vh.passengerLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.blue));
+            vh.passengerLinearLayout.setBackgroundColor(Color.parseColor("#FFD504"));
         }else{
             vh.passengerLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
         }

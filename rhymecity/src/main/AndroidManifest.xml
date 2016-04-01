@@ -69,7 +69,9 @@
 
 
 
-        <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" />
+        <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" >
+
+        </activity>
         <activity android:name=".ui.activity.Login.LoginActivity" />
         <activity android:name=".ui.activity.Register.RegisterActivity" />
         <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />

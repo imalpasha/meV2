@@ -53,7 +53,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/checkBox"
                 android:scaleX="1.5"
-                android:scaleY="1.5"/>
+                android:scaleY="1.5"
+                android:buttonTint="@color/actionBarColour_default_theme"/>
         </LinearLayout>
     </LinearLayout>
 

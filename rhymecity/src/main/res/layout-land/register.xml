@@ -410,7 +410,7 @@
                                             android:inputType="date"
                                             android:background="@null"
                                             android:paddingBottom="8dp"
-                                            android:hint="@string/dob"
+                                            android:hint="@string/date_ob"
                                             android:textSize="@dimen/font16sp"
                                             android:textColorHint="@color/loginFontTxt"
                                             android:id="@+id/txtRegisterDatePicker" />

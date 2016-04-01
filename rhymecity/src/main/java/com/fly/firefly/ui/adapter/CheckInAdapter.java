@@ -250,19 +250,19 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
        // vh = new ViewHolder();
         final ExpandableListView eLV = (ExpandableListView) parent;
 
-       // if (convertView == null) {
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
             vh = new ViewHolderHeader();
             ButterKnife.inject(vh, convertView);
             convertView.setTag(vh);
-       /// }
-       /// else {
-       ///     vh = (ViewHolderHeader) convertView.getTag();
-       /// }
+        }
+        else {
+            vh = (ViewHolderHeader) convertView.getTag();
+        }
 
 
         if(obj.get(groupPosition).getStatus().equals("Checked In")){
-            vh.passengerCheckInCheckBox.setVisibility(View.INVISIBLE);
+            vh.passengerCheckInCheckBox.setVisibility(View.GONE);
             vh.txtCheckInStatus.setVisibility(View.VISIBLE);
             vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
         }else{
@@ -345,7 +345,11 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
     }
 
     public void setSelectedCountry(String selectedCountry, String selectedCountryCode){
-        obj.get(selectedPosition).setIssuing_country(selectedCountryCode);
+        String[] splitCountryCode = selectedCountryCode.split("/");
+        String splitedCountryCode = splitCountryCode[0];
+
+        obj.get(selectedPosition).setIssuing_country(splitedCountryCode);
+
         notifyDataSetChanged();
     }
 

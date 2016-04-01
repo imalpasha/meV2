@@ -28,6 +28,8 @@ public class ConfirmUpdateReceive {
 
     public ConfirmUpdateReceive(ConfirmUpdateReceive param_obj){
         this.obj = param_obj;
+        status = param_obj.getStatus();
+        message = param_obj.getMessage();
     }
 
     public String getStatus() {

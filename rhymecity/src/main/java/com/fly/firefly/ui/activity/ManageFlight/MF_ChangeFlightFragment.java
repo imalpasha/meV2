@@ -8,25 +8,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.FlightSummaryReceive;
+import com.fly.firefly.api.obj.ListBookingReceive;
+import com.fly.firefly.api.obj.ManageChangeContactReceive;
+import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.BookingFlight.CodeShareFlightListActivity;
 import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.module.ManageChangeFlightDate;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ChangeFlight;
 import com.fly.firefly.ui.object.GetChangeFlight;
 import com.fly.firefly.ui.object.GetFlightAvailability;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
+import com.fly.firefly.utils.LocalNotification;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.google.gson.Gson;
@@ -38,6 +46,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.RealmResults;
 
 public class MF_ChangeFlightFragment extends BaseFragment implements  DatePickerDialog.OnDateSetListener,ManageFlightPrenter.GetFlightView {
 
@@ -95,6 +104,9 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     private static final String DATEPICKER_TAG = "datepicker";
     private DatePickerDialog datePickerDialog;
     private ChangeSearchFlightReceive localObj;
+    private boolean disableDeparture = false;
+    private boolean disableReturn = false;
+    private boolean retrieveFlightInfo = false;
 
     public static MF_ChangeFlightFragment newInstance(Bundle bundle) {
 
@@ -108,6 +120,8 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new ManageChangeFlightDate(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
+
     }
 
     @Override
@@ -115,6 +129,10 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
         View view = inflater.inflate(R.layout.change_flight, container, false);
         ButterKnife.inject(this, view);
+
+        //checkGoing
+
+
 
         /*Retrieve bundle data*/
         Bundle bundle = getArguments();
@@ -150,6 +168,32 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         initiateLoading(getActivity());
         presenter.onGetFlightAvailability(getObj);
 
+        checkGoing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                  @Override
+                                                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                      if (isChecked) {
+                                                          if (disableDeparture) {
+                                                              BaseFragment.setAlertDialog(getActivity(), "Unable to change flight date.","Flight Change");
+                                                              checkGoing.setChecked(false);
+                                                          }
+                                                      }
+                                                  }
+                                              }
+        );
+
+
+        checkReturn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                  @Override
+                                                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                      if(isChecked){
+                                                          if(disableReturn){
+                                                              BaseFragment.setAlertDialog(getActivity(),"Unable to change flight date.","Flight Change");
+                                                              checkReturn.setChecked(false);
+                                                          }
+                                                      }
+                                                  }
+                                              }
+        );
 
         btnSearchFlight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,11 +216,13 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
     public void requestFlight(){
 
+        retrieveFlightInfo = true;
+
         GetChangeFlight getFlightObj = new GetChangeFlight();
 
         ChangeFlight goingObj = new ChangeFlight();
-        goingObj.setDeparture_station(localObj.getJourneyObj().getJourneys().get(0).getDeparture_station());
-        goingObj.setArrival_station(localObj.getJourneyObj().getJourneys().get(0).getArrival_station());
+        goingObj.setDeparture_station(localObj.getJourneys().get(0).getDeparture_station());
+        goingObj.setArrival_station(localObj.getJourneys().get(0).getArrival_station());
         goingObj.setDeparture_date(txtDepartureDate.getTag().toString());
         if(checkGoing.isChecked()){
             goingObj.setStatus("Y");
@@ -188,9 +234,9 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         }
 
         ChangeFlight returnObj = new ChangeFlight();
-        if (localObj.getJourneyObj().getJourneys().size() > 1) {
-            returnObj.setDeparture_station(localObj.getJourneyObj().getJourneys().get(1).getDeparture_station());
-            returnObj.setArrival_station(localObj.getJourneyObj().getJourneys().get(1).getArrival_station());
+        if (localObj.getJourneys().size() > 1) {
+            returnObj.setDeparture_station(localObj.getJourneys().get(1).getDeparture_station());
+            returnObj.setArrival_station(localObj.getJourneys().get(1).getArrival_station());
             returnObj.setDeparture_date(txtReturnDepartureDate.getTag().toString());
             if(checkReturn.isChecked()){
                 returnObj.setStatus("Y");
@@ -213,12 +259,11 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     @Override
     public void onGetFlightSuccess(ChangeSearchFlightReceive obj) {
         dismissLoading();
-        Log.e("Current FLight", obj.getJourneyObj().getStatus());
         localObj = obj;
-        Boolean status = Controller.getRequestStatus(obj.getJourneyObj().getStatus(), obj.getJourneyObj().getMessage(), getActivity());
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
-            if(obj.getJourneyObj().getJourneys().get(0).getFlight_status().equals("Available")){
+            if(obj.getJourneys().get(0).getFlight_status().equals("Available")){
                 /*Arrival Date Clicked*/
                 departureDateBlock.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -228,19 +273,22 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
                         PICKER = DEPARTURE_DATE_PICKER;
                     }
                 });
+            }else{
+                disableDeparture = true;
             }
 
-            txtDepartureFlight.setText(obj.getJourneyObj().getJourneys().get(0).getDeparture_station_name());
-            txtDepartureFlight.setTag(obj.getJourneyObj().getJourneys().get(0).getDeparture_station());
+            txtDepartureFlight.setText(obj.getJourneys().get(0).getDeparture_station_name());
+            txtDepartureFlight.setTag(obj.getJourneys().get(0).getDeparture_station());
 
-            txtArrivalFlight.setText(obj.getJourneyObj().getJourneys().get(0).getArrival_station_name());
-            txtArrivalFlight.setTag(obj.getJourneyObj().getJourneys().get(0).getArrival_station());
+            txtArrivalFlight.setText(obj.getJourneys().get(0).getArrival_station_name());
+            txtArrivalFlight.setTag(obj.getJourneys().get(0).getArrival_station());
 
-            txtDepartureDate.setText(obj.getJourneyObj().getJourneys().get(0).getDeparture_date());
-            txtDepartureDate.setTag(reformatDOB2(obj.getJourneyObj().getJourneys().get(0).getDeparture_date()));
-            if (obj.getJourneyObj().getJourneys().size() > 1) {
+            txtDepartureDate.setText(obj.getJourneys().get(0).getDeparture_date());
 
-                if(obj.getJourneyObj().getJourneys().get(0).getFlight_status().equals("Available")) {
+            txtDepartureDate.setTag(reformatDOB2(obj.getJourneys().get(0).getDeparture_date()));
+            if (obj.getJourneys().size() > 1) {
+
+                if(obj.getJourneys().get(0).getFlight_status().equals("Available")) {
                 /*Departure Date Clicked*/
                     returnDateBlock.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -251,12 +299,14 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
                         }
                     });
+                }else{
+                    disableReturn = true;
                 }
                 returnLayout.setVisibility(View.VISIBLE);
-                txtReturnDeparture.setText(obj.getJourneyObj().getJourneys().get(1).getDeparture_station_name());
-                txtReturnArrival.setText(obj.getJourneyObj().getJourneys().get(1).getArrival_station_name());
-                txtReturnDepartureDate.setText(obj.getJourneyObj().getJourneys().get(1).getDeparture_date());
-                txtReturnDepartureDate.setTag(reformatDOB2(obj.getJourneyObj().getJourneys().get(1).getDeparture_date()));
+                txtReturnDeparture.setText(obj.getJourneys().get(1).getDeparture_station_name());
+                txtReturnArrival.setText(obj.getJourneys().get(1).getArrival_station_name());
+                txtReturnDepartureDate.setText(obj.getJourneys().get(1).getDeparture_date());
+                txtReturnDepartureDate.setTag(reformatDOB2(obj.getJourneys().get(1).getDeparture_date()));
 
             }
         }
@@ -333,6 +383,24 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(!retrieveFlightInfo){
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                ChangeSearchFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), ChangeSearchFlightReceive.class);
+                onGetFlightSuccess(obj);
+            }
+        }else{
+            if(result.size() > 0){
+                Log.e("x","1");
+                Gson gson = new Gson();
+                SearchFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SearchFlightReceive.class);
+                onNewFlightReceive(obj);
+            }
+        }
+
     }
 
     @Override

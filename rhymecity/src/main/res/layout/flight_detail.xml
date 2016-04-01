@@ -314,23 +314,23 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/returnFlightNA"
-                            android:visibility="gone"
-                            android:padding="35dp" >
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/returnFlightNA"
+                        android:visibility="gone"
+                        android:padding="35dp" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/book_flight_availability"
-                                android:textSize="19dp"
-                                android:textColor="@color/dark_lvl5"
-                                android:id="@+id/textView352"
-                                android:layout_marginBottom="1dp"
-                                android:layout_gravity="center_horizontal" />
-                        </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/book_flight_availability"
+                            android:textSize="19dp"
+                            android:textColor="@color/dark_lvl5"
+                            android:id="@+id/textView352"
+                            android:layout_marginBottom="1dp"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
 
                         <com.fly.firefly.utils.ExpandAbleGridView
                             android:id="@+id/flightArrival"
@@ -398,6 +398,19 @@
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Fly Basic"
+                                        android:layout_marginBottom="10dp"
+                                        android:id="@+id/textView355" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="horizontal"
@@ -516,7 +529,8 @@
                                 <LinearLayout
                                     android:orientation="horizontal"
                                     android:layout_width="match_parent"
-                                    android:layout_height="match_parent" >
+                                    android:layout_height="match_parent"
+                                    android:layout_marginBottom="5dp">
 
                                     <TextView
                                         android:layout_width="wrap_content"
@@ -549,6 +563,7 @@
                                 android:text="I confirm, understand and accept Firefly's General Conditions of Carriage. Fare Rules and confirm that the passenger(s) in my reservation does not require Special Assistance and are not categorised as Unaccompanied Minor(s)."
                                 android:id="@+id/fareRulesChkBox"
                                 android:padding="10dp"
+                                android:buttonTint="@color/actionBarColour_default_theme"
                                 android:layout_marginBottom="10dp"
                                 android:checked="false"
                                 android:textSize="14dp"/>

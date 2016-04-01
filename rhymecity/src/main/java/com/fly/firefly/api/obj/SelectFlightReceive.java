@@ -29,6 +29,9 @@ public class SelectFlightReceive {
 
     public SelectFlightReceive(SelectFlightReceive param_obj){
         this.flightObj = param_obj;
+        message = param_obj.getMessage();
+        booking_id = param_obj.getBookingId();
+        status = param_obj.getStatus();
     }
 
     public String getStatus() {

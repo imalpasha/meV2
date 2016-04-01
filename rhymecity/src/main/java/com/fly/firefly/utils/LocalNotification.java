@@ -73,11 +73,12 @@ public class LocalNotification extends BaseFragment {
         try {
             date1 = sdf.parse(date);
         }catch (Exception e){
+            Log.e("message",e.getMessage());
         }
-        Log.e(cal.getTime().toString(),date1.toString());
-        if(date1.before(cal.getTime())){
-            status = true;
-        }
+
+        //if(date1.before(cal.getTime())){
+         //   status = true;
+        //}
 
         return status;
     }

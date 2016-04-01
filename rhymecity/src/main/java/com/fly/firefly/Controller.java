@@ -38,9 +38,8 @@ public class Controller extends BaseFragment {
         pref.clearSignatureFromLocalStorage();
         pref.clearPassword();
         pref.clearUserEmail();
-
+        pref.setLoginStatus("N");
         Log.e("SUCCESS","ok");
-
     }
 
 
@@ -81,20 +80,23 @@ public class Controller extends BaseFragment {
 
         } else if (objStatus.equals("error") || objStatus.equals("error_validation")) {
             status = false;
-            setAlertDialog(act, message);
+            setAlertDialog(act, message,"Validation Error");
 
         } else if (objStatus.equals("401")) {
             status = false;
             setSignatureInvalid(act,message);
             pref.clearSignatureFromLocalStorage();
 
+        }else if(objStatus.equals("force_logout")){
+            Controller.clearAll(act);
+            resetPage(act);
         }
         else if (objStatus.equals("change_password")) {
             goChangePasswordPage(act);
         }else if(objStatus.equals("error")) {
             //croutonAlert(getActivity(),obj.getMessage());
             //setSuccessDialog(getActivity(), obj.getMessage(), getActivity(), SearchFlightActivity.class);
-            setAlertDialog(act,message);
+            setAlertDialog(act,message,"Validation Error");
         }
         return status;
 
@@ -106,6 +108,11 @@ public class Controller extends BaseFragment {
         act.finish();
     }
 
-
+    //Redirect
+    public static void resetPage(Activity act){
+        Intent loginPage = new Intent(act, HomeActivity.class);
+        act.startActivity(loginPage);
+        act.finish();
+    }
 
 }

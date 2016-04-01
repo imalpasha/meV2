@@ -157,7 +157,7 @@
                                             android:id="@+id/editText10"
                                             android:background="@null"
                                             android:paddingBottom="5dp"
-                                            android:hint="@string/register_basic_information"
+                                            android:hint="@string/register_basic_informationV2"
                                             android:textSize="@dimen/font17sp"
                                             android:textStyle="bold"
                                             android:textColorHint="@color/registerBasicInfoText" />
@@ -316,6 +316,7 @@
                                             android:background="@null"
                                             android:paddingBottom="8dp"
                                             android:hint="@string/register_title"
+                                            android:focusable="true"
                                             android:clickable="true"
                                             android:textSize="@dimen/font16sp"
                                             android:textColorHint="@color/loginFontTxt"
@@ -401,7 +402,7 @@
                                             android:inputType="date"
                                             android:background="@null"
                                             android:paddingBottom="8dp"
-                                            android:hint="@string/dob"
+                                            android:hint="@string/date_ob"
                                             android:textSize="@dimen/font16sp"
                                             android:textColorHint="@color/loginFontTxt"
                                             android:id="@+id/txtRegisterDatePicker" />
@@ -772,6 +773,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/checkBox2"
+                                    android:buttonTint="@color/actionBarColour_default_theme"
                                     android:text="@string/subscribe"
                                     android:textSize="14dp"/>
 
@@ -780,6 +782,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="@string/agreeTnc"
                                     android:id="@+id/chkTNC"
+                                    android:buttonTint="@color/actionBarColour_default_theme"
                                     android:textSize="14dp"
                                     android:paddingRight="10dp"/>
 
