@@ -30,7 +30,10 @@ public class PersonalDetailActivity extends MainFragmentActivity implements Frag
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, PersonalDetailFragment.newInstance(bundle)).commit();
+
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

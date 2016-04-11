@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.Validator;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.inject.Inject;
 
@@ -171,6 +172,13 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.txtInfantTotalReturn)
     TextView txtInfantTotalReturn;
 
+    @InjectView(R.id.txtOperatedBy)
+    TextView txtOperatedBy;
+
+    @InjectView(R.id.txtReturnOperatedBy)
+    TextView txtReturnOperatedBy;
+
+
     private int fragmentContainerId;
     private SharedPrefManager pref;
     private String bookingID,signature;
@@ -203,7 +211,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
         view = inflater.inflate(R.layout.itinenary, container, false);
         ButterKnife.inject(this, view);
-        //pref = new SharedPrefManager(getActivity());
+        pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
 
         String itinenary = bundle.getString("ITINENARY_INFORMATION");
@@ -212,6 +220,21 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         Gson gson = new Gson();
         final ContactInfoReceive obj = gson.fromJson(itinenary, ContactInfoReceive.class);
         setSummary(obj);
+
+        //Check Flight Type (FY/MH)
+        HashMap<String, String> initLogin = pref.getFlightType();
+        String type = initLogin.get(SharedPrefManager.FLIGHT_TYPE);
+        if(type != null){
+            if(type.equals("MH")){
+                txtOperatedBy.setVisibility(View.VISIBLE);
+                txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+                txtReturnOperatedBy.setVisibility(View.VISIBLE);
+                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+
+            }
+        }
+
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override

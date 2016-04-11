@@ -15,6 +15,8 @@ import java.util.List;
 public class DeviceInfoSuccess{
 
     private final DeviceInfoSuccess userObj;
+
+    private AppVersion data_version_mobile;
     private String data_version;
     private String location;
     private String banner_default;
@@ -29,6 +31,37 @@ public class DeviceInfoSuccess{
     private String titleName;
     private String status;
     private String signature;
+
+    public class AppVersion{
+
+        private String version;
+        private String force_update;
+
+        public String getForce_update() {
+            return force_update;
+        }
+
+        public void setForce_update(String force_update) {
+            this.force_update = force_update;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+    }
+
+    public AppVersion getData_version_mobile() {
+        return data_version_mobile;
+    }
+
+    public void setData_version_mobile(AppVersion data_version_mobile) {
+        this.data_version_mobile = data_version_mobile;
+    }
 
     public SocialMedia getSocial_media() {
         return social_media_link;

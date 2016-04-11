@@ -237,6 +237,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     private ManageChangeContactReceive obj = null;
     private String pnr,bookingId,signature;
     private String totalDue;
+    private boolean recreateSummary = true;
 
     public static CommitChangeFragment newInstance(Bundle bundle) {
 
@@ -369,6 +370,8 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     }
 
     public void setSummary(ManageChangeContactReceive obj){
+
+        recreateSummary = false;
 
         txtPNR.setText(obj.getItenerary_information().getPnr());
         txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
@@ -656,13 +659,15 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
 
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
-            Log.e("x","1");
-            Gson gson = new Gson();
-            ConfirmUpdateReceive obj = gson.fromJson(result.get(0).getCachedResult(), ConfirmUpdateReceive.class);
-            changeConfirm(obj);
+        if(recreateSummary) {
+            if (result.size() > 0) {
+                Log.e("x", "1");
+                Gson gson = new Gson();
+                ConfirmUpdateReceive obj = gson.fromJson(result.get(0).getCachedResult(), ConfirmUpdateReceive.class);
+                changeConfirm(obj);
+                recreateSummary = false;
+            }
         }
-
     }
 
     @Override

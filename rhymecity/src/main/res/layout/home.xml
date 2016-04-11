@@ -14,6 +14,27 @@
 
         <LinearLayout
             android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textTimeLeft"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="X"
+                />
+
+            <Button
+                android:id="@+id/btnStartTimer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Start Timer"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"

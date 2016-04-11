@@ -27,6 +27,7 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, HomeFragment.newInstance(),"Home").commit();
 
+        setMenuButton();
         hideTitle();
         unlockDrawer();
         BaseFragment.removeLogoHeader(this);

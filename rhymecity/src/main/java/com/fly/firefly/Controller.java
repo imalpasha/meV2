@@ -90,8 +90,7 @@ public class Controller extends BaseFragment {
         }else if(objStatus.equals("force_logout")){
             Controller.clearAll(act);
             resetPage(act);
-        }
-        else if (objStatus.equals("change_password")) {
+        }else if (objStatus.equals("change_password")) {
             goChangePasswordPage(act);
         }else if(objStatus.equals("error")) {
             //croutonAlert(getActivity(),obj.getMessage());
@@ -101,6 +100,11 @@ public class Controller extends BaseFragment {
         return status;
 
     }
+
+    public void retry(){
+
+    }
+
     //Redirect
     public static void goChangePasswordPage(Activity act){
         Intent loginPage = new Intent(act, ChangePasswordActivity.class);

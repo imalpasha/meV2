@@ -245,7 +245,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 mobileCheckInNA.setVisibility(View.VISIBLE);
                 listviewLayout.setVisibility(View.GONE);
             } else {
-                adapter = new BookingListAdapter(getActivity(), obj.getList_booking());
+                adapter = new BookingListAdapter(getActivity(), obj.getList_booking(),"MC");
                 listView.setAdapter(adapter);
                 pref.setSignatureToLocalStorage(obj.getSignature());
                 //pnrLayout.setVisibility(View.GONE);

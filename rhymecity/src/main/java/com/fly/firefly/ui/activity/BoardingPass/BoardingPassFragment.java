@@ -381,7 +381,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 boardingPassNA.setVisibility(View.VISIBLE);
                 listviewLayout.setVisibility(View.GONE);
             }else{
-                adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
+                adapter = new BookingListAdapter(getActivity(),obj.getList_booking(),"BP");
                 listView.setAdapter(adapter);
                 pref.setSignatureToLocalStorage(obj.getSignature());
             }
@@ -399,7 +399,6 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 retrieveBoardingPass(selectedFromList,obj);
             }
         });
-
     }
 
     public void retrieveBoardingPass(ListBookingReceive.ListBooking selectedFromList,ListBookingReceive obj){

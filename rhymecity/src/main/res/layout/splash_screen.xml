@@ -5,21 +5,12 @@
     android:gravity="center"
     android:background="@color/actionBarColour_default_theme">
 
-    <TextView
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Firefly"
-        android:textStyle="bold"
-        android:textSize="28dp"
-        android:textColor="@color/white"
-        android:id="@+id/textView9" />
-
-    <ProgressBar
-        android:layout_marginLeft="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_gravity="center" />
-
-
+        android:id="@+id/imageView8"
+        android:src="@drawable/splash_screen"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"/>
 </LinearLayout>

@@ -797,10 +797,13 @@ public class ApiRequestHandler {
             @Override
             public void success(ListBookingReceive retroResponse, Response response) {
 
-                bus.post(new ListBookingReceive(retroResponse));
-                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
-                resetInc();
-
+                if(retroResponse.getStatus().equals("retry")){
+                    onManageFlight(event);
+                }else{
+                    bus.post(new ListBookingReceive(retroResponse));
+                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                    resetInc();
+                }
             }
 
             @Override

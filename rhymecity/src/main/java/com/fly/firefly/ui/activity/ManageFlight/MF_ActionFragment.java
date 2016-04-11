@@ -760,6 +760,8 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(recreateSummary){
+            Log.e("Recreate",Boolean.toString(recreateSummary));
+
             if(result.size() > 0){
                 Log.e("x","1");
                 Gson gson = new Gson();

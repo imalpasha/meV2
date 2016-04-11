@@ -50,7 +50,6 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         aq = new AQuery(this);
-        setMenuButton();
         ButterKnife.inject(this);
         instance = this;
 

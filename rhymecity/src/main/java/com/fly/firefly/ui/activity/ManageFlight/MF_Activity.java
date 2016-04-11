@@ -24,6 +24,8 @@ public class MF_Activity extends MainFragmentActivity implements FragmentContain
         fragmentManager.beginTransaction().replace(R.id.main_content, MF_Fragment.newInstance()).commit();
 
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

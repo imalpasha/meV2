@@ -3,10 +3,13 @@ package com.fly.firefly.ui.activity.SplashScreen;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +25,8 @@ import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.module.SplashScreenModule;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.presenter.HomePresenter;
+import com.fly.firefly.utils.App;
+import com.fly.firefly.utils.Push;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -45,11 +50,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private Boolean running = false;
     private static SweetAlertDialog pDialog;
 
-    public static SplashScreenFragment newInstance() {
+    public static SplashScreenFragment newInstance(Bundle bundle) {
 
         SplashScreenFragment fragment = new SplashScreenFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
+        fragment.setArguments(bundle);
         return fragment;
 
     }
@@ -70,6 +74,14 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         pref = new SharedPrefManager(getActivity());
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
 
+        //Bundle bundle = getArguments();
+        //String token = bundle.getString("DEVICE_TOKEN");
+        //Log.e("TOKEN",token);
+
+        //get push notification token
+        //String pushNotificationToken = Push.getToken(getActivity());
+
+        //Log.e("Token",pushNotificationToken);
 
         HashMap<String, String> initUserEmail = pref.getUserEmail();
         String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
@@ -117,8 +129,6 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         return view;
     }
 
-
-
     public void sendDeviceInformationToServer(DeviceInformation info){
         if(pDialog.isShowing()){
             pDialog.dismiss();
@@ -146,11 +156,6 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         })
          .show();
 
-      /*  new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE)
-                .setContentText(msg)
-                .setConfirmText("Retry")
-*/
-
     }
 
     @Override
@@ -159,29 +164,30 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
 
-            Log.e("Object",obj.toString());
-
             HashMap<String, String> initLogin = pref.getDataVesion();
             String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
             String dataVersion = obj.getObj().getData_version();
+            String appVersion = obj.getObj().getData_version_mobile().getVersion();
+            String updateStatus = obj.getObj().getData_version_mobile().getForce_update();
 
+            // forceUpdate() update app if needed
+            // update() - update data in app if needed
+
+            //Check App Version. Update if needed
+            if (!App.APP_VERSION.equals(appVersion) && updateStatus.equals("Y")) {
+                forceUpdate();
+            } else {
                 if (localDataVersion == null) {
                     update(obj);
-                }else if(localDataVersion != null && !localDataVersion.equals(dataVersion)) {
+                } else if (localDataVersion != null && !localDataVersion.equals(dataVersion)) {
                     update(obj);
-                }else{
-                    //Log.e("No Update","True");
-                    update(obj);
-
+                } else {
+                    goHomepage();
                 }
-
             }
-            //Redirect to homepage after success loading splashscreen
-            //if (true) {
-            //    //forceUpdate();
-            //    goHomepage();
-//
-//            }
+
+        }
+
 
     }
 
@@ -192,8 +198,9 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         String promoBannerUrl = obj.getObj().getBanner_promo();
         String bannerModule = obj.getObj().getBanner_module();
         String dataVersion = obj.getObj().getData_version();
+        String appVersion = obj.getObj().getData_version_mobile().getVersion();
+
         DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
-        Log.e("Facebook", socialMediaObj.getFacebook());
 
         /*Save All to pref for reference*/
         Gson gson = new Gson();
@@ -208,23 +215,24 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         String flight = gson.toJson(obj.getObj().getData_market());
         pref.setFlight(flight);
-        Log.e("data MARKKER", flight);
-
 
         String socialMedia = gson.toJson(socialMediaObj);
-        Log.e("socialMedia", socialMedia);
         pref.setSocialMedia(socialMedia);
-                /*End*/
+        /*End*/
 
-                /*Save Signature to local storage*/
+        /*Save Signature to local storage*/
         pref.setSignatureToLocalStorage(signature);
         pref.setBannerUrl(bannerUrl);
         pref.setPromoBannerUrl(promoBannerUrl);
         pref.setBannerModule(bannerModule);
         pref.setDataVersion(dataVersion);
+        pref.setAppVersion(appVersion);
+
+        //Check If app need update
+        HashMap<String, String> initApp = pref.getAppVersion();
+        String localAppVersion = initApp.get(SharedPrefManager.APP_VERSION);
 
         goHomepage();
-
 
     }
 

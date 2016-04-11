@@ -86,7 +86,6 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     @InjectView(R.id.fareRulesChkBox)CheckBox fareRulesChkBox;
     //@InjectView(R.id.fareRuleLayout)LinearLayout fareRuleLayout;
 
-
     private int fragmentContainerId;
     private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
     private String departPort,departDatePlain,arrivalPort,departPortCode,flightType;

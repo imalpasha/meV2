@@ -679,7 +679,7 @@
                     android:padding="5dp"
                     android:background="@drawable/drawable_login_bottom_border"
                     android:id="@+id/returnFlightPrice"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:orientation="horizontal"

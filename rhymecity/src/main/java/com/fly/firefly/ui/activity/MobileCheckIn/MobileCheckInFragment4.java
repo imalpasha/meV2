@@ -20,6 +20,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.MobileCheckInPassengerReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.activity.BoardingPass.BoardingPassDisplayActivity;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.module.MobileCheckInModule3;
@@ -50,6 +51,10 @@ public class MobileCheckInFragment4 extends BaseFragment {
 
     @InjectView(R.id.txtMessage)
     TextView txtMessage;
+
+    @InjectView(R.id.txtBoardingHere)
+    TextView txtBoardingHere;
+
 
     private int fragmentContainerId;
     private String mobileCheckInRule;
@@ -94,6 +99,17 @@ public class MobileCheckInFragment4 extends BaseFragment {
                 closeIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 getActivity().startActivity(closeIntent);
                 getActivity().finish();
+
+            }
+        });
+
+        txtBoardingHere.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
+                next.putExtra("OFFLINE_BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
+                getActivity().startActivity(next);
 
             }
         });

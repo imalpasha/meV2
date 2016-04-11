@@ -27,6 +27,8 @@ public class FlightSummaryActivity2 extends MainFragmentActivity implements Frag
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, FlightSummaryFragment.newInstance(),"FlightSummary").commit();
 
+        setMenuButton();
+
     }
 
 

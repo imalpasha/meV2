@@ -7,10 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.fly.firefly.Controller;
@@ -179,6 +181,9 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
 
     @InjectView(R.id.checkAsPassengerLayout)
     LinearLayout checkAsPassengerLayout;
+
+    @InjectView(R.id.contactInfoScrollView)
+    ScrollView contactInfoScrollView;
 
     private ArrayList<DropDownItem> countrysList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> purposeList = new ArrayList<DropDownItem>();
@@ -407,6 +412,13 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
             @Override
             public void onClick(View v) {
                 mValidator.validate();
+            }
+        });
+
+        contactInfoScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                view.requestFocus();
             }
         });
 

@@ -245,7 +245,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                 manageFlightNA.setVisibility(View.VISIBLE);
                 listviewLayout.setVisibility(View.GONE);
             }else{
-                adapter = new BookingListAdapter(getActivity(),obj.getList_booking());
+                adapter = new BookingListAdapter(getActivity(),obj.getList_booking(),"MF");
                 listView.setAdapter(adapter);
                 pref.setSignatureToLocalStorage(obj.getSignature());
             }

@@ -27,6 +27,8 @@ public class MF_SeatSelectionActivity extends MainFragmentActivity implements Fr
         fragmentManager.beginTransaction().replace(R.id.main_content, MF_SeatSelectionFragment.newInstance(bundle)).commit();
 
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

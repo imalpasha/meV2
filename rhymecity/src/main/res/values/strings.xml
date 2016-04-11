@@ -877,6 +877,18 @@ select another date or station and try again.</string>
 
 
     <!-- Drawer/Version -->
-    <string name="x_lbl">V30/3_1</string>
+    <string name="x_lbl">V5/4_1</string>
+
+
+
+
+    <!-- CleanUP -->
+    <!-- General -->
+    <string name="unable_to_connect">Unable to connect to server</string>
+    <string name="connection_error">Connection Error</string>
+    <string name="retry">Retry</string>
+    <string name="ticketReminder">Kindly ensure email itinerary is received. If you don\'t receive email itinerary within 30 minutes , please contact our call centre +603 7845 4543 for assistance.</string>
+
+
 
 </resources>

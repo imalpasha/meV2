@@ -26,6 +26,7 @@ public class CommitChangeActivity extends MainFragmentActivity implements Fragme
         fragmentManager.beginTransaction().replace(R.id.main_content, CommitChangeFragment.newInstance(bundle)).commit();
 
         hideTitle();
+
     }
 
     @Override

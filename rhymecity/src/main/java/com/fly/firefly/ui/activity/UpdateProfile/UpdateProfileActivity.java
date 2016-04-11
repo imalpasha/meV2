@@ -32,6 +32,8 @@ public class UpdateProfileActivity extends MainFragmentActivity implements Fragm
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
         // [END shared_tracker]
+        setMenuButton();
+
 
     }
 

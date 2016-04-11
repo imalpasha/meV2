@@ -9,10 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -98,6 +100,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     LinearLayout passengerBlock9;
     @InjectView(R.id.btnPersonalInfo)
     Button btnPersonalInfo;
+
+    @InjectView(R.id.personalDetailScrollView)
+    ScrollView personalDetailScrollView;
+
 
    /* @NotEmpty(sequence = 1)
     @InjectView(R.id.txtUserId)
@@ -625,11 +631,17 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             }
         });*/
 
+
+        personalDetailScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                view.requestFocus();
+            }
+        });
+
         return view;
     }
-
-
-
 
     public void creatExpiredDatePickerObject(Integer currentPosition){
 

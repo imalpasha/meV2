@@ -24,6 +24,7 @@ public class SeatSelectionActivity extends MainFragmentActivity implements Fragm
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, SeatSelectionFragment.newInstance(bundle)).commit();
 
+        setMenuButton();
         hideTitle();
     }
 

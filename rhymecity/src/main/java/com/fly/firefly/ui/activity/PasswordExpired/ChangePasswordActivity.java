@@ -26,6 +26,8 @@ public class ChangePasswordActivity extends MainFragmentActivity implements Frag
         super.onCreate(savedInstanceState);
         ButterKnife.inject(this);
 
+        setMenuButton();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, ChangePasswordFragment.newInstance()).commit();
 

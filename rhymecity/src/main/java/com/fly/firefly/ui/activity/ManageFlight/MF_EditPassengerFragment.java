@@ -8,9 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.fly.firefly.Controller;
@@ -93,6 +95,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     @InjectView(R.id.btnPersonalInfo)
     Button btnPersonalInfo;
 
+    @InjectView(R.id.personalDetailScrollView)
+    ScrollView personalDetailScrollView;
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -385,6 +389,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             @Override
             public void onClick(View v) {
                 int intTotalAdult = 0;
+                formContinue = true;
 
                 ArrayList<InfantInfo> infantObj = new ArrayList<InfantInfo>();
                 ArrayList<PassengerInfo> passengerObj = new ArrayList<PassengerInfo>();
@@ -401,7 +406,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_last_name");
                     TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
                     TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
-                    TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+                    TextView adultExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
 
                     TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
                     EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
@@ -418,9 +423,11 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     checkEditTextNull(docNo);
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                    Log.e("infantTravelDocCode"+infantTravelDocCode,travelDoc.getText().toString());
                     if(infantTravelDocCode != null){
                         if(infantTravelDocCode.equals("P")){
-                            checkTextViewNull(expireDate);
+                            checkTextViewNull(adultExpireDate);
+                            Log.e("expireDate",adultExpireDate.getText().toString());
                         }
                     }
 
@@ -604,6 +611,14 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             }
         });
 
+        personalDetailScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+
+            @Override
+            public void onScrollChanged() {
+                view.requestFocus();
+            }
+        });
+
         return view;
     }
 
@@ -698,13 +713,11 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     }
 
     public void checkTextViewNull(TextView txtView){
-        if(txtView.getText().toString() == "") {
+        if(txtView.getText().toString() == "" || txtView.getText().toString().matches("")) {
             txtView.setError("Field Required");
             setShake(txtView);
             txtView.requestFocus();
             formContinue = false;
-        }else{
-            formContinue = true;
         }
     }
 
@@ -715,8 +728,6 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             setShake(editText);
             editText.requestFocus();
             formContinue = false;
-        }else{
-            formContinue = true;
         }
     }
 
@@ -848,6 +859,9 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
 
             LinearLayout travellingBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with_block");
             travellingBlock.setVisibility(View.GONE);
+
+            LinearLayout genderBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender_block");
+            genderBlock.setVisibility(View.GONE);
         }
 
         for(int infantInc = 1 ; infantInc < Integer.parseInt(totalInfant) + 1 ; infantInc++){

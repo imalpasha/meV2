@@ -20,11 +20,11 @@ public final class CommonUtilities {
     /**
      * Tag used on log messages.
      */
-    static final String TAG = "ZATY GCM";
+    public static final String TAG = "ZATY GCM";
 
-    static final String DISPLAY_MESSAGE_ACTION ="com.fly.firefly.DISPLAY_MESSAGE";
+   public static final String DISPLAY_MESSAGE_ACTION ="com.fly.firefly.DISPLAY_MESSAGE";
 
-    static final String EXTRA_MESSAGE = "message";
+    public static final String EXTRA_MESSAGE = "message";
 
     /**
      * Notifies UI to display a message.

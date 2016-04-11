@@ -32,7 +32,10 @@ public class FireflyFlightListActivity extends MainFragmentActivity implements F
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, FireflyFlightListFragment.newInstance(bundle)).commit();
+
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

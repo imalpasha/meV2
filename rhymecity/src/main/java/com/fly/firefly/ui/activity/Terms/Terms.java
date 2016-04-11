@@ -24,6 +24,7 @@ public class Terms extends MainFragmentActivity implements FragmentContainerActi
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, TermsFragment.newInstance()).commit();
 
+        setMenuButton();
 
 
     }

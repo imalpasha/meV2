@@ -106,7 +106,6 @@ public class MainActivity extends Activity {
 				protected Void doInBackground(Void... params) {
 					// Register on our server
 					// On server creates a new user
-					Log.e(name,email);
 					//ServerUtilities.register(context, name, email, regId);
 					return null;
 				}

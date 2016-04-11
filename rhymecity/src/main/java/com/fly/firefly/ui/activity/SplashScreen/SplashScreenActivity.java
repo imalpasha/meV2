@@ -22,13 +22,15 @@ public class SplashScreenActivity extends MainFragmentActivity implements Fragme
 
         ButterKnife.inject(this);
 
-        hideMenuButton();
-        hideTitle();
-        lockDrawer();
+        //hideMenuButton();
+        //hideTitle();
+        //lockDrawer();
         BaseFragment.removeLogoHeader(this);
 
+        Bundle bundle = getIntent().getExtras();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.main_content, SplashScreenFragment.newInstance()).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, SplashScreenFragment.newInstance(bundle)).commit();
 
     }
 

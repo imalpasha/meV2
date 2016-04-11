@@ -1,11 +1,16 @@
 package com.fly.firefly.ui.activity.Homepage;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -13,12 +18,15 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
@@ -26,6 +34,7 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.DeviceInfoSuccess;
 import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.ui.AutoCamera;
 import com.fly.firefly.ui.activity.Beacon.BeaconRanging;
 import com.fly.firefly.ui.activity.BoardingPass.BoardingPassActivity;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightActivity;
@@ -34,6 +43,7 @@ import com.fly.firefly.ui.activity.GeoFencing.GeoFencingFragment;
 import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.ManageFlight.MF_Activity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity1;
+import com.fly.firefly.ui.activity.PushNotification.MainActivity;
 import com.fly.firefly.ui.activity.PushNotification.PushNotificationActivity;
 import com.fly.firefly.ui.module.HomeModule;
 import com.fly.firefly.ui.presenter.HomePresenter;
@@ -43,6 +53,7 @@ import com.fly.firefly.utils.SharedPrefManager;
 import com.google.android.gms.analytics.Tracker;
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.util.HashMap;
 
 import javax.inject.Inject;
@@ -98,6 +109,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     private int fragmentContainerId;
     private SharedPrefManager pref;
     public static final String TAG = GeoFencingFragment.class.getSimpleName();
+
+    View view;
+
    /* private static final int NUMBER_OF_LOCATION_ITERATIONS = 10;
     private GoogleMap map; // Might be null if Google Play services APK is not available.
     private MyPlaces happyPlace;
@@ -129,7 +143,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.home, container, false);
+        view = inflater.inflate(R.layout.home, container, false);
         ButterKnife.inject(this, view);
         aq.recycle(view);
         pref = new SharedPrefManager(getActivity());
@@ -138,6 +152,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
         //TextView myTextView = new TextView(getActivity());
 
+        //private String retry = this.getResources().getString(R.string.retry);
 
 
         /*Realm Obj Test*/
@@ -327,7 +342,23 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //trySetAlarm();
         //LocalNotification.convert(getActivity());
 
+        screenSize();
         return view;
+    }
+
+
+    public void screenSize(){
+
+        WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        Point size = new Point();
+        display.getSize(size);
+        int width = size.x;
+        int height = size.y;
+
+        Log.e(Integer.toString(width),Integer.toString(height));
+
     }
 
 
@@ -350,7 +381,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             default:
                 toastMsg = "Screen size is neither large, normal or small";
         }
-            Log.e("toastMsg",toastMsg);
+            Log.e("toastMsg", toastMsg);
     }
 
     // ------------------------------------------------------------------------------------------- //
@@ -390,10 +421,16 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     public void goToBoardingPass() {
         //Intent loginPage = new Intent(getActivity(), BeaconRanging.class);
         Intent loginPage = new Intent(getActivity(), BoardingPassActivity.class);
+        //Intent loginPage = new Intent(getActivity(), MainActivity.class);
         //Intent loginPage = new Intent(getActivity(), GenFencingActivity.class);
+        //Intent loginPage = new Intent(getActivity(), AutoCamera.class);
+
         getActivity().startActivity(loginPage);
 
+
+
     }
+
 
     public void goBookingPage() {
         Intent loginPage = new Intent(getActivity(), SearchFlightActivity.class);
@@ -414,12 +451,28 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     public void onResume() {
         super.onResume();
         presenter.onResume();
+        Log.e("ONRESUME", "TRUE");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         presenter.onPause();
+        Log.e("ONPAUSE","TRUE");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //presenter.onStop();
+        Log.e("ONSTOP","TRUE");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //presenter.onDestroy();
+        Log.e("ONDESTROY","TRUE");
     }
 
     public void registerBackFunction() {

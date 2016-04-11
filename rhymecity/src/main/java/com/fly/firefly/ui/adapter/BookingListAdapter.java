@@ -27,10 +27,12 @@ public class BookingListAdapter extends BaseAdapter {
     private MF_Fragment fragment;
     private String flightWay;
     private Boolean active = false;
+    private String module;
 
-    public BookingListAdapter(Context context, List<ListBookingReceive.ListBooking> paramObj) {
+    public BookingListAdapter(Context context, List<ListBookingReceive.ListBooking> paramObj,String module) {
         this.context = context;
         this.obj = paramObj;
+        this.module = module;
     }
 
     @Override
@@ -51,6 +53,8 @@ public class BookingListAdapter extends BaseAdapter {
     static class ViewHolder {
         @InjectView(R.id.txtPNR) TextView txtPNR;
         @InjectView(R.id.txtDate) TextView txtDate;
+        @InjectView(R.id.txtConfirmation) TextView txtConfirmation;
+
         //@InjectView(R.id.txtArrival) TextView txtArrival;
         //@InjectView(R.id.txtDeparture) TextView txtDeparture;
 
@@ -69,7 +73,13 @@ public class BookingListAdapter extends BaseAdapter {
             vh = (ViewHolder) view.getTag();
         }
 
-        vh.txtPNR.setText(obj.get(position).getPnr());
+        if(module.equals("MF")){
+            vh.txtConfirmation.setText("Confirmation Code");
+            vh.txtPNR.setText(obj.get(position).getPnr());
+        }else{
+            vh.txtConfirmation.setText("Station Code");
+            vh.txtPNR.setText(obj.get(position).getDeparture_station_code()+" - "+obj.get(position).getArrival_station_code());
+        }
         vh.txtDate.setText(obj.get(position).getDate());
 
         return view;

@@ -65,6 +65,13 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/txtMessage" />
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Or click [HERE] to check your boarding pass"
+                            android:layout_marginTop="20dp"
+                            android:id="@+id/txtBoardingHere" />
+
                     </LinearLayout>
 
                 </LinearLayout>

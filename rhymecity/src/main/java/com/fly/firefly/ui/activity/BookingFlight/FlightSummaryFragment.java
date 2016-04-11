@@ -244,11 +244,18 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtInfantTotalReturn)
     TextView txtInfantTotalReturn;
 
+    @InjectView(R.id.txtOperatedBy)
+    TextView txtOperatedBy;
+
+    @InjectView(R.id.txtReturnOperatedBy)
+    TextView txtReturnOperatedBy;
+
     private SharedPrefManager pref;
     private int fragmentContainerId;
     private Boolean goingFlightDetailTxt = true;
     private Boolean returnFlightDetailTxt = true;
     private String storeUsername;
+    private boolean recreateSummary = true;
 
     public static FlightSummaryFragment newInstance() {
 
@@ -280,6 +287,19 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         HashMap<String, String> initUsername = pref.getUserEmail();
         storeUsername = initUsername.get(SharedPrefManager.USER_EMAIL);
 
+        //Check Flight Type (FY/MH)
+        HashMap<String, String> initLogin = pref.getFlightType();
+        String type = initLogin.get(SharedPrefManager.FLIGHT_TYPE);
+        if(type != null){
+            if(type.equals("MH")){
+                txtOperatedBy.setVisibility(View.VISIBLE);
+                txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+                txtReturnOperatedBy.setVisibility(View.VISIBLE);
+                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+
+            }
+        }
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -297,8 +317,6 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
                 }
             }
         });
-
-
 
         txtReturnFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -355,15 +373,15 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         //pref.setSeat(seat);
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-
             setSummary(obj);
             //Save Object To Local DB(realm.io)
             RealmObjectController.saveFlight(getActivity(), obj, storeUsername);
-
         }
     }
 
     public void setSummary(FlightSummaryReceive obj){
+
+        recreateSummary = false;
 
         txtPNR.setText(obj.getItenerary_information().getPnr());
         txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
@@ -666,13 +684,14 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         presenter.onResume();
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
+        if(recreateSummary){
+            if(result.size() > 0){
             Log.e("x","1");
             Gson gson = new Gson();
             FlightSummaryReceive obj = gson.fromJson(result.get(0).getCachedResult(), FlightSummaryReceive.class);
             onFlightSummary(obj);
-        }else{
-            Log.e("x","2");
+            recreateSummary = false;
+            }
         }
     }
 

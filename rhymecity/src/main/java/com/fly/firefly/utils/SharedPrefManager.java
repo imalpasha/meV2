@@ -41,6 +41,7 @@ public class SharedPrefManager {
     public static final String FLIGHT_TYPE ="FT";
     public static final String USER_ID ="UI";
 
+    public static final String APP_VERSION = "AV";
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -52,10 +53,18 @@ public class SharedPrefManager {
         _prefsEditor = _sharedPrefs.edit();
     }
 
+
     /*user id*/
     public HashMap<String, String> getUserID() {
         HashMap<String, String> init = new HashMap<String, String>();
         init.put(USER_ID, _sharedPrefs.getString(USER_ID, null));
+        return init;
+    }
+
+    /*SOCIAL MEDIA*/
+    public HashMap<String, String> getAppVersion() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(APP_VERSION, _sharedPrefs.getString(APP_VERSION, null));
         return init;
     }
 
@@ -237,6 +246,12 @@ public class SharedPrefManager {
         HashMap<String, String> init = new HashMap<String, String>();
         init.put(PASSWORD, _sharedPrefs.getString(PASSWORD, null));
         return init;
+    }
+
+    /*Set Booking ID*/
+    public void setAppVersion(String version) {
+        _prefsEditor.putString(APP_VERSION, version);
+        _prefsEditor.apply();
     }
 
     /*Set Booking ID*/
@@ -529,6 +544,12 @@ public class SharedPrefManager {
     public void clearState() {
         // Clearing Selected
         _sharedPrefs.edit().remove(STATE).apply();
+    }
+
+    /*Clear State Value*/
+    public void clearAppVersion() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(APP_VERSION).apply();
     }
 
     /*Clear Flight Value*/

@@ -36,7 +36,6 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         Log.e("Registering", "tRUE");
         displayMessage(context, "Your device registred with GCM");
-        Log.d("NAME", MainActivity.name);
         ServerUtilities.register(context, MainActivity.name, MainActivity.email, registrationId);
     }
 
@@ -100,12 +99,33 @@ public class GCMIntentService extends GCMBaseIntentService {
      * Issues a notification to inform the user that server has sent a message.
      */
     private void generateNotification(Context context, String message) {
-        String[] parts = message.split("/");
-        String part1 = parts[0]; // 004
-        String part2 = parts[1]; // 034556\
-        Log.e("Part1 " + part1, "Part2 " + part2);
+//        String[] parts = message.split("/");
+//        String part1 = parts[0]; // 004
+//        String part2 = parts[1]; // 034556\
+//        Log.e("Part1 " + part1, "Part2 " + part2);
         PendingIntent viewPendingIntent = null;
-        if(part2.equals("reminder")){
+
+        Intent viewIntent = new Intent(context, PushNotificationV1.class);
+        viewIntent.putExtra("MESSAGE", message);
+        viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+        notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
+        notificationBuilder
+                .setContentText(message)
+                .setContentTitle(String.format("Firefly"))
+                .setSmallIcon(R.drawable.departure_icon)
+                .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
+                .setTicker(String.format("%1$s Fence: %2$s", "tEST", "tEST"));
+        //Intent notificationIntent = new Intent(context, MapsActivity.class);
+        //notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+        //notificationIntent.setAction(Intent.ACTION_MAIN);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
+        notificationBuilder.setContentIntent(viewPendingIntent);
+        notificationManager.notify(1, notificationBuilder.build());
+
+        /*if(part2.equals("reminder")){
             Log.e("PART2","REMINDER");
             Intent viewIntent = new Intent(context, PushNotificationV1.class);
             viewIntent.putExtra("MESSAGE", message);
@@ -136,7 +156,7 @@ public class GCMIntentService extends GCMBaseIntentService {
             //viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
             //Log.e("Beacon", "True");
             //test();
-        }
+        }*/
 
 
        /* int icon = R.drawable.ic_launcher;

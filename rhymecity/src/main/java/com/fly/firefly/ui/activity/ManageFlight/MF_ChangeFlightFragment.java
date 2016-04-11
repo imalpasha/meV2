@@ -102,11 +102,12 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     private String RETURN_DATE_PICKER = "RETURN_DATE_PICKER";
     private String PICKER;
     private static final String DATEPICKER_TAG = "datepicker";
-    private DatePickerDialog datePickerDialog;
+    private DatePickerDialog datePickerDialog1,datePickerDialog2;
     private ChangeSearchFlightReceive localObj;
     private boolean disableDeparture = false;
     private boolean disableReturn = false;
     private boolean retrieveFlightInfo = false;
+    private int year;
 
     public static MF_ChangeFlightFragment newInstance(Bundle bundle) {
 
@@ -133,7 +134,6 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         //checkGoing
 
 
-
         /*Retrieve bundle data*/
         Bundle bundle = getArguments();
         String flightSummary = bundle.getString("ITINENARY_INFORMATION");
@@ -141,9 +141,8 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
         /*DatePicker Setup - Failed to make it global*/
         final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        datePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-        datePickerDialog.setYearRange(year, year + 1);
+        year = calendar.get(Calendar.YEAR);
+
 
         //adult = bundle.getString(ADULT);
         //infant = bundle.getString(INFANT);
@@ -263,13 +262,20 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
+            //modify date
+            String departureDate = obj.getJourneys().get(0).getDeparture_date();
+            String[] splitDate = departureDate.split("/");
+
+            datePickerDialog1 = DatePickerDialog.newInstance(this, Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[0]));
+            datePickerDialog1.setYearRange(year, year + 1);
+
             if(obj.getJourneys().get(0).getFlight_status().equals("Available")){
                 /*Arrival Date Clicked*/
                 departureDateBlock.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //AnalyticsApplication.sendEvent("Click", "departureBlock");
-                        datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                        datePickerDialog1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                         PICKER = DEPARTURE_DATE_PICKER;
                     }
                 });
@@ -288,14 +294,23 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
             txtDepartureDate.setTag(reformatDOB2(obj.getJourneys().get(0).getDeparture_date()));
             if (obj.getJourneys().size() > 1) {
 
+                String returnDate = obj.getJourneys().get(1).getDeparture_date();
+                String[] splitReturn = returnDate.split("/");
+
+                datePickerDialog2 = DatePickerDialog.newInstance(this, Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                datePickerDialog2.setYearRange(year, year + 1);
+
+
                 if(obj.getJourneys().get(0).getFlight_status().equals("Available")) {
                 /*Departure Date Clicked*/
                     returnDateBlock.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                            datePickerDialog2.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                             PICKER = RETURN_DATE_PICKER;
                             AnalyticsApplication.sendEvent("Click", "returnDateblock");
+
+
 
                         }
                     });

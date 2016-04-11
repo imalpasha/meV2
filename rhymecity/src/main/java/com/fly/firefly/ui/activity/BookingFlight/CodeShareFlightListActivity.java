@@ -30,7 +30,10 @@ public class CodeShareFlightListActivity extends MainFragmentActivity implements
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, CodeShareFlightListFragment.newInstance(bundle)).commit();
+
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

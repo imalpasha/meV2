@@ -26,6 +26,8 @@ public class MF_ActionActivity extends MainFragmentActivity implements FragmentC
         fragmentManager.beginTransaction().replace(R.id.main_content, MF_ActionFragment.newInstance(bundle),"MF_ACTION").commit();
 
         hideTitle();
+        setMenuButton();
+
     }
 
     @Override

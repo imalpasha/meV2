@@ -31,7 +31,10 @@ public class BoardingPassDisplayActivity extends MainFragmentActivity implements
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, BoardingPassDisplayFragment.newInstance(bundle)).commit();
+
         hideTitle();
+        setMenuButton();
+
     }
 
 

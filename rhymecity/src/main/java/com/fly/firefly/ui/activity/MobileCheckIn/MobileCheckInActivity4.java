@@ -20,6 +20,8 @@ public class MobileCheckInActivity4 extends MainFragmentActivity implements Frag
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.main_content, MobileCheckInFragment4.newInstance(bundle)).commit();
 
+        setMenuButton();
+
     }
 
     @Override
