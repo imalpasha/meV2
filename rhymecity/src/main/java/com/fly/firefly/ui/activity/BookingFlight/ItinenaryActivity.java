@@ -38,8 +38,8 @@ public class ItinenaryActivity extends MainFragmentActivity implements FragmentC
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Itinenary Detail" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setScreenName("Itinenary Detail" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

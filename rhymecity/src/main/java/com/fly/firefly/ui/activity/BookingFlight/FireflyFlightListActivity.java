@@ -41,8 +41,8 @@ public class FireflyFlightListActivity extends MainFragmentActivity implements F
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Flight Details" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setcreenName("Flight Details" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

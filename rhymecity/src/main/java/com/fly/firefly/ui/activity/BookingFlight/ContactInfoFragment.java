@@ -26,6 +26,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -210,6 +211,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Personal Details(Contact Details)";
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
 
     private ArrayList<DropDownItem> travelDocList;
@@ -886,6 +888,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

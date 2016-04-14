@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
@@ -49,6 +50,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     //@InjectView(R.id.btnLogin) Button btnLogin;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Mobile Check In Detail";
     private MobileCheckinReceive obj;
     private String PNR;
     private String arrivalCode,departureCode;
@@ -225,6 +227,9 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

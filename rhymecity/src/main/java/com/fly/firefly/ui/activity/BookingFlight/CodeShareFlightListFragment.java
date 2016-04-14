@@ -108,7 +108,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
 
     private final String PREMIER = "PREMIER";
-    private static final String SCREEN_LABEL = "Flight Detail";
+    private static final String SCREEN_LABEL = "Book Flight: Flight Details(MH)";
+    private static final String SCREEN_LABEL_MANAGE = "Edit MH Flight Detail";
     private final String FLIGHT_TYPE = "FLIGHT_TYPE";
     private final String ADULT = "ADULT";
     private final String INFANT = "INFANT";
@@ -611,8 +612,15 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
+
+        if (pnr == null){
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+            Log.e("Tracker", SCREEN_LABEL);
+        }else{
+
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
+            Log.e("Tracker", SCREEN_LABEL_MANAGE);
+        }
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
 

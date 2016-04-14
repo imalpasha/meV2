@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -93,6 +94,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     private PassengerSeatAdapterV4 passengerSeatListV2;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Edit Seat Selection";
     private List<String> seatTag1;
     private List<String> seatTag2;
 
@@ -836,6 +838,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(!retrieveSeat){

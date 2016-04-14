@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -53,6 +54,7 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
 
     //private ProgressBar progressIndicator;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Send Itinerary";
     private String pnr,username,bookingId,signature;
 
     public static MF_SentItineraryFragment newInstance(Bundle bundle) {
@@ -131,6 +133,9 @@ public class MF_SentItineraryFragment extends BaseFragment implements ManageFlig
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

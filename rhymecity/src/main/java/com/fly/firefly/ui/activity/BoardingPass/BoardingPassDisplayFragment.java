@@ -68,6 +68,7 @@ public class BoardingPassDisplayFragment extends BaseFragment {
 
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Boarding Pass Detail";
     private SharedPrefManager pref;
     private String boardingPassList;
     private RetrieveBoardingPassReceive obj;
@@ -236,6 +237,9 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

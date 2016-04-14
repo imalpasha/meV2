@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -252,6 +253,7 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
     private SharedPrefManager pref;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Booking Flight: Flight Summary";
     private Boolean goingFlightDetailTxt = true;
     private Boolean returnFlightDetailTxt = true;
     private String storeUsername;
@@ -682,6 +684,9 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(recreateSummary){

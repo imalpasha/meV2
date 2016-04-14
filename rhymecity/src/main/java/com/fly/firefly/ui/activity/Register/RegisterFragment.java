@@ -168,6 +168,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private int month;
     private int year;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Register";
     private SharedPrefManager pref;
     private int month_number;
     private DatePickerObj date;
@@ -178,7 +179,6 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     private String dialingCode;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
-    private static final String SCREEN_LABEL = "Register";
     private Boolean validateStatus = true;
     private Boolean limitAge;
     /*DropDown Variable*/
@@ -524,7 +524,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

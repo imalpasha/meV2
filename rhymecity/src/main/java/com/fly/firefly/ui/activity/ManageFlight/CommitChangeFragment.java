@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -230,6 +231,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
 
     //private ProgressBar progressIndicator;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Edit Payment Screen";
     private Boolean goingFlightDetailTxt = true;
     private Boolean returnFlightDetailTxt = true;
     private SharedPrefManager pref;
@@ -657,6 +659,8 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
         super.onResume();
         presenter.onResume();
 
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(recreateSummary) {

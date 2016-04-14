@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.androidquery.AQuery;
 import com.androidquery.callback.AjaxCallback;
 import com.androidquery.callback.AjaxStatus;
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -103,6 +104,8 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     TextView txtTotalDue;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Payment Details(Add Payment)";
+    private static final String SCREEN_LABEL_MANAGE = "Manage Flight: Payment Details(Add Payment)";
     private SharedPrefManager pref;
     private String signature;
     private View view;
@@ -513,6 +516,15 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        if (paymentFrom.equals("CHANGE") ) {
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
+            Log.e("Tracker", SCREEN_LABEL_MANAGE);
+
+        }else {
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+            Log.e("Tracker", SCREEN_LABEL);
+        }
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(getPaymentList){

@@ -78,7 +78,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     private int fragmentContainerId;
     public static final String DATEPICKER_TAG = "datepicker";
     private String fullDate;
-    private static final String SCREEN_LABEL = "Update Profile";
+    private static final String SCREEN_LABEL = "Update Information";
     DropDownItem selectedCountry,selectTitle_code;
     private View view;
     private LoginReceive.UserInfo loginObj;
@@ -542,6 +542,7 @@ public class UpdateProfileFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         Log.e("Tracker", SCREEN_LABEL);
     }

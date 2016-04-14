@@ -52,9 +52,9 @@ public class BoardingPassActivity extends MainFragmentActivity implements Fragme
     public void onResume() {
         super.onResume();
         // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Boarding Pass");
+        /*Log.i("Page Name", "Setting screen name: " + "Boarding Pass");
         mTracker.setScreenName("Boarding Pass" + "Main");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());*/
     }
 
 

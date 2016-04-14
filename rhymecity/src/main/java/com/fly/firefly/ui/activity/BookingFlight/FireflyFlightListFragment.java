@@ -87,6 +87,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     //@InjectView(R.id.fareRuleLayout)LinearLayout fareRuleLayout;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Flight Details";
+    private static final String SCREEN_LABEL_MANAGE = "Edit Flight Detail";
     private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
     private String departPort,departDatePlain,arrivalPort,departPortCode,flightType;
     private String returnDepartPort,returnArrivalPort,returnDatePlain,arrivalPortCode;
@@ -100,7 +102,6 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     private final String RETURN_BASIC = "RETURN_BASIC";
     private final String BASIC = "BASIC";
     private final String PREMIER = "PREMIER";
-    private static final String SCREEN_LABEL = "Flight Detail";
     private final String FLIGHT_TYPE = "FLIGHT_TYPE";
     private final String ADULT = "ADULT";
     private final String INFANT = "INFANT";
@@ -705,8 +706,14 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     public void onResume() {
         super.onResume();
         presenter.onResume();
-        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
+
+        if (pnr == null){
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+            Log.e("Tracker", SCREEN_LABEL);
+        }else{
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
+            Log.e("Tracker", SCREEN_LABEL_MANAGE);
+        }
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
 

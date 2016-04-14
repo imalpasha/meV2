@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.Terms;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.presenter.TermsPresenter;
@@ -25,6 +27,7 @@ public class TermsFragment extends BaseFragment {
     @InjectView(R.id.mainWebView)WebView mainWebView;
 
     String URL= "http://fyapidev.me-tech.com.my/api/displayTerm";
+    private static final String SCREEN_LABEL = "FAQ";
 
     public static TermsFragment newInstance() {
 
@@ -74,10 +77,19 @@ public class TermsFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //presenter.onResume();
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
+    }
 
-
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        //presenter.onPause();
+    }
 
 
 }

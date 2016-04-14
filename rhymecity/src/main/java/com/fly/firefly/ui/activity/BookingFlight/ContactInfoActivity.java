@@ -39,8 +39,8 @@ public class ContactInfoActivity extends MainFragmentActivity implements Fragmen
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Personal Detail" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setScreenName("Personal Detail" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

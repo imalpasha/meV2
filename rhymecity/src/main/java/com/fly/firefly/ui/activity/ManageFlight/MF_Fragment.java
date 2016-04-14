@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -77,6 +78,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
 
 
     private int fragmentContainerId;
+    public String SCREEN_LABEL;
     private SharedPrefManager pref;
     private String signature;
     private Validator mValidator;
@@ -125,6 +127,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
         String storePassword = initPassword.get(SharedPrefManager.PASSWORD);
 
         if(loginStatus != null && loginStatus.equals("Y")) {
+            SCREEN_LABEL =  "Manage Flight: Login Manage Flight";
             cache_login = true;
             if(Controller.connectionAvailable(getActivity())){
                 initiateLoading(getActivity());
@@ -137,6 +140,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
         }else{
             cache_login = false;
             pnrLayout.setVisibility(View.VISIBLE);
+            SCREEN_LABEL =  "Manage Flight: Manage Flight";
         }
 
          /*Set PNR auto caps*/
@@ -298,6 +302,9 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
 

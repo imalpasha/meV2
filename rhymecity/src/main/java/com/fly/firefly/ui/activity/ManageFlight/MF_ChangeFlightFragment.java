@@ -108,6 +108,7 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     private boolean disableReturn = false;
     private boolean retrieveFlightInfo = false;
     private int year;
+    public String SCREEN_LABEL;
 
     public static MF_ChangeFlightFragment newInstance(Bundle bundle) {
 
@@ -130,6 +131,7 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
 
         View view = inflater.inflate(R.layout.change_flight, container, false);
         ButterKnife.inject(this, view);
+        SCREEN_LABEL = "Edit Search Flight";
 
         //checkGoing
 
@@ -398,6 +400,9 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(!retrieveFlightInfo){

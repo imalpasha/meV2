@@ -13,6 +13,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -30,6 +31,9 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Payment Details(Payment Web)";
+    private static final String SCREEN_LABEL_MANAGE = "Manage Flight: Payment Details(Payment Web)";
+    private String paymentFrom;
     boolean loadingFinished = true;
     boolean redirect = false;
 
@@ -54,7 +58,7 @@ public class PaymentWebViewFragment extends BaseFragment  {
         Bundle bundle = getArguments();
 
         String url = bundle.getString("PAYMENT_URL");
-        final String paymentFrom = bundle.getString("PAYMENT_FROM");
+        paymentFrom = bundle.getString("PAYMENT_FROM");
 
 
         //Gson gson = new Gson();
@@ -151,7 +155,17 @@ public class PaymentWebViewFragment extends BaseFragment  {
     @Override
     public void onResume() {
         super.onResume();
+
+        if (paymentFrom.equals("CHANGE") ) {
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
+            Log.e("Tracker", SCREEN_LABEL_MANAGE);
+
+        }else {
+            AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+            Log.e("Tracker", SCREEN_LABEL);
+        }
     }
+
 
     @Override
     public void onPause() {
