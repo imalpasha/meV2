@@ -89,6 +89,8 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Book Flight: Flight Details";
     private static final String SCREEN_LABEL_MANAGE = "Edit Flight Detail";
+    //public String SCREEN_NAME;
+    //public int popup = 0;
     private FlightDetailAdapter departListBasic,departListPremier, returnListBasic,returnListPremier;
     private String departPort,departDatePlain,arrivalPort,departPortCode,flightType;
     private String returnDepartPort,returnArrivalPort,returnDatePlain,arrivalPortCode;
@@ -395,6 +397,9 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     }
 
     public void continueAs(){
+
+        //popup = 1;
+        //SCREEN_NAME = "Book FLight: Flight Details(Login Popup)";
 
         LayoutInflater li = LayoutInflater.from(getActivity());
         final View myView = li.inflate(R.layout.continue_as, null);
@@ -707,9 +712,10 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         super.onResume();
         presenter.onResume();
 
-        if (pnr == null){
+        if (pnr == null) {
             AnalyticsApplication.sendScreenView(SCREEN_LABEL);
             Log.e("Tracker", SCREEN_LABEL);
+
         }else{
             AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
             Log.e("Tracker", SCREEN_LABEL_MANAGE);

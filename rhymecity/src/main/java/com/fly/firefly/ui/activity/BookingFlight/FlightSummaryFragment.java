@@ -253,7 +253,7 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
     private SharedPrefManager pref;
     private int fragmentContainerId;
-    private static final String SCREEN_LABEL = "Booking Flight: Flight Summary";
+    private static final String SCREEN_LABEL = "Book Flight: Flight Summary";
     private Boolean goingFlightDetailTxt = true;
     private Boolean returnFlightDetailTxt = true;
     private String storeUsername;

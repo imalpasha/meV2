@@ -231,7 +231,7 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
 
     //private ProgressBar progressIndicator;
     private int fragmentContainerId;
-    private static final String SCREEN_LABEL = "Edit Payment Screen";
+    private static final String SCREEN_LABEL = "Manage Flight: Manage Flight Home";
     private Boolean goingFlightDetailTxt = true;
     private Boolean returnFlightDetailTxt = true;
     private SharedPrefManager pref;

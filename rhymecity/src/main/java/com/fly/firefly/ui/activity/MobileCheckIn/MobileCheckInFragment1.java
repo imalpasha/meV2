@@ -149,7 +149,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 //Display No Internet connection
             }
         }else{
-            SCREEN_LABEL =  "Mobile Check In";
+            SCREEN_LABEL =  "Mobile Check-In";
             mobileCheckInPNRLayout.setVisibility(View.VISIBLE);
 
             txtDeparture.setTag(DEPARTURE_FLIGHT);
