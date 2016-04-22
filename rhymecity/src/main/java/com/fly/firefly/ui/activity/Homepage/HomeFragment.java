@@ -108,10 +108,10 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @InjectView(R.id.bookFlightBtn)
     TextView bookFlightBtn;
 
-
-    private static final String SCREEN_LABEL = "Home";
     private String facebookUrl,twitterUrl,instagramUrl;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Home";
+
     private SharedPrefManager pref;
     public static final String TAG = GeoFencingFragment.class.getSimpleName();
 
@@ -458,6 +458,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         super.onResume();
         presenter.onResume();
         Log.e("ONRESUME", "TRUE");
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

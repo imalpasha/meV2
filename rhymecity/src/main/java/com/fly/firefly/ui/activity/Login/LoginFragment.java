@@ -64,7 +64,6 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     // Validator Attributes
     private Validator mValidator;
     private Tracker mTracker;
-    private static final String SCREEN_LABEL = "Login";
 
     @Inject
     LoginPresenter presenter;
@@ -89,6 +88,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     private SharedPrefManager pref;
     private String storePassword,storeUsername;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Login";
 
     public static LoginFragment newInstance() {
 
@@ -326,7 +326,9 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -117,6 +118,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     private Boolean formContinue = true;
     private int totalAdult,totalInfant;
     private String pnr,username,bookingId;
+    private static final String SCREEN_LABEL = "Edit Passenger Detail";
 
     private Calendar calendar = Calendar.getInstance();
     private int year = calendar.get(Calendar.YEAR);
@@ -991,6 +993,9 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

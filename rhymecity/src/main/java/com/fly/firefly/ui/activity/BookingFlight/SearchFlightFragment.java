@@ -117,13 +117,13 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private final String CHILDREN = "CHILDREN";
     private final String INFANT = "INFANT";
     private String flightType = "1";
-    private static final String SCREEN_LABEL = "Search Flight";
 
     private int totalAdult = 1;
     private int totalChildren = 0;
     private int totalInfant = 0;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Search Flight";
     private boolean blockAdult = false;
     private boolean blockAdultNumber = false;
 
@@ -715,7 +715,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

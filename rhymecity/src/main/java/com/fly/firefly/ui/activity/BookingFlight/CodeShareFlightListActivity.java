@@ -39,8 +39,8 @@ public class CodeShareFlightListActivity extends MainFragmentActivity implements
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Flight Details" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setScreenName("Flight Details" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

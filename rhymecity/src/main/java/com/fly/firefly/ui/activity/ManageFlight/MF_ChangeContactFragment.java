@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
@@ -198,6 +199,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
     private SharedPrefManager pref;
     private String pnr,username,bookingId,signature;
     private String travelPurpose;
+    private static final String SCREEN_LABEL = "Edit Contact Detail";
 
     public static MF_ChangeContactFragment newInstance(Bundle bundle) {
 
@@ -644,6 +646,9 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
             if(result.size() > 0){

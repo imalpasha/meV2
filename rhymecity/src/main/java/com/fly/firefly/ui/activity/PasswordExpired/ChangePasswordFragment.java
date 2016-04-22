@@ -58,6 +58,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     private AlertDialog dialog;
     private SharedPrefManager pref;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Login: Password Expired";
     private View view;
 
     @Inject ChangePasswordPresenter presenter;
@@ -90,8 +91,6 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
 
     @InjectView(R.id.btnchangepassword)
     Button changepasswordButton;
-
-    private static final String SCREEN_LABEL = "Change Password";
 
     public static ChangePasswordFragment newInstance() {
 
@@ -237,6 +236,7 @@ public class ChangePasswordFragment extends BaseFragment implements ChangePasswo
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         Log.e("Tracker", SCREEN_LABEL);
     }

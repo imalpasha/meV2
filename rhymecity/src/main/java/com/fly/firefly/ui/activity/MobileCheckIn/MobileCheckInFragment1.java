@@ -92,11 +92,11 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     private SharedPrefManager pref;
     private String DEPARTURE_FLIGHT = "Please choose your departure airport";
     private String ARRIVAL_FLIGHT = "Please choose your arrival airport";
-    private static final String SCREEN_LABEL = "Mobile Check In";
     private Validator mValidator;
     private String loginStatus;
     private String storeUsername;
     private int fragmentContainerId;
+    public String SCREEN_LABEL = "Login Mobile Check-In";
     private BookingListAdapter adapter;
     private String signatureFromLocal;
     private boolean cache_login = false;
@@ -155,7 +155,6 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 cachedDisplay = true;
                 horizontalProgressBar.setVisibility(View.VISIBLE);
                 //update the list on background
-                presenter.getUserPNR(storeUsername,storePassword,"check_in");
 
             }else{
                 if(Controller.connectionAvailable(getActivity())){
@@ -169,6 +168,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
             mobileCheckInNext1.setVisibility(View.GONE);
 
         }else{
+            SCREEN_LABEL =  "Mobile Check-In";
             mobileCheckInPNRLayout.setVisibility(View.VISIBLE);
 
             txtDeparture.setTag(DEPARTURE_FLIGHT);

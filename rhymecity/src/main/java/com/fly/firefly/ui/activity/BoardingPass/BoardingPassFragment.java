@@ -107,12 +107,12 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
 
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
+    public String SCREEN_LABEL;
     private ArrayList<DropDownItem> dataFlightDeparture;
     private static ArrayList<DropDownItem> dataFlightArrival;
     private SharedPrefManager pref;
     private String DEPARTURE_FLIGHT = "Please choose your departure airport";
     private String ARRIVAL_FLIGHT = "Please choose your arrival airport";
-    private static final String SCREEN_LABEL = "Boarding Pass";
     private Validator mValidator;
 
     private BookingListAdapter adapter;
@@ -169,6 +169,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
         String storePassword = initPassword.get(SharedPrefManager.PASSWORD);
 
         if(loginStatus != null && loginStatus.equals("Y")) {
+            SCREEN_LABEL = "Login Boarding Pass";
 
             if(!Controller.connectionAvailable(getActivity())){
                 //if login & no internet.. display data from local database
@@ -221,6 +222,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
             }
 
         }else{
+            SCREEN_LABEL = "Boarding Pass";
             pnrLayout.setVisibility(View.VISIBLE);
 
             /*Set PNR auto caps*/
@@ -491,6 +493,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
 

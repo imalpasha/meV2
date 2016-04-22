@@ -14,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
@@ -72,6 +73,7 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
 
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Mobile Check In Term";
     private String mobileCheckInRule;
     private MobileCheckInPassengerReceive obj;
     private AlertDialog dialog;
@@ -323,6 +325,9 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

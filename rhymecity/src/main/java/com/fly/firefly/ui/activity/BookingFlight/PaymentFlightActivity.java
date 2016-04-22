@@ -47,8 +47,8 @@ public class PaymentFlightActivity extends MainFragmentActivity implements Fragm
         super.onResume();
         // presenter.onResume();
         Log.i("Page Name", "Setting screen name: " + "Payment Flight");
-        mTracker.setScreenName("Payment Flight" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setScreenName("Payment Flight" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

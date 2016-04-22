@@ -49,9 +49,9 @@ public class PaymentWebViewActivity extends MainFragmentActivity implements Frag
     public void onResume() {
         super.onResume();
         // presenter.onResume();
-        Log.i("Page Name", "Setting screen name: " + "Payment Flight");
-        mTracker.setScreenName("Payment Flight" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //Log.i("Page Name", "Setting screen name: " + "Payment Flight");
+        //mTracker.setScreenName("Payment Flight" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override

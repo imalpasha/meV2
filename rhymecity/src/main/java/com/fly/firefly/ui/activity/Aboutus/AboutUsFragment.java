@@ -36,6 +36,7 @@ public class AboutUsFragment extends BaseFragment implements AboutUsPresenter.Ab
     TextView txtAboutUs;
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "About Us";
 
     public static AboutUsFragment newInstance() {
 
@@ -76,6 +77,9 @@ public class AboutUsFragment extends BaseFragment implements AboutUsPresenter.Ab
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
     }
 

@@ -124,6 +124,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Personal Details(Passenger Details)";
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
     private ArrayList<DropDownItem> titleList;
     private ArrayList<DropDownItem> genderList;
@@ -1134,6 +1135,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){

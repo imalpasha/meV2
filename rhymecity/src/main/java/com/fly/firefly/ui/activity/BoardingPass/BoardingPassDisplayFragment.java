@@ -83,6 +83,7 @@ public class BoardingPassDisplayFragment extends BaseFragment implements Boardin
 
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Boarding Pass Detail";
     private SharedPrefManager pref;
     private String boardingPassList,selectedBoardingPassList;
     private RetrieveBoardingPassReceive obj;
@@ -301,6 +302,9 @@ public class BoardingPassDisplayFragment extends BaseFragment implements Boardin
             RetrieveBoardingPassReceive obj = gson.fromJson(result.get(0).getCachedResult(), RetrieveBoardingPassReceive.class);
             onBoardingPassReceive(obj);
         }
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

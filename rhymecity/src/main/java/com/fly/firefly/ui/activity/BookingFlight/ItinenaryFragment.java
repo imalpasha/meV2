@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.fly.firefly.AnalyticsApplication;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
@@ -180,6 +181,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
 
     private int fragmentContainerId;
+    private static final String SCREEN_LABEL = "Book Flight: Payment Details(Payment Summary)";
     private SharedPrefManager pref;
     private String bookingID,signature;
     private String flightType_return;
@@ -444,6 +446,9 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        Log.e("Tracker", SCREEN_LABEL);
     }
 
     @Override

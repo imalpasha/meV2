@@ -39,8 +39,8 @@ public class PersonalDetailActivity extends MainFragmentActivity implements Frag
     @Override
     public void onResume() {
         super.onResume();
-        mTracker.setScreenName("Personal Detail" + "A");
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        //mTracker.setScreenName("Personal Detail" + "A");
+        //mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     @Override
