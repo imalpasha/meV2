@@ -124,7 +124,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
     private ArrayList<Integer> ageOfTraveller = new ArrayList<Integer>();
 
     //different object for different field.
-    private DatePickerDialog datePickerYear1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+    private DatePickerDialog datePickerYear1;
     private DatePickerDialog datePickerYear2 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     private DatePickerDialog datePickerYear3 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     private DatePickerDialog datePickerYear4 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -341,22 +341,40 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
             });
 
 
-            TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
+            final TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
             txtDob.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    createDatePickerObject(selectedPassenger);
+                   // createDatePickerObject(selectedPassenger);
+
+                    String currentDOB = txtDob.getText().toString();
+                    if(!currentDOB.equals("")){
+                        String[] splitReturn = currentDOB.split("/");
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                    }else{
+                        createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    }
+
                     clickedPassenger = selectedPassenger;
                     boolDob = true;
                     boolExpireDate = false;
                 }
             });
 
-            TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+            final TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
             txtExpireDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    creatExpiredDatePickerObject(selectedPassenger);
+                   // creatExpiredDatePickerObject(selectedPassenger);
+
+                    String currentExpire = txtExpireDate.getText().toString();
+                    if(!currentExpire.equals("")){
+                        String[] splitReturn = currentExpire.split("/");
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                    }else{
+                        createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    }
+
                     clickedPassenger = selectedPassenger;
                     boolDob = false;
                     boolExpireDate = true;
@@ -615,11 +633,18 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
 
             @Override
             public void onScrollChanged() {
-                view.requestFocus();
+                //view.requestFocus();
             }
         });
 
         return view;
+    }
+
+    public void createDateObj(Integer year , Integer month , Integer day){
+
+        datePickerYear1 = DatePickerDialog.newInstance(this,year,month,day);
+        datePickerYear1.setYearRange(calendar.get(Calendar.YEAR) - 80, calendar.get(Calendar.YEAR));
+        datePickerYear1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
     }
 
     public void creatExpiredDatePickerObject(Integer currentPosition){
@@ -830,7 +855,7 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) {
+        if(month < 9) {
             varMonth = "0";
         }
         if(day < 10){

@@ -293,11 +293,12 @@ public class MobileCheckInFragment3 extends BaseFragment implements MobileCheckI
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
 
-            if(RealmObjectController.currentPNR(getActivity(),obj,storeUsername)){
-                //RealmObjectController.saveBoardingPass(getActivity(),obj,storeUsername);
-            }else{
-                Log.e("New PNR","True");
-            }
+            //if(RealmObjectController.currentPNR(getActivity(),obj,storeUsername)){
+                RealmObjectController.currentPNR(getActivity(),obj,storeUsername);
+            //    RealmObjectController.saveBoardingPass(getActivity(),obj,storeUsername);
+            //}else{
+            //    Log.e("New PNR","True");
+            //}
 
             Intent next = new Intent(getActivity(), MobileCheckInActivity4.class);
             next.putExtra("MOBILE_CHECK_IN", (new Gson()).toJson(obj));

@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.ManageFlight;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -228,6 +229,16 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     @InjectView(R.id.txtInfantTotalReturn)
     TextView txtInfantTotalReturn;
 
+    @InjectView(R.id.userSSR)
+    LinearLayout userSSR;
+
+    @InjectView(R.id.txtOperatedBy)
+    TextView txtOperatedBy;
+
+    @InjectView(R.id.txtReturnOperatedBy)
+    TextView txtReturnOperatedBy;
+
+
     //private ProgressBar progressIndicator;
     private int fragmentContainerId;
     private Boolean goingFlightDetailTxt = true;
@@ -338,6 +349,79 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
         return view;
     }
 
+
+    public void displaySSRList(){
+
+        //Services & Fee
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        for(int services = 0 ; services < obj.getSpecial_services_request().size() ; services++){
+
+            String ssrFlightType = obj.getSpecial_services_request().get(services).getType();
+            TextView txtFlightType = new TextView(getActivity());
+            txtFlightType.setText(ssrFlightType);
+            txtFlightType.setTypeface(null, Typeface.BOLD);
+
+            //txtServicePrice.setLayoutParams(half04);
+            txtFlightType.setGravity(Gravity.LEFT);
+
+            userSSR.addView(txtFlightType);
+
+            for(int servicesLoop = 0 ; servicesLoop < obj.getSpecial_services_request().get(services).getPassenger().size() ; servicesLoop++){
+
+                LinearLayout servicesRow = new LinearLayout(getActivity());
+                servicesRow.setOrientation(LinearLayout.VERTICAL);
+                servicesRow.setPadding(2, 2, 2, 2);
+                servicesRow.setWeightSum(1);
+                servicesRow.setLayoutParams(matchParent);
+
+                String passengerName = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getName();
+
+                TextView txtName = new TextView(getActivity());
+                txtName.setText(passengerName);
+
+                TextView txtServicesName = new TextView(getActivity());
+                txtServicesName.setText("Name: "+txtName.getText().toString());
+                txtServicesName.setTypeface(null, Typeface.BOLD);
+
+                servicesRow.addView(txtServicesName);
+
+                if(obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr() != null){
+                    for(int ssrLoop = 0 ; ssrLoop < obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() ; ssrLoop++){
+
+                        String passengerSSR = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().get(ssrLoop).getSsr_name();
+
+                        TextView txtServicePrice = new TextView(getActivity());
+                        txtServicePrice.setText(passengerSSR);
+                        //txtServicePrice.setLayoutParams(half04);
+                        txtServicePrice.setGravity(Gravity.LEFT);
+
+                        if(ssrLoop == obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() - 1){
+                            //margin bottom
+                            servicesRow.setPadding(0, 0, 0, 15);
+                        }
+
+                        servicesRow.addView(txtServicePrice);
+                    }
+                }
+
+
+                if(servicesLoop == obj.getSpecial_services_request().get(services).getPassenger().size() - 1){
+                    //margin bottom
+                    servicesRow.setPadding(0, 0, 0, 25);
+                }
+
+                userSSR.addView(servicesRow);
+
+
+            }
+
+        }
+
+    }
+
     public void requestChange(){
 
       initiateLoading(getActivity());
@@ -372,6 +456,20 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
     public void setSummary(ManageChangeContactReceive obj){
 
         recreateSummary = false;
+
+
+        //HIDE CHANGE SEAT IF MH
+        if(obj.getFlight_type().equals("MH")){
+
+            txtOperatedBy.setVisibility(View.VISIBLE);
+            txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+            txtReturnOperatedBy.setVisibility(View.VISIBLE);
+            txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+
+        }
+
+        displaySSRList();
 
         txtPNR.setText(obj.getItenerary_information().getPnr());
         txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());

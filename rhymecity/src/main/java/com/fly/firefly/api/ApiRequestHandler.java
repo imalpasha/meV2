@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.estimote.sdk.repackaged.gson_v2_3_1.com.google.gson.Gson;
-import com.fly.firefly.Controller;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.api.obj.AboutUsReceive;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
@@ -22,6 +21,7 @@ import com.fly.firefly.api.obj.MobileCheckInPassengerReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.fly.firefly.api.obj.PushNotificationReceive;
 import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
+import com.fly.firefly.api.obj.SSRReceive;
 import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
@@ -39,12 +39,14 @@ import com.fly.firefly.api.obj.UpdateProfileReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.object.AboutUs;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ChangeSSR;
 import com.fly.firefly.ui.object.ConfirmUpdateRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.FlightSummary;
 import com.fly.firefly.ui.object.GetChangeFlight;
 import com.fly.firefly.ui.object.GetFlightAvailability;
+import com.fly.firefly.ui.object.GetSSR;
 import com.fly.firefly.ui.object.ItineraryObj;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.ManageContactInfo;
@@ -800,6 +802,18 @@ public class ApiRequestHandler {
                 if(retroResponse.getStatus().equals("retry")){
                     onManageFlight(event);
                 }else{
+
+                    if(event.getModule().equals("manage_booking")){
+                        //save manage flight list to realm.
+                        RealmObjectController.saveManageFlightList(MainFragmentActivity.getContext(),retroResponse);
+                    }else if(event.getModule().equals("check_in")){
+                        //save mobile-checkin list to realm.
+                        RealmObjectController.saveMobileCheckInList(MainFragmentActivity.getContext(),retroResponse);
+                    }else if(event.getModule().equals("boarding_pass")){
+                        //save mobile-checkin list to realm.
+                        RealmObjectController.saveBoardingPassPNRList(MainFragmentActivity.getContext(),retroResponse);
+                    }
+
                     bus.post(new ListBookingReceive(retroResponse));
                     RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
                     resetInc();
@@ -1142,6 +1156,7 @@ public class ApiRequestHandler {
             public void success(RetrieveBoardingPassReceive retroResponse, Response response) {
 
                 bus.post(new RetrieveBoardingPassReceive(retroResponse));
+                RealmObjectController.cachedBoardingPass(MainFragmentActivity.getContext(),retroResponse);
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
                 resetInc();
 
@@ -1191,6 +1206,66 @@ public class ApiRequestHandler {
 
         });
     }
+
+    @Subscribe
+    public void onRetrieveSSR(final GetSSR event) {
+
+        apiService.onRetrieveSSR(event, new Callback<SSRReceive>() {
+
+            @Override
+            public void success(SSRReceive retroResponse, Response response) {
+
+                bus.post(new SSRReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (retry) {
+                    loop();
+                    onRetrieveSSR(event);
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+        });
+    }
+
+    @Subscribe
+    public void onChangeSSR(final ChangeSSR event) {
+
+        apiService.onChangeSSR(event, new Callback<ManageChangeContactReceive>() {
+
+            @Override
+            public void success(ManageChangeContactReceive retroResponse, Response response) {
+
+                bus.post(new ManageChangeContactReceive(retroResponse));
+                RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                resetInc();
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                if (retry) {
+                    loop();
+                    onChangeSSR(event);
+                } else {
+                    resetInc();
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+        });
+    }
+
+
 
     public void resetInc(){
         inc = 0;

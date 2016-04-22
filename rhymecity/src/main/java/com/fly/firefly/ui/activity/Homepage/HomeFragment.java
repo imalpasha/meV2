@@ -23,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -102,6 +104,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     @InjectView(R.id.instagramLink)
     LinearLayout igLink;
+
+    @InjectView(R.id.bookFlightBtn)
+    TextView bookFlightBtn;
 
 
     private static final String SCREEN_LABEL = "Home";
@@ -223,11 +228,13 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         Gson gson = new Gson();
         DeviceInfoSuccess.SocialMedia socialMediaObj = gson.fromJson(socialMedia, DeviceInfoSuccess.SocialMedia.class);
 
-        facebookUrl = socialMediaObj.getFacebook();
-        twitterUrl = socialMediaObj.getTwitter();
-        instagramUrl = socialMediaObj.getInstagram();
+        try {
+            facebookUrl = socialMediaObj.getFacebook();
+            twitterUrl = socialMediaObj.getTwitter();
+            instagramUrl = socialMediaObj.getInstagram();
+        }catch (Exception e){
 
-        Log.e("Facebook",facebookUrl);
+        }
 
         // [START shared_tracker]
         // Obtain the shared Tracker instance.
@@ -261,7 +268,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
                 //trySetAlarm();
             }
         });
-
 
         /*mobileFaq.setOnClickListener(new View.OnClickListener() {
             @Override

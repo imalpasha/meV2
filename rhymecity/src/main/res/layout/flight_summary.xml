@@ -202,7 +202,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/ticketReminder"
-                                android:id="@+id/textView400"
+                                android:id="@+id/txtItineraryNote"
                                 android:textSize="12dp"
                                 android:textStyle="bold"/>
                         </LinearLayout>
@@ -243,13 +243,30 @@
                             android:id="@+id/goingFlight"
                             android:layout_marginTop="2dp" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Going Out"
-                                android:textStyle="bold"
-                                android:padding="3dp"
-                                android:id="@+id/txtGoingFlightType" />
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Going Out"
+                                    android:textStyle="bold"
+                                    android:padding="3dp"
+                                    android:id="@+id/txtGoingFlightType" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="Unconfirmed"
+                                    android:textColor="@color/red"
+                                    android:textSize="14dp"
+                                    android:visibility="gone"
+                                    android:layout_marginLeft="20dp"
+                                    android:id="@+id/txtGoingFlightStatus" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -298,12 +315,29 @@
                             android:id="@+id/returnFlight"
                             android:layout_marginTop="2dp" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textStyle="bold"
-                                android:padding="3dp"
-                                android:id="@+id/txtReturnFlightType" />
+                            <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:padding="3dp"
+                                    android:id="@+id/txtReturnFlightType" />
+
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:text="Unconfirmed"
+                                    android:textColor="@color/red"
+                                    android:textSize="14dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:layout_width="wrap_content"
+                                    android:visibility="gone"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/txtReturnFlightStatus" />
+                            </LinearLayout>
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -338,6 +372,55 @@
                                 android:id="@+id/txtReturnFlightTime" />
                         </LinearLayout>
                     </LinearLayout>
+
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/ssrBlock">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SPECIAL SERVICES REQUEST"
+                                android:id="@+id/textView401"
+                                android:textSize="@dimen/font20sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="5dp"
+                            android:id="@+id/userFlightSSR"
+                            android:background="@drawable/drawable_login_bottom_border" >
+
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:weightSum="1"
+                                android:padding="5dp"
+                                android:id="@+id/userSSR">
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
 
                     <LinearLayout
                         android:orientation="vertical"

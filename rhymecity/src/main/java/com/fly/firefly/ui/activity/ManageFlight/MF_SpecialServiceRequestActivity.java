@@ -1,36 +1,32 @@
-package com.fly.firefly.ui.activity.SplashScreen;
+package com.fly.firefly.ui.activity.ManageFlight;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
-import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 
 import butterknife.ButterKnife;
 
 //import android.view.WindowManager;
 
-public class SplashScreenActivity extends MainFragmentActivity implements FragmentContainerActivity {
+public class MF_SpecialServiceRequestActivity extends MainFragmentActivity implements FragmentContainerActivity {
 
     private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         ButterKnife.inject(this);
-
-        //hideMenuButton();
-        //hideTitle();
-        //lockDrawer();
-        BaseFragment.removeLogoHeader(this);
 
         Bundle bundle = getIntent().getExtras();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.splash_content, SplashScreenFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.main_content, MF_SpecialServiceRequestFragment.newInstance(bundle)).commit();
+
+        hideTitle();
+        setMenuButton();
 
     }
 
@@ -38,4 +34,5 @@ public class SplashScreenActivity extends MainFragmentActivity implements Fragme
     public int getFragmentContainerId() {
         return R.id.main_activity_fragment_container;
     }
+
 }

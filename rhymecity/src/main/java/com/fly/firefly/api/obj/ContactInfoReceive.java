@@ -17,7 +17,10 @@ public class ContactInfoReceive {
     private ContactInfoReceive obj;
     private List<PasssengerInfo> passengers = new ArrayList<PasssengerInfo>();
     private List<Journeys> journeys = new ArrayList<Journeys>();
+    private List<SeatFare> seat_fare = new ArrayList<SeatFare>();
     private String message;
+    private String flight_type;
+
 
     //itinerary
     private List<FlightDetails> flight_details;
@@ -25,6 +28,15 @@ public class ContactInfoReceive {
     private List<Services> services;
     private String total_price;
     private String total_due;
+
+
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
+    }
 
     public ContactInfoReceive(ContactInfoReceive param_obj){
         this.obj = param_obj;
@@ -41,8 +53,41 @@ public class ContactInfoReceive {
         services = param_obj.getServices();
         total_price = param_obj.getTotal_price();
         total_due =  param_obj.getTotal_due();
+        flight_type = param_obj.getFlight_type();
+        seat_fare = param_obj.getSeat_fare();
     }
 
+    public class SeatFare{
+
+        private String name;
+        private String price;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getPrice() {
+            return price;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+    }
+
+
+    public List<SeatFare> getSeat_fare() {
+        return seat_fare;
+    }
+
+    public void setSeat_fare(List<SeatFare> seat_fare) {
+        this.seat_fare = seat_fare;
+    }
 
     public String getTotal_due() {
         return total_due;
@@ -202,6 +247,15 @@ public class ContactInfoReceive {
         private String compartment;
         private String compartmentReturn;
         private String seatReturn;
+        private String checked_in;
+
+        public String getChecked_in() {
+            return checked_in;
+        }
+
+        public void setChecked_in(String checked_in) {
+            this.checked_in = checked_in;
+        }
 
         public String getCompartment_designator() {
             return compartment_designator;

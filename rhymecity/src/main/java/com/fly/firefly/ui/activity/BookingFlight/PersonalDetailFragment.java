@@ -314,12 +314,21 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 });
 
 
-                TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
+                final TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
                 txtDob.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        createDatePickerObject(selectedPassenger);
+                        //createDatePickerObject(selectedPassenger);
+
+                        String currentDOB = txtDob.getText().toString();
+                        if(!currentDOB.equals("")){
+                            String[] splitReturn = currentDOB.split("/");
+                            createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                        }else{
+                            createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                        }
+
                         clickedPassenger = selectedPassenger;
                         boolDob = true;
                         boolExpireDate = false;
@@ -327,12 +336,21 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     }
                 });
 
-                TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+               final TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
                 txtExpireDate.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
-                        creatExpiredDatePickerObject(selectedPassenger);
+
+                        String currentExpired = txtExpireDate.getText().toString();
+                        if(!currentExpired.equals("")){
+                            String[] splitReturn = currentExpired.split("/");
+                            createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                        }else{
+                            createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                        }
+
+                        //creatExpiredDatePickerObject(selectedPassenger);
                         clickedPassenger = selectedPassenger;
                         boolDob = false;
                         boolExpireDate = true;
@@ -590,8 +608,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                         }
 
+                        HashMap<String, String> initFlightType = pref.getFlightType();
+                        String flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+
+                        Log.e("FlightType",flightType);
                         Passenger obj = new Passenger();
                         obj.setSignature(signature);
+                        obj.setFlight_type(flightType);
                         obj.setBooking_id(bookingID);
                         obj.setPassengers(passengerObj);
                         obj.setInfant(infantObj);
@@ -636,11 +659,18 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             @Override
             public void onScrollChanged() {
-                view.requestFocus();
+               // view.requestFocus();
             }
         });
 
         return view;
+    }
+
+    public void createDateObj(Integer year , Integer month , Integer day){
+
+        datePickerYear1 = DatePickerDialog.newInstance(this,year,month,day);
+        datePickerYear1.setYearRange(calendar.get(Calendar.YEAR) - 80, calendar.get(Calendar.YEAR));
+        datePickerYear1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
     }
 
     public void creatExpiredDatePickerObject(Integer currentPosition){
@@ -940,8 +970,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) {
+        if(month < 9) {
             varMonth = "0";
+
         }
         if(day < 10){
             varDay = "0";
@@ -1044,12 +1075,19 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         if(loginStatus != null && loginStatus.equals("Y")) {
             //memberLoginBlock.setVisibility(View.GONE);
-            Log.e("GONE","TRUE");
+
             Gson gson = new Gson();
             String userInfo = getUserInfoCached(getActivity());
             loginObj = gson.fromJson(userInfo, LoginReceive.UserInfo.class);
-            txtTitle.setText(loginObj.getContact_title());
 
+            //modify date//
+            String dob = reformatDOB(loginObj.getDOB());
+            String[] splitDate = dob.split("/");
+
+            datePickerYear1 = DatePickerDialog.newInstance(this, Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[0]));
+            Log.e("GONE","TRUE");
+
+            txtTitle.setText(loginObj.getContact_title());
             TextView passenger1Title = (TextView) view.findViewWithTag("passenger1_title");
             TextView passenger1FirstName = (TextView) view.findViewWithTag("passenger1_first_name");
             TextView passenger1LastName = (TextView) view.findViewWithTag("passenger1_last_name");

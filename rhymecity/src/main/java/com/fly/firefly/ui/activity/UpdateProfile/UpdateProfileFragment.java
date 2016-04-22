@@ -498,7 +498,7 @@ public class UpdateProfileFragment extends BaseFragment implements
          pref.setUserInfo(userInfo);
          pref.setUsername(obj.getUserInfo().getFirst_name());
 
-         setSuccessDialog(getActivity(), obj.getMessage(), HomeActivity.class,"Information successfully updated!");
+         setSuccessDialog(getActivity(), "Information Successfully Updated", HomeActivity.class,"Update Information");
 
        }
     }

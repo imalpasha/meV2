@@ -418,7 +418,7 @@ public class MF_ChangeContactFragment extends BaseFragment implements Validator.
         contactInfoScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                view.requestFocus();
+                //view.requestFocus();
             }
         });
 

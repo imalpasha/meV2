@@ -672,6 +672,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         Gson gson = new Gson();
         String countryList = gson.toJson(obj);
         pref.setFlightType(obj.getType());
+        Log.e("Flight Type",obj.getType());
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
@@ -747,7 +748,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) {
+        if(month < 9) {
             varMonth = "0";
         }
         if(day < 10){

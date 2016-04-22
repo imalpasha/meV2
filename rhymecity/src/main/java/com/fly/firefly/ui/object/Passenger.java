@@ -10,6 +10,7 @@ public class Passenger {
 
 
     private String booking_id;
+    private String flight_type;
     private String signature;
     private String pnr;
     private ArrayList<PassengerInfo> passengers;
@@ -24,6 +25,8 @@ public class Passenger {
         signature = data.getSignature();
         passengers = data.getPassengers();
         infants = data.getInfant();
+        flight_type = data.getFlight_type();
+
 
     }
 
@@ -33,6 +36,16 @@ public class Passenger {
         passengers = data.getPassengers();
         infants = data.getInfant();
         pnr = pnrData;
+        flight_type = data.getFlight_type();
+    }
+
+
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
     }
 
     public String getPnr() {

@@ -2,6 +2,7 @@ package com.fly.firefly.ui.presenter;
 
 import android.util.Log;
 
+import com.fly.firefly.api.obj.ChangeSSRReceive;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.CheckInListReceive;
 import com.fly.firefly.api.obj.ConfirmUpdateReceive;
@@ -12,15 +13,18 @@ import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.ManageFlightReceive;
 import com.fly.firefly.api.obj.ManageRequestIntinenary;
+import com.fly.firefly.api.obj.SSRReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SplashFailedConnect;
 import com.fly.firefly.api.obj.ForgotPasswordReceive;
 import com.fly.firefly.api.obj.LoginReceive;
+import com.fly.firefly.ui.object.ChangeSSR;
 import com.fly.firefly.ui.object.ConfirmUpdateRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.GetChangeFlight;
 import com.fly.firefly.ui.object.GetFlightAvailability;
+import com.fly.firefly.ui.object.GetSSR;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.ManageContactInfo;
 import com.fly.firefly.ui.object.ManageFlightObj;
@@ -43,6 +47,11 @@ public class ManageFlightPrenter {
         void onGetFlightFromPNR(FlightSummaryReceive event);
         void onUserPnrList(ListBookingReceive event);
         void onCheckUserStatus(CheckInListReceive event);
+    }
+
+    public interface ChangeSpecialMealView{
+        void onSSRReceive(SSRReceive obj);
+        void onChangeSSRReceive(ManageChangeContactReceive obj);
     }
 
     public interface ChangeContactView {
@@ -81,6 +90,7 @@ public class ManageFlightPrenter {
     private ChangeSeatView view5;
     private SendItinenary view6;
     private GetFlightView view7;
+    private ChangeSpecialMealView view8;
 
     private final Bus bus;
 
@@ -119,6 +129,11 @@ public class ManageFlightPrenter {
         this.bus = bus;
     }
 
+    public ManageFlightPrenter(ChangeSpecialMealView view, Bus bus) {
+        this.view8 = view;
+        this.bus = bus;
+    }
+
     public void onResume() {
         bus.register(this);
     }
@@ -127,9 +142,18 @@ public class ManageFlightPrenter {
         bus.unregister(this);
     }
 
+    public void getSSRMeal(GetSSR data){
+        bus.post(new GetSSR(data));
+    }
+
+    public void changeMeal(ChangeSSR data){
+        bus.post(new ChangeSSR(data));
+    }
+
     public void onSendPNRV1(ManageFlightObj data) {
         bus.post(new ManageFlightObj(data));
     }
+
     public void onSendPNRV2(String username,String password,String module) {
         bus.post(new ManageFlightObjV2(username,password,module));
     }
@@ -249,6 +273,22 @@ public class ManageFlightPrenter {
     public void onGetNewFlight(SearchFlightReceive event) {
         view7.onNewFlightReceive(event);
     }
+
+    @Subscribe
+    public void onSSRReceive(SSRReceive event) {
+        view8.onSSRReceive(event);
+    }
+
+    @Subscribe
+    public void onChangeSSRReceive(ManageChangeContactReceive event) {
+        try{
+            view8.onChangeSSRReceive(event);
+        }catch (Exception e){
+
+        }
+    }
+
+
 
     //@Subscribe
     //public void onSuccessGetFlightList(SearchFlightReceive event) {

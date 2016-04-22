@@ -75,6 +75,7 @@
         <activity android:name=".ui.activity.BookingFlight.ContactInfoActivity" >
 
         </activity>
+
         <activity android:name=".ui.activity.Login.LoginActivity" />
         <activity android:name=".ui.activity.Register.RegisterActivity" />
         <activity android:name=".ui.activity.BookingFlight.SearchFlightActivity" />
@@ -113,9 +114,9 @@
         <activity android:name=".ui.activity.ManageFlight.MF_ChangeContactActivity" />
         <activity android:name=".ui.activity.ManageFlight.MF_EditPassengerActivity" />
         <activity android:name=".ui.activity.ManageFlight.MF_ChangeFlightActivity" />
-        <activity android:name=".ui.activity.ManageFlight.MF_SeatSelectionActivity" >
+        <activity android:name=".ui.activity.ManageFlight.MF_SeatSelectionActivity" />
+        <activity android:name=".ui.activity.ManageFlight.MF_SpecialServiceRequestActivity"/>
 
-        </activity>
         <activity android:name=".ui.activity.ManageFlight.MF_SentItineraryActivity" />
         <activity android:name=".ui.activity.UpdateProfile.UpdateProfileActivity" />
         <activity android:name=".ui.activity.ManageFlight.CommitChangeActivity" />
@@ -150,7 +151,6 @@
             android:name=".ui.activity.SplashScreen.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

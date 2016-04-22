@@ -20,10 +20,13 @@ public class FlightSummaryReceive {
     private List<FlightDetails> flight_details;
     private List<PriceDetails> price_details;
     private List<PassengerList> passenger_information;
+    private List<SpecialServicesRequest> special_services_request;
+
     private String total_price;
     private String total_paid;
     private String total_due;
     private String booking_id;
+    private String flight_type;
     private FlightSummaryReceive obj;
 
     public FlightSummaryReceive(FlightSummaryReceive param_obj){
@@ -42,6 +45,25 @@ public class FlightSummaryReceive {
         total_paid = param_obj.getTotal_paid();
         total_due = param_obj.getTotal_due();
         booking_id = param_obj.getBooking_id();
+        flight_type = param_obj.getFlight_type();
+        special_services_request = param_obj.getSpecial_services_request();
+    }
+
+
+    public List<SpecialServicesRequest> getSpecial_services_request() {
+        return special_services_request;
+    }
+
+    public void setSpecial_services_request(List<SpecialServicesRequest> special_services_request) {
+        this.special_services_request = special_services_request;
+    }
+
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
     }
 
     public String getMessage() {
@@ -84,7 +106,6 @@ public class FlightSummaryReceive {
     public void setInsurance_details(Insurance insurance_details) {
         this.insurance_details = insurance_details;
     }
-
     public class Insurance{
 
         private String status;
@@ -117,16 +138,66 @@ public class FlightSummaryReceive {
 
     }
 
+    public class SpecialServicesRequest{
 
 
+        private String type;
+        private List<PassengerSSR> passenger;
 
+        public List<PassengerSSR> getPassenger() {
+            return passenger;
+        }
 
+        public void setPassenger(List<PassengerSSR> passenger) {
+            this.passenger = passenger;
+        }
 
+        public String getType() {
+            return type;
+        }
 
+        public void setType(String type) {
+            this.type = type;
+        }
 
+        public class PassengerSSR{
 
+            private String name;
+            private List<ListSSR> list_ssr;
 
+            public String getName() {
+                return name;
+            }
 
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public List<ListSSR> getList_ssr() {
+                return list_ssr;
+            }
+
+            public void setList_ssr(List<ListSSR> list_ssr) {
+                this.list_ssr = list_ssr;
+            }
+
+        }
+
+        public class ListSSR{
+
+            private String ssr_name;
+
+            public String getSsr_name() {
+                return ssr_name;
+            }
+
+            public void setSsr_name(String ssr_name) {
+                this.ssr_name = ssr_name;
+            }
+
+        }
+
+    }
 
     public List<PaymentDetail> getPayment_details() {
         return payment_details;
@@ -220,6 +291,15 @@ public class FlightSummaryReceive {
         private String flight_number;
         private String time;
         private String type;
+        private String flight_status;
+
+        public String getFlight_status() {
+            return flight_status;
+        }
+
+        public void setFlight_status(String flight_status) {
+            this.flight_status = flight_status;
+        }
 
         public String getType() {
             return type;
@@ -734,6 +814,15 @@ public class FlightSummaryReceive {
         private String booking_status;
         private String pnr;
         private String booking_date;
+        private String itinerary_note;
+
+        public String getItinerary_note() {
+            return itinerary_note;
+        }
+
+        public void setItinerary_note(String itinerary_note) {
+            this.itinerary_note = itinerary_note;
+        }
 
         public String getBooking_status() {
             return booking_status;

@@ -434,9 +434,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
 
                 if (userId.getText().toString().equals("") || password.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "User ID is required", Toast.LENGTH_LONG).show();
-                } else if (!userId.getText().toString().matches(emailPattern)) {
-                    Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
-                } else {
+                }else {
                     loginFragment(userId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, password.getText().toString()));
                 }
             }

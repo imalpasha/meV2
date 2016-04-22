@@ -1,5 +1,7 @@
 package com.fly.firefly.ui.object;
 
+import java.util.List;
+
 /**
  * Created by Dell on 12/16/2015.
  */
@@ -26,7 +28,33 @@ public class ContactInfo {
     private String signature;
     private String pnr;
     private String username;
+    private String flight_type;
+    private List<PassengerMeal> going_flight;
+    private List<PassengerMeal> return_flight;
 
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
+    }
+
+    public List<PassengerMeal> getGoing_flight() {
+        return going_flight;
+    }
+
+    public void setGoing_flightMeal(List<PassengerMeal> going_flight) {
+        this.going_flight = going_flight;
+    }
+
+    public List<PassengerMeal> getReturn_flight() {
+        return return_flight;
+    }
+
+    public void setReturn_flightMeal(List<PassengerMeal> return_flight) {
+        this.return_flight = return_flight;
+    }
 
     public ContactInfo(){
 
@@ -53,8 +81,9 @@ public class ContactInfo {
         contact_mobile_phone = data.getContact_mobile_phone();
         contact_alternate_phone = data.getContact_alternate_phone();
         insurance = data.getInsurance();
-
-
+        going_flight = data.getGoing_flight();
+        return_flight = data.return_flight;
+        flight_type = data.getFlight_type();
 
     }
 

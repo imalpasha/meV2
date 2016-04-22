@@ -85,15 +85,16 @@
                                 android:orientation="vertical"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:gravity="center"
+                                android:gravity="center_horizontal"
+                                android:layout_gravity="center_horizontal"
                                 android:background="@color/actionBarColour_default_theme"
                                 android:padding="3dp">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="SUBANG - PENANG"
                                     android:textSize="19dp"
+                                    android:gravity="center"
                                     android:textColor="@color/white"
                                     android:id="@+id/txtDepartAirport"
                                     android:textStyle="bold"
@@ -239,11 +240,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="-"
                                 android:textSize="19dp"
                                 android:id="@+id/txtReturnAirport"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
+                                android:gravity="center"
                                 android:layout_marginBottom="1dp"/>
 
                             <TextView
@@ -407,7 +408,8 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Fly Basic"
+                                        android:text="FlyBasic"
+                                        android:textStyle="bold"
                                         android:layout_marginBottom="10dp"
                                         android:id="@+id/textView355" />
                                 </LinearLayout>

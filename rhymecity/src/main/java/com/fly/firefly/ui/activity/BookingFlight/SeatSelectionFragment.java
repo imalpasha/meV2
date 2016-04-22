@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.api.obj.ContactInfoReceive;
+import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
@@ -77,6 +79,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
     @InjectView(R.id.passengerSeatListReturn)
     LinearLayout passengerSeatListReturn;
+
+    @InjectView(R.id.seatPriceList)
+    LinearLayout seatPriceList;
 
     private SharedPrefManager pref;
     private PassengerSeatAdapterV1 passengerSeatListV1;
@@ -144,6 +149,9 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
         /*Initiate Seat Row*/
         Gson gson = new Gson();
         contactObj = gson.fromJson(seatHash, ContactInfoReceive.class);
+
+        //display seat Fee
+        displaySeatFee();
 
         seatInfoDepart = contactObj.getJourneys().get(0).getSeat_info();
         List<ContactInfoReceive.Journeys> journeys = contactObj.getJourneys();
@@ -323,6 +331,57 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
         return view;
     }
+
+    public void displaySeatFee(){
+
+        //Services & Fee
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(34, 34);
+        llp.setMargins(0, 0, 8, 0); // llp.setMargins(left, top, right, bottom);
+
+        for(int services = 0 ; services < contactObj.getSeat_fare().size() ; services++){
+
+            LinearLayout servicesRow = new LinearLayout(getActivity());
+            servicesRow.setOrientation(LinearLayout.HORIZONTAL);
+            servicesRow.setPadding(2, 2, 2, 2);
+            servicesRow.setWeightSum(1);
+            servicesRow.setLayoutParams(matchParent);
+
+            LinearLayout seatColour = new LinearLayout(getActivity());
+            seatColour.setLayoutParams(llp);
+
+            String seatType = contactObj.getSeat_fare().get(services).getName();
+            String seatPrice = contactObj.getSeat_fare().get(services).getPrice();
+
+            if(seatType.equals("Standard Seat")){
+                seatColour.setBackgroundResource(R.color.standard_seat);
+            }else if(seatType.equals("Preferred Seat")){
+                seatColour.setBackgroundResource(R.color.preferred_seat);
+            }else if(seatType.equals("Desired Seat")){
+                seatColour.setBackgroundResource(R.color.desired_seat);
+            }
+
+
+            TextView txtSeatType = new TextView(getActivity());
+            txtSeatType.setText(seatType);
+            txtSeatType.setTextSize(12);
+
+            TextView txtSeatPrice = new TextView(getActivity());
+            txtSeatPrice.setText(seatPrice);
+            txtSeatPrice.setTextSize(12);
+            txtSeatPrice.setPadding(15,0,0,0);
+
+            servicesRow.addView(seatColour);
+            servicesRow.addView(txtSeatType);
+            servicesRow.addView(txtSeatPrice);
+
+            seatPriceList.addView(servicesRow);
+
+        }
+
+    }
+
 
     public void setPassenger1(String type,ExpandAbleGridView list,TextView txtSeat,List<PasssengerInfoV2> passengers,String depart,String arrival){
 

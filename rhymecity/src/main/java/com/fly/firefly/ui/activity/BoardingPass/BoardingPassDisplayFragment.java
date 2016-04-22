@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidquery.util.BitmapCache;
@@ -20,6 +22,7 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.ManageChangeContactReceive;
 import com.fly.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
@@ -28,7 +31,11 @@ import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity2;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity3;
 import com.fly.firefly.ui.activity.SlidePage.ProductImagesPagerAdapter;
+import com.fly.firefly.ui.adapter.BookingListAdapter;
+import com.fly.firefly.ui.module.BoardingPassDisplayModule;
 import com.fly.firefly.ui.module.BoardingPassModule;
+import com.fly.firefly.ui.object.BoardingPassObj;
+import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.PagerBoardingPassObj;
 import com.fly.firefly.ui.object.ProductImage;
@@ -56,9 +63,14 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import me.relex.circleindicator.CircleIndicator;
 
-public class BoardingPassDisplayFragment extends BaseFragment {
+public class BoardingPassDisplayFragment extends BaseFragment implements BoardingPassPresenter.RetrieveBoardingPassView {
+
+    @Inject
+    BoardingPassPresenter presenter;
 
     @InjectView(R.id.pager)
     ViewPager pager;
@@ -66,10 +78,13 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     @InjectView(R.id.indicator)
     CircleIndicator indicator;
 
+    @InjectView(R.id.horizontalProgressBar)
+    ProgressBar horizontalProgressBar;
+
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
     private SharedPrefManager pref;
-    private String boardingPassList;
+    private String boardingPassList,selectedBoardingPassList;
     private RetrieveBoardingPassReceive obj;
 
     public static BoardingPassDisplayFragment newInstance(Bundle bundle) {
@@ -83,7 +98,9 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RealmObjectController.clearCachedResult(getActivity());
+        RealmObjectController.clearCachedResult(MainFragmentActivity.getContext());
+        FireFlyApplication.get(getActivity()).createScopedGraph(new BoardingPassDisplayModule(this)).inject(this);
+
     }
 
     @Override
@@ -97,7 +114,15 @@ public class BoardingPassDisplayFragment extends BaseFragment {
             boardingPassList = bundle.getString("BOARDING_PASS_OBJ");
             Gson gson = new Gson();
             obj = gson.fromJson(boardingPassList, RetrieveBoardingPassReceive.class);
+            Log.e("PNR",bundle.getString("PNR"));
+
             startPagination(obj);
+
+            //put some condition here later
+            if(bundle.getString("LOAD_BACKGROUND").equals("Y")){
+                retrieveBoardingPass(bundle);
+            }
+
         }else if(bundle.containsKey("OFFLINE_BOARDING_PASS_OBJ")){
             boardingPassList = bundle.getString("OFFLINE_BOARDING_PASS_OBJ");
             Gson gson = new Gson();
@@ -106,19 +131,9 @@ public class BoardingPassDisplayFragment extends BaseFragment {
         }
 
 
-
         return view;
     }
 
-    /*private void addBitmapToMemoryCache(final int key, final Bitmap bitmap) {
-          if (getBitmapFromMemCache(key) == null) {
-            mMemoryCache.put(key, bitmap);
-        }
-    }
-
-    private Bitmap getBitmapFromMemCache(final int key) {
-        return mMemoryCache.get(key);
-    }*/
 
     public void startPagination(RetrieveBoardingPassReceive passObj){
 
@@ -227,6 +242,48 @@ public class BoardingPassDisplayFragment extends BaseFragment {
 
     }
 
+    //update current boarding pass list if available (cached list)
+    public void retrieveBoardingPass(Bundle bundle){
+
+        RetrieveBoardingPassObj flightObj = new RetrieveBoardingPassObj();
+        flightObj.setUser_id(bundle.getString("USER_ID"));
+        flightObj.setPnr(bundle.getString("PNR"));
+        flightObj.setDeparture_station(bundle.getString("DEPARTURE_STATION_CODE"));
+        flightObj.setArrival_station(bundle.getString("ARRIVAL_STATION_CODE"));
+        flightObj.setSignature(bundle.getString("SIGNATURE"));
+        //retrieveBoardingPass = true;
+        horizontalProgressBar.setVisibility(View.VISIBLE);
+
+        presenter.retrieveBoardingPass(flightObj);
+
+    }
+
+    @Override
+    public void onBoardingPassReceive(RetrieveBoardingPassReceive obj) {
+
+        dismissLoading();
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
+        if (status) {
+
+            startPagination(obj);
+
+            //test
+            Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
+            final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
+            Log.e("Current",result2.toString());
+
+            horizontalProgressBar.setVisibility(View.GONE);
+        }
+
+    }
+
+
+    @Override
+    public void onUserPnrList(final ListBookingReceive obj){
+
+    }
+
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -236,11 +293,21 @@ public class BoardingPassDisplayFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if(result.size() > 0){
+            Gson gson = new Gson();
+            RetrieveBoardingPassReceive obj = gson.fromJson(result.get(0).getCachedResult(), RetrieveBoardingPassReceive.class);
+            onBoardingPassReceive(obj);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        presenter.onPause();
+
     }
 
 

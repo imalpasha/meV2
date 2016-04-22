@@ -1,5 +1,7 @@
 package me.mattlogan.rhymecity;
 
+import android.util.Log;
+
 import com.fly.firefly.AppModule;
 import com.fly.firefly.api.ApiService;
 import com.squareup.okhttp.OkHttpClient;
@@ -41,7 +43,11 @@ public class DebugAppModule {
                 .setEndpoint(endpoint)
                 .setRequestInterceptor(requestInterceptor)
                 .setClient(new OkClient(okHttpClient))
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new RestAdapter.Log() {
+                    public void log(String msg) {
+                        Log.i("retrofit", msg);
+                    }
+                })
                 .setLog(logger)
                 .build()
                 .create(ApiService.class);

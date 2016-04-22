@@ -224,16 +224,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
         //Check Flight Type (FY/MH)
         HashMap<String, String> initLogin = pref.getFlightType();
         String type = initLogin.get(SharedPrefManager.FLIGHT_TYPE);
-        if(type != null){
-            if(type.equals("MH")){
-                txtOperatedBy.setVisibility(View.VISIBLE);
-                txtOperatedBy.setText("Operated By Malaysia Airlines");
 
-                txtReturnOperatedBy.setVisibility(View.VISIBLE);
-                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
-
-            }
-        }
 
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
@@ -284,6 +275,15 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     }
 
     public void setSummary(ContactInfoReceive obj){
+
+        if(obj.getFlight_type().equals("MH")){
+                txtOperatedBy.setVisibility(View.VISIBLE);
+                txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+                txtReturnOperatedBy.setVisibility(View.VISIBLE);
+                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+        }
+
 
         int flightLoop = obj.getFlight_details().size();
 

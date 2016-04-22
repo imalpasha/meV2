@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -81,6 +82,18 @@ public class BaseFragment extends Fragment {
 	private static Boolean status;
 	Boolean manualValidationStatus = true;
 	private static int staticIndex = -1;
+
+	public void blinkText(TextView txt){
+
+		//try set blinking textview
+		Animation anim = new AlphaAnimation(0.0f, 1.0f);
+		anim.setDuration(80); //You can manage the blinking time with this parameter
+		anim.setStartOffset(20);
+		anim.setRepeatMode(Animation.REVERSE);
+		anim.setRepeatCount(Animation.INFINITE);
+		txt.startAnimation(anim);
+
+	}
 
 	public String getDialingCode(String coutryCode,Activity act){
 
@@ -648,8 +661,11 @@ public class BaseFragment extends Fragment {
 
 	public static void dismissLoading(){
 
-		if(dialog.isShowing()){
-			dialog.dismiss();
+		try {
+			if(dialog.isShowing()){
+				dialog.dismiss();
+			}
+		}catch (Exception e){
 		}
 	}
 
@@ -667,6 +683,7 @@ public class BaseFragment extends Fragment {
 		builder.show();
 	}
 
+
 	/*Global PoPup*/
 	public void popupSelection(final ArrayList array,Activity act,final TextView txt,final Boolean tagStatus,View v){
 
@@ -679,7 +696,7 @@ public class BaseFragment extends Fragment {
 
 				AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
 
-				alertStateCode.setSingleChoiceItems(dropState, indexForState, new DialogInterface.OnClickListener() {
+				alertStateCode.setSingleChoiceItems(dropState, 0, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 

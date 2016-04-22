@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.fly.firefly.AnalyticsApplication;
@@ -19,16 +20,14 @@ import com.fly.firefly.Controller;
 import com.fly.firefly.FireFlyApplication;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
-import com.fly.firefly.api.obj.FlightSummaryReceive;
 import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.api.obj.MobileCheckinReceive;
-import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.BookingListAdapter;
 import com.fly.firefly.ui.module.MobileCheckInModule1;
+import com.fly.firefly.ui.object.MobileCheckInList;
 import com.fly.firefly.ui.object.CachedResult;
-import com.fly.firefly.ui.object.ManageFlightObj;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.presenter.MobileCheckInPresenter;
 import com.fly.firefly.utils.DropDownItem;
@@ -82,6 +81,12 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     @InjectView(R.id.listviewLayout)
     LinearLayout listviewLayout;
 
+    @InjectView(R.id.horizontalProgressBar)
+    ProgressBar horizontalProgressBar;
+
+    @InjectView(R.id.mobileCheckInNoInternet)
+    LinearLayout mobileCheckInNoInternet;
+
     private ArrayList<DropDownItem> dataFlightDeparture;
     private static ArrayList<DropDownItem> dataFlightArrival;
     private SharedPrefManager pref;
@@ -96,6 +101,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     private String signatureFromLocal;
     private boolean cache_login = false;
     private boolean retrieveCheckIn = false;
+    private boolean cachedDisplay = false;
 
     public static MobileCheckInFragment1 newInstance() {
 
@@ -140,13 +146,28 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
 
         if(loginStatus != null && loginStatus.equals("Y")) {
-            if(Controller.connectionAvailable(getActivity())){
-                initiateLoading(getActivity());
+
+            RealmResults<MobileCheckInList> cachedListResult = RealmObjectController.getMobileCheckInList(MainFragmentActivity.getContext());
+            if(cachedListResult.size() > 0){
+                Gson gson = new Gson();
+                ListBookingReceive obj = gson.fromJson(cachedListResult.get(0).getCachedList(), ListBookingReceive.class);
+                onUserPnrList(obj);
+                cachedDisplay = true;
+                horizontalProgressBar.setVisibility(View.VISIBLE);
+                //update the list on background
                 presenter.getUserPNR(storeUsername,storePassword,"check_in");
-                mobileCheckInNext1.setVisibility(View.GONE);
+
             }else{
-                //Display No Internet connection
+                if(Controller.connectionAvailable(getActivity())){
+                    initiateLoading(getActivity());
+                    presenter.getUserPNR(storeUsername,storePassword,"check_in");
+                }else{
+                    mobileCheckInNoInternet.setVisibility(View.VISIBLE);
+                }
             }
+
+            mobileCheckInNext1.setVisibility(View.GONE);
+
         }else{
             mobileCheckInPNRLayout.setVisibility(View.VISIBLE);
 
@@ -237,7 +258,12 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
     @Override
     public void onUserPnrList(final ListBookingReceive obj){
 
-        dismissLoading();
+        if(!cachedDisplay){
+            dismissLoading();
+        }else{
+            horizontalProgressBar.setVisibility(View.INVISIBLE);
+        }
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
@@ -248,6 +274,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 adapter = new BookingListAdapter(getActivity(), obj.getList_booking(),"MC");
                 listView.setAdapter(adapter);
                 pref.setSignatureToLocalStorage(obj.getSignature());
+                Log.e("Update Here","Y");
                 //pnrLayout.setVisibility(View.GONE);
             }
         }

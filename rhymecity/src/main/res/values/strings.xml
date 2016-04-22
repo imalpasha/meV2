@@ -757,6 +757,8 @@ select another date or station and try again.</string>
     <string name="manage_flight_edit_passenger">EDIT PASSENGER</string>
     <string name="manage_flight_change_flight">CHANGE FLIGHT</string>
     <string name="manage_flight_change_seat">CHANGE SEAT</string>
+    <string name="manage_flight_special_meal_request">SPECIAL MEAL REQUEST</string>
+
     <string name="manage_flight_add_payment">ADD PAYMENT</string>
     <string name="manage_flight_send_itinenary">SEND ITINERARY</string>
     <string name="manage_flight_contact_detail">CONTACT DETAIL</string>
@@ -781,7 +783,8 @@ select another date or station and try again.</string>
 
 
     <!-- Boarding Pass -->
-    <string name="boardingPassNA">No Boarding Pass Available</string>
+    <string name="boardingPassTitle">No boarding pass available.</string>
+    <string name="boardingPassNA">Boarding Pass will be displayed after the check-in process is complete. </string>
 
 
     <string name="boarding_pass">BOARDING PASS</string>
@@ -877,7 +880,7 @@ select another date or station and try again.</string>
 
 
     <!-- Drawer/Version -->
-    <string name="x_lbl">V5/4_1</string>
+    <string name="x_lbl">V4/22_3</string>
 
 
 
@@ -888,7 +891,7 @@ select another date or station and try again.</string>
     <string name="connection_error">Connection Error</string>
     <string name="retry">Retry</string>
     <string name="ticketReminder">Kindly ensure email itinerary is received. If you don\'t receive email itinerary within 30 minutes , please contact our call centre +603 7845 4543 for assistance.</string>
-
-
+    <string name="no_internet_connection_title">Whoops!</string>
+    <string name="no_internet_connection">No internet connection found. Check your internet connection and try again</string>
 
 </resources>

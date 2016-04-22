@@ -1,6 +1,7 @@
 package com.fly.firefly.ui.activity.ManageFlight;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,6 +55,9 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
     @InjectView(R.id.mfChangeSeat)
     LinearLayout mfChangeSeat;
+
+    @InjectView(R.id.mfMealRequest)
+    LinearLayout mfMealRequest;
 
     @InjectView(R.id.mfChangeFlight)
     LinearLayout mfChangeFlight;
@@ -209,6 +213,9 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
     @InjectView(R.id.servicesList)
     LinearLayout servicesList;
 
+    @InjectView(R.id.userSSR)
+    LinearLayout userSSR;
+
     @InjectView(R.id.txtConfInsurance)
     TextView txtConfInsurance;
 
@@ -244,6 +251,12 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
     @InjectView(R.id.txtInfantTotalReturn)
     TextView txtInfantTotalReturn;
+
+    @InjectView(R.id.txtOperatedBy)
+    TextView txtOperatedBy;
+
+    @InjectView(R.id.txtReturnOperatedBy)
+    TextView txtReturnOperatedBy;
 
     //private ProgressBar progressIndicator;
     private int fragmentContainerId;
@@ -293,6 +306,8 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
           Gson gson = new Gson();
           obj = gson.fromJson(flightSummary, FlightSummaryReceive.class);
           setSummary(obj);
+
+
         }else if(bundle.containsKey("AlertDialog")){
 
             recreateSummary = true;
@@ -365,6 +380,14 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
                 goToSentItenary();
             }
         });
+
+        mfMealRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goMealSSR();
+            }
+        });
+
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -458,8 +481,31 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
     }*/
 
-
     public void setSummary(FlightSummaryReceive obj){
+
+        boolean btnHidden1 = false;
+        boolean btnHidden2 = false;
+        boolean oneFlight = false;
+
+        //hide functiona if flight departed
+        if(obj.getFlight_details().get(0).getFlight_status().equals("departed")){
+          btnHidden1 = true;
+        }
+
+        //HIDE CHANGE SEAT IF MH
+        if(obj.getFlight_type().equals("MH")){
+            mfChangeSeat.setVisibility(View.GONE);
+
+            //DISABLE FIRST
+            mfMealRequest.setVisibility(View.VISIBLE);
+
+            txtOperatedBy.setVisibility(View.VISIBLE);
+            txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+            txtReturnOperatedBy.setVisibility(View.VISIBLE);
+            txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+
+        }
 
         recreateSummary = false;
 
@@ -551,8 +597,8 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
         }
 
         //Services & Fee
-        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
-        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
         LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
         for(int services = 0 ; services < obj.getPrice_details().size() ; services++){
@@ -707,7 +753,97 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
             txtReturnFlightDetailTotal.setText(returnFlightDetailTotal);
             txtReturnFlightFeeTotal.setText(returnFlightDetailTotal);
 
+            //hide functiona if flight departed
+            if(obj.getFlight_details().get(1).getFlight_status().equals("departed")){
+                btnHidden2 = true;
+            }
+
+            if(btnHidden1 && btnHidden2){
+                mfChangeSeat.setVisibility(View.GONE);
+                mfChangeFlight.setVisibility(View.GONE);
+            }
+        }else{
+            oneFlight = true;
         }
+
+        if(btnHidden1 && oneFlight){
+            mfChangeSeat.setVisibility(View.GONE);
+            mfChangeFlight.setVisibility(View.GONE);
+        }
+
+            displaySSRList();
+    }
+
+
+    public void displaySSRList(){
+
+        //Services & Fee
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        for(int services = 0 ; services < obj.getSpecial_services_request().size() ; services++){
+
+            String ssrFlightType = obj.getSpecial_services_request().get(services).getType();
+            TextView txtFlightType = new TextView(getActivity());
+            txtFlightType.setText(ssrFlightType);
+            txtFlightType.setTypeface(null, Typeface.BOLD);
+
+            //txtServicePrice.setLayoutParams(half04);
+            txtFlightType.setGravity(Gravity.LEFT);
+
+            userSSR.addView(txtFlightType);
+
+                for(int servicesLoop = 0 ; servicesLoop < obj.getSpecial_services_request().get(services).getPassenger().size() ; servicesLoop++){
+
+                    LinearLayout servicesRow = new LinearLayout(getActivity());
+                    servicesRow.setOrientation(LinearLayout.VERTICAL);
+                    servicesRow.setPadding(2, 2, 2, 2);
+                    servicesRow.setWeightSum(1);
+                    servicesRow.setLayoutParams(matchParent);
+
+                    String passengerName = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getName();
+
+                    TextView txtName = new TextView(getActivity());
+                    txtName.setText(passengerName);
+
+                    TextView txtServicesName = new TextView(getActivity());
+                    txtServicesName.setText("Name: "+txtName.getText().toString());
+                    txtServicesName.setTypeface(null, Typeface.BOLD);
+
+                    servicesRow.addView(txtServicesName);
+
+                    if(obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr() != null){
+                        for(int ssrLoop = 0 ; ssrLoop < obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() ; ssrLoop++){
+
+                            String passengerSSR = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().get(ssrLoop).getSsr_name();
+
+                            TextView txtServicePrice = new TextView(getActivity());
+                            txtServicePrice.setText(passengerSSR);
+                            //txtServicePrice.setLayoutParams(half04);
+                            txtServicePrice.setGravity(Gravity.LEFT);
+
+                            if(ssrLoop == obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() - 1){
+                                //margin bottom
+                                servicesRow.setPadding(0, 0, 0, 15);
+                            }
+
+                            servicesRow.addView(txtServicePrice);
+                        }
+                    }
+
+
+                    if(servicesLoop == obj.getSpecial_services_request().get(services).getPassenger().size() - 1){
+                        //margin bottom
+                        servicesRow.setPadding(0, 0, 0, 25);
+                    }
+
+                    userSSR.addView(servicesRow);
+
+
+                }
+
+            }
 
     }
 
@@ -735,6 +871,12 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
     public void goToChangeFlight()
     {
         Intent seatSelection = new Intent(getActivity(), MF_ChangeFlightActivity.class);
+        seatSelection.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
+        getActivity().startActivity(seatSelection);
+    }
+
+    public void goMealSSR(){
+        Intent seatSelection = new Intent(getActivity(), MF_SpecialServiceRequestActivity.class);
         seatSelection.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
         getActivity().startActivity(seatSelection);
     }

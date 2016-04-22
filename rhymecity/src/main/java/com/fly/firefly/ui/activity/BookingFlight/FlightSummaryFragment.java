@@ -3,6 +3,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -11,6 +12,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -74,6 +77,15 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
     @InjectView(R.id.txtPNR)
     TextView txtPNR;
+
+    @InjectView(R.id.txtItineraryNote)
+    TextView txtItineraryNote;
+
+    @InjectView(R.id.txtGoingFlightStatus)
+    TextView txtGoingFlightStatus;
+
+    @InjectView(R.id.txtReturnFlightStatus)
+    TextView txtReturnFlightStatus;
 
     @InjectView(R.id.txtBookingStatus)
     TextView txtBookingStatus;
@@ -250,6 +262,9 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtReturnOperatedBy)
     TextView txtReturnOperatedBy;
 
+    @InjectView(R.id.userSSR)
+    LinearLayout userSSR;
+
     private SharedPrefManager pref;
     private int fragmentContainerId;
     private Boolean goingFlightDetailTxt = true;
@@ -290,16 +305,8 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         //Check Flight Type (FY/MH)
         HashMap<String, String> initLogin = pref.getFlightType();
         String type = initLogin.get(SharedPrefManager.FLIGHT_TYPE);
-        if(type != null){
-            if(type.equals("MH")){
-                txtOperatedBy.setVisibility(View.VISIBLE);
-                txtOperatedBy.setText("Operated By Malaysia Airlines");
 
-                txtReturnOperatedBy.setVisibility(View.VISIBLE);
-                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
 
-            }
-        }
 
         txtGoingFlightPriceDetail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -352,6 +359,78 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         return view;
     }
 
+    public void displaySSRList(FlightSummaryReceive obj){
+
+        //Services & Fee
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        for(int services = 0 ; services < obj.getSpecial_services_request().size() ; services++){
+
+            String ssrFlightType = obj.getSpecial_services_request().get(services).getType();
+            TextView txtFlightType = new TextView(getActivity());
+            txtFlightType.setText(ssrFlightType);
+            txtFlightType.setTypeface(null, Typeface.BOLD);
+
+            //txtServicePrice.setLayoutParams(half04);
+            txtFlightType.setGravity(Gravity.LEFT);
+
+            userSSR.addView(txtFlightType);
+
+            for(int servicesLoop = 0 ; servicesLoop < obj.getSpecial_services_request().get(services).getPassenger().size() ; servicesLoop++){
+
+                LinearLayout servicesRow = new LinearLayout(getActivity());
+                servicesRow.setOrientation(LinearLayout.VERTICAL);
+                servicesRow.setPadding(2, 2, 2, 2);
+                servicesRow.setWeightSum(1);
+                servicesRow.setLayoutParams(matchParent);
+
+                String passengerName = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getName();
+
+                TextView txtName = new TextView(getActivity());
+                txtName.setText(passengerName);
+
+                TextView txtServicesName = new TextView(getActivity());
+                txtServicesName.setText("Name: "+txtName.getText().toString());
+                txtServicesName.setTypeface(null, Typeface.BOLD);
+
+                servicesRow.addView(txtServicesName);
+
+                if(obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr() != null){
+                    for(int ssrLoop = 0 ; ssrLoop < obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() ; ssrLoop++){
+
+                        String passengerSSR = obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().get(ssrLoop).getSsr_name();
+
+                        TextView txtServicePrice = new TextView(getActivity());
+                        txtServicePrice.setText(passengerSSR);
+                        //txtServicePrice.setLayoutParams(half04);
+                        txtServicePrice.setGravity(Gravity.LEFT);
+
+                        if(ssrLoop == obj.getSpecial_services_request().get(services).getPassenger().get(servicesLoop).getList_ssr().size() - 1){
+                            //margin bottom
+                            servicesRow.setPadding(0, 0, 0, 15);
+                        }
+
+                        servicesRow.addView(txtServicePrice);
+                    }
+                }
+
+
+                if(servicesLoop == obj.getSpecial_services_request().get(services).getPassenger().size() - 1){
+                    //margin bottom
+                    servicesRow.setPadding(0, 0, 0, 25);
+                }
+
+                userSSR.addView(servicesRow);
+
+
+            }
+
+        }
+
+    }
+
     public void requestFlightSummary(Signature signatureObj){
         initiateLoading(getActivity());
         HashMap<String, String> init = pref.getSeat();
@@ -383,7 +462,27 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
         recreateSummary = false;
 
+        displaySSRList(obj);
+
+        if(obj.getFlight_type().equals("MH")){
+                txtOperatedBy.setVisibility(View.VISIBLE);
+                txtOperatedBy.setText("Operated By Malaysia Airlines");
+
+                txtReturnOperatedBy.setVisibility(View.VISIBLE);
+                txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
+
+        }else{
+                txtItineraryNote.setVisibility(View.GONE);
+        }
+
+
         txtPNR.setText(obj.getItenerary_information().getPnr());
+        txtItineraryNote.setText(obj.getItenerary_information().getItinerary_note());
+
+        //set blink
+        blinkText(txtGoingFlightStatus);
+        txtGoingFlightStatus.setVisibility(View.GONE);
+
         txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
         txtBookingDate.setText(obj.getItenerary_information().getBooking_date());
 
@@ -585,6 +684,10 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         if(flightLoop > 1){
             returnFlight.setVisibility(View.VISIBLE);
             returnFlightPrice.setVisibility(View.VISIBLE);
+
+            //blink text
+            blinkText(txtReturnFlightStatus);
+            txtReturnFlightStatus.setVisibility(View.GONE);
 
             //Going Flight Information
             String returnFlightType = obj.getFlight_details().get(1).getType();

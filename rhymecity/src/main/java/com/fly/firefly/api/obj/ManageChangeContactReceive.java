@@ -13,7 +13,6 @@ public class ManageChangeContactReceive {
     private String status;
     private ItinenaryInformation itinerary_information;
     private ContactInformation contact_information;
-
     public String getMessage() {
         return message;
     }
@@ -22,12 +21,12 @@ public class ManageChangeContactReceive {
     }
     private String message;
     private Insurance insurance_details;
-
+    private String flight_type;
     private List<PaymentDetail> payment_details;
     private List<FlightDetails> flight_details;
     private List<PriceDetails> price_details;
     private List<PassengerList> passenger_information;
-
+    private List<FlightSummaryReceive.SpecialServicesRequest> special_services_request;
     private String total_price;
     private String total_paid;
     private String total_due;
@@ -35,6 +34,21 @@ public class ManageChangeContactReceive {
     private String pnr;
     private ManageChangeContactReceive obj;
 
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
+    }
+
+    public List<FlightSummaryReceive.SpecialServicesRequest> getSpecial_services_request() {
+        return special_services_request;
+    }
+
+    public void setSpecial_services_request(List<FlightSummaryReceive.SpecialServicesRequest> special_services_request) {
+        this.special_services_request = special_services_request;
+    }
 
 
     public void setObj(ManageChangeContactReceive obj) {
@@ -561,11 +575,13 @@ public class ManageChangeContactReceive {
         price_details = obj.getPrice_details();
         passenger_information = obj.getPassenger_information();
 
+        flight_type = obj.getFlight_type();
         total_price = obj.getTotal_price();
         total_paid = obj.getTotal_paid();
         total_due = obj.getTotal_due();
         booking_id = obj.getBooking_id();
         pnr = obj.getPnr();
+        special_services_request = obj.getSpecial_services_request();
     }
 
 

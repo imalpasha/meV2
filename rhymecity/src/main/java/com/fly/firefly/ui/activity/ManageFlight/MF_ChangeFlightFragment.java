@@ -370,7 +370,7 @@ public class MF_ChangeFlightFragment extends BaseFragment implements  DatePicker
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) {
+        if(month < 9) {
             varMonth = "0";
         }
         if(day < 10){

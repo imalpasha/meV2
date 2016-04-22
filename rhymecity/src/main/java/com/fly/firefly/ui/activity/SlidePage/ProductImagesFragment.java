@@ -118,7 +118,6 @@ public class ProductImagesFragment extends BaseFragment {
         aq.recycle(rootView);
         ButterKnife.inject(this, rootView);
 
-        Log.e("boardingObj.getUrl()", boardingObj.getQRCodeURL());
         return rootView;
     }
 

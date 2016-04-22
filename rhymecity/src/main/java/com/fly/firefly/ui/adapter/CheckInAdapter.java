@@ -106,15 +106,15 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        if (convertView == null) {
+       // if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_child, parent, false);
             v2 = new ViewHolderContent();
             ButterKnife.inject(v2, convertView);
             convertView.setTag(v2);
-        }
-        else {
-            v2 = (ViewHolderContent) convertView.getTag();
-        }
+       // }
+       // else {
+       //     v2 = (ViewHolderContent) convertView.getTag();
+       // }
         if(!obj.get(groupPosition).getTravel_document().equals("NRIC")){
             v2.linearCheckInExpireDate.setVisibility(View.VISIBLE);
             v2.checkInExpireDate.setText(BaseFragment.reformatDOB(obj.get(groupPosition).getExpiration_date()));
@@ -214,7 +214,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         v2.checkInPassengerTravelDoc.setText(BaseFragment.getTravelDocument(context, obj.get(groupPosition).getTravel_document()));
         v2.checkInPassengerDocNo.setText(obj.get(groupPosition).getDocument_number());
         v2.checkInPassengerBonuslink.setText(obj.get(groupPosition).getBonuslink());
-        convertView.setTag(v2);
+        //convertView.setTag(v2);
 
         return convertView;
     }
@@ -250,15 +250,15 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
        // vh = new ViewHolder();
         final ExpandableListView eLV = (ExpandableListView) parent;
 
-        if (convertView == null) {
+       // if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
             vh = new ViewHolderHeader();
             ButterKnife.inject(vh, convertView);
             convertView.setTag(vh);
-        }
-        else {
-            vh = (ViewHolderHeader) convertView.getTag();
-        }
+       // }
+       // else {
+       //     vh = (ViewHolderHeader) convertView.getTag();
+       // }
 
 
         if(obj.get(groupPosition).getStatus().equals("Checked In")){
@@ -303,6 +303,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         if(isExpanded){
             vh.passengerCheckInCheckBox.setChecked(true);
         }
+
         return convertView;
     }
 
@@ -337,7 +338,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) { varMonth = "0";}
+        if(month < 9) { varMonth = "0";}
         if (day < 10) { varDay = "0";}
 
         obj.get(selectedPosition).setExpiration_date(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);

@@ -45,6 +45,7 @@ import com.fly.firefly.ui.presenter.ManageFlightPrenter;
 import com.fly.firefly.utils.ExpandAbleGridView;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
+import com.fly.firefly.utils.Utils;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -87,6 +88,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
     @InjectView(R.id.passengerSeatListReturn)
     LinearLayout passengerSeatListReturn;
+
+    @InjectView(R.id.seatPriceList)
+    LinearLayout seatPriceList;
 
     private SharedPrefManager pref;
     private PassengerSeatAdapterV3 passengerSeatListV1;
@@ -170,6 +174,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
                 PasssengerInfoV2 selectedFromList = (PasssengerInfoV2) (listPassengerDepart.getItemAtPosition(myItemInt));
                 //setSeat(seatInfoDepart);
+
+                if(selectedFromList.getCheckedIn().equals("N")){
+
                 seatListReturn.setVisibility(View.GONE);
                 seatListDepart.setVisibility(View.VISIBLE);
 
@@ -193,6 +200,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 selectedFromList.setSelected(true);
                 selectedFromList.setActive(true);
 
+            }else{
+                    Utils.toastNotification(getActivity(),"Passenger already checked-in");
+                }
             }
         });
 
@@ -200,27 +210,29 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
                 PasssengerInfoV2 selectedFromList = (PasssengerInfoV2) (listPassengerReturn.getItemAtPosition(myItemInt));
 
-                seatListReturn.setVisibility(View.VISIBLE);
-                seatListDepart.setVisibility(View.GONE);
+                if(selectedFromList.getCheckedIn().equals("N")) {
 
-                passengerSeatListV2.clearSelected();
-                passengerSeatListV1.clearSelected();
+                    seatListReturn.setVisibility(View.VISIBLE);
+                    seatListDepart.setVisibility(View.GONE);
 
-                seatTag2 = new ArrayList<>(1);
+                    passengerSeatListV2.clearSelected();
+                    passengerSeatListV1.clearSelected();
 
-                if(myItemInt < passengerSize-1){
-                    next2 = false;
-                }else{
-                    next2 = true;
+                    seatTag2 = new ArrayList<>(1);
+
+                    if (myItemInt < passengerSize - 1) {
+                        next2 = false;
+                    } else {
+                        next2 = true;
+                    }
+
+                    passengerNoV2 = myItemInt;
+                    //Set selected
+                    LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
+                    clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
+                    selectedFromList.setSelected(true);
+                    selectedFromList.setActive(true);
                 }
-
-                passengerNoV2 = myItemInt;
-                //Set selected
-                LinearLayout clickedPassenger = (LinearLayout) myView.findViewById(R.id.passengerLinearLayout);
-                clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
-                selectedFromList.setSelected(true);
-                selectedFromList.setActive(true);
-
             }
         });
 
@@ -283,9 +295,69 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         return view;
     }
 
+    public void displaySeatFee(ContactInfoReceive contactObj){
+
+        //Services & Fee
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(34, 34);
+        llp.setMargins(0, 0, 8, 0); // llp.setMargins(left, top, right, bottom);
+
+        for(int services = 0 ; services < contactObj.getSeat_fare().size() ; services++){
+
+            LinearLayout servicesRow = new LinearLayout(getActivity());
+            servicesRow.setOrientation(LinearLayout.HORIZONTAL);
+            servicesRow.setPadding(2, 2, 2, 2);
+            servicesRow.setWeightSum(1);
+            servicesRow.setLayoutParams(matchParent);
+
+            LinearLayout seatColour = new LinearLayout(getActivity());
+            seatColour.setLayoutParams(llp);
+
+            String seatType = contactObj.getSeat_fare().get(services).getName();
+            String seatPrice = contactObj.getSeat_fare().get(services).getPrice();
+
+            if(seatType.equals("Standard Seat")){
+                seatColour.setBackgroundResource(R.color.standard_seat);
+            }else if(seatType.equals("Preferred Seat")){
+                seatColour.setBackgroundResource(R.color.preferred_seat);
+            }else if(seatType.equals("Desired Seat")){
+                seatColour.setBackgroundResource(R.color.desired_seat);
+            }
+
+
+            TextView txtSeatType = new TextView(getActivity());
+            txtSeatType.setText(seatType);
+            txtSeatType.setTextSize(12);
+
+            TextView txtSeatPrice = new TextView(getActivity());
+            txtSeatPrice.setText(seatPrice);
+            txtSeatPrice.setTextSize(12);
+            txtSeatPrice.setPadding(15,0,0,0);
+
+            servicesRow.addView(seatColour);
+            servicesRow.addView(txtSeatType);
+            servicesRow.addView(txtSeatPrice);
+
+            seatPriceList.addView(servicesRow);
+
+        }
+
+    }
+
     public void setPassenger1(String type,ExpandAbleGridView list,TextView txtSeat,List<PasssengerInfoV2> passengers,String depart,String arrival){
 
-        passengers.get(0).setSelected(true);
+
+        //auto select non check-in passenger
+        for(int t = 0; t < passengers.size(); t++){
+            if(passengers.get(t).getCheckedIn().equals("N")){
+                passengers.get(t).setSelected(true);
+                passengerNoV1 = t;
+                break;
+            }
+        }
+
+
         txtSeat.setText(depart + " - " + arrival);
         passengerSeatListV1 = new PassengerSeatAdapterV3(getActivity(),passengers,this);
         list.setAdapter(passengerSeatListV1);
@@ -774,7 +846,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 obj2.setTitle(passengers.get(v).getTitle());
                 obj2.setSeat(passengers.get(v).getUnit_designator());
                 obj2.setCompartment(passengers.get(v).getCompartment_designator());
-
+                obj2.setCheckedIn(passengers.get(v).getChecked_in());
                 objV2.add(obj2);
         }
 
@@ -790,7 +862,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 obj3.setTitle(passengers.get(v).getTitle());
                 obj3.setSeat(passengers.get(v).getUnit_designator());
                 obj3.setCompartment(passengers.get(v).getCompartment_designator());
-
+                obj3.setCheckedIn(passengers.get(v).getChecked_in());
                 objV3.add(obj3);
             }
 
@@ -812,7 +884,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             passengerSeatListReturn.setVisibility(View.VISIBLE);
         }
 
-
+        displaySeatFee(obj);
+        retrieveSeat = true;
+        RealmObjectController.clearCachedResult(getActivity());
     }
 
     @Override

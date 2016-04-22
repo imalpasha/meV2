@@ -2,6 +2,7 @@ package com.fly.firefly.api;
 
 import com.fly.firefly.api.obj.AboutUsReceive;
 import com.fly.firefly.api.obj.ChangePasswordReceive;
+import com.fly.firefly.api.obj.ChangeSSRReceive;
 import com.fly.firefly.api.obj.ChangeSearchFlightReceive;
 import com.fly.firefly.api.obj.CheckInListReceive;
 import com.fly.firefly.api.obj.ConfirmUpdateReceive;
@@ -24,6 +25,7 @@ import com.fly.firefly.api.obj.PaymentReceive;
 import com.fly.firefly.api.obj.PushNotificationReceive;
 import com.fly.firefly.api.obj.RegisterReceive;
 import com.fly.firefly.api.obj.RetrieveBoardingPassReceive;
+import com.fly.firefly.api.obj.SSRReceive;
 import com.fly.firefly.api.obj.SearchFlightReceive;
 import com.fly.firefly.api.obj.SeatSelectionReveice;
 import com.fly.firefly.api.obj.SelectChangeFlightReceive;
@@ -35,12 +37,14 @@ import com.fly.firefly.api.obj.tryObj;
 import com.fly.firefly.ui.object.AboutUs;
 import com.fly.firefly.ui.object.BaseObj;
 import com.fly.firefly.ui.object.ChangePasswordRequest;
+import com.fly.firefly.ui.object.ChangeSSR;
 import com.fly.firefly.ui.object.ConfirmUpdateRequest;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DeviceInformation;
 import com.fly.firefly.ui.object.FlightSummary;
 import com.fly.firefly.ui.object.GetChangeFlight;
 import com.fly.firefly.ui.object.GetFlightAvailability;
+import com.fly.firefly.ui.object.GetSSR;
 import com.fly.firefly.ui.object.LoginRequest;
 import com.fly.firefly.ui.object.ManageContactInfo;
 import com.fly.firefly.ui.object.ManageFlightObj;
@@ -199,6 +203,12 @@ public interface ApiService {
     @POST("/getAboutUS")
     void onRetrieveAboutUs(@Body AboutUs obj, Callback<AboutUsReceive> callback);
 
+    @POST("/getMealSSR")
+    void onRetrieveSSR(@Body GetSSR obj, Callback<SSRReceive> callback);
+
+
+    @POST("/changeSSR")
+    void onChangeSSR(@Body ChangeSSR obj, Callback<ManageChangeContactReceive> callback);
 
 
 

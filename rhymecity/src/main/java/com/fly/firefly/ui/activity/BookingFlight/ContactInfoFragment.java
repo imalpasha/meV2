@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.Html;
@@ -12,6 +13,7 @@ import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,7 @@ import com.fly.firefly.ui.module.ContactInfoModule;
 import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ContactInfo;
 import com.fly.firefly.ui.object.DefaultPassengerObj;
+import com.fly.firefly.ui.object.PassengerMeal;
 import com.fly.firefly.ui.presenter.BookingPresenter;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
@@ -207,7 +210,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.contactInfoScrollView)
     ScrollView contactInfoScrollView;
 
+    @InjectView(R.id.passengerSSRMealList)
+    LinearLayout passengerSSRMealList;
 
+    @InjectView(R.id.specialMealLayout)
+    LinearLayout specialMealLayout;
 
     private int fragmentContainerId;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -242,6 +249,10 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private int index = -1;
     private AlertDialog dialog;
     private String insuranceStatus = "N";
+    private PassengerInfoReveice obj;
+    private ArrayList<DropDownItem> departMealList = new ArrayList<DropDownItem>();
+    private ArrayList<DropDownItem> returnMealList = new ArrayList<DropDownItem>();
+    private String flightType;
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
 
@@ -264,7 +275,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
@@ -273,11 +283,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
 
-        Bundle xxx = getActivity().getIntent().getExtras();
-        String insurance = bundle.getString("INSURANCE_STATUS");
+        //Bundle xxx = getActivity().getIntent().getExtras();
+        //String insurance = bundle.getString("INSURANCE_STATUS");
 
-        //HashMap<String, String> init = pref.getSeat();
-        //String seatHash = init.get(SharedPrefManager.SEAT);
+        HashMap<String, String> init = pref.getSeat();
+        String seatHash = init.get(SharedPrefManager.SEAT);
 
         String defaultPassenger = "";
         try {
@@ -286,11 +296,10 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             Log.e("Invalid","True");
         }
 
-
         changeContactInfoBtn.setVisibility(View.GONE);
         Gson gson = new Gson();
 
-        PassengerInfoReveice obj = gson.fromJson(insurance, PassengerInfoReveice.class);
+        obj= gson.fromJson(seatHash, PassengerInfoReveice.class);
 
         /* If Passenger Already Login - Auto display necessary data */
         HashMap<String, String> initLogin = pref.getLoginStatus();
@@ -464,13 +473,16 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         /*Booking Id*/
         HashMap<String, String> initFlightType = pref.getFlightType();
-        String flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+        flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
         if(flightType.equals("MH")){
             btnSeatSelection.setVisibility(View.GONE);
             btnWithoutSeatSelection.setText("Continue");
+            displaySSRMeal();
+
         }else{
             Log.e("FlightType",flightType);
+
         }
 
          /*Onclick Continue*/
@@ -514,11 +526,156 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         contactInfoScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                view.requestFocus();
+               // view.requestFocus();
             }
         });
 
         return view;
+    }
+
+    public void mealSSR(){
+
+		/*Depart Meal*/
+
+        for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++)
+        {
+            DropDownItem itemCountry = new DropDownItem();
+            itemCountry.setText(obj.getMeal().get(0).getList_meal().get(i).getName());
+            itemCountry.setCode(obj.getMeal().get(0).getList_meal().get(i).getMeal_code());
+            itemCountry.setTag("Meal");
+            itemCountry.setId(i);
+            departMealList.add(itemCountry);
+        }
+
+        /*Return Meal*/
+        if(obj.getMeal().size() > 1){
+            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++)
+            {
+                DropDownItem itemCountry = new DropDownItem();
+                itemCountry.setText(obj.getMeal().get(1).getList_meal().get(i).getName());
+                itemCountry.setCode(obj.getMeal().get(1).getList_meal().get(i).getMeal_code());
+                itemCountry.setTag("Meal");
+                itemCountry.setId(i);
+                returnMealList.add(itemCountry);
+            }
+        }
+    }
+
+    public String getMealCode(String mealName,String type){
+        String mealCode = "";
+
+        if(type.equals("Depart")){
+            for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++)
+            {
+                if(mealName.equals(obj.getMeal().get(0).getList_meal().get(i).getName())){
+                    mealCode = obj.getMeal().get(0).getList_meal().get(i).getMeal_code();
+                    break;
+                }
+            }
+        }else{
+            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++)
+            {
+                if(mealName.equals(obj.getMeal().get(1).getList_meal().get(i).getName())){
+                    mealCode = obj.getMeal().get(1).getList_meal().get(i).getMeal_code();
+                    break;
+                }
+            }
+        }
+
+        return mealCode;
+    }
+
+    public void displaySSRMeal(){
+
+        specialMealLayout.setVisibility(View.VISIBLE);
+        mealSSR();
+
+        //Services & Fee
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        int departLoop = 1;
+        int returnLoop = 1;
+
+        for(int services = 0 ; services < obj.getMeal().size() ; services++){
+
+            String ssrFlightDestination = obj.getMeal().get(services).getDestination_name();
+            TextView txtFlightType = new TextView(getActivity());
+            txtFlightType.setText(ssrFlightDestination);
+            txtFlightType.setTypeface(null, Typeface.BOLD);
+            txtFlightType.setGravity(Gravity.LEFT);
+            txtFlightType.setPadding(0, 10, 0, 10);
+
+            passengerSSRMealList.addView(txtFlightType);
+
+            for(int servicesLoop = 0 ; servicesLoop < obj.getMeal().get(services).getPassenger().size() ; servicesLoop++){
+
+                LinearLayout servicesRow = new LinearLayout(getActivity());
+                servicesRow.setOrientation(LinearLayout.VERTICAL);
+                servicesRow.setPadding(2, 2, 2, 2);
+                servicesRow.setWeightSum(1);
+                servicesRow.setLayoutParams(matchParent);
+                servicesRow.setBackgroundResource(R.drawable.drawable_login_bottom_border);
+
+                String passengerName = obj.getMeal().get(services).getPassenger().get(servicesLoop).getPassenger_name();
+
+                TextView txtName = new TextView(getActivity());
+                txtName.setTypeface(null, Typeface.BOLD);
+                txtName.setText(passengerName);
+                txtName.setPadding(0, 5, 0, 5);
+
+                LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                llp.setMargins(0, 5, 0, 5); // llp.setMargins(left, top, right, bottom);
+
+                final TextView txtMealList = new TextView(getActivity());
+                txtMealList.setBackgroundResource(R.drawable.block_with_border);
+                txtMealList.setText("Default Meal");
+                txtMealList.setPadding(7, 7, 7, 7);
+                txtMealList.setLayoutParams(llp);
+                //onclick meal
+                if(services == 0){
+                    txtMealList.setTag("passenger_depart"+Integer.toString(departLoop));
+                    txtMealList.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupSelection(departMealList, getActivity(), txtMealList, false, view);
+                        }
+                    });
+
+                    departLoop++;
+
+                }else{
+                    txtMealList.setTag("passenger_return"+Integer.toString(returnLoop));
+                    Log.e("ReturnTag","passenger_return"+Integer.toString(returnLoop));
+
+                    txtMealList.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupSelection(returnMealList, getActivity(), txtMealList, false, view);
+                        }
+                    });
+
+                    returnLoop++;
+                }
+
+
+                servicesRow.addView(txtName);
+                servicesRow.addView(txtMealList);
+                servicesRow.setPadding(0, 10, 0, 20);
+
+                /*if(servicesLoop == obj.getMeal().get(services).getPassenger().size() - 1){
+                    //margin bottom
+                    servicesRow.setPadding(0, 0, 0, 25);
+                }else{
+                    servicesRow.setPadding(0, 10, 0, 10);
+                }*/
+
+                passengerSSRMealList.addView(servicesRow);
+            }
+
+        }
+
     }
 
     public void setInsuranceText(){
@@ -552,17 +709,14 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         // txtInsuranceDetail.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
-       /*Popup Forgot Password*/
 
+    /*Popup Forgot Password*/
     public void removeInsurance(){
 
         LayoutInflater li = LayoutInflater.from(getActivity());
         final View myView = li.inflate(R.layout.remove_insurance_opt, null);
         Button confirmRemove = (Button)myView.findViewById(R.id.confirmRemove);
         Button continueRemove = (Button)myView.findViewById(R.id.continueInsurance);
-
-
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(myView);
@@ -584,7 +738,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                 txtInsurance3.setVisibility(View.GONE);
                 txtInsurance4.setVisibility(View.GONE);
                 wantToBeProtected.setVisibility(View.VISIBLE);
-
+                insuranceStatus = "N";
                 insuranceCheckBoxLayout.setVisibility(View.GONE);
                 if (dialog.isShowing()) {
                     dialog.dismiss();
@@ -595,7 +749,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         continueRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insuranceCheckBoxLayout.setVisibility(View.GONE);
+                //insuranceCheckBoxLayout.setVisibility(View.GONE);
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
@@ -648,7 +802,6 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             lp.height = 600;
             mDialog.getWindow().setAttributes(lp);
         }
-
 
     /*Country selector - > need to move to main activity*/
     public void showCountrySelector(Activity act,ArrayList constParam,String data)
@@ -834,45 +987,91 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         String seatSelectionStatus;
 
         initiateLoading(getActivity());
-        ContactInfo obj = new ContactInfo();
+        ContactInfo contactObj = new ContactInfo();
 
         if(withSeat){
             seatSelectionStatus = "Y";
         }else{
             seatSelectionStatus = "N";
         }
+        HashMap<String, String> initFlightType = pref.getFlightType();
+        String flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+
         Log.e("Seat Selection",seatSelectionStatus);
-        obj.setBooking_id(bookingID);
-        obj.setSeat_selection_status(seatSelectionStatus);
-        obj.setSignature(signature);
-        obj.setContact_travel_purpose(txtPurpose.getTag().toString());
-        obj.setContact_title(txtTitle.getTag().toString());
-        obj.setContact_first_name(txtFirstName.getText().toString());
-        obj.setContact_last_name(txtLastName.getText().toString());
-        obj.setContact_email(txtEmailAddress.getText().toString());
+        contactObj.setBooking_id(bookingID);
+        contactObj.setFlight_type(flightType);
+        contactObj.setSeat_selection_status(seatSelectionStatus);
+        contactObj.setSignature(signature);
+        contactObj.setContact_travel_purpose(txtPurpose.getTag().toString());
+        contactObj.setContact_title(txtTitle.getTag().toString());
+        contactObj.setContact_first_name(txtFirstName.getText().toString());
+        contactObj.setContact_last_name(txtLastName.getText().toString());
+        contactObj.setContact_email(txtEmailAddress.getText().toString());
+
+        //getMealCode
+        if(flightType.equals("MH")){
+
+            ArrayList<PassengerMeal> departMeal = new ArrayList<PassengerMeal>();
+            for(int y = 0; y < obj.getMeal().get(0).getPassenger().size(); y++){
+
+                TextView mealCodePerPassenger = (TextView) view.findViewWithTag("passenger_depart" + Integer.toString(y + 1));
+                String departMealCode = getMealCode(mealCodePerPassenger.getText().toString(),"Depart");
+
+                PassengerMeal passengerMeal = new PassengerMeal();
+                passengerMeal.setPassenger_number(Integer.toString(y));
+                passengerMeal.setMeal_code(departMealCode);
+
+                departMeal.add(passengerMeal);
+
+            }
+            contactObj.setGoing_flightMeal(departMeal);
+
+            ArrayList<PassengerMeal> returnMeal = new ArrayList<PassengerMeal>();
+
+            if(obj.getMeal().size() > 1){
+
+                for(int x = 0; x < obj.getMeal().get(1).getPassenger().size(); x++){
+
+                    //getMealCode
+                    TextView mealCodePerPassenger2 = (TextView) view.findViewWithTag("passenger_return" + Integer.toString(x + 1));
+                    String returnMealCode = getMealCode(mealCodePerPassenger2.getText().toString(),"Return");
+
+                    PassengerMeal passengerMeal = new PassengerMeal();
+                    passengerMeal.setPassenger_number(Integer.toString(x));
+                    passengerMeal.setMeal_code(returnMealCode);
+
+                    returnMeal.add(passengerMeal);
+
+                }
+
+            }
+            contactObj.setReturn_flightMeal(returnMeal);
+
+        }
+
 
         /*Exception*/
         if(txtPurpose.getTag().toString().equals("2")){
-            obj.setContact_state(txtState.getTag().toString());
-            obj.setContact_city(txtCity.getText().toString());
-            obj.setContact_postcode(txtPostCode.getText().toString());
+            contactObj.setContact_state(txtState.getTag().toString());
+            contactObj.setContact_city(txtCity.getText().toString());
+            contactObj.setContact_postcode(txtPostCode.getText().toString());
 
-            obj.setContact_company_name(txtCompanyName.getText().toString());
-            obj.setContact_address1(txtCompanyAddress1.getText().toString());
-            obj.setContact_address2(txtCompanyAddress2.getText().toString());
-            obj.setContact_address3(txtCompanyAddress3.getText().toString());
+            contactObj.setContact_company_name(txtCompanyName.getText().toString());
+            contactObj.setContact_address1(txtCompanyAddress1.getText().toString());
+            contactObj.setContact_address2(txtCompanyAddress2.getText().toString());
+            contactObj.setContact_address3(txtCompanyAddress3.getText().toString());
         }
 
         if(insuranceCheckBox.isChecked()){
-            obj.setInsurance("1");
+            contactObj.setInsurance("1");
         }else{
-            obj.setInsurance("0");
+            contactObj.setInsurance("0");
         }
-        obj.setContact_country(selectedCountryCode);
-        obj.setContact_mobile_phone(txtPhone.getText().toString());
-        obj.setContact_alternate_phone(txtAlternatePhone.getText().toString());
+        contactObj.setContact_country(selectedCountryCode);
+        contactObj.setContact_mobile_phone(txtPhone.getText().toString());
+        contactObj.setContact_alternate_phone(txtAlternatePhone.getText().toString());
 
-        presenter.contactInfo(obj);
+        presenter.contactInfo(contactObj);
 
     }
 

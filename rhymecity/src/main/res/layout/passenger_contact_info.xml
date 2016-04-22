@@ -52,7 +52,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="@string/manage_flight_contact_detail"
+                                android:text="@string/book_flight"
                                 android:gravity="center"
                                 android:textSize="@dimen/font21sp"
                                 android:textColor="@color/white"
@@ -84,315 +84,101 @@
                             <LinearLayout
                                 android:orientation="vertical"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp">
+                                android:layout_height="match_parent"
+                                android:id="@+id/specialMealLayout"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:padding="5dp"
+                                        android:background="@color/actionBarColour_default_theme"
+                                        android:id="@+id/linearLayout51" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Special Meal Request"
+                                            android:tag="txtPassenger1"
+                                            android:textSize="@dimen/font20sp"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:id="@+id/passengerSSRMealList"
+                                    android:padding="5dp">
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/contactInfoLayout">
+
+                                <LinearLayout
+                                    android:orientation="vertical"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent" >
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:padding="5dp"
+                                        android:background="@color/actionBarColour_default_theme"
+                                        android:id="@+id/linearLayout83" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Contact Information"
+                                            android:tag="txtPassenger1"
+                                            android:textSize="@dimen/font20sp"
+                                            android:textColor="@color/white"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:background="@drawable/drawable_login_bottom_border"
-                                    android:id="@+id/checkAsPassengerLayout">
+                                    android:padding="5dp">
 
-                                    <CheckBox
-                                        android:layout_width="wrap_content"
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Check passenger as contact person"
-                                        android:id="@+id/checkAsPassenger"
-                                        android:padding="10dp"
-                                        android:buttonTint="@color/actionBarColour_default_theme"
-                                        android:layout_marginBottom="10dp"/>
+                                        android:layout_marginTop="10dp"
+                                        android:background="@drawable/drawable_login_bottom_border"
+                                        android:id="@+id/checkAsPassengerLayout">
 
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
+                                        <CheckBox
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="@string/general_travel_purpose"
-                                            android:id="@+id/textView111"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/red"
-                                            android:layout_marginLeft="3dp"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
+                                            android:text="Check passenger as contact person"
+                                            android:id="@+id/checkAsPassenger"
                                             android:padding="5dp"
-                                            android:textStyle="bold"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/txtPurpose" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border">
-
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Title."
-                                            android:id="@+id/textView16"
-                                            android:textStyle="bold"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/red"
-                                            android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp">
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="6dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:textStyle="bold"
-                                            android:id="@+id/txtTitle" />
+                                            android:buttonTint="@color/actionBarColour_default_theme"
+                                            android:layout_marginBottom="10dp"/>
 
                                     </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="First Name"
-                                            android:id="@+id/textView18"
-                                            android:textStyle="bold"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/red"
-                                            android:layout_marginLeft="3dp"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <EditText
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:id="@+id/txtFirstName"
-                                            android:inputType="textPersonName"
-                                            android:background="@drawable/block_with_border"
-                                            />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border"  >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Last Name"
-                                            android:id="@+id/textView20"
-                                            android:textStyle="bold"/>
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/red"
-                                            android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"/>
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <EditText
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:inputType="textPersonName"
-                                            android:id="@+id/txtLastName"
-                                            android:background="@drawable/block_with_border"
-                                            />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:id="@+id/linearLayout13"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:id="@+id/textView196"
-                                            android:text="@string/general_email_addresss"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/red"
-                                            android:layout_marginLeft="3dp"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <EditText
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:inputType="textEmailAddress"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/txtEmailAddress" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:id="@+id/countryBlock"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Country"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/red"
-                                            android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView114" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/txtCountry" />
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:id="@+id/companyBlock"
-                                    android:visibility="gone">
 
                                     <LinearLayout
                                         android:orientation="vertical"
@@ -410,9 +196,56 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:id="@+id/textView152"
-                                                android:text="Company Name"
+                                                android:text="@string/general_travel_purpose"
+                                                android:id="@+id/textView111"
                                                 android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/red"
+                                                android:layout_marginLeft="3dp"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="5dp" >
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:padding="5dp"
+                                                android:textStyle="bold"
+                                                android:background="@drawable/block_with_border"
+                                                android:id="@+id/txtPurpose" />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="15dp"
+                                        android:paddingBottom="13dp"
+                                        android:background="@drawable/drawable_login_bottom_border">
+
+
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Title."
+                                                android:id="@+id/textView16"
+                                                android:textStyle="bold"/>
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -427,16 +260,62 @@
                                             android:orientation="vertical"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
-                                            android:background="@drawable/block_with_border"
+                                            android:layout_marginTop="5dp">
+
+                                            <TextView
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:padding="6dp"
+                                                android:background="@drawable/block_with_border"
+                                                android:textStyle="bold"
+                                                android:id="@+id/txtTitle" />
+
+                                        </LinearLayout>
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="15dp"
+                                        android:paddingBottom="13dp"
+                                        android:background="@drawable/drawable_login_bottom_border" >
+
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="First Name"
+                                                android:id="@+id/textView18"
+                                                android:textStyle="bold"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/red"
+                                                android:layout_marginLeft="3dp"/>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
                                             android:layout_marginTop="5dp" >
 
                                             <EditText
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:padding="5dp"
-                                                android:id="@+id/txtCompanyName"
+                                                android:id="@+id/txtFirstName"
                                                 android:inputType="textPersonName"
-                                                android:background="@drawable/block_with_border"/>
+                                                android:background="@drawable/block_with_border"
+                                                />
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -447,6 +326,55 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="15dp"
                                         android:paddingBottom="13dp"
+                                        android:background="@drawable/drawable_login_bottom_border"  >
+
+                                        <LinearLayout
+                                            android:orientation="horizontal"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Last Name"
+                                                android:id="@+id/textView20"
+                                                android:textStyle="bold"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/red"
+                                                android:textStyle="bold"
+                                                android:layout_marginLeft="3dp"/>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="5dp" >
+
+                                            <EditText
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:padding="5dp"
+                                                android:inputType="textPersonName"
+                                                android:id="@+id/txtLastName"
+                                                android:background="@drawable/block_with_border"
+                                                />
+                                        </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginTop="15dp"
+                                        android:paddingBottom="13dp"
+                                        android:id="@+id/linearLayout13"
                                         android:background="@drawable/drawable_login_bottom_border" >
 
                                         <LinearLayout
@@ -457,7 +385,8 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Company Address 1"
+                                                android:id="@+id/textView196"
+                                                android:text="@string/general_email_addresss"
                                                 android:textStyle="bold" />
 
                                             <TextView
@@ -479,9 +408,9 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:padding="5dp"
-                                                android:inputType="textPostalAddress"
+                                                android:inputType="textEmailAddress"
                                                 android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtCompanyAddress1" />
+                                                android:id="@+id/txtEmailAddress" />
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -492,72 +421,13 @@
                                         android:layout_height="match_parent"
                                         android:layout_marginTop="15dp"
                                         android:paddingBottom="13dp"
-                                        android:background="@drawable/drawable_login_bottom_border" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Company Address 2"
-                                            android:textStyle="bold" />
-
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginTop="5dp" >
-
-                                            <EditText
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:padding="5dp"
-                                                android:inputType="textPostalAddress"
-                                                android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtCompanyAddress2" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="15dp"
-                                        android:paddingBottom="13dp"
-                                        android:background="@drawable/drawable_login_bottom_border" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Company Address 3"
-                                            android:textStyle="bold" />
-
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginTop="5dp" >
-
-                                            <EditText
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:padding="5dp"
-                                                android:inputType="textPostalAddress"
-                                                android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtCompanyAddress3" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="15dp"
-                                        android:paddingBottom="13dp"
+                                        android:id="@+id/countryBlock"
                                         android:background="@drawable/drawable_login_bottom_border" >
 
                                         <LinearLayout
                                             android:orientation="horizontal"
                                             android:layout_width="match_parent"
-                                            android:layout_height="match_parent" >
+                                            android:layout_height="match_parent">
 
                                             <TextView
                                                 android:layout_width="wrap_content"
@@ -571,51 +441,8 @@
                                                 android:text="*"
                                                 android:textColor="@color/red"
                                                 android:textStyle="bold"
-                                                android:layout_marginLeft="3dp"/>
-                                        </LinearLayout>
-
-                                        <LinearLayout
-                                            android:orientation="vertical"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:layout_marginTop="5dp" >
-
-                                            <TextView
-                                                android:layout_width="match_parent"
-                                                android:layout_height="wrap_content"
-                                                android:padding="5dp"
-                                                android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtCountryBusiness" />
-                                        </LinearLayout>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="15dp"
-                                        android:paddingBottom="13dp"
-                                        android:background="@drawable/drawable_login_bottom_border" >
-
-                                        <LinearLayout
-                                            android:orientation="horizontal"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent">
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="State"
-                                                android:textStyle="bold" />
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="*"
-                                                android:textColor="@color/red"
-                                                android:textStyle="bold"
                                                 android:layout_marginLeft="3dp"
-                                                android:id="@+id/textView118" />
+                                                android:id="@+id/textView114" />
                                         </LinearLayout>
 
                                         <LinearLayout
@@ -629,8 +456,348 @@
                                                 android:layout_height="wrap_content"
                                                 android:padding="5dp"
                                                 android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtState" />
+                                                android:id="@+id/txtCountry" />
                                         </LinearLayout>
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:orientation="vertical"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:id="@+id/companyBlock"
+                                        android:visibility="gone">
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:id="@+id/textView152"
+                                                    android:text="Company Name"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textColor="@color/red"
+                                                    android:textStyle="bold"
+                                                    android:layout_marginLeft="3dp"/>
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:background="@drawable/block_with_border"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:id="@+id/txtCompanyName"
+                                                    android:inputType="textPersonName"
+                                                    android:background="@drawable/block_with_border"/>
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Company Address 1"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textStyle="bold"
+                                                    android:textColor="@color/red"
+                                                    android:layout_marginLeft="3dp"/>
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:inputType="textPostalAddress"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtCompanyAddress1" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Company Address 2"
+                                                android:textStyle="bold" />
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:inputType="textPostalAddress"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtCompanyAddress2" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Company Address 3"
+                                                android:textStyle="bold" />
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:inputType="textPostalAddress"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtCompanyAddress3" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent" >
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Country"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textColor="@color/red"
+                                                    android:textStyle="bold"
+                                                    android:layout_marginLeft="3dp"/>
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtCountryBusiness" />
+                                            </LinearLayout>
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="State"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textColor="@color/red"
+                                                    android:textStyle="bold"
+                                                    android:layout_marginLeft="3dp"
+                                                    android:id="@+id/textView118" />
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <TextView
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtState" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="City"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textStyle="bold"
+                                                    android:textColor="@color/red"
+                                                    android:layout_marginLeft="3dp"/>
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:inputType="textPostalAddress"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtCity" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:orientation="vertical"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:layout_marginTop="15dp"
+                                            android:paddingBottom="13dp"
+                                            android:background="@drawable/drawable_login_bottom_border" >
+
+                                            <LinearLayout
+                                                android:orientation="horizontal"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent">
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="Post Code"
+                                                    android:textStyle="bold" />
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="*"
+                                                    android:textColor="@color/red"
+                                                    android:textStyle="bold"
+                                                    android:layout_marginLeft="3dp"/>
+                                            </LinearLayout>
+
+                                            <LinearLayout
+                                                android:orientation="vertical"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="match_parent"
+                                                android:layout_marginTop="5dp" >
+
+                                                <EditText
+                                                    android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:padding="5dp"
+                                                    android:inputType="number"
+                                                    android:background="@drawable/block_with_border"
+                                                    android:id="@+id/txtPostCode" />
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
 
                                     </LinearLayout>
 
@@ -650,7 +817,8 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="City"
+                                                android:id="@+id/txtMobilePhone"
+                                                android:text="Mobile Phone"
                                                 android:textStyle="bold" />
 
                                             <TextView
@@ -659,7 +827,8 @@
                                                 android:text="*"
                                                 android:textStyle="bold"
                                                 android:textColor="@color/red"
-                                                android:layout_marginLeft="3dp"/>
+                                                android:layout_marginLeft="3dp"
+                                                android:id="@+id/textView115" />
                                         </LinearLayout>
 
                                         <LinearLayout
@@ -672,9 +841,11 @@
                                                 android:layout_width="match_parent"
                                                 android:layout_height="wrap_content"
                                                 android:padding="5dp"
-                                                android:inputType="textPostalAddress"
                                                 android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtCity" />
+                                                android:inputType="number"
+                                                android:digits="0,1,2,3,4,5,6,7,8,9"
+                                                android:id="@+id/txtPhone"
+                                                android:maxLength="14"/>
                                         </LinearLayout>
 
                                     </LinearLayout>
@@ -695,7 +866,7 @@
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:text="Post Code"
+                                                android:text="Alternate Phone"
                                                 android:textStyle="bold" />
 
                                             <TextView
@@ -718,109 +889,15 @@
                                                 android:layout_height="wrap_content"
                                                 android:padding="5dp"
                                                 android:inputType="number"
+                                                android:digits="0,1,2,3,4,5,6,7,8,9"
                                                 android:background="@drawable/block_with_border"
-                                                android:id="@+id/txtPostCode" />
+                                                android:id="@+id/txtAlternatePhone"
+                                                android:maxLength="14"/>
                                         </LinearLayout>
 
                                     </LinearLayout>
 
-
                                 </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:id="@+id/txtMobilePhone"
-                                            android:text="Mobile Phone"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textStyle="bold"
-                                            android:textColor="@color/red"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView115" />
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <EditText
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:inputType="phone"
-                                            android:id="@+id/txtPhone"
-                                            android:maxLength="14"/>
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="15dp"
-                                    android:paddingBottom="13dp"
-                                    android:background="@drawable/drawable_login_bottom_border" >
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Alternate Phone"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/red"
-                                            android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"/>
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginTop="5dp" >
-
-                                        <EditText
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:inputType="phone"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/txtAlternatePhone"
-                                            android:maxLength="14"/>
-                                    </LinearLayout>
-
-                                </LinearLayout>
-
                             </LinearLayout>
 
                         </LinearLayout>

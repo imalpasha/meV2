@@ -258,6 +258,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:textStyle="italic"
+                            android:visibility="gone"
+                            android:id="@+id/txtOperatedBy" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="Time 6.50AM to 7.10AM"
                             android:padding="2dp"
                             android:id="@+id/txtGoingFlightTime" />
@@ -302,7 +310,62 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
+                            android:textStyle="italic"
+                            android:visibility="gone"
+                            android:id="@+id/txtReturnOperatedBy" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
                             android:id="@+id/txtReturnFlightTime" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/ssrBlock">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:background="@color/actionBarColour_default_theme" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SPECIAL SERVICES REQUEST"
+                            android:id="@+id/textView401"
+                            android:textSize="@dimen/font20sp"
+                            android:textColor="@color/white"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5dp"
+                        android:id="@+id/userFlightSSR"
+                        android:background="@drawable/drawable_login_bottom_border" >
+
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="1"
+                            android:padding="5dp"
+                            android:id="@+id/userSSR">
+
+                        </LinearLayout>
+
                     </LinearLayout>
                 </LinearLayout>
 

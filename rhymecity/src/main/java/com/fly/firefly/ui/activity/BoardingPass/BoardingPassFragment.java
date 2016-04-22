@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.androidquery.util.BitmapCache;
@@ -36,8 +37,10 @@ import com.fly.firefly.ui.adapter.BookingListAdapter;
 import com.fly.firefly.ui.adapter.OfflineBookingListAdapter;
 import com.fly.firefly.ui.module.BoardingPassModule;
 import com.fly.firefly.ui.object.BoardingPassObj;
+import com.fly.firefly.ui.object.BoardingPassPNRList;
 import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageFlightObj;
+import com.fly.firefly.ui.object.MobileCheckInList;
 import com.fly.firefly.ui.object.MobileCheckinObj;
 import com.fly.firefly.ui.object.ProductImage;
 import com.fly.firefly.ui.object.RetrieveBoardingPassObj;
@@ -99,6 +102,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     @InjectView(R.id.listviewLayout)
     LinearLayout listviewLayout;
 
+    @InjectView(R.id.horizontalProgressBar)
+    ProgressBar horizontalProgressBar;
+
     private BitmapCache mMemoryCache;
     private int fragmentContainerId;
     private ArrayList<DropDownItem> dataFlightDeparture;
@@ -115,7 +121,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     private String storeUsername;
     private String loginStatus;
     private String signatureFromLocal;
+    private boolean cachedDisplay = false;
     private boolean retrieveBoardingPass = false;
+    private Bundle dataPassBundle;
 
     public static BoardingPassFragment newInstance() {
 
@@ -143,6 +151,8 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
         final View view = inflater.inflate(R.layout.retrieve_boarding_pass, container, false);
         ButterKnife.inject(this, view);
 
+        dataPassBundle = new Bundle();
+
         /*Preference Manager*/
         pref = new SharedPrefManager(getActivity());
 
@@ -165,29 +175,51 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 Realm realm = Realm.getInstance(getActivity());
                 final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
 
+                if(result2.size() == 0) {
+                    //no cached boarding pass
+                    boardingPassNA.setVisibility(View.VISIBLE);
+                }else{
 
-//              offlineAdapter = new OfflineBookingListAdapter(getActivity(),obj.getObj().getBoarding_pass());
-                offlineAdapter = new OfflineBookingListAdapter(getActivity(),result2);
+    //              offlineAdapter = new OfflineBookingListAdapter(getActivity(),obj.getObj().getBoarding_pass());
+                    offlineAdapter = new OfflineBookingListAdapter(getActivity(),result2);
 
-                listView.setAdapter(offlineAdapter);
+                    listView.setAdapter(offlineAdapter);
 
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
 
-                        final MobileConfirmCheckInPassengerReceive obj = (new Gson()).fromJson(result2.get(myItemInt).getBoardingPassObj(), MobileConfirmCheckInPassengerReceive.class);
+                            final MobileConfirmCheckInPassengerReceive obj = (new Gson()).fromJson(result2.get(myItemInt).getBoardingPassObj(), MobileConfirmCheckInPassengerReceive.class);
 
-                        Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
-                        next.putExtra("OFFLINE_BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
-                        getActivity().startActivity(next);
+                            Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
+                            next.putExtra("OFFLINE_BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
+                            getActivity().startActivity(next);
 
-                    }
-                });
+                        }
+                    });
+                }
                 boardingPassBtn.setVisibility(View.GONE);
+
             }else{
-                initiateLoading(getActivity());
-                presenter.retriveListOfBoardingPass(storeUsername, storePassword, "boarding_pass");
-                boardingPassBtn.setVisibility(View.GONE);
+
+                RealmResults<BoardingPassPNRList> cachedListResult = RealmObjectController.getBoardingPassPNRList(MainFragmentActivity.getContext());
+                if(cachedListResult.size() > 0){
+
+                    Gson gson = new Gson();
+                    ListBookingReceive obj = gson.fromJson(cachedListResult.get(0).getCachedList(), ListBookingReceive.class);
+                    onUserPnrList(obj);
+                    Log.e("Use Cached List","True");
+                    cachedDisplay = true;
+                    horizontalProgressBar.setVisibility(View.VISIBLE);
+                    //update the list on background
+                    presenter.retriveListOfBoardingPass(storeUsername, storePassword, "boarding_pass");
+
+                }else{
+                    initiateLoading(getActivity());
+                    presenter.retriveListOfBoardingPass(storeUsername, storePassword, "boarding_pass");
+                    boardingPassBtn.setVisibility(View.GONE);
+                }
             }
+
         }else{
             pnrLayout.setVisibility(View.VISIBLE);
 
@@ -280,22 +312,16 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
         if (status) {
             Log.e("Success", "True");
             //startPagination();
+
+
             Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
             next.putExtra("BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
+            dataPassBundle.putString("LOAD_BACKGROUND","N");
+            next.putExtras(dataPassBundle);
             getActivity().startActivity(next);
         }
 
     }
-
-    /*private void addBitmapToMemoryCache(final int key, final Bitmap bitmap) {
-          if (getBitmapFromMemCache(key) == null) {
-            mMemoryCache.put(key, bitmap);
-        }
-    }
-
-    private Bitmap getBitmapFromMemCache(final int key) {
-        return mMemoryCache.get(key);
-    }*/
 
     /*Filter Arrival Airport*/
     public static void filterArrivalAirport(String code) {
@@ -344,6 +370,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
         flightObj.setArrival_station(txtArrive.getTag().toString());
         flightObj.setSignature(signatureFromLocal);
 
+
+
+
         presenter.retrieveBoardingPass(flightObj);
     }
 
@@ -373,7 +402,12 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
     @Override
     public void onUserPnrList(final ListBookingReceive obj){
 
-        dismissLoading();
+        if(!cachedDisplay){
+            dismissLoading();
+        }else{
+            horizontalProgressBar.setVisibility(View.INVISIBLE);
+        }
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
@@ -390,13 +424,45 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+
                 ListBookingReceive.ListBooking selectedFromList = (ListBookingReceive.ListBooking) (listView.getItemAtPosition(myItemInt));
 
-                Log.e("Selected PNR", selectedFromList.getPnr());
-                Log.e("Username", pref.getUserEmail().toString());
-                initiateLoading(getActivity());
+                dataPassBundle.putString("PNR",selectedFromList.getPnr());
+                dataPassBundle.putString("USER_ID",obj.getUser_id());
+                dataPassBundle.putString("DEPARTURE_STATION_CODE",selectedFromList.getDeparture_station_code());
+                dataPassBundle.putString("ARRIVAL_STATION_CODE",selectedFromList.getArrival_station_code());
+                dataPassBundle.putString("SIGNATURE",obj.getSignature());
 
-                retrieveBoardingPass(selectedFromList,obj);
+                //check if already cached, display cached data first and load new data at background
+                Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
+                final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
+                Log.e("result",result2.toString());
+
+                //do query here
+                RealmResults<BoardingPassObj> boardingPass = realm.where(BoardingPassObj.class).equalTo("pnr",selectedFromList.getPnr()).equalTo("departureDateTime", selectedFromList.getDeparture_datetime()).findAll();
+                Log.e("qryResult",boardingPass.toString());
+                if(boardingPass.size() > 0){
+
+                    //if more than 0 - boarding pass cached. just display using realm object
+                    //but still need to reload new data incase user check-in through website
+                    final RetrieveBoardingPassReceive ccc = (new Gson()).fromJson(boardingPass.get(0).getBoardingPassObj(), RetrieveBoardingPassReceive.class);
+
+                    Log.e("PNR",ccc.getBoarding_pass().get(0).getRecordLocator());
+                    Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
+                    next.putExtra("BOARDING_PASS_OBJ", (new Gson()).toJson(ccc));
+                    dataPassBundle.putString("LOAD_BACKGROUND","Y");
+                    next.putExtras(dataPassBundle);
+
+                    getActivity().startActivity(next);
+
+
+
+                }else{
+                    initiateLoading(getActivity());
+                    retrieveBoardingPass(selectedFromList,obj);
+                }
+
+
             }
         });
     }
@@ -411,10 +477,10 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
         flightObj.setSignature(obj.getSignature());
         retrieveBoardingPass = true;
 
-
         presenter.retrieveBoardingPass(flightObj);
 
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

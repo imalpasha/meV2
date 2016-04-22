@@ -182,40 +182,43 @@
                             android:layout_height="match_parent"
                             android:layout_margin="2dp"
                             android:padding="5dp"
+                            android:weightSum="1"
+                            android:layout_gravity="center"
                             android:background="@color/actionBarColour_default_theme" >
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="0.55"
+                                android:layout_height="wrap_content"
+                                android:text="AOR - SZB"
+                                android:gravity="left"
+                                android:textSize="16dp"
+                                android:layout_gravity="center"
+                                android:id="@+id/txtSeatReturn"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"/>
 
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_weight="0.25"
+                                android:layout_height="wrap_content"
+                                android:text="Seat"
+                                android:id="@+id/xx"
+                                android:textSize="16dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:layout_gravity="center"/>
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Seat"
-                                        android:textSize="20dp"
-                                        android:textColor="@color/white"
-                                        android:textStyle="bold"
-                                        android:layout_gravity="center"/>
-                                </LinearLayout>
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_weight="0.2"
+                                android:layout_height="wrap_content">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="SZB - AOR"
-                                    android:id="@+id/txtSeatReturn"
-                                    android:layout_alignParentLeft="true"
-                                    android:layout_centerInParent="true"
-
-                                    android:textColor="@color/white"
-                                    android:textStyle="bold"/>
-                            </RelativeLayout>
+                            </LinearLayout>
 
                         </LinearLayout>
+
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -338,122 +341,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:padding="6dp"
-                        android:layout_marginTop="3dp">
+                        android:layout_marginTop="3dp"
+                        android:id="@+id/seatPriceList">
 
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center" >
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/standard_seat" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Standard Seat"
-                                android:id="@+id/textView357"
-                                android:textSize="10dp" />
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="15.90 MYR"
-                                    android:textSize="11dp"
-                                    android:id="@+id/txtStandardSeatPrice" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:layout_marginTop="3dp"
-                            android:layout_marginBottom="3dp">
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/preferred_seat" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Preferred Seat"
-                                android:id="@+id/textView358"
-                                android:textSize="10dp" />
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" >
-
-                                <TextView
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="21.20 MYR"
-                                    android:textSize="11dp"
-                                    android:id="@+id/txtPreferredSeatPrice" />
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="horizontal"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center" >
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="18dp"
-                                android:layout_height="18dp"
-                                android:layout_marginRight="3dp"
-                                android:background="@color/desired_seat" />
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Desired Seat"
-                                    android:id="@+id/textView359"
-                                    android:textSize="10dp" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:orientation="vertical"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" >
-
-                                <TextView
-                                    android:layout_marginLeft="5dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="42.40 MYR"
-                                    android:textSize="11dp"
-                                    android:id="@+id/txtDesiredSeatPrice" />
-                            </LinearLayout>
-                        </LinearLayout>
                     </LinearLayout>
 
                     <LinearLayout

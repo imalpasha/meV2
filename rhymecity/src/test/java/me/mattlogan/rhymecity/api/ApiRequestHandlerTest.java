@@ -1,4 +1,4 @@
-package me.mattlogan.rhymecity.api;
+/*package me.mattlogan.rhymecity.api;
 
 import com.squareup.otto.Bus;
 
@@ -18,6 +18,7 @@ import me.mattlogan.firefly.api.model.RhymesResponse;
 import me.mattlogan.firefly.event.rhymes.RhymesFailureEvent;
 import me.mattlogan.firefly.event.rhymes.RhymesRequestedEvent;
 import me.mattlogan.firefly.event.rhymes.RhymesSuccessEvent;
+
 import retrofit.Callback;
 
 import static org.junit.Assert.assertEquals;
@@ -83,4 +84,4 @@ public class ApiRequestHandlerTest {
 
         assertEquals("test", eventArgument.getValue().getWord());
     }
-}
+}*/

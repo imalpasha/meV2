@@ -245,7 +245,45 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:id="@+id/mobileCheckInNoInternet"
+                        android:visibility="gone"
+                        android:gravity="center"
+                        android:padding="35dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_internet_connection_title"
+                            android:textSize="28dp"
+                            android:gravity="center"
+                            android:textColor="@color/dark_lvl5"
+                            android:layout_marginBottom="15dp"
+                            android:layout_gravity="center_horizontal" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/no_internet_connection"
+                            android:textSize="17dp"
+                            android:gravity="center"
+                            android:textColor="@color/dark_lvl5"
+                            android:layout_gravity="center_horizontal" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:id="@+id/listviewLayout">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="8dp"
+                            android:id="@+id/horizontalProgressBar"
+                            android:visibility="gone"
+                            android:indeterminate="true"
+                            android:progress="1"/>
 
                         <ListView
                             android:layout_width="match_parent"

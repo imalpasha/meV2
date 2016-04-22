@@ -49,6 +49,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private DeviceInformation info;
     private Boolean running = false;
     private static SweetAlertDialog pDialog;
+    private boolean proceed = false;
 
     public static SplashScreenFragment newInstance(Bundle bundle) {
 
@@ -67,7 +68,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        //RealmObjectController.deleteRealmFile(getActivity());
+        RealmObjectController.deleteRealmFile(getActivity());
 
         View view = inflater.inflate(R.layout.splash_screen, container, false);
         ButterKnife.inject(this, view);
@@ -99,8 +100,14 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         HashMap<String, String> initLogin = pref.getDataVesion();
         String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
-        if(localDataVersion == null){
+
+        if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
             localDataVersion = "0";
+            proceed = true;
+        }else if(localDataVersion == null && Controller.connectionAvailable(getActivity()))
+        {
+            connectionRetry("No Internet Connection");
+            proceed = false;
         }
 
         info = new DeviceInformation();
@@ -114,15 +121,15 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setUsername(userEmail);
         info.setPassword(userPassword);
 
-        if(localDataVersion == null){
-           sendDeviceInformationToServer(info);
-        }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
-           sendDeviceInformationToServer(info);
-        }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
-            goHomepage();
+        if(proceed){
+            if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
+                sendDeviceInformationToServer(info);
+            }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
+                goHomepage();
+            }
+            running = true;
         }
 
-        running = true;
 
         //RealmObjectController.deleteRealmFile(getActivity());
 

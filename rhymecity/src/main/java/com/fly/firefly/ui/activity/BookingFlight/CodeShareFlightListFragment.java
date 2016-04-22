@@ -105,7 +105,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
     private final String ECONOMY_PROMO = "ECONOMY_PROMO";
     private final String ECONOMY = "ECONOMY";
-
+    private final String BUSINESS = "BUSINESS";
 
     private final String PREMIER = "PREMIER";
     private static final String SCREEN_LABEL = "Flight Detail";
@@ -397,9 +397,7 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
                 if (userId.getText().toString().equals("") || password.getText().toString().equals("")) {
                     Toast.makeText(getActivity(), "User ID is required", Toast.LENGTH_LONG).show();
-                } else if (!userId.getText().toString().matches(emailPattern)) {
-                    Toast.makeText(getActivity(), "Invalid Email", Toast.LENGTH_LONG).show();
-                } else {
+                }else {
                     loginFragment(userId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, password.getText().toString()));
                 }
             }
@@ -492,6 +490,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         selectFlightObj.setJourney_sell_key_1(departFlightJourneyKey);
         selectFlightObj.setFare_sell_key_1(departFlightFareSellKey);
 
+        Log.e("departFlightFareSellKey","departFlightFareSellKey "+departFlightFareSellKey);
+
         selectFlightObj.setFlight_number_2(returnFlightNumber);
         selectFlightObj.setDeparture_time_2(returnFlightDepartureTime);
         selectFlightObj.setArrival_time_2(returnFlightArrivalTime);
@@ -543,8 +543,16 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             departFlightJourneyKey = obj.getJourney_sell_key();
             if (type.equals(ECONOMY_PROMO)) {
                 departFlightFareSellKey = obj.getEconomy_promo_class().getFare_sell_key();
+                Log.e("A","departFlightFareSellKey "+departFlightFareSellKey);
+
             } else if(type.equals(ECONOMY)){
                 departFlightFareSellKey = obj.getEconomy_class().getFare_sell_key();
+                Log.e("B","departFlightFareSellKey "+departFlightFareSellKey);
+
+            }else if(type.equals(BUSINESS)){
+                departFlightFareSellKey = obj.getBusiness_class().getFare_sell_key();
+                Log.e("C","departFlightFareSellKey "+departFlightFareSellKey);
+
             }
         } else if (way.equals(RETURN)) {
 
@@ -557,6 +565,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                 returnFlightFareSellKey = obj.getEconomy_promo_class().getFare_sell_key();
             } else if(type.equals(ECONOMY)){
                 returnFlightFareSellKey = obj.getEconomy_class().getFare_sell_key();
+            }else if(type.equals(BUSINESS)){
+                returnFlightFareSellKey = obj.getBusiness_class().getFare_sell_key();
             }
         }
     }

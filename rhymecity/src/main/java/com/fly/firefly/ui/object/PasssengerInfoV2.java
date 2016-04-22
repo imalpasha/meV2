@@ -16,6 +16,15 @@ public class PasssengerInfoV2 {
     private String compartment;
     private String compartmentReturn;
     private String seatReturn;
+    private String checkedIn;
+
+    public String getCheckedIn() {
+        return checkedIn;
+    }
+
+    public void setCheckedIn(String checkedIn) {
+        this.checkedIn = checkedIn;
+    }
 
     public String getUnit_designator() {
         return unit_designator;

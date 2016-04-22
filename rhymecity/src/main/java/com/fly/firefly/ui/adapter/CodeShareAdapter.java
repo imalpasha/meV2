@@ -15,6 +15,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.api.obj.FlightInfo;
 import com.fly.firefly.ui.activity.BookingFlight.CodeShareFlightListFragment;
 import com.fly.firefly.ui.activity.BookingFlight.FireflyFlightListFragment;
+import com.fly.firefly.ui.object.PasssengerInfoV2;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class CodeShareAdapter extends BaseAdapter {
     private String arrivalAirport;
     private String flightClass;
     private Integer selected_position = -1;
+    private String selectedType;
     private CodeShareFlightListFragment fragment;
     private String flightWay;
     private Boolean active = false;
@@ -80,7 +82,6 @@ public class CodeShareAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
-        Log.e("Invalidate","True");
         ViewHolder vh;
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.codeshare_flight_list, parent, false);
@@ -91,11 +92,15 @@ public class CodeShareAdapter extends BaseAdapter {
             vh = (ViewHolder) view.getTag();
         }
 
-        Log.e("E",obj.get(position).getEconomy_class().getStatus());
+
+
+
         /*CheckBox*/
         if(position==selected_position)
         {
-            if(obj.get(position).getEconomy_promo_class().getStatus().equals("active")){
+
+            //checkbox per row
+            if(obj.get(position).getEconomy_promo_class().getChecked() != null){
                 if(obj.get(position).getEconomy_promo_class().getChecked()){
                     vh.economyPromoCheckBox.setChecked(true);
                 }else{
@@ -103,7 +108,7 @@ public class CodeShareAdapter extends BaseAdapter {
                 }
             }
 
-            if(obj.get(position).getEconomy_class().getStatus().equals("active")){
+            if(obj.get(position).getEconomy_class().getChecked() != null){
                 if(obj.get(position).getEconomy_class().getChecked()){
                     vh.economyCheckBox.setChecked(true);
                 }else{
@@ -111,19 +116,51 @@ public class CodeShareAdapter extends BaseAdapter {
                 }
             }
 
-            if(obj.get(position).getBusiness_class().getStatus().equals("active")){
+            if(obj.get(position).getBusiness_class().getChecked() != null){
                 if(obj.get(position).getBusiness_class().getChecked()){
+                    vh.businessCheckBox.setChecked(true);
+                }else{
+                    vh.businessCheckBox.setChecked(false);
+                }
+            }
+
+            if(selectedType.equals("ECONOMY_PROMO")){
+                if(obj.get(position).getEconomy_promo_class().getChecked()){
+                    vh.economyPromoCheckBox.setChecked(true);
+                }else{
+                    vh.economyPromoCheckBox.setChecked(false);
+                }
+            }else if(selectedType.equals("ECONOMY")){
+                if(obj.get(position).getEconomy_class().getChecked()){
                     vh.economyCheckBox.setChecked(true);
                 }else{
                     vh.economyCheckBox.setChecked(false);
                 }
+            }else if(selectedType.equals("BUSINESS")){
+                if(obj.get(position).getBusiness_class().getChecked()){
+                    vh.businessCheckBox.setChecked(true);
+                }else{
+                    vh.businessCheckBox.setChecked(false);
+                }
             }
-        }
-        else
+
+            /*if(obj.get(position).getEconomy_promo_class().getStatus().equals("active")){
+
+            }
+
+            if(obj.get(position).getEconomy_class().getStatus().equals("active")){
+
+            }
+
+            if(obj.get(position).getBusiness_class().getStatus().equals("active")){
+
+            }*/
+        }else
         {
             vh.economyPromoCheckBox.setChecked(false);
             vh.economyCheckBox.setChecked(false);
-
+            vh.businessCheckBox.setChecked(false);
+            Log.e("Not Checked","true");
         }
 
         //EconomyPromo CheckBox
@@ -135,9 +172,14 @@ public class CodeShareAdapter extends BaseAdapter {
                     if(obj.get(position).getEconomy_promo_class().getStatus().equals("active")){
                        active = true;
                        selected_position =  position;
-                        obj.get(position).getEconomy_promo_class().setChecked(true);
-                    }else{
-                        obj.get(position).getEconomy_promo_class().setChecked(false);
+                       selectedType = "ECONOMY_PROMO";
+
+                       //clearSelected();
+                       obj.get(position).getEconomy_promo_class().setChecked(true);
+                       obj.get(position).getEconomy_class().setChecked(false);
+                       obj.get(position).getBusiness_class().setChecked(false);
+
+
                     }
 
                     //True
@@ -160,7 +202,13 @@ public class CodeShareAdapter extends BaseAdapter {
                     if(obj.get(position).getEconomy_class().getStatus().equals("active")){
                         active = true;
                         selected_position =  position;
+                        selectedType = "ECONOMY";
+
+                        //clearSelected();
                         obj.get(position).getEconomy_class().setChecked(true);
+                        obj.get(position).getBusiness_class().setChecked(false);
+                        obj.get(position).getEconomy_promo_class().setChecked(false);
+
                     }
                     //True
                     if(active){
@@ -182,7 +230,12 @@ public class CodeShareAdapter extends BaseAdapter {
                     if(obj.get(position).getBusiness_class().getStatus().equals("active")){
                         active = true;
                         selected_position =  position;
+                        selectedType = "BUSINESS";
+
+                        //clearSelected();
+                        obj.get(position).getEconomy_class().setChecked(false);
                         obj.get(position).getBusiness_class().setChecked(true);
+                        obj.get(position).getEconomy_promo_class().setChecked(false);
                     }
                     //True
                     if(active){
@@ -234,6 +287,20 @@ public class CodeShareAdapter extends BaseAdapter {
 
     }
 
+    public void clearSelected(){
+
+        int x = 0;
+        for (FlightInfo pic : obj)
+        {
+            Log.e("Loop",Integer.toString(x));
+
+            obj.get(x).getEconomy_promo_class().setChecked(false);
+            obj.get(x).getBusiness_class().setChecked(false);
+            obj.get(x).getEconomy_class().setChecked(false);
+
+            x++;
+        }
+    }
 
     public void invalidateSelected(){
         selected_position = -1;

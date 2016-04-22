@@ -77,15 +77,6 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
             vh = (ViewHolder) view.getTag();
         }
 
-        if(obj.get(position).isSelected()){
-            vh.passengerLinearLayout.setBackgroundColor(Color.parseColor("#FFD504"));
-        }else{
-            vh.passengerLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
-        }
-
-        vh.passengerName.setText(obj.get(position).getTitle()+" "+obj.get(position).getFirst_name()+" "+obj.get(position).getLast_name());
-        vh.passengerSeatNo.setText(obj.get(position).getSeat());
-
         vh.removeSeatNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,10 +100,19 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
             }
         });
 
+        vh.passengerName.setText(obj.get(position).getTitle()+" "+obj.get(position).getFirst_name()+" "+obj.get(position).getLast_name());
+        vh.passengerSeatNo.setText(obj.get(position).getSeat());
 
+        if(obj.get(position).isSelected()){
+            vh.passengerLinearLayout.setBackgroundColor(Color.parseColor("#FFD504"));
+        }else{
+            vh.passengerLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
 
-
-
+        if(obj.get(position).getCheckedIn().equals("Y")) {
+            vh.removeSeatNo.setVisibility(View.INVISIBLE);
+            vh.passengerLinearLayout.setBackgroundColor(context.getResources().getColor(R.color.white));
+        }
 
         return view;
 
@@ -193,9 +193,20 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
             obj.get(x).setSelected(false);
             x++;
         }
-        frag.clearSeatTag2(passengerPosition);
-        obj.get(passengerPosition).setSelected(true);
-        obj.get(passengerPosition).setActive(true);
+
+        if(obj.get(passengerPosition).getCheckedIn().equals("N")){
+            frag.clearSeatTag2(passengerPosition);
+            obj.get(passengerPosition).setSelected(true);
+            obj.get(passengerPosition).setActive(true);
+        }else{
+            try{
+                frag.clearSeatTag2(passengerPosition+1);
+                obj.get(passengerPosition+1).setSelected(true);
+                obj.get(passengerPosition+1).setActive(true);
+            }catch (Exception e){
+
+            }
+        }
 
         notifyDataSetChanged();
     }
@@ -208,9 +219,15 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
             obj.get(x).setSelected(false);
             x++;
         }
-        obj.get(0).setSelected(true);
-        obj.get(0).setActive(true);
-        frag.clearSeatTag2(0);
+
+        for(int t = 0; t < obj.size(); t++){
+            if(obj.get(t).getCheckedIn().equals("N")){
+                obj.get(t).setSelected(true);
+                obj.get(t).setActive(true);
+                frag.clearSeatTag2(t);
+                break;
+            }
+        }
         notifyDataSetChanged();
     }
 

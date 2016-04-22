@@ -24,6 +24,8 @@ public class AboutUsActivity extends MainFragmentActivity implements FragmentCon
         fragmentManager.beginTransaction().replace(R.id.main_content, AboutUsFragment.newInstance(),"About").commit();
 
         hideTitle();
+        setMenuButton();
+
         //unlockDrawer();
         //BaseFragment.removeLogoHeader(this);
     }

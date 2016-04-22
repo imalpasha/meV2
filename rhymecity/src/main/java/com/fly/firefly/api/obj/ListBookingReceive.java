@@ -2,6 +2,8 @@ package com.fly.firefly.api.obj;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Dell on 1/29/2016.
  */
@@ -112,6 +114,15 @@ public class ListBookingReceive {
         private String arrival_station_code;
         private String date;
         private String check_in;
+        private String departure_datetime;
+
+        public String getDeparture_datetime() {
+            return departure_datetime;
+        }
+
+        public void setDeparture_datetime(String departure_datetime) {
+            this.departure_datetime = departure_datetime;
+        }
 
         public String getCheck_in() {
             return check_in;

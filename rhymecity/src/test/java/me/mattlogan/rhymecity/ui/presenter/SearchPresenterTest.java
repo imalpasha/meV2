@@ -1,4 +1,4 @@
-package me.mattlogan.rhymecity.ui.presenter;
+/*package me.mattlogan.rhymecity.ui.presenter;
 
 import com.squareup.otto.Bus;
 
@@ -82,3 +82,4 @@ public class SearchPresenterTest {
         verify(view).showRetrieveRhymesError();
     }
 }
+*/

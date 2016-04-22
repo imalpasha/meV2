@@ -25,6 +25,7 @@ import com.fly.firefly.ui.activity.Login.LoginActivity;
 import com.fly.firefly.ui.activity.Register.RegisterActivity;
 import com.fly.firefly.ui.activity.Terms.Terms;
 import com.fly.firefly.ui.activity.UpdateProfile.UpdateProfileActivity;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 
 import butterknife.ButterKnife;
@@ -177,6 +178,8 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
             {
                 pref.setLoginStatus("N");
                 Controller.clearAll(this);
+                RealmObjectController.deleteRealmFile(MainFragmentActivity.getContext());
+
                 Intent login = new Intent(this, HomeActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(login);
