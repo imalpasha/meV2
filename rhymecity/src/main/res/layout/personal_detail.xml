@@ -553,6 +553,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
+                                    android:visibility="gone"
                                     android:background="@drawable/drawable_login_bottom_border">
 
                                 <LinearLayout
@@ -662,7 +663,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Nationality."
                                             android:id="@+id/textView150"
                                             android:textStyle="bold"/>
 
@@ -697,6 +698,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
+                                    android:visibility="gone"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
                                     <LinearLayout
@@ -742,6 +744,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
+                                    android:id="@+id/passenger1_enrich_block"
+                                    android:tag="passenger1_enrich_block"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -1106,6 +1110,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
+                                    android:visibility="gone"
+                                    android:id="@+id/passenger2TravelDoc"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
                                     <LinearLayout
@@ -1217,7 +1223,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country:"
+                                        android:text="Nationality."
                                         android:id="@+id/textView174"
                                         android:textStyle="bold"/>
 
@@ -1252,6 +1258,8 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
+                                    android:id="@+id/passenger2DocNo"
+                                    android:visibility="gone"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
                                 <LinearLayout
@@ -1666,6 +1674,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger3TravelDoc"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -1780,7 +1790,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country"
+                                        android:text="Nationality."
                                         android:id="@+id/textView188"
                                         android:textStyle="bold"/>
 
@@ -1810,6 +1820,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger3DocNo"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -2228,6 +2240,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger4TravelDoc"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -2342,7 +2356,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country."
+                                        android:text="Nationality."
                                         android:id="@+id/textView208"
                                         android:textStyle="bold"/>
 
@@ -2372,6 +2386,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger4DocNo"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -2788,6 +2804,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger5TravelDoc"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -2902,7 +2920,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Issuing Country."
+                                        android:text="Nationality."
                                         android:id="@+id/textView228"
                                         android:textStyle="bold"/>
 
@@ -2932,6 +2950,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:id="@+id/passenger5DocNo"
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -3342,6 +3362,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
+                                    android:id="@+id/passenger6TravelDoc"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -3457,7 +3479,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country."
+                                            android:text="Nationality."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -3487,6 +3509,8 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
+                                    android:id="@+id/passenger6DocNo"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -3892,6 +3916,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -4006,7 +4031,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country."
+                                            android:text="Nationality."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4035,6 +4060,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -4438,6 +4464,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -4552,7 +4579,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country."
+                                            android:text="Nationality."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -4581,6 +4608,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -4984,6 +5012,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -5098,7 +5127,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country."
+                                            android:text="Nationality."
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5127,6 +5156,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -5546,6 +5576,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -5662,7 +5693,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Nationality."
                                             android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
@@ -5692,6 +5723,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -6113,6 +6145,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -6229,7 +6262,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Nationality."
                                             android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
@@ -6259,6 +6292,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -6678,6 +6712,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -6794,7 +6829,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Nationality."
                                             android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
@@ -6824,6 +6859,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -7229,6 +7265,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
@@ -7343,7 +7380,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Issuing Country:"
+                                            android:text="Nationality."
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -7372,6 +7409,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
+                                    android:visibility="gone"
                                     android:orientation="vertical"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"

@@ -319,13 +319,31 @@
                     android:id="@+id/linearLayout23"
                     android:layout_marginTop="2dp" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Going Out"
-                        android:textStyle="bold"
-                        android:padding="3dp"
-                        android:id="@+id/txtGoingFlightType" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Going Out"
+                            android:textStyle="bold"
+                            android:padding="3dp"
+                            android:id="@+id/txtGoingFlightType" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:text="Unconfirmed"
+                            android:textColor="@color/red"
+                            android:textSize="14dp"
+                            android:visibility="gone"
+                            android:layout_marginLeft="20dp"
+                            android:id="@+id/txtGoingFlightStatus" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -374,12 +392,30 @@
                     android:id="@+id/returnFlight"
                     android:layout_marginTop="2dp" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:padding="3dp"
-                        android:id="@+id/txtReturnFlightType" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:padding="3dp"
+                            android:id="@+id/txtReturnFlightType" />
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="Unconfirmed"
+                            android:textColor="@color/red"
+                            android:textSize="14dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_width="wrap_content"
+                            android:visibility="gone"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/txtReturnFlightStatus" />
+
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="wrap_content"

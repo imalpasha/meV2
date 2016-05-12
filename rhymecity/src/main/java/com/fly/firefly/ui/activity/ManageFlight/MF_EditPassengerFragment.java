@@ -287,6 +287,14 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         }*/
 
         int totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
+
+        if(obj.getFlight_type().equals("MH")){
+            for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
+                LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc)+"_enrich_block");
+                enrichBlock.setVisibility(View.GONE);
+            }
+        }
+
         for (int adultInc = 1; adultInc < totalPassenger; adultInc++) {
 
             final int selectedPassenger = adultInc;
@@ -435,12 +443,12 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     checkTextViewNull(title);
                     checkTextViewNull(gender);
                     checkTextViewNull(dob);
-                    checkTextViewNull(travelDoc);
-                    checkEditTextNull(docNo);
+                    //checkTextViewNull(travelDoc);
+                    //checkEditTextNull(docNo);
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
-                    checkEditTextNull(docNo);
+                    //checkEditTextNull(docNo);
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                     Log.e("infantTravelDocCode"+infantTravelDocCode,travelDoc.getText().toString());
@@ -474,12 +482,12 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                     checkTextViewNull(travellingWith);
                     checkTextViewNull(gender);
                     checkTextViewNull(dob);
-                    checkTextViewNull(travelDoc);
-                    checkEditTextNull(docNo);
+                    //checkTextViewNull(travelDoc);
+                    //checkEditTextNull(docNo);
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
-                    checkEditTextNull(docNo);
+                    //checkEditTextNull(docNo);
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                     if(infantTravelDocCode != null){
@@ -535,8 +543,11 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         passengerInfo.setDob(splitDOB[2] + "-" + splitDOB[1] + "-" + splitDOB[0]);
 
                         //Travel Doc
-                        String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        String travelDocCode = "NRIC";
+                                //getTravelDocCode(getActivity(), travelDoc.getText().toString());
                         passengerInfo.setTravel_document(travelDocCode);
+                        passengerInfo.setDocument_number("");
+
                         if (travelDocCode.equals("P")) {
 
                             //ExpireDate
@@ -551,7 +562,8 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                         passengerInfo.setIssuing_country(countryCode);
 
-                        passengerInfo.setDocument_number(docNo.getText().toString());
+                        //passengerInfo.setDocument_number(docNo.getText().toString());
+
                         passengerInfo.setBonusLink(enrich.getText().toString());
 
                         passengerObj.add(passengerInfo);
@@ -596,7 +608,11 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         infantInfo.setDob(splitDOB[2] + "-" +splitDOB[1] + "-" + splitDOB[0]);
 
                         //Travel Doc
-                        String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        String travelDocCode = "NRIC";
+                        //infantInfo.setDocument_number(docNo.getText().toString());
+                        infantInfo.setDocument_number("");
+
+                        //getTravelDocCode(getActivity(), travelDoc.getText().toString());
                         infantInfo.setTravel_document(travelDocCode);
                         if (travelDocCode.equals("P")) {
 
@@ -610,7 +626,6 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
                         //Issuing Country Code
                         String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                         infantInfo.setIssuing_country(countryCode);
-                        infantInfo.setDocument_number(docNo.getText().toString());
 
                         infantObj.add(infantInfo);
 

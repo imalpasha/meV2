@@ -12,13 +12,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.PushNotification.AlertDialogManager;
 import com.fly.firefly.ui.activity.PushNotification.ConnectionDetector;
 import com.fly.firefly.ui.activity.PushNotification.WakeLocker;
 import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.Gson;
+
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.DISPLAY_MESSAGE_ACTION;
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.EXTRA_MESSAGE;
@@ -39,24 +43,28 @@ public class TokenActivity extends Activity {
 
     public static String name;
     public static String email;
+    private SweetAlertDialog pDialog;
+    private static Activity activity;
     String regId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
-
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        activity = this;
         cd = new ConnectionDetector(getApplicationContext());
+        getGCMKey();
+    }
 
-        // Check if Internet present
+    public void getGCMKey(){
+
+        if(pDialog.isShowing()){
+            pDialog.dismiss();
+        }
+        //check internet connection
         if (!cd.isConnectingToInternet()) {
-
-            Intent home = new Intent(TokenActivity.this, SplashScreenActivity.class);
-            home.putExtra("DEVICE_TOKEN", "");
-            startActivity(home);
-            finish();
-            return;
-
+           connectionRetry("No Internet Connection",this  );
         }
 
         // Make sure the device has the proper dependencies.
@@ -64,56 +72,52 @@ public class TokenActivity extends Activity {
 
         // Make sure the manifest was properly set - comment out this line
         // while developing the app, then uncomment it when it's ready.
-        //GCMRegistrar.checkManifest(this);
         GCMRegistrar.checkManifest(this);
-
-        lblMessage = (TextView) findViewById(R.id.lblMessage);
-        textView = (EditText) findViewById(R.id.textView);
+        //GCMRegistrar.checkManifest(this);
 
         registerReceiver(mHandleMessageReceiver, new IntentFilter(DISPLAY_MESSAGE_ACTION));
 
         regId = GCMRegistrar.getRegistrationId(this);
-        Log.e("regId", regId);
 
         if (regId.equals("")) {
             // Registration is not present, register now with GCM
             GCMRegistrar.register(this, SENDER_ID);
+            this.finish();
+
             Log.e("regId", "1");
 
-        } else {
-            Log.e("regId", "2");
-            // Device is already registered on GCM
+        }else{
+            // Check if Internet present
+            if (cd.isConnectingToInternet()) {
 
-            // Try to register again, but not in the UI thread.
-            // It's also necessary to cancel the thread onDestroy(),
-            // hence the use of AsyncTask instead of a raw thread.
-            final Context context = this;
-            mRegisterTask = new AsyncTask<Void, Void, Void>() {
+                Intent home = new Intent(activity, SplashScreenActivity.class);
+                home.putExtra("GCM_KEY", regId);
+                activity.startActivity(home);
+                activity.finish();
+                return;
 
-                @Override
-                protected Void doInBackground(Void... params) {
-
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Void result) {
-                    mRegisterTask = null;
-
-                    Intent home = new Intent(TokenActivity.this, SplashScreenActivity.class);
-                    home.putExtra("DEVICE_TOKEN", regId);
-                    startActivity(home);
-                    finish();
-
-                    Log.e("REG ID background",regId);
-                }
-
-            };
-            mRegisterTask.execute(null, null, null);
+            }
         }
-        //}
+
     }
 
+    public void connectionRetry(String msg,final Activity act){
+
+        pDialog.setTitleText("Connection Error");
+        pDialog.setCancelable(false);
+        pDialog.setContentText(msg);
+        pDialog.setConfirmText("Retry");
+        pDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sDialog) {
+                //sendDeviceInformationToServer(info);
+                getGCMKey();
+
+            }
+        })
+                .show();
+
+    }
     /**
      * Receiving push messages
      * */
@@ -123,7 +127,7 @@ public class TokenActivity extends Activity {
             String newMessage = intent.getExtras().getString(EXTRA_MESSAGE);
             // Waking up mobile if it is sleeping
             WakeLocker.acquire(getApplicationContext());
-
+            Log.e("newMessage",newMessage);
             /**
              * Take appropriate action on this message
              * depending upon your app requirement
@@ -131,13 +135,21 @@ public class TokenActivity extends Activity {
              * */
 
             // Showing received message
-            lblMessage.append(newMessage + "\n");
-            Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
+           // lblMessage.append(newMessage + "\n");
+          //  Toast.makeText(getApplicationContext(), "New Message: " + newMessage, Toast.LENGTH_LONG).show();
 
             // Releasing wake lock
             WakeLocker.release();
         }
     };
+
+    public static void splash(Context act,String regId){
+        Intent home = new Intent(activity, TokenActivity.class);
+        home.putExtra("GCM_KEY", regId);
+        //home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(home);
+        activity.finish();
+    }
 
 
     @Override

@@ -55,6 +55,7 @@ public class ContactInfoReceive {
         total_due =  param_obj.getTotal_due();
         flight_type = param_obj.getFlight_type();
         seat_fare = param_obj.getSeat_fare();
+
     }
 
     public class SeatFare{

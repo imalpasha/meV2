@@ -189,8 +189,8 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
 
+                            horizontalProgressBar.setVisibility(View.INVISIBLE);
                             final MobileConfirmCheckInPassengerReceive obj = (new Gson()).fromJson(result2.get(myItemInt).getBoardingPassObj(), MobileConfirmCheckInPassengerReceive.class);
-
                             Intent next = new Intent(getActivity(), BoardingPassDisplayActivity.class);
                             next.putExtra("OFFLINE_BOARDING_PASS_OBJ", (new Gson()).toJson(obj));
                             getActivity().startActivity(next);

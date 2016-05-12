@@ -10,12 +10,22 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.fly.firefly.R;
+import com.fly.firefly.api.obj.PassengerInfoReveice;
+import com.fly.firefly.base.BaseFragment;
+import com.fly.firefly.base.BaseFragmentActivity;
 import com.fly.firefly.ui.activity.BeaconV2.BoardingGateActivity;
 import com.fly.firefly.ui.activity.BeaconV2.PushNotificationV1;
 import com.fly.firefly.ui.activity.GeoFencing.GenFencingActivity;
+import com.fly.firefly.ui.activity.Homepage.HomeActivity;
 import com.fly.firefly.ui.activity.PushNotification.MainActivity;
 import com.fly.firefly.ui.activity.PushNotification.ServerUtilities;
+import com.fly.firefly.ui.activity.SplashScreen.PopupNotificationActivity;
+import com.fly.firefly.ui.activity.SplashScreen.SplashScreenActivity;
+import com.fly.firefly.ui.activity.SplashScreen.TokenActivity;
+import com.fly.firefly.utils.RealmObjectController;
 import com.google.android.gcm.GCMBaseIntentService;
+import com.google.android.gms.common.api.BooleanResult;
+import com.google.gson.Gson;
 
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.SENDER_ID;
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.displayMessage;
@@ -36,7 +46,12 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Device registered: regId = " + registrationId);
         Log.e("Registering", "tRUE");
         displayMessage(context, "Your device registred with GCM");
-        ServerUtilities.register(context, MainActivity.name, MainActivity.email, registrationId);
+        //ServerUtilities.register(context, MainActivity.name, MainActivity.email, registrationId);
+
+        //back to splash screen
+        //BaseFragment.splashScreen(context,registrationId);
+        TokenActivity.splash(context,registrationId);
+
     }
 
     /**
@@ -61,6 +76,9 @@ public class GCMIntentService extends GCMBaseIntentService {
         displayMessage(context, message);
         // notifies user
         generateNotification(context, message);
+        //BaseFragmentActivity.setAppStatus(true);
+       // Log.e("CheckAppStatus", Boolean.toString(BaseFragmentActivity.getAppStatus()));
+
     }
 
     /**
@@ -69,7 +87,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     @Override
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
-        String message = getString(R.string.register, total);
+        String message = "Register";
         displayMessage(context, message);
         // notifies user
         generateNotification(context, message);
@@ -83,40 +101,78 @@ public class GCMIntentService extends GCMBaseIntentService {
         Log.i(TAG, "Received error: " + errorId);
         Log.e("Registering", "NOT REGISTER");
 
-        displayMessage(context, getString(R.string.register, errorId));
+        displayMessage(context, "Register");
     }
 
     @Override
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
         Log.i(TAG, "Received recoverable error: " + errorId);
-        displayMessage(context, getString(R.string.register,
-                errorId));
+        displayMessage(context, getString(R.string.register,errorId));
         return super.onRecoverableError(context, errorId);
     }
 
     /**
      * Issues a notification to inform the user that server has sent a message.
      */
+
+    public class GCMClass {
+
+        private String title;
+        private String body;
+
+        public String getBody() {
+            return body;
+        }
+
+        public void setBody(String body) {
+            this.body = body;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
     private void generateNotification(Context context, String message) {
+
+        Gson gson = new Gson();
+        GCMClass obj = gson.fromJson(message, GCMClass.class);
+
 //        String[] parts = message.split("/");
 //        String part1 = parts[0]; // 004
 //        String part2 = parts[1]; // 034556\
 //        Log.e("Part1 " + part1, "Part2 " + part2);
-        PendingIntent viewPendingIntent = null;
 
-        Intent viewIntent = new Intent(context, PushNotificationV1.class);
+        //convert string to json
+        Intent viewIntent;
+        //if(LifeCycleActivity.isApplicationVisible()){
+            viewIntent = new Intent(context, PopupNotificationActivity.class);
+            Log.e("Visibile","true");
+       // }
+
+
+        viewIntent.setAction("android.intent.action.MAIN");
+        viewIntent.addCategory("android.intent.category.LAUNCHER");
         viewIntent.putExtra("MESSAGE", message);
-        viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
+
+        //save message to realm object
+        RealmObjectController.clearNotificationMessage(context);
+        RealmObjectController.saveNotificationMessage(context,obj.getBody(),obj.getTitle());
+
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
         notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
         notificationBuilder
-                .setContentText(message)
-                .setContentTitle(String.format("Firefly"))
+                .setContentText(obj.getBody())
+                .setContentTitle(String.format(obj.getTitle()))
                 .setSmallIcon(R.drawable.departure_icon)
                 .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
-                .setTicker(String.format("%1$s Fence: %2$s", "tEST", "tEST"));
+                .setTicker(String.format(obj.getTitle()));
         //Intent notificationIntent = new Intent(context, MapsActivity.class);
         //notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         //notificationIntent.setAction(Intent.ACTION_MAIN);

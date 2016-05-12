@@ -19,6 +19,15 @@ public class SeatSelectionReveice {
     private List<Journeys> journeys = new ArrayList<Journeys>();
     private String message;
 
+    public String getFlight_type() {
+        return flight_type;
+    }
+
+    public void setFlight_type(String flight_type) {
+        this.flight_type = flight_type;
+    }
+
+    private String flight_type;
     //itinerary
     private List<FlightDetails> flight_details;
     private List<PriceDetails> price_details;
@@ -520,7 +529,7 @@ public class SeatSelectionReveice {
         price_details = param_obj.getPrice_details();
         services = param_obj.getServices();
         total_price = param_obj.getTotal_price();
-
+        flight_type = param_obj.getFlight_type();
     }
 
     public String getStatus() {

@@ -12,6 +12,7 @@ public class DeviceInformation extends BaseObj {
     private String model;
     private String dataVersion;
     private String password;
+    private String GCMKey;
 
     /*Initiate Class*/
     public DeviceInformation() {
@@ -28,7 +29,17 @@ public class DeviceInformation extends BaseObj {
         signature = info.getSignature();
         username = info.getUsername();
         password = info.getPassword();
+        GCMKey = info.getGCMKey();
     }
+
+    public String getGCMKey() {
+        return GCMKey;
+    }
+
+    public void setGCMKey(String GCMKey) {
+        this.GCMKey = GCMKey;
+    }
+
 
     /*Setter & Getter*/
 

@@ -462,6 +462,9 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
 
     public void setSummary(FlightSummaryReceive obj){
 
+        String $oneWayFlightStatus = null;
+        String $twoWayFlightStatus = null;
+
         recreateSummary = false;
 
         displaySSRList(obj);
@@ -469,23 +472,31 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
         if(obj.getFlight_type().equals("MH")){
                 txtOperatedBy.setVisibility(View.VISIBLE);
                 txtOperatedBy.setText("Operated By Malaysia Airlines");
-
                 txtReturnOperatedBy.setVisibility(View.VISIBLE);
                 txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
 
+                //set blink
+                $oneWayFlightStatus = obj.getFlight_details().get(0).getFlight_segment_status();
+
+                if($oneWayFlightStatus.equals("Unconfirmed")){
+                    blinkText(txtGoingFlightStatus);
+                    txtGoingFlightStatus.setVisibility(View.VISIBLE);
+                    $oneWayFlightStatus = obj.getFlight_details().get(0).getFlight_segment_status();
+                }
+
+                txtBookingStatus.setText($oneWayFlightStatus);
+
         }else{
                 txtItineraryNote.setVisibility(View.GONE);
+                txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
         }
+
 
 
         txtPNR.setText(obj.getItenerary_information().getPnr());
         txtItineraryNote.setText(obj.getItenerary_information().getItinerary_note());
 
-        //set blink
-        blinkText(txtGoingFlightStatus);
-        txtGoingFlightStatus.setVisibility(View.GONE);
-
-        txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
+        //
         txtBookingDate.setText(obj.getItenerary_information().getBooking_date());
 
         int flightLoop = obj.getFlight_details().size();
@@ -687,9 +698,28 @@ public class FlightSummaryFragment extends BaseFragment implements BookingPresen
             returnFlight.setVisibility(View.VISIBLE);
             returnFlightPrice.setVisibility(View.VISIBLE);
 
-            //blink text
-            blinkText(txtReturnFlightStatus);
-            txtReturnFlightStatus.setVisibility(View.GONE);
+            //set blink
+            if(obj.getFlight_type().equals("MH")) {
+
+                $twoWayFlightStatus = obj.getFlight_details().get(1).getFlight_segment_status();
+
+                if($twoWayFlightStatus.equals("Unconfirmed")){
+                    blinkText(txtReturnFlightStatus);
+                    txtReturnFlightStatus.setVisibility(View.VISIBLE);
+                }
+
+                //check both condition
+                if($twoWayFlightStatus.equals("Unconfirmed") || $oneWayFlightStatus.equals("Unconfirmed")){
+                    txtBookingStatus.setText("Unconfirmed");
+                }else if($twoWayFlightStatus.equals("Payment Received") || $oneWayFlightStatus.equals("Payment Received")){
+                    txtBookingStatus.setText("Payment Received");
+                }else if($twoWayFlightStatus.equals("Confirmed") && $oneWayFlightStatus.equals("Confirmed")){
+                    txtBookingStatus.setText("Confirmed");
+                }
+
+            }else{
+                txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
+            }
 
             //Going Flight Information
             String returnFlightType = obj.getFlight_details().get(1).getType();

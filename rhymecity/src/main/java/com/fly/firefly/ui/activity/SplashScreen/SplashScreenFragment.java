@@ -75,9 +75,13 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         pref = new SharedPrefManager(getActivity());
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
 
-        //Bundle bundle = getArguments();
-        //String token = bundle.getString("DEVICE_TOKEN");
-        //Log.e("TOKEN",token);
+        Bundle bundle = getArguments();
+
+        /*String gcmKey = bundle.getString("GCM_KEY");
+        if(gcmKey == null){
+            gcmKey = "";
+        }*/
+        String gcmKey = "";
 
         //get push notification token
         //String pushNotificationToken = Push.getToken(getActivity());
@@ -116,10 +120,12 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setDeviceId(deviceId);
         info.setBrand(Build.BRAND);
         info.setModel(Build.MODEL);
+        //info.setModel("test");
         info.setDataVersion("0");
         info.setSignature("");
         info.setUsername(userEmail);
         info.setPassword(userPassword);
+        info.setGCMKey(gcmKey);
 
         if(proceed){
             if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
@@ -239,11 +245,15 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         HashMap<String, String> initApp = pref.getAppVersion();
         String localAppVersion = initApp.get(SharedPrefManager.APP_VERSION);
 
+        //thru homepage
+        Log.e("homeStatus",Boolean.toString(Controller.getHomeStatus()));
         goHomepage();
 
     }
 
     public void goHomepage(){
+        Controller.setHomeStatus();
+
         Intent home = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(home);
         getActivity().finish();

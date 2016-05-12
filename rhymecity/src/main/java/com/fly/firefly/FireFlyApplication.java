@@ -46,17 +46,18 @@ public class FireFlyApplication extends AnalyticsApplication {
         super.onCreate();
 
         Crashlytics crashlytics = new Crashlytics.Builder().disabled(BuildConfig.DEBUG).build();
-        Fabric.with(this, crashlytics);
+        Fabric.with(this, crashlytics, new Crashlytics());
         //Fabric.with(this, new Crashlytics());
         buildObjectGraphAndInject();
         createApiRequestHandler();
+        registerActivityLifecycleCallbacks(new LifeCycleActivity());
         //instance = FireFlyApplicationthis;
          /* -------------- Beacon ----------------*/
         //beaconManager = new BeaconManager(this);
-        pref = new SharedPrefManager(this);
-        region = new Region("region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
+        //pref = new SharedPrefManager(this);
+        //region = new Region("region", UUID.fromString("B9407F30-F5F8-466E-AFF9-25556B57FE6D"), null, null);
         /* ------------------------------------- */
-        Log.e("1", "1");
+        //Log.e("1", "1");
  /* ----------------------- Beacon Range ------------------------------- */
 
         /*On enter region - start monitoring*/

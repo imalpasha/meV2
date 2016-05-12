@@ -1,6 +1,7 @@
 package com.fly.firefly.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 
 import com.fly.firefly.MainFragmentActivity;
@@ -14,21 +15,63 @@ import com.fly.firefly.ui.object.BoardingPassPNRList;
 import com.fly.firefly.ui.object.ManageFlightList;
 import com.fly.firefly.ui.object.MobileCheckInList;
 import com.fly.firefly.ui.object.CachedResult;
+import com.fly.firefly.ui.object.NotificationMessage;
 import com.fly.firefly.ui.object.RealmFlightObj;
 import com.google.gson.Gson;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmMigrationNeededException;
 
 /**
  * Created by Dell on 2/11/2016.
  */
 public class RealmObjectController extends BaseFragment {
 
+
+    public static Realm getRealmInstance(Activity act){
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(act).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        try {
+            return Realm.getInstance(realmConfiguration);
+        } catch (RealmMigrationNeededException e){
+            try {
+                Realm.deleteRealm(realmConfiguration);
+                //Realm file has been deleted.
+                return Realm.getInstance(realmConfiguration);
+            } catch (Exception ex){
+                throw ex;
+                //No Realm file to remove.
+            }
+        }
+    }
+
+    public static Realm getRealmInstanceContext(Context act){
+
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder(act).deleteRealmIfMigrationNeeded().build();
+        Realm.setDefaultConfiguration(realmConfiguration);
+
+        try {
+            return Realm.getInstance(realmConfiguration);
+        } catch (RealmMigrationNeededException e){
+            try {
+                Realm.deleteRealm(realmConfiguration);
+                //Realm file has been deleted.
+                return Realm.getInstance(realmConfiguration);
+            } catch (Exception ex){
+                throw ex;
+                //No Realm file to remove.
+            }
+        }
+    }
+
+
     public static void cachedResult(Activity act, String cachedResult) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
 
         final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
         realm.beginTransaction();
@@ -45,17 +88,39 @@ public class RealmObjectController extends BaseFragment {
 
     public static RealmResults<CachedResult> getCachedResult(Activity act) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
         final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
 
         return result;
     }
 
+    public static RealmResults<NotificationMessage> getNotificationMessage(Activity act) {
+
+        Realm realm = getRealmInstance(act);
+        final RealmResults<NotificationMessage> result = realm.where(NotificationMessage.class).findAll();
+
+        return result;
+    }
+
+
+
+
     public static void clearCachedResult(Activity act) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
 
         final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
+        realm.beginTransaction();
+        result.clear();
+        realm.commitTransaction();
+
+    }
+
+    public static void clearNotificationMessage(Context act) {
+
+        Realm realm = getRealmInstanceContext(act);
+
+        final RealmResults<NotificationMessage> result = realm.where(NotificationMessage.class).findAll();
         realm.beginTransaction();
         result.clear();
         realm.commitTransaction();
@@ -65,7 +130,7 @@ public class RealmObjectController extends BaseFragment {
     /*Save List*/
     public static void saveMobileCheckInList(Activity act, ListBookingReceive obj) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
 
         final RealmResults<MobileCheckInList> result = realm.where(MobileCheckInList.class).findAll();
         realm.beginTransaction();
@@ -85,7 +150,7 @@ public class RealmObjectController extends BaseFragment {
 
     public static void saveManageFlightList(Activity act, ListBookingReceive obj) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
 
         final RealmResults<ManageFlightList> result = realm.where(ManageFlightList.class).findAll();
         realm.beginTransaction();
@@ -103,9 +168,21 @@ public class RealmObjectController extends BaseFragment {
         realm.commitTransaction();
     }
 
+    public static void saveNotificationMessage(Context act, String message,String title)
+    {
+        Realm realm = getRealmInstanceContext(act);
+        realm.beginTransaction();
+        NotificationMessage realmObject = realm.createObject(NotificationMessage.class);
+        realmObject.setMessage(message);
+        realmObject.setTitle(title);
+        realm.commitTransaction();
+
+    }
+
+
     public static void saveBoardingPassPNRList(Activity act, ListBookingReceive obj) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
 
         final RealmResults<BoardingPassPNRList> result = realm.where(BoardingPassPNRList.class).findAll();
         realm.beginTransaction();
@@ -125,7 +202,7 @@ public class RealmObjectController extends BaseFragment {
 
     public static RealmResults<MobileCheckInList> getMobileCheckInList(Activity act) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
         final RealmResults<MobileCheckInList> result = realm.where(MobileCheckInList.class).findAll();
 
         return result;
@@ -133,7 +210,7 @@ public class RealmObjectController extends BaseFragment {
 
     public static RealmResults<ManageFlightList> getManageFlightList(Activity act) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
         final RealmResults<ManageFlightList> result = realm.where(ManageFlightList.class).findAll();
 
         return result;
@@ -141,7 +218,7 @@ public class RealmObjectController extends BaseFragment {
 
     public static RealmResults<BoardingPassPNRList> getBoardingPassPNRList(Activity act) {
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
         final RealmResults<BoardingPassPNRList> result = realm.where(BoardingPassPNRList.class).findAll();
 
         return result;
@@ -164,12 +241,17 @@ public class RealmObjectController extends BaseFragment {
     }
 
     public static void deleteRealmFile(Activity act) {
-        /*Remove Realm Data*/
-        RealmConfiguration config = new RealmConfiguration.Builder(act).deleteRealmIfMigrationNeeded().build();
-        Realm realm = Realm.getInstance(config);
-        realm.close();
-        realm.deleteRealm(config);
 
+        /*Try Remove Realm Data*/
+        try {
+            RealmConfiguration config = new RealmConfiguration.Builder(act).deleteRealmIfMigrationNeeded().build();
+            Realm realm = Realm.getInstance(config);
+            realm.deleteRealm(config);
+            realm.close();
+
+        }catch (Exception e){
+            Log.e("Throw Exception","Realm.io");
+        }
     }
 
     public static void saveFlight(Activity act, FlightSummaryReceive obj, String username) {
@@ -178,7 +260,7 @@ public class RealmObjectController extends BaseFragment {
         Gson gsonFlight = new Gson();
         String flightSummaryReceive = gsonFlight.toJson(obj);
 
-        Realm realm = Realm.getInstance(act);
+        Realm realm = getRealmInstance(act);
         realm.beginTransaction();
         RealmFlightObj realmObject = realm.createObject(RealmFlightObj.class);
         realmObject.setPnr(obj.getPnr());
@@ -190,7 +272,7 @@ public class RealmObjectController extends BaseFragment {
 
     public static boolean currentPNR(Activity act, final MobileConfirmCheckInPassengerReceive obj, final String username) {
 
-        final Realm realm = Realm.getInstance(act);
+        final Realm realm = getRealmInstance(act);
         BoardingPassObj boardingPas;
         Log.e("Record", obj.getObj().getBoarding_pass().get(0).getRecordLocator());
 
@@ -261,7 +343,7 @@ public class RealmObjectController extends BaseFragment {
 
         Log.e("Record",obj.getBoarding_pass().get(0).getRecordLocator());
 
-        final Realm realm = Realm.getInstance(act);
+        final Realm realm = getRealmInstance(act);
         BoardingPassObj boardingPas;
 
         Gson gsonFlight = new Gson();

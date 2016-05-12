@@ -292,6 +292,15 @@ public class FlightSummaryReceive {
         private String time;
         private String type;
         private String flight_status;
+        private String flight_segment_status;
+
+        public String getFlight_segment_status() {
+            return flight_segment_status;
+        }
+
+        public void setFlight_segment_status(String flight_segment_status) {
+            this.flight_segment_status = flight_segment_status;
+        }
 
         public String getFlight_status() {
             return flight_status;

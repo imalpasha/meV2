@@ -221,6 +221,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
         Gson gson = new Gson();
         final ContactInfoReceive obj = gson.fromJson(itinenary, ContactInfoReceive.class);
+        //Log.e("status",obj.getFlight_type());
         setSummary(obj);
 
         //Check Flight Type (FY/MH)

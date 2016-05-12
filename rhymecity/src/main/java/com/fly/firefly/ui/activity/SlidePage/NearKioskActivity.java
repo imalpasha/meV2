@@ -28,7 +28,7 @@ public class NearKioskActivity extends MainFragmentActivity implements FragmentC
         return R.id.main_activity_fragment_container;
     }
 
-    protected void onResume()
+    public void onResume()
     {
         super.onResume();
     }

@@ -72,6 +72,12 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
     @InjectView(R.id.txtBookingStatus)
     TextView txtBookingStatus;
 
+    @InjectView(R.id.txtGoingFlightStatus)
+    TextView txtGoingFlightStatus;
+
+    @InjectView(R.id.txtReturnFlightStatus)
+    TextView txtReturnFlightStatus;
+
     @InjectView(R.id.txtBookingDate)
     TextView txtBookingDate;
 
@@ -485,6 +491,9 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
     public void setSummary(FlightSummaryReceive obj){
 
+        String $oneWayFlightStatus = null;
+        String $twoWayFlightStatus = null;
+
         boolean btnHidden1 = false;
         boolean btnHidden2 = false;
         boolean oneFlight = false;
@@ -507,7 +516,22 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
             txtReturnOperatedBy.setVisibility(View.VISIBLE);
             txtReturnOperatedBy.setText("Operated By Malaysia Airlines");
 
+            //set blink
+            $oneWayFlightStatus = obj.getFlight_details().get(0).getFlight_segment_status();
+
+            if($oneWayFlightStatus.equals("Unconfirmed")){
+                blinkText(txtGoingFlightStatus);
+                txtGoingFlightStatus.setVisibility(View.VISIBLE);
+                $oneWayFlightStatus = obj.getFlight_details().get(0).getFlight_segment_status();
+            }
+
+            txtBookingStatus.setText($oneWayFlightStatus);
+
+        }else{
+            txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
         }
+
+
 
         recreateSummary = false;
 
@@ -519,7 +543,7 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
         }
 
         txtPNR.setText(obj.getItenerary_information().getPnr());
-        txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
+        //txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
         txtBookingDate.setText(obj.getItenerary_information().getBooking_date());
 
         int flightLoop = obj.getFlight_details().size();
@@ -709,6 +733,31 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
         if(flightLoop > 1){
             returnFlight.setVisibility(View.VISIBLE);
             returnFlightPrice.setVisibility(View.VISIBLE);
+
+
+            if(obj.getFlight_type().equals("MH")){
+
+                $twoWayFlightStatus = obj.getFlight_details().get(1).getFlight_segment_status();
+
+                if($twoWayFlightStatus.equals("Unconfirmed")){
+                    blinkText(txtReturnFlightStatus);
+                    txtReturnFlightStatus.setVisibility(View.VISIBLE);
+                }
+
+                //check both condition
+                if($twoWayFlightStatus.equals("Unconfirmed") || $oneWayFlightStatus.equals("Unconfirmed")){
+                    txtBookingStatus.setText("Unconfirmed");
+                }else if($twoWayFlightStatus.equals("Payment Received") || $oneWayFlightStatus.equals("Payment Received")){
+                    txtBookingStatus.setText("Payment Received");
+                }else if($twoWayFlightStatus.equals("Confirmed") && $oneWayFlightStatus.equals("Confirmed")){
+                    txtBookingStatus.setText("Confirmed");
+                }
+
+            }else{
+                txtBookingStatus.setText(obj.getItenerary_information().getBooking_status());
+            }
+
+
 
             //Going Flight Information
             String returnFlightType = obj.getFlight_details().get(1).getType();

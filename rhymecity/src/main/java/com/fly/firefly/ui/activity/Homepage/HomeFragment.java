@@ -155,6 +155,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
         RealmObjectController.clearCachedResult(getActivity());
 
+
         //TextView myTextView = new TextView(getActivity());
 
         //private String retry = this.getResources().getString(R.string.retry);
@@ -348,8 +349,15 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //trySetAlarm();
         //LocalNotification.convert(getActivity());
 
-        screenSize();
+       // screenSize();
+
+
+       // forceCrash(view);
         return view;
+    }
+
+    public void forceCrash(View view) {
+        throw new RuntimeException("This is a crash");
     }
 
 

@@ -157,6 +157,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     private int adultInc;
     private boolean lessThan12 = true;
     private ArrayList<Integer> ageOfTraveller = new ArrayList<Integer>();
+    private String flightType;
 
     //different object for different field.
     private DatePickerDialog datePickerYear1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -243,6 +244,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
         Log.e("signature",signature);
 
+
+
         /*Adult Passenger Data For Selection*/
         for (int i = 1; i < Integer.parseInt(adult)+1 ; i++)
         {
@@ -258,7 +261,18 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         travelDocList = getTravelDoc(getActivity());
         countrys = getStaticCountry(getActivity());
 
+        //if mh..disable bonuslink
         int totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
+        HashMap<String, String> initFlightType = pref.getFlightType();
+        flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+
+        if(flightType.equals("MH")){
+            for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
+                LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc)+"_enrich_block");
+                enrichBlock.setVisibility(View.GONE);
+            }
+        }
+
         for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
 
             final int selectedPassenger = adultInc;
@@ -409,12 +423,14 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                     checkTextViewNull(title);
                     checkTextViewNull(dob);
-                    checkTextViewNull(travelDoc);
-                    checkEditTextNull(docNo);
+
+                    //checkTextViewNull(travelDoc);
+                    //checkEditTextNull(docNo);
+
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
-                    checkEditTextNull(docNo);
+                    //checkEditTextNull(docNo);
                     checkBonuslink(enrich);
 
 
@@ -454,8 +470,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     checkTextViewNull(travellingWith);
                     checkTextViewNull(gender);
                     checkTextViewNull(dob);
-                    checkTextViewNull(travelDoc);
-                    checkEditTextNull(docNo);
+                    //checkTextViewNull(travelDoc);
+                    //checkEditTextNull(docNo);
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
@@ -522,8 +538,14 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                             passengerInfo.setDob(splitDOB[2]+"-"+splitDOB[1]+"-"+splitDOB[0]);
 
                             //Travel Doc
-                            String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                            //String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                            //passengerInfo.setDocument_number(docNo.getText().toString());
+
+                            String travelDocCode = "NRIC";
+
+                            //auto assign travel doc - new req -  change later
                             passengerInfo.setTravel_document(travelDocCode);
+
                             if (travelDocCode.equals("P")) {
                                 //ExpireDate
                                 String fullExpireDate = expireDate.getText().toString();
@@ -533,11 +555,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                                 passengerInfo.setExpiration_date("");
                             }
 
+                            passengerInfo.setDocument_number("");
+
                             //Issuing Country Code
                             String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                             passengerInfo.setIssuing_country(countryCode);
 
-                            passengerInfo.setDocument_number(docNo.getText().toString());
                             passengerInfo.setBonusLink(enrich.getText().toString());
 
                             passengerObj.add(passengerInfo);
@@ -589,8 +612,11 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                             infantInfo.setDob(splitDOB[2] + "-" +splitDOB[1]+ "-" +splitDOB[0]);
 
                             //Travel Doc
-                            String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                            String travelDocCode = "NRIC";
+                            //getTravelDocCode(getActivity(), travelDoc.getText().toString());
                             infantInfo.setTravel_document(travelDocCode);
+                            infantInfo.setDocument_number("");
+
                             if (travelDocCode.equals("P")) {
 
                                 String fullExpireDate = expireDate.getText().toString();
@@ -603,14 +629,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                             //Issuing Country Code
                             String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                             infantInfo.setIssuing_country(countryCode);
-                            infantInfo.setDocument_number(docNo.getText().toString());
 
                             infantObj.add(infantInfo);
 
                         }
 
                         HashMap<String, String> initFlightType = pref.getFlightType();
-                        String flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+                        flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
                         Log.e("FlightType",flightType);
                         Passenger obj = new Passenger();
@@ -674,7 +699,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         datePickerYear1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
     }
 
-    public void creatExpiredDatePickerObject(Integer currentPosition){
+   /* public void creatExpiredDatePickerObject(Integer currentPosition){
 
         if(currentPosition.equals(1)){
             datePickerYearE1.setYearRange(year, year+10);
@@ -806,6 +831,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         dialog.show();
 
     }
+*/
 
     public void requestForgotPassword(String username,String signature){
         initiateLoading(getActivity());

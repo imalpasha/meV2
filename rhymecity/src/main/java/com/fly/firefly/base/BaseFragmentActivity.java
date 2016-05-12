@@ -7,12 +7,19 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
+import com.fly.firefly.ui.activity.PushNotification.MainActivity;
+import com.fly.firefly.ui.object.CachedResult;
+import com.fly.firefly.ui.object.NotificationMessage;
 import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.RealmObjectController;
+
+import io.realm.RealmResults;
 
 //import com.actionbarsherlock.app.ActionBar;
 //import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -20,6 +27,7 @@ import com.fly.firefly.utils.RealmObjectController;
 
 public class BaseFragmentActivity extends FragmentActivity {
 
+    public static String appStatus;
     public com.fly.firefly.base.AQuery aq;
     //TabView tabsView;
 
@@ -196,6 +204,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void startActivity(Intent intent)
     {
         super.startActivity(intent);
+        Log.e("startActivity","startActivity");
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         RealmObjectController.clearCachedResult(this);
 
@@ -223,5 +232,40 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void onPause()
     {
         super.onPause();
+
+        Log.e("OnPause","OnPause");
+    }
+
+    @Override
+    public void onResume(){
+
+        super.onResume();
+        Log.e("onResume","onResume");
+        if(!this.getClass().getSimpleName().equals("SplashScreenActivity")){
+            if(appStatus != null && appStatus.equals("ready_for_notification")){
+                if(appStatus.equals("ready_for_notification")){
+                    RealmResults<NotificationMessage> result = RealmObjectController.getNotificationMessage(this);
+                    Log.e("result",Integer.toString(result.size()));
+                    if(result.size() > 0){
+                        BaseFragment.setAlertDialog(this,result.get(0).getMessage(),result.get(0).getTitle());
+                        RealmObjectController.clearNotificationMessage(this);
+                    }
+                }else{
+                    Log.e("Result?","A"+appStatus);
+                }
+            }else{
+                appStatus = "not_for_notification";
+            }
+        }
+
+
+    }
+
+    public static void setAppStatus(String status){
+        appStatus = status;
+    }
+
+    public static String getAppStatus(){
+       return appStatus;
     }
 }

@@ -295,6 +295,8 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
 
                 // presenter.onSendPNRV1(manageFlightObj);
 
+                horizontalProgressBar.setVisibility(View.INVISIBLE);
+
                 MobileCheckinObj flightObj = new MobileCheckinObj();
                 flightObj.setPnr(selectedFromList.getPnr());
                 flightObj.setUser_id(obj.getUser_id());

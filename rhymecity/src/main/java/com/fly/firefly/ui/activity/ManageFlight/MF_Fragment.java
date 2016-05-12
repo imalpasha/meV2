@@ -305,6 +305,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                 manageFlightObj.setSignature(obj.getSignature());
 
                 cache_login = false;
+                horizontalProgressBar.setVisibility(View.INVISIBLE);
                 presenter.onSendPNRV1(manageFlightObj);
             }
         });

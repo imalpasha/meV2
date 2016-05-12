@@ -33,6 +33,16 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  */
 public class Controller extends BaseFragment {
 
+    private static boolean homeStatus;
+
+    public static boolean getHomeStatus(){
+        return homeStatus;
+    }
+
+    public static void setHomeStatus(){
+        homeStatus = true;
+    }
+
     public static void clearAll(Activity act){
         SharedPrefManager  pref = new SharedPrefManager(act);
         pref.clearSignatureFromLocalStorage();

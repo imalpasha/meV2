@@ -213,6 +213,8 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         v2.checkInPassengerIssuingCountry.setText(BaseFragment.getCountryName(context, obj.get(groupPosition).getIssuing_country()));
         v2.checkInPassengerTravelDoc.setText(BaseFragment.getTravelDocument(context, obj.get(groupPosition).getTravel_document()));
         v2.checkInPassengerDocNo.setText(obj.get(groupPosition).getDocument_number());
+        //v2.checkInPassengerTravelDoc.setText("");
+        //v2.checkInPassengerDocNo.setText("");
         v2.checkInPassengerBonuslink.setText(obj.get(groupPosition).getBonuslink());
         //convertView.setTag(v2);
 
@@ -250,15 +252,16 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
        // vh = new ViewHolder();
         final ExpandableListView eLV = (ExpandableListView) parent;
 
-       // if (convertView == null) {
+        //if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
             vh = new ViewHolderHeader();
             ButterKnife.inject(vh, convertView);
             convertView.setTag(vh);
-       // }
-       // else {
-       //     vh = (ViewHolderHeader) convertView.getTag();
-       // }
+        //}
+        //else {
+        //    vh = (ViewHolderHeader) convertView.getTag();
+
+        //}
 
 
         if(obj.get(groupPosition).getStatus().equals("Checked In")){
@@ -280,6 +283,20 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
             }
         }*/
 
+       /* if(obj.get(groupPosition).getChecked() != null){
+            if(obj.get(groupPosition).getChecked().equals("Y")){
+                Log.e(Integer.toString(groupPosition),obj.get(groupPosition).getChecked());
+                vh.passengerCheckInCheckBox.setChecked(true);
+            }else{
+                Log.e(Integer.toString(groupPosition),obj.get(groupPosition).getChecked());
+                obj.get(groupPosition).setChecked("N");
+                vh.passengerCheckInCheckBox.setChecked(false);
+            }
+        }else{
+            obj.get(groupPosition).setChecked("N");
+            vh.passengerCheckInCheckBox.setChecked(false);
+        }*/
+
         //obj.get(position).setChecked("N");
         vh.passengerCheckInCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -293,7 +310,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
                     obj.get(groupPosition).setChecked("N");
                     eLV.collapseGroup(groupPosition);
                 }
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
             }
         });
 

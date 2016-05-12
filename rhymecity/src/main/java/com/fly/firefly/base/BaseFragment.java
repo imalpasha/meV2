@@ -44,6 +44,7 @@ import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInFragment1;
 import com.fly.firefly.ui.object.Country;
 import com.fly.firefly.utils.DropDownItem;
 import com.fly.firefly.utils.DropMenuAdapter;
+import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.fly.firefly.utils.Utils;
 
@@ -87,7 +88,7 @@ public class BaseFragment extends Fragment {
 
 		//try set blinking textview
 		Animation anim = new AlphaAnimation(0.0f, 1.0f);
-		anim.setDuration(80); //You can manage the blinking time with this parameter
+		anim.setDuration(120); //You can manage the blinking time with this parameter
 		anim.setStartOffset(20);
 		anim.setRepeatMode(Animation.REVERSE);
 		anim.setRepeatCount(Animation.INFINITE);
@@ -473,7 +474,11 @@ public class BaseFragment extends Fragment {
 				.setTitleText(title)
 				.setContentText(msg)
 				.show();
+
+		//RealmObjectController.clearNotificationMessage(act);
+
 	}
+
 	public static boolean setConfirmDialog(final Activity act){
 
 		new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
@@ -727,7 +732,9 @@ public class BaseFragment extends Fragment {
 				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 				lp.copyFrom(mDialog.getWindow().getAttributes());
 				lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-				lp.height = 600;
+				lp.height = WindowManager.LayoutParams.WRAP_CONTENT;;
+				//lp.horizontalMargin = 100;
+				//lp.verticalMargin = 100;
 				mDialog.getWindow().setAttributes(lp);
 	}
 
@@ -1270,6 +1277,16 @@ public class BaseFragment extends Fragment {
 		{
 			e.printStackTrace();
 		}
+	}
+
+	public static void splashScreen(Context act,String regId){
+
+		Intent home = new Intent(act, SplashScreenActivity.class);
+		home.putExtra("GCM_KEY", regId);
+		//home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		act.getApplicationContext().startActivity(home);
+		//return;
+
 	}
 
 }
