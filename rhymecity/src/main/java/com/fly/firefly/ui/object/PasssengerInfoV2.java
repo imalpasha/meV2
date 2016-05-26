@@ -17,6 +17,15 @@ public class PasssengerInfoV2 {
     private String compartmentReturn;
     private String seatReturn;
     private String checkedIn;
+    private String originalSeatType;
+
+    public String getOriginalSeatType() {
+        return originalSeatType;
+    }
+
+    public void setOriginalSeatType(String originalSeatType) {
+        this.originalSeatType = originalSeatType;
+    }
 
     public String getCheckedIn() {
         return checkedIn;

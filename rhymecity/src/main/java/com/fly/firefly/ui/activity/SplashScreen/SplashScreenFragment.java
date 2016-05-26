@@ -68,7 +68,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
 
-        RealmObjectController.deleteRealmFile(getActivity());
+        Controller.setHomeStatus();
 
         View view = inflater.inflate(R.layout.splash_screen, container, false);
         ButterKnife.inject(this, view);
@@ -77,16 +77,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         Bundle bundle = getArguments();
 
-        /*String gcmKey = bundle.getString("GCM_KEY");
+        String gcmKey = bundle.getString("GCM_KEY");
         if(gcmKey == null){
             gcmKey = "";
-        }*/
-        String gcmKey = "";
-
-        //get push notification token
-        //String pushNotificationToken = Push.getToken(getActivity());
-
-        //Log.e("Token",pushNotificationToken);
+        }
 
         HashMap<String, String> initUserEmail = pref.getUserEmail();
         String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
@@ -104,14 +98,8 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         HashMap<String, String> initLogin = pref.getDataVesion();
         String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
-
-        if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
+        if(localDataVersion == null) {
             localDataVersion = "0";
-            proceed = true;
-        }else if(localDataVersion == null && Controller.connectionAvailable(getActivity()))
-        {
-            connectionRetry("No Internet Connection");
-            proceed = false;
         }
 
         info = new DeviceInformation();
@@ -127,15 +115,17 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         info.setPassword(userPassword);
         info.setGCMKey(gcmKey);
 
-        if(proceed){
-            if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
-                sendDeviceInformationToServer(info);
-            }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
-                goHomepage();
-            }
-            running = true;
+        if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
+            sendDeviceInformationToServer(info);
+        }else if(localDataVersion == null && !Controller.connectionAvailable(getActivity())){
+            connectionRetry("No Internet Connection 2");
+        }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
+            sendDeviceInformationToServer(info);
+        }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
+            goHomepage();
         }
 
+        running = true;
 
         //RealmObjectController.deleteRealmFile(getActivity());
 
@@ -150,14 +140,14 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             presenter.deviceInformation(info);
 
         }else{
-            connectionRetry("No Internet Connection");
+            connectionRetry("No Internet Connection 2");
             Log.e("X","XX");
         }
     }
 
     public void connectionRetry(String msg){
 
-        pDialog.setTitleText("Connection Error");
+        pDialog.setTitleText("Connection Error 3");
         pDialog.setCancelable(false);
         pDialog.setContentText(msg);
         pDialog.setConfirmText("Retry");
@@ -280,8 +270,12 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+
         if(!running){
-            sendDeviceInformationToServer(info);
+            Intent home = new Intent(getActivity(), TokenActivity.class);
+            getActivity().startActivity(home);
+            getActivity().finish();
         }
 
 

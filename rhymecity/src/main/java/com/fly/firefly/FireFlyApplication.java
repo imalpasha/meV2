@@ -50,7 +50,7 @@ public class FireFlyApplication extends AnalyticsApplication {
         //Fabric.with(this, new Crashlytics());
         buildObjectGraphAndInject();
         createApiRequestHandler();
-        registerActivityLifecycleCallbacks(new LifeCycleActivity());
+        //registerActivityLifecycleCallbacks(new LifeCycleActivity());
         //instance = FireFlyApplicationthis;
          /* -------------- Beacon ----------------*/
         //beaconManager = new BeaconManager(this);

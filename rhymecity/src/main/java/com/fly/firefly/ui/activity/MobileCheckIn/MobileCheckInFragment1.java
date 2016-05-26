@@ -155,6 +155,7 @@ public class MobileCheckInFragment1 extends BaseFragment implements MobileCheckI
                 cachedDisplay = true;
                 horizontalProgressBar.setVisibility(View.VISIBLE);
                 //update the list on background
+                presenter.getUserPNR(storeUsername,storePassword,"check_in");
 
             }else{
                 if(Controller.connectionAvailable(getActivity())){

@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fly.firefly.Controller;
 import com.fly.firefly.MainFragmentActivity;
 import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
@@ -50,6 +51,12 @@ public class TokenActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*Intent home = new Intent(this, SplashScreenActivity.class);
+        home.putExtra("GCM_KEY", regId);
+        this.startActivity(home);
+        this.finish();*/
+
         setContentView(R.layout.splash_screen);
         pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
         activity = this;
@@ -63,9 +70,9 @@ public class TokenActivity extends Activity {
             pDialog.dismiss();
         }
         //check internet connection
-        if (!cd.isConnectingToInternet()) {
-           connectionRetry("No Internet Connection",this  );
-        }
+        //if (!cd.isConnectingToInternet()) {
+        //   connectionRetry("No Internet Connection",this  );
+        //}
 
         // Make sure the device has the proper dependencies.
         GCMRegistrar.checkDevice(this);
@@ -88,15 +95,16 @@ public class TokenActivity extends Activity {
 
         }else{
             // Check if Internet present
-            if (cd.isConnectingToInternet()) {
+           // if (cd.isConnectingToInternet()) {
 
+                Log.e("REGISTERID",regId);
                 Intent home = new Intent(activity, SplashScreenActivity.class);
                 home.putExtra("GCM_KEY", regId);
                 activity.startActivity(home);
                 activity.finish();
                 return;
 
-            }
+            //}
         }
 
     }

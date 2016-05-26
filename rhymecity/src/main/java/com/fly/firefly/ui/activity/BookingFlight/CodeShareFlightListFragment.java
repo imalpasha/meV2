@@ -237,8 +237,6 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
          /*Return If Available*/
         if(obj.getJourneys().size() > 1){
 
-
-
             //Check From ManageFlight
             if(obj.getJourneys().get(1).getFlights().size() == 0){
                 //goingFlightBlock.setVisibility(View.GONE);
@@ -330,10 +328,34 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
                 if(proceed){
 
+
                     if(!fareRulesChkBox.isChecked()){
                         proceed = false;
                         croutonAlert(getActivity(), "You must agree to the terms and conditions.");
                     }else{
+
+                        pref.setSSR1("N");
+
+                        if(departFlightArrivalTime != null && departFlightDepartureTime != null ){
+                            boolean offerSSRDepart = flightDuration(departFlightArrivalTime,departFlightDepartureTime);
+                            if(offerSSRDepart){
+                                pref.setSSR1("Y");
+                            }else{
+                                pref.setSSR1("N");
+                            }
+                        }
+
+                        pref.setSSR2("N");
+
+                        if(returnFlightArrivalTime != null && returnFlightDepartureTime != null ){
+                            boolean offerSSRReturn = flightDuration(returnFlightArrivalTime,returnFlightDepartureTime);
+                            if(offerSSRReturn){
+                                pref.setSSR2("Y");
+                            }else{
+                                pref.setSSR2("N");
+                            }
+                        }
+
                         if(pnr == null){
                             if(loginStatus == null || loginStatus.equals("N")) {
                                 continueAs();
@@ -461,7 +483,6 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         }
     }
 
-
     /*Inner Func*/
     public void goPersonalDetail()
     {
@@ -510,6 +531,8 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         dismissLoading();
         pref.setBookingID(obj.getBookingId());
 
+        //calculate flight duration
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
@@ -542,6 +565,9 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
             departFlightDepartureTime = obj.getDeparture_time();
             departFlightArrivalTime = obj.getArrival_time();
             departFlightJourneyKey = obj.getJourney_sell_key();
+
+            Log.e(departFlightArrivalTime,departFlightDepartureTime);
+
             if (type.equals(ECONOMY_PROMO)) {
                 departFlightFareSellKey = obj.getEconomy_promo_class().getFare_sell_key();
                 Log.e("A","departFlightFareSellKey "+departFlightFareSellKey);
@@ -588,6 +614,19 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         changeFlightObj.setArrival_station(arrivalPortCode);
         changeFlightObj.setDeparture_date(departDatePlain);
         changeFlightObj.setReturn_date(returnDatePlain);
+
+        //SENT EMPTY VALUE
+        if(departFlightNumber == null){
+            departFlightNumber = "";
+        }if(departFlightDepartureTime == null){
+            departFlightDepartureTime = "";
+        }if(departFlightArrivalTime == null){
+            departFlightArrivalTime = "";
+        }if(departFlightJourneyKey == null){
+            departFlightJourneyKey = "";
+        }if(departFlightFareSellKey == null){
+            departFlightFareSellKey = "";
+        }
 
         changeFlightObj.setStatus_1(status1);
         changeFlightObj.setFlight_number_1(departFlightNumber);

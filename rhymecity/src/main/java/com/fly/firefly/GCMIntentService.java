@@ -9,22 +9,12 @@ import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.fly.firefly.R;
-import com.fly.firefly.api.obj.PassengerInfoReveice;
-import com.fly.firefly.base.BaseFragment;
-import com.fly.firefly.base.BaseFragmentActivity;
-import com.fly.firefly.ui.activity.BeaconV2.BoardingGateActivity;
-import com.fly.firefly.ui.activity.BeaconV2.PushNotificationV1;
-import com.fly.firefly.ui.activity.GeoFencing.GenFencingActivity;
-import com.fly.firefly.ui.activity.Homepage.HomeActivity;
-import com.fly.firefly.ui.activity.PushNotification.MainActivity;
+import com.fly.firefly.ui.activity.PushNotification.RegisterActivity;
 import com.fly.firefly.ui.activity.PushNotification.ServerUtilities;
-import com.fly.firefly.ui.activity.SplashScreen.PopupNotificationActivity;
-import com.fly.firefly.ui.activity.SplashScreen.SplashScreenActivity;
+import com.fly.firefly.ui.activity.SplashScreen.Pop2NotificationActivity;
 import com.fly.firefly.ui.activity.SplashScreen.TokenActivity;
 import com.fly.firefly.utils.RealmObjectController;
 import com.google.android.gcm.GCMBaseIntentService;
-import com.google.android.gms.common.api.BooleanResult;
 import com.google.gson.Gson;
 
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.SENDER_ID;
@@ -137,33 +127,61 @@ public class GCMIntentService extends GCMBaseIntentService {
             this.title = title;
         }
     }
-    private void generateNotification(Context context, String message) {
+
+    private void generateNotification(Context context,String notificationMessage) {
+
+        int requestID = (int) System.currentTimeMillis();
 
         Gson gson = new Gson();
-        GCMClass obj = gson.fromJson(message, GCMClass.class);
+        GCMClass obj = gson.fromJson(notificationMessage, GCMClass.class);
 
-//        String[] parts = message.split("/");
-//        String part1 = parts[0]; // 004
-//        String part2 = parts[1]; // 034556\
-//        Log.e("Part1 " + part1, "Part2 " + part2);
+        Intent notificationIntent = new Intent(context, Pop2NotificationActivity.class);
+        notificationIntent.setAction(Intent.ACTION_MAIN);
 
-        //convert string to json
-        Intent viewIntent;
-        //if(LifeCycleActivity.isApplicationVisible()){
-            viewIntent = new Intent(context, PopupNotificationActivity.class);
-            Log.e("Visibile","true");
-       // }
+        //notificationIntent.setFlags(Intent.FLAG_ONE_SHOT);
+        Log.e("Visibile","true");
 
-
-        viewIntent.setAction("android.intent.action.MAIN");
-        viewIntent.addCategory("android.intent.category.LAUNCHER");
-        viewIntent.putExtra("MESSAGE", message);
+        //notificationIntent.setAction("android.intent.action.MAIN");
+        //notificationIntent.addCategory("android.intent.category.LAUNCHER");
+        //notificationIntent.putExtra("MESSAGE", notificationMessage);
 
         //save message to realm object
         RealmObjectController.clearNotificationMessage(context);
         RealmObjectController.saveNotificationMessage(context,obj.getBody(),obj.getTitle());
 
-        PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID,notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        mBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
+        mBuilder
+                .setContentText(obj.getBody())
+                .setContentTitle(String.format(obj.getTitle()))
+                .setSmallIcon(R.drawable.departure_icon)
+                .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
+                .setTicker(String.format(obj.getTitle()));
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder.setContentIntent(contentIntent);
+        notificationManager.notify(1, mBuilder.build());
+
+    }
+
+
+
+    private void generateNotification2(Context context, String message) {
+
+        Gson gson = new Gson();
+        GCMClass obj = gson.fromJson(message, GCMClass.class);
+
+        //convert string to json
+        Intent viewIntent = new Intent(context, Pop2NotificationActivity.class);
+        Log.e("Visibile","true");
+        viewIntent.setAction("android.intent.action.MAIN");
+        viewIntent.addCategory("android.intent.category.LAUNCHER");
+        viewIntent.putExtra("MESSAGE", message);
+
+
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
         notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
@@ -173,73 +191,10 @@ public class GCMIntentService extends GCMBaseIntentService {
                 .setSmallIcon(R.drawable.departure_icon)
                 .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
                 .setTicker(String.format(obj.getTitle()));
-        //Intent notificationIntent = new Intent(context, MapsActivity.class);
-        //notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        //notificationIntent.setAction(Intent.ACTION_MAIN);
+
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
         notificationBuilder.setContentIntent(viewPendingIntent);
         notificationManager.notify(1, notificationBuilder.build());
-
-        /*if(part2.equals("reminder")){
-            Log.e("PART2","REMINDER");
-            Intent viewIntent = new Intent(context, PushNotificationV1.class);
-            viewIntent.putExtra("MESSAGE", message);
-            viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
-
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
-            notificationBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
-            notificationBuilder
-                    .setContentText(message)
-                    .setContentTitle(String.format("Firefly"))
-                    .setSmallIcon(R.drawable.departure_icon)
-                    .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
-                    .setTicker(String.format("%1$s Fence: %2$s", "tEST", "tEST"));
-            //Intent notificationIntent = new Intent(context, MapsActivity.class);
-            //notificationIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            //notificationIntent.setAction(Intent.ACTION_MAIN);
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            //PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-            notificationBuilder.setContentIntent(viewPendingIntent);
-            notificationManager.notify(1, notificationBuilder.build());
-
-        }else{
-
-            Intent viewIntent = new Intent(context, BoardingGateActivity.class);
-            //viewIntent.putExtra("MESSAGE", message);
-            viewIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(viewIntent);
-            //viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
-            //Log.e("Beacon", "True");
-            //test();
-        }*/
-
-
-       /* int icon = R.drawable.ic_launcher;
-        long when = System.currentTimeMillis();
-        NotificationManager notificationManager = (NotificationManager)
-                context.getSystemService(Context.NOTIFICATION_SERVICE);
-        Notification notification = new Notification(icon, message, when);
-        
-        String title = context.getString(R.string.app_name);
-        
-        Intent notificationIntent = new Intent(context, MainActivity.class);
-        // set intent so it does not start a new activity
-        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
-                Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent intent =
-                PendingIntent.getActivity(context, 0, notificationIntent, 0);
-       // notification.setLatestEventInfo(context, title, message, intent);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        
-        // Play default notification sound
-        notification.defaults |= Notification.DEFAULT_SOUND;
-        
-        //notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "your_sound_file_name.mp3");
-        
-        // Vibrate if vibrate is enabled
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(0, notification);      */
 
     }
 

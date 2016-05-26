@@ -65,6 +65,8 @@ public class CodeShareAdapter extends BaseAdapter {
         @InjectView(R.id.txtDepartureTime) TextView txtDepartureTime;
         @InjectView(R.id.txtDepartureAirport) TextView txtDepartureAirport;
         @InjectView(R.id.txtArrivalAirport) TextView txtArrivalAirport;
+        @InjectView(R.id.txtOperatedBy) TextView txtOperatedBy;
+
        // @InjectView(R.id.txtFarePrice) TextView txtFarePrice;
        // @InjectView(R.id.checkBox) CheckBox checkBox;
 
@@ -249,12 +251,13 @@ public class CodeShareAdapter extends BaseAdapter {
         });
 
 
-        vh.txtFlightNo.setText("FLIGHT NO. MH "+ obj.get(position).getFlight_number());
+        vh.txtFlightNo.setText("FLIGHT NO. FY "+ obj.get(position).getFlight_number());
         vh.txtArrivalTime.setText(obj.get(position).getArrival_time());
         vh.txtDepartureTime.setText(obj.get(position).getDeparture_time());
         vh.txtDepartureAirport.setText(departureAirport);
         vh.txtDepartureAirport.setText(departureAirport);
         vh.txtArrivalAirport.setText(arrivalAirport);
+        vh.txtOperatedBy.setText("Operated by Malaysia Airlines (MH"+obj.get(position).getMh_flight_number()+")" );
 
         if(obj.get(position).getEconomy_promo_class().getStatus().equals("active")){
             vh.txtBusiness.setText(obj.get(position).getEconomy_promo_class().getTotal_fare()+" MYR");

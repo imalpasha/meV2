@@ -77,6 +77,34 @@ public class ListBookingReceive {
 
     public class ListBooking{
 
+        private String pnr;
+        private String departure_station_code;
+        private String arrival_station_code;
+        private String date;
+        private String check_in;
+        private String departure_datetime;
+        private String departure_datetime_1st;
+
+        public String getDeparture_datetime_1st() {
+            return departure_datetime_1st;
+        }
+
+        public void setDeparture_datetime_1st(String departure_datetime_1st) {
+            this.departure_datetime_1st = departure_datetime_1st;
+        }
+
+
+
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        private String status;
+
         public String getPnr() {
             return pnr;
         }
@@ -109,12 +137,6 @@ public class ListBookingReceive {
             this.date = date;
         }
 
-        private String pnr;
-        private String departure_station_code;
-        private String arrival_station_code;
-        private String date;
-        private String check_in;
-        private String departure_datetime;
 
         public String getDeparture_datetime() {
             return departure_datetime;

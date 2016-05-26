@@ -173,7 +173,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
 
             if(!Controller.connectionAvailable(getActivity())){
                 //if login & no internet.. display data from local database
-                Realm realm = Realm.getInstance(getActivity());
+                Realm realm = RealmObjectController.getRealmInstance(getActivity());
                 final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
 
                 if(result2.size() == 0) {
@@ -198,7 +198,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                         }
                     });
                 }
-                boardingPassBtn.setVisibility(View.GONE);
+                //boardingPassBtn.setVisibility(View.GONE);
 
             }else{
 
@@ -220,6 +220,7 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                     boardingPassBtn.setVisibility(View.GONE);
                 }
             }
+            boardingPassBtn.setVisibility(View.GONE);
 
         }else{
             SCREEN_LABEL = "Boarding Pass";
@@ -435,8 +436,9 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                 dataPassBundle.putString("ARRIVAL_STATION_CODE",selectedFromList.getArrival_station_code());
                 dataPassBundle.putString("SIGNATURE",obj.getSignature());
 
+
                 //check if already cached, display cached data first and load new data at background
-                Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
+                Realm realm = RealmObjectController.getRealmInstance(getActivity());
                 final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
                 Log.e("result",result2.toString());
 
@@ -463,9 +465,11 @@ public class BoardingPassFragment extends BaseFragment implements Validator.Vali
                     initiateLoading(getActivity());
                     retrieveBoardingPass(selectedFromList,obj);
                 }
-
+                horizontalProgressBar.setVisibility(View.INVISIBLE);
 
             }
+
+
         });
     }
 

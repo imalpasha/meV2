@@ -117,8 +117,14 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     private List<SeatInfo> seatInfoDepart;
     private boolean twoWay = false;
     private String pnr,username,bookingId;
-    private boolean retrieveSeat = false;
+    private boolean retrieveSeat;
+    private boolean clicked = false;
+    private boolean seatDisplayed = false;
+    private String activeSeatType,activeSeatType2;
+    private boolean clickable,clickable2;
+    private String originalSeatType,originalSeatType2;
 
+    int h = 0;
     List<ContactInfoReceive.PasssengerInfo> passengers =  new ArrayList<ContactInfoReceive.PasssengerInfo>();
     List<PasssengerInfoV2> objV2 = new ArrayList<PasssengerInfoV2>();
     List<PasssengerInfoV2> objV3 = new ArrayList<PasssengerInfoV2>();
@@ -168,7 +174,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         requestSeatObj.setSignature(signature);
         requestSeatObj.setBooking_id(bookingId);
         initiateLoading(getActivity());
-        presenter.onSeatAvailability(requestSeatObj);
+
+
+        getSeatAvailability(requestSeatObj);
 
 
 
@@ -205,6 +213,14 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             }else{
                     Utils.toastNotification(getActivity(),"Passenger already checked-in");
                 }
+
+                //get seat type
+                activeSeatType = getSeatType(selectedFromList.getSeat(),"DEPART");
+                originalSeatType = passengerSeatListV1.getNextPassengerOriginalSeatType();
+
+                //resetOnClickSeat1(activeSeatType);
+                Log.e("activeSeatType",activeSeatType);
+
             }
         });
 
@@ -234,7 +250,14 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                     clickedPassenger.setBackgroundColor(getResources().getColor(R.color.blue));
                     selectedFromList.setSelected(true);
                     selectedFromList.setActive(true);
+                }else{
+                    Utils.toastNotification(getActivity(),"Passenger already checked-in");
                 }
+
+                //get seat type
+                activeSeatType2 = getSeatType(selectedFromList.getSeat(),"RETURN");
+                originalSeatType2 = passengerSeatListV2.getNextPassengerOriginalSeatType();
+                Log.e(activeSeatType2,originalSeatType2);
             }
         });
 
@@ -297,7 +320,16 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         return view;
     }
 
+    public void getSeatAvailability(SeatAvailabilityRequest obj){
+
+        retrieveSeat = true;
+        presenter.onSeatAvailability(obj);
+
+    }
+
     public void displaySeatFee(ContactInfoReceive contactObj){
+
+        retrieveSeat = false;
 
         //Services & Fee
         LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
@@ -348,7 +380,6 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     }
 
     public void setPassenger1(String type,ExpandAbleGridView list,TextView txtSeat,List<PasssengerInfoV2> passengers,String depart,String arrival){
-
 
         //auto select non check-in passenger
         for(int t = 0; t < passengers.size(); t++){
@@ -441,7 +472,6 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             {
 
                 String seatNumber = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_number();
-                String seatType = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_type();
                 String seatStatus = tempSeatValue.get(label).getSeatRowArray().get(x-1).getStatus();
                 final String compartment = tempSeatValue.get(label).getSeatRowArray().get(x-1).getCompartment_designator();
 
@@ -449,8 +479,9 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT, 0.25f);
 
-
                 final TextView txtDetailList = new TextView(getActivity());
+                final String seatType = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_type();
+
                 txtDetailList.setText(seatNumber);
                 txtDetailList.setGravity(Gravity.CENTER);
                 txtDetailList.setTextColor(getResources().getColor(R.color.white));
@@ -458,76 +489,103 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 txtDetailList.setTag(seatNumber);
                 txtDetailList.setBackgroundColor(getResources().getColor(R.color.grey_background));
 
-                txtDetailList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    txtDetailList.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
+                            clickable = true;
+                            //check here
 
-                        if (seatTag1.size() == 1) {
-
-
-                            //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
-                            TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
-
-                            seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
-                            seatToRemove.setClickable(true);
-                            //seatToRemove.setTextColor(getResources().getColor(R.color.white));
-
-                            seatTag1.remove(0);
-                            seatTag1.add(txtDetailList.getText().toString());
-
-                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
-                            txtDetailList.setClickable(false);
-
-                            passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatListV1.setSelectedCompartmentSeat(compartment);
-
-
-                            //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
-                            //selectedSeatTag.add(txtDetailList.getText().toString());
-                        } else {
-
-                            if(passengerSeatListV1.getSelected(passengerNoV1) != null && passengerSeatListV1.getSelected(passengerNoV1) != "" ){
-                                TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
-                                seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
-                                seatToRemove.setClickable(true);
-                            }
-
-                            seatTag1.add(txtDetailList.getText().toString());
-                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
-                            txtDetailList.setClickable(false);
-
-                            passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatListV1.setSelectedCompartmentSeat(compartment);
-
-
-                            //selectedSeatTag.add(txtDetailList.getText().toString());
-                        }
-
-                        Log.e(Integer.toString(passengerNoV1),Integer.toString(passengerSize));
-                        if(next1){
-                            Log.e(Integer.toString(passengerNoV1),Integer.toString(passengerSize));
-
-                            if(passengerNoV1 < passengerSize-1){
-                                passengerSeatListV1.setNextPassengerSelected(passengerNoV1+1);
-                            }else{
-
-                                if(twoWay){
-                                    autoSelectReturnPassenger();
-                                    passengerSeatListV2.autoSelectReturnPassenger();
-                                    Log.e("Error", "True");
+                            if(activeSeatType.equals("desired") && (seatType.equals("standard") || seatType.equals("preferred"))){
+                                clickable = false;
+                            }else if(activeSeatType.equals("preferred")){
+                                if(seatType.equals("standard")){
+                                    clickable = false;
+                                }else{
+                                    clickable = true;
                                 }
                             }
-                        }else{
-                            if(passengerNoV1 < passengerSize-1){
-                                passengerSeatListV1.setNextPassengerSelected(passengerNoV1 + 1);
+
+                            if(originalSeatType != null){
+                                if(originalSeatType.equals(seatType)){
+                                    clickable = true;
+                                }
+                            }
+
+                            if(clickable){
+                                if (seatTag1.size() == 1) {
+
+                                    //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
+                                    TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
+
+                                    seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                                    seatToRemove.setClickable(true);
+                                    //seatToRemove.setTextColor(getResources().getColor(R.color.white));
+
+                                    seatTag1.remove(0);
+                                    seatTag1.add(txtDetailList.getText().toString());
+
+                                    txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                                    txtDetailList.setClickable(false);
+
+                                    passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                                    passengerSeatListV1.setSelectedCompartmentSeat(compartment);
+
+
+                                    //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
+                                    //selectedSeatTag.add(txtDetailList.getText().toString());
+                                } else {
+
+                                    if (passengerSeatListV1.getSelected(passengerNoV1) != null && passengerSeatListV1.getSelected(passengerNoV1) != "") {
+                                        TextView seatToRemove = (TextView) view.findViewWithTag(passengerSeatListV1.getSelected(passengerNoV1));
+                                        seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                                        seatToRemove.setClickable(true);
+                                    }
+
+                                    seatTag1.add(txtDetailList.getText().toString());
+                                    txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                                    txtDetailList.setClickable(false);
+
+                                    passengerSeatListV1.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                                    passengerSeatListV1.setSelectedCompartmentSeat(compartment);
+
+
+                                    //selectedSeatTag.add(txtDetailList.getText().toString());
+                                }
+
+                                if (next1) {
+
+                                    if (passengerNoV1 < passengerSize - 1) {
+                                        passengerSeatListV1.setNextPassengerSelected(passengerNoV1 + 1);
+                                        activeSeatType = getSeatType(passengerSeatListV1.getCurrentSelected(),"DEPART");
+                                        originalSeatType = passengerSeatListV1.getNextPassengerOriginalSeatType();
+
+                                        Log.e(activeSeatType,originalSeatType);
+
+                                    } else {
+
+                                        if (twoWay) {
+                                            autoSelectReturnPassenger();
+                                            passengerSeatListV2.autoSelectReturnPassenger();
+                                            activeSeatType2 = getSeatType(passengerSeatListV2.getCurrentSelected(),"DEPART");
+                                            originalSeatType2 = passengerSeatListV2.getNextPassengerOriginalSeatType();
+
+                                        }
+                                    }
+                                } else {
+                                    if (passengerNoV1 < passengerSize - 1) {
+                                        passengerSeatListV1.setNextPassengerSelected(passengerNoV1 + 1);
+                                        activeSeatType = getSeatType(passengerSeatListV1.getCurrentSelected(),"DEPART");
+                                        originalSeatType = passengerSeatListV1.getNextPassengerOriginalSeatType();
+
+                                        //activeSeatType
+                                    }
+                                }
+                            }else{
+                                Utils.toastNotification(getActivity(), "Seat downgraded not allowed");
                             }
                         }
-
-                    }
-
-                });
-
+                    });
 
                 //"seat_type":"standard",
                 //Set color and clickable
@@ -641,7 +699,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
             {
 
                 String seatNumber = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_number();
-                String seatType = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_type();
+                final String seatType = tempSeatValue.get(label).getSeatRowArray().get(x-1).getSeat_type();
                 String seatStatus = tempSeatValue.get(label).getSeatRowArray().get(x-1).getStatus();
                 final String compartment = tempSeatValue.get(label).getSeatRowArray().get(x-1).getCompartment_designator();
 
@@ -658,68 +716,94 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 txtDetailList.setTag("RETURN" + "_" + seatNumber);
                 txtDetailList.setBackgroundColor(getResources().getColor(R.color.grey_background));
 
-                txtDetailList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    txtDetailList.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
 
+                            clickable2 = true;
 
-                        if (seatTag2.size() == 1) {
-
-                            //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
-                            TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+passengerSeatListV2.getSelected(passengerNoV2));
-
-                            seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
-                            seatToRemove.setClickable(true);
-                            //seatToRemove.setTextColor(getResources().getColor(R.color.white));
-
-                            seatTag2.remove(0);
-                            seatTag2.add(txtDetailList.getText().toString());
-
-                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
-                            txtDetailList.setClickable(false);
-
-                            //    if(oneWay){
-                            passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatListV2.setSelectedCompartmentSeat(compartment);
-                            //   }else{
-                            //       passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            //       passengerSeatList.setSelectedCompartmentSeat(compartment);
-                            //   }
-
-                            //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
-                            //selectedSeatTag.add(txtDetailList.getText().toString());
-                        } else {
-
-                            if(passengerSeatListV2.getSelected(passengerNoV2) != null && passengerSeatListV2.getSelected(passengerNoV2) != ""){
-
-                                TextView seatToRemove = (TextView) view.findViewWithTag("RETURN"+"_"+
-                                        passengerSeatListV2.getSelected(passengerNoV2));
-                                seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
-                                seatToRemove.setClickable(true);
+                            if(activeSeatType2.equals("desired") && (seatType.equals("standard") || seatType.equals("preferred"))){
+                                clickable2 = false;
+                            }else if(activeSeatType2.equals("preferred")){
+                                if(seatType.equals("standard")){
+                                    clickable2 = false;
+                                }else{
+                                    clickable2 = true;
+                                }
                             }
 
-                            seatTag2.add(txtDetailList.getText().toString());
-                            txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
-                            txtDetailList.setClickable(false);
+                            if(originalSeatType2 != null){
+                                if(originalSeatType2.equals(seatType)){
+                                    clickable2 = true;
+                                    Log.e("Clickable","true");
+                                }
+                                Log.e("Clickable","false");
+                            }
 
-                            passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
-                            passengerSeatListV2.setSelectedCompartmentSeat(compartment);
+                            if(clickable2){
+                                if (seatTag2.size() == 1) {
 
-                            if(next2){
-                                Log.e(Integer.toString(passengerNoV2),Integer.toString(passengerSize));
+                                    //TextView seatToRemove = (TextView) view.findViewWithTag(seatTag.get(0));
+                                    TextView seatToRemove = (TextView) view.findViewWithTag("RETURN" + "_" + passengerSeatListV2.getSelected(passengerNoV2));
 
-                                if(passengerNoV2 < passengerSize-1){
-                                    passengerSeatListV2.setNextPassengerSelected(passengerNoV2+1);
+                                    seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                                    seatToRemove.setClickable(true);
+                                    //seatToRemove.setTextColor(getResources().getColor(R.color.white));
+
+                                    seatTag2.remove(0);
+                                    seatTag2.add(txtDetailList.getText().toString());
+
+                                    txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                                    txtDetailList.setClickable(false);
+
+                                    //    if(oneWay){
+                                    passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                                    passengerSeatListV2.setSelectedCompartmentSeat(compartment);
+                                    //   }else{
+                                    //       passengerSeatList.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                                    //       passengerSeatList.setSelectedCompartmentSeat(compartment);
+                                    //   }
+
+                                    //passengerSeatListDepart.setSelectedSeatCompartment(passengerSeatListDepart.getSelected(passengerNo));
+                                    //selectedSeatTag.add(txtDetailList.getText().toString());
+                                } else {
+
+                                    if (passengerSeatListV2.getSelected(passengerNoV2) != null && passengerSeatListV2.getSelected(passengerNoV2) != "") {
+
+                                        TextView seatToRemove = (TextView) view.findViewWithTag("RETURN" + "_" +
+                                                passengerSeatListV2.getSelected(passengerNoV2));
+                                        seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
+                                        seatToRemove.setClickable(true);
+                                    }
+
+                                    seatTag2.add(txtDetailList.getText().toString());
+                                    txtDetailList.setBackgroundColor(getResources().getColor(R.color.bright_green));
+                                    txtDetailList.setClickable(false);
+
+                                    passengerSeatListV2.setSelectedPasssengerSeat(txtDetailList.getText().toString());
+                                    passengerSeatListV2.setSelectedCompartmentSeat(compartment);
+
+                                    if (next2) {
+
+                                        if (passengerNoV2 < passengerSize - 1) {
+                                            passengerSeatListV2.setNextPassengerSelected(passengerNoV2 + 1);
+                                            originalSeatType2 = passengerSeatListV2.getNextPassengerOriginalSeatType();
+                                            activeSeatType2 = getSeatType(passengerSeatListV2.getCurrentSelected(),"RETURN");
+                                            Log.e("originalSeatType2",originalSeatType2);
+                                        }
+                                    } else {
+                                        passengerSeatListV2.setNextPassengerSelected(passengerNoV2 + 1);
+                                        activeSeatType2 = getSeatType(passengerSeatListV2.getCurrentSelected(),"RETURN");
+                                        originalSeatType2 = passengerSeatListV2.getNextPassengerOriginalSeatType();
+                                        Log.e("originalSeatType2",originalSeatType2);
+                                    }
                                 }
                             }else{
-                                passengerSeatListV2.setNextPassengerSelected(passengerNoV2+1);
+                                Utils.toastNotification(getActivity(), "Seat downgraded not allowed");
                             }
+
                         }
-
-                    }
-
-                });
-
+                    });
 
                 //"seat_type":"standard",
                 //Set color and clickable
@@ -777,7 +861,6 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
     public void clearSelectedOnFragmentV2(String seat){
 
-        Log.e("V2", seat);
         TextView seatToRemove = (TextView) view.findViewWithTag("RETURN_"+seat);
         seatToRemove.setBackgroundColor(getResources().getColor(R.color.grey_background));
         seatToRemove.setClickable(true);
@@ -821,11 +904,10 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
     }
 
-
     public void seatSelect(ManageSeatInfo obj){
 
         initiateLoading(getActivity());
-        retrieveSeat = true;
+        retrieveSeat = false;
         presenter.seatSelect(obj,pnr,username,signature);
 
     }
@@ -833,67 +915,103 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
     @Override
     public void onRequestSeat(ContactInfoReceive obj) {
 
+
         dismissLoading();
+        if(!seatDisplayed){
+            seatInfoDepart = obj.getJourneys().get(0).getSeat_info();
 
-        seatInfoDepart = obj.getJourneys().get(0).getSeat_info();
-
-        List<ContactInfoReceive.Journeys> journeys = obj.getJourneys();
+            List<ContactInfoReceive.Journeys> journeys = obj.getJourneys();
 
         /*Set Passenger to adapter*/
             passengers = obj.getJourneys().get(0).getPassengers();
+            activeSeatType = getSeatType(passengers.get(0).getUnit_designator(),"DEPART");
+
             for(int v = 0 ; v < passengers.size() ; v++){
                 PasssengerInfoV2 obj2 = new PasssengerInfoV2();
                 obj2.setFirst_name(passengers.get(v).getFirst_name());
                 obj2.setLast_name(passengers.get(v).getLast_name());
                 obj2.setTitle(passengers.get(v).getTitle());
                 obj2.setSeat(passengers.get(v).getUnit_designator());
+                obj2.setOriginalSeatType(getSeatType(passengers.get(v).getUnit_designator(),"DEPART"));
                 obj2.setCompartment(passengers.get(v).getCompartment_designator());
                 obj2.setCheckedIn(passengers.get(v).getChecked_in());
                 objV2.add(obj2);
-        }
 
-        passengerSize = objV2.size();
-        Log.e("passengerSize",Integer.toString(passengerSize));
+            }
+            passengerSize = objV2.size();
+            Log.e("passengerSize",Integer.toString(passengerSize));
 
-        if(obj.getJourneys().size() > 1){
-            passengers = obj.getJourneys().get(1).getPassengers();
-            for(int v = 0 ; v < passengers.size() ; v++){
-                PasssengerInfoV2 obj3 = new PasssengerInfoV2();
-                obj3.setFirst_name(passengers.get(v).getFirst_name());
-                obj3.setLast_name(passengers.get(v).getLast_name());
-                obj3.setTitle(passengers.get(v).getTitle());
-                obj3.setSeat(passengers.get(v).getUnit_designator());
-                obj3.setCompartment(passengers.get(v).getCompartment_designator());
-                obj3.setCheckedIn(passengers.get(v).getChecked_in());
-                objV3.add(obj3);
+
+
+            if(obj.getJourneys().size() > 1){
+                seatInfoReturn = obj.getJourneys().get(1).getSeat_info();
+                passengers = obj.getJourneys().get(1).getPassengers();
+                activeSeatType2 = getSeatType(passengers.get(0).getUnit_designator(),"RETURN");
+
+                for(int v = 0 ; v < passengers.size() ; v++){
+                    PasssengerInfoV2 obj3 = new PasssengerInfoV2();
+                    obj3.setFirst_name(passengers.get(v).getFirst_name());
+                    obj3.setLast_name(passengers.get(v).getLast_name());
+                    obj3.setTitle(passengers.get(v).getTitle());
+                    obj3.setSeat(passengers.get(v).getUnit_designator());
+                    obj3.setOriginalSeatType(getSeatType(passengers.get(v).getUnit_designator(),"RETURN"));
+                    obj3.setCompartment(passengers.get(v).getCompartment_designator());
+                    obj3.setCheckedIn(passengers.get(v).getChecked_in());
+                    objV3.add(obj3);
+                }
+
+                //set total passenger
+
             }
 
-            //set total passenger
 
+            setSeat1(seatListDepart, seatInfoDepart);
+            setPassenger1("DEPART", listPassengerDepart, txtSeatDeparture, objV2, journeys.get(0).getDeparture_station(), journeys.get(0).getArrival_station());
+            seatListReturn.setVisibility(View.GONE);
+
+            if(journeys.size() > 1){
+
+                twoWay = true;
+                //seatInfoReturn = obj.getJourneys().get(1).getSeat_info();
+                setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
+                setSeat2(seatListReturn, seatInfoReturn);
+                passengerSeatListReturn.setVisibility(View.VISIBLE);
+            }
+
+            RealmObjectController.clearCachedResult(MainFragmentActivity.getContext());
+            displaySeatFee(obj);
+            retrieveSeat = true;
+            seatDisplayed = true;
         }
 
+    }
 
-        setSeat1(seatListDepart, seatInfoDepart);
-        setPassenger1("DEPART", listPassengerDepart, txtSeatDeparture, objV2, journeys.get(0).getDeparture_station(), journeys.get(0).getArrival_station());
-        seatListReturn.setVisibility(View.GONE);
 
-        if(journeys.size() > 1){
+    public String getSeatType(String seatUnit,String way){
 
-            twoWay = true;
-            seatInfoReturn = obj.getJourneys().get(1).getSeat_info();
-            setPassenger2("RETURN",listPassengerReturn,txtSeatReturn,objV3,journeys.get(1).getDeparture_station(),journeys.get(1).getArrival_station());
-            setSeat2(seatListReturn, seatInfoReturn);
-            passengerSeatListReturn.setVisibility(View.VISIBLE);
+        String seatType = "";
+        if(way.equals("DEPART")){
+            for(int c = 0 ; c < seatInfoDepart.size(); c++){
+                if(seatUnit.equals(seatInfoDepart.get(c).getSeat_number())){
+                    seatType = seatInfoDepart.get(c).getSeat_type();
+                }
+            }
+        }else{
+            for(int v = 0 ; v < seatInfoReturn.size(); v++){
+                if(seatUnit.equals(seatInfoReturn.get(v).getSeat_number())){
+                    seatType = seatInfoReturn.get(v).getSeat_type();
+                }
+            }
         }
 
-        displaySeatFee(obj);
-        retrieveSeat = true;
-        RealmObjectController.clearCachedResult(getActivity());
+        return seatType;
     }
 
     @Override
     public void onSeatChange(ManageChangeContactReceive obj) {
         dismissLoading();
+        clicked = true;
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             Intent intent = new Intent(getActivity(), CommitChangeActivity.class);
@@ -917,7 +1035,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
         Log.e("Tracker", SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(!retrieveSeat){
+        if(retrieveSeat){
             if(result.size() > 0){
                 Log.e("x","1");
                 Gson gson = new Gson();
@@ -925,12 +1043,14 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 onRequestSeat(obj);
             }
         }else{
-            if(result.size() > 0){
-                Log.e("x","1");
-                Gson gson = new Gson();
-                ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
-                onSeatChange(obj);
-            }
+            Log.e("result",Integer.toString(result.size()));
+            Log.e("result",result.toString());
+             if(result.size() > 0){
+                 Log.e("x","1");
+                 Gson gson = new Gson();
+                 ManageChangeContactReceive obj = gson.fromJson(result.get(0).getCachedResult(), ManageChangeContactReceive.class);
+                 onSeatChange(obj);
+             }
         }
     }
 

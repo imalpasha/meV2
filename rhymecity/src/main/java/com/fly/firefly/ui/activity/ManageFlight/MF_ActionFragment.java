@@ -508,7 +508,15 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
             mfChangeSeat.setVisibility(View.GONE);
 
             //DISABLE FIRST
-            mfMealRequest.setVisibility(View.VISIBLE);
+
+            String departureTime = obj.getFlight_details().get(0).getDeparture_time();
+            String arrivalTime = obj.getFlight_details().get(0).getArrival_time();
+
+            Log.e(departureTime,arrivalTime);
+            boolean offerSSRDepart = flightDuration2(arrivalTime,departureTime);
+            if(offerSSRDepart){
+                mfMealRequest.setVisibility(View.VISIBLE);
+            }
 
             txtOperatedBy.setVisibility(View.VISIBLE);
             txtOperatedBy.setText("Operated By Malaysia Airlines");
@@ -737,6 +745,14 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
 
             if(obj.getFlight_type().equals("MH")){
 
+                String departureTime = obj.getFlight_details().get(1).getDeparture_time();
+                String arrivalTime = obj.getFlight_details().get(1).getArrival_time();
+
+                boolean offerSSRReturn = flightDuration2(arrivalTime,departureTime);
+                if(offerSSRReturn){
+                    mfMealRequest.setVisibility(View.VISIBLE);
+                }
+
                 $twoWayFlightStatus = obj.getFlight_details().get(1).getFlight_segment_status();
 
                 if($twoWayFlightStatus.equals("Unconfirmed")){
@@ -781,11 +797,11 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);
             txtReturnFlightPriceTotalGuest.setText(returnFlightPriceGuestTotal);
 
-            String returnFlightInfant = obj.getPrice_details().get(0).getInfant();
-            String returnFlightInfantTotal = obj.getPrice_details().get(0).getTotal_infant();
+            String returnFlightInfant = obj.getPrice_details().get(1).getInfant();
+            String returnFlightInfantTotal = obj.getPrice_details().get(1).getTotal_infant();
 
             if(returnFlightInfant != null){
-                txtInfantReturn.setText(goingFlightInfant);
+                txtInfantReturn.setText(returnFlightInfant);
                 txtInfantTotalReturn.setText(returnFlightInfantTotal);
                 infantLayoutReturn.setVisibility(View.VISIBLE);
             }

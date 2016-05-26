@@ -40,15 +40,12 @@ public class DeviceInfoSuccess{
         public String getForce_update() {
             return force_update;
         }
-
         public void setForce_update(String force_update) {
             this.force_update = force_update;
         }
-
         public String getVersion() {
             return version;
         }
-
         public void setVersion(String version) {
             this.version = version;
         }

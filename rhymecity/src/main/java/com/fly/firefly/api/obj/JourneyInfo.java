@@ -15,6 +15,16 @@ public class JourneyInfo {
     public String arrival_station_code;
     public String arrival_station_name;
     public String flight_status;
+    public String mh_flight_number;
+    public String departure_station;
+
+    public String getMh_flight_number() {
+        return mh_flight_number;
+    }
+
+    public void setMh_flight_number(String mh_flight_number) {
+        this.mh_flight_number = mh_flight_number;
+    }
 
     public String getFlight_status() {
         return flight_status;
@@ -25,7 +35,6 @@ public class JourneyInfo {
     }
 
     //changeFlight
-    public String departure_station;
 
     public String getArrival_station() {
         return arrival_station;

@@ -10,7 +10,9 @@
         android:layout_height="0dp"
         android:layout_weight="0.1"
         android:weightSum="1"
-        android:padding="5dp">
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp">
 
         <LinearLayout
             android:orientation="vertical"
@@ -39,8 +41,26 @@
                 android:textStyle="bold"
                 android:textSize="16dp"
                 android:id="@+id/txtFlightNo" />
+
         </LinearLayout>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="0.1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="3dp"
+            android:text="Operated by Malaysia Airlines (MH1138)"
+            android:id="@+id/txtOperatedBy"
+            android:textSize="14dp"
+            android:textColor="@color/operated_by"/>
     </LinearLayout>
 
     <LinearLayout
@@ -49,6 +69,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.7"
         android:weightSum="1"
+        android:paddingTop="5dp"
         android:paddingRight="15dp"
         android:paddingLeft="15dp">
 

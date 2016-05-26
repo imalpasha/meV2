@@ -585,6 +585,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/txtTotalDue"
                             android:textColor="@color/red"
+                            android:textSize="15dp"
                             android:textStyle="bold"/>
                     </LinearLayout>
 

@@ -41,6 +41,10 @@ public class SharedPrefManager {
     public static final String FLIGHT_TYPE ="FT";
     public static final String USER_ID ="UI";
 
+    public static final String OFFERSSR1 ="OFS1";
+    public static final String OFFERSSR2 ="OFS2";
+
+
     public static final String APP_VERSION = "AV";
     int PRIVATE_MODE = 0;
     Context _context;
@@ -52,6 +56,21 @@ public class SharedPrefManager {
         _sharedPrefs = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         _prefsEditor = _sharedPrefs.edit();
     }
+
+    /*SSR1*/
+    public HashMap<String, String> getSSR1() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(OFFERSSR1, _sharedPrefs.getString(OFFERSSR1, null));
+        return init;
+    }
+
+    /*SSR2*/
+    public HashMap<String, String> getSSR2() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(OFFERSSR2, _sharedPrefs.getString(OFFERSSR2, null));
+        return init;
+    }
+
 
 
     /*user id*/
@@ -234,6 +253,16 @@ public class SharedPrefManager {
         return init;
     }
 
+    public void setSSR1(String type) {
+        _prefsEditor.putString(OFFERSSR1, type);
+        _prefsEditor.apply();
+    }
+
+    public void setSSR2(String type) {
+        _prefsEditor.putString(OFFERSSR2, type);
+        _prefsEditor.apply();
+    }
+
     /*Return User_info*/
     public HashMap<String, String> getUserEmail() {
         HashMap<String, String> init = new HashMap<String, String>();
@@ -253,6 +282,7 @@ public class SharedPrefManager {
         _prefsEditor.putString(APP_VERSION, version);
         _prefsEditor.apply();
     }
+
 
     /*Set Booking ID*/
     public void setUserID(String id) {

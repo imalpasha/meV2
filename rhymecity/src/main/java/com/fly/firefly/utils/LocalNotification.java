@@ -67,7 +67,6 @@ public class LocalNotification extends BaseFragment {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
-        Log.e("c",cal.getTime().toString());
 
         Date date1 = null;
         try {
@@ -76,9 +75,9 @@ public class LocalNotification extends BaseFragment {
             Log.e("message",e.getMessage());
         }
 
-        //if(date1.before(cal.getTime())){
-         //   status = true;
-        //}
+        if(date1.before(cal.getTime())){
+            status = true;
+        }
 
         return status;
     }

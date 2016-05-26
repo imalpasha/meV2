@@ -397,8 +397,8 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             String returnFlightPriceGuest = obj.getPrice_details().get(1).getGuest();
             String returnFlightPriceGuestTotal = obj.getPrice_details().get(1).getTotal_guest();
 
-            String returnFlightInfant = obj.getPrice_details().get(0).getInfant();
-            String returnFlightInfantTotal = obj.getPrice_details().get(0).getTotal_infant();
+            String returnFlightInfant = obj.getPrice_details().get(1).getInfant();
+            String returnFlightInfantTotal = obj.getPrice_details().get(1).getTotal_infant();
 
             if(returnFlightInfant != null){
                 txtInfantReturn.setText(returnFlightInfant);

@@ -248,6 +248,7 @@ public class BaseFragmentActivity extends FragmentActivity {
                     Log.e("result",Integer.toString(result.size()));
                     if(result.size() > 0){
                         BaseFragment.setAlertDialog(this,result.get(0).getMessage(),result.get(0).getTitle());
+                        MainFragmentActivity.setAppStatus("not_ready_for_notification");
                         RealmObjectController.clearNotificationMessage(this);
                     }
                 }else{

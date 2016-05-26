@@ -293,6 +293,24 @@ public class FlightSummaryReceive {
         private String type;
         private String flight_status;
         private String flight_segment_status;
+        private String departure_time;
+        private String arrival_time;
+
+        public String getDeparture_time() {
+            return departure_time;
+        }
+
+        public void setDeparture_time(String departure_time) {
+            this.departure_time = departure_time;
+        }
+
+        public String getArrival_time() {
+            return arrival_time;
+        }
+
+        public void setArrival_time(String arrival_time) {
+            this.arrival_time = arrival_time;
+        }
 
         public String getFlight_segment_status() {
             return flight_segment_status;

@@ -388,9 +388,9 @@ public class RealmObjectController extends BaseFragment {
             @Override
             public void onSuccess() {
 
-                Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
-                final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
-                Log.e("XXX",result2.toString());
+                //Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
+                //final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
+                //Log.e("XXX",result2.toString());
 
                 //BoardingPassObj realmObject = realm.createObject(BoardingPassObj.class);
                 //Log.e("Size", realmObject.getPnr());

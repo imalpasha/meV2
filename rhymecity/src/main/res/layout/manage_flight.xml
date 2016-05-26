@@ -242,11 +242,87 @@
                             android:visibility="gone"
                             android:indeterminate="true"
                             android:progress="1"/>
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme"
+                            android:id="@+id/notDepartedList" >
 
-                        <ListView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Upcoming Trips"
+                                android:tag="txtPassenger1"
+                                android:textSize="@dimen/font20sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.fly.firefly.utils.ExpandAbleGridView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/listView" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:id="@+id/noUpcomingTrips">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No Upcoming Trips"
+                                android:gravity="center"
+                                android:textSize="18dp"
+                                android:padding="20dp"
+                                android:id="@+id/textView357" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:background="@color/actionBarColour_default_theme"
+                            android:id="@+id/departedList" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Completed Travel"
+                                android:tag="txtPassenger1"
+                                android:textSize="@dimen/font20sp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.fly.firefly.utils.ExpandAbleGridView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/listViewDepart" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:id="@+id/noCompletedTravel">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="No Completed Travel"
+                                android:gravity="center"
+                                android:textSize="18dp"
+                                android:padding="20dp"
+                                android:id="@+id/textView357123" />
+                        </LinearLayout>
 
                     </LinearLayout>
 

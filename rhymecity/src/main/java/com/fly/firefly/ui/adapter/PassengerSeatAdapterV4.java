@@ -66,7 +66,6 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
-        Log.e("Invalidate","True");
         ViewHolder vh;
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.passenger_seat_list, parent, false);
@@ -130,7 +129,6 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
         {
 
             pic.setSelected(false);
-            Log.e(Boolean.toString(obj.get(x).isSelected()), "False");
             x++;
         }
 
@@ -168,8 +166,6 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
         int seatNumber = data;
         String data2 = obj.get(seatNumber).getSeat();
 
-        //Log.e("Seat",data2);
-
         return data2;
         //notifyDataSetChanged();
     }
@@ -178,8 +174,6 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
 
         int seatNumber = data;
         String data2 = obj.get(seatNumber).getCompartment();
-
-        //Log.e("Seat",data2);
 
         return data2;
         //notifyDataSetChanged();
@@ -211,6 +205,22 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public String getCurrentSelected(){
+
+        String currentSelected = "";
+        int x = 0;
+        for (PasssengerInfoV2 pic : obj)
+        {
+            if(obj.get(x).isSelected()){
+                currentSelected = obj.get(x).getSeat();
+                break;
+            }
+            x++;
+        }
+
+        return currentSelected;
+    }
+
     public void autoSelectReturnPassenger(){
 
         int x = 0;
@@ -229,6 +239,22 @@ public class PassengerSeatAdapterV4 extends BaseAdapter {
             }
         }
         notifyDataSetChanged();
+    }
+
+    public String getNextPassengerOriginalSeatType(){
+
+        String originalSeatType = "";
+        int x = 0;
+        for (PasssengerInfoV2 pic : obj)
+        {
+            if(obj.get(x).isSelected()){
+                originalSeatType = obj.get(x).getOriginalSeatType();
+                break;
+            }
+            x++;
+        }
+
+        return originalSeatType;
     }
 
 }

@@ -66,7 +66,6 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
     @Override
     public View getView(final int position, View view, ViewGroup parent) {
 
-        Log.e("Invalidate","True");
         ViewHolder vh;
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.passenger_seat_list, parent, false);
@@ -81,8 +80,6 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
 
         vh.passengerName.setText(obj.get(position).getTitle()+" "+obj.get(position).getFirst_name()+" "+obj.get(position).getLast_name());
         vh.passengerSeatNo.setText(obj.get(position).getSeat());
-       // Log.e("Title", obj.get(position).getTitle());
-       // Log.e("Seat",obj.get(position).getSeat());
 
         vh.removeSeatNo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +127,6 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
         {
 
             pic.setSelected(false);
-            Log.e(Boolean.toString(obj.get(x).isSelected()), "False");
             x++;
         }
 
@@ -168,8 +164,6 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
         int seatNumber = data;
         String data2 = obj.get(seatNumber).getSeat();
 
-        //Log.e("Seat",data2);
-
         return data2;
         //notifyDataSetChanged();
     }
@@ -178,8 +172,6 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
 
         int seatNumber = data;
         String data2 = obj.get(seatNumber).getCompartment();
-
-        //Log.e("Seat",data2);
 
         return data2;
         //notifyDataSetChanged();
@@ -210,5 +202,38 @@ public class PassengerSeatAdapterV3 extends BaseAdapter {
 
         notifyDataSetChanged();
     }
+
+    public String getCurrentSelected(){
+
+        String currentSelected = "x";
+        int x = 0;
+        for (PasssengerInfoV2 pic : obj)
+        {
+            if(obj.get(x).isSelected()){
+                currentSelected = obj.get(x).getSeat();
+                break;
+            }
+            x++;
+        }
+
+        return currentSelected;
+    }
+
+    public String getNextPassengerOriginalSeatType(){
+
+        String originalSeatType = "";
+        int x = 0;
+        for (PasssengerInfoV2 pic : obj)
+        {
+            if(obj.get(x).isSelected()){
+                originalSeatType = obj.get(x).getOriginalSeatType();
+                break;
+            }
+            x++;
+        }
+
+        return originalSeatType;
+    }
+
 
 }

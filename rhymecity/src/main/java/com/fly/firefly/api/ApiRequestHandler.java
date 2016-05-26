@@ -142,7 +142,7 @@ public class ApiRequestHandler {
 
                 bus.post(new DeviceInfoSuccess(retroResponse));
                 RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
-                resetInc();
+                //resetInc();
 
             }
 

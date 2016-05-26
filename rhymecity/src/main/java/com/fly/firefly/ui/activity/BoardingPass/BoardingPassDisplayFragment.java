@@ -269,9 +269,9 @@ public class BoardingPassDisplayFragment extends BaseFragment implements Boardin
             startPagination(obj);
 
             //test
-            Realm realm = Realm.getInstance(MainFragmentActivity.getContext());
-            final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
-            Log.e("Current",result2.toString());
+            //Realm realm = RealmObjectController.getRealmInstance(getActivity());
+            //final RealmResults<BoardingPassObj> result2 = realm.where(BoardingPassObj.class).findAll();
+            //Log.e("Current",result2.toString());
 
             horizontalProgressBar.setVisibility(View.GONE);
         }

@@ -38,6 +38,7 @@ import com.fly.firefly.R;
 import com.fly.firefly.ui.activity.BookingFlight.SearchFlightFragment;
 import com.fly.firefly.ui.activity.SplashScreen.SplashScreenActivity;
 //import com.fly.firefly.ui.adapter.CheckInPassengerListAdapter;
+import com.fly.firefly.ui.activity.SplashScreen.TokenActivity;
 import com.fly.firefly.ui.adapter.CheckInAdapter;
 import com.fly.firefly.ui.activity.BoardingPass.BoardingPassFragment;
 import com.fly.firefly.ui.activity.MobileCheckIn.MobileCheckInFragment1;
@@ -83,6 +84,61 @@ public class BaseFragment extends Fragment {
 	private static Boolean status;
 	Boolean manualValidationStatus = true;
 	private static int staticIndex = -1;
+
+
+	public boolean flightDuration2(String arrivalTime,String returnDepartureTime){
+
+		boolean status = true;
+
+		SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mma");
+
+		Date arrival = null;
+		Date departureReturn = null;
+
+		try {
+			arrival = parseFormat.parse(arrivalTime);
+			departureReturn = parseFormat.parse(returnDepartureTime);
+		}catch (Exception e){
+		}
+
+		long count60minute = arrival.getTime() - departureReturn.getTime();
+
+		Log.e("abc", Long.toString(TimeUnit.MILLISECONDS.toMinutes(count60minute)));
+
+		if(Math.abs(TimeUnit.MILLISECONDS.toMinutes(count60minute)) <= 60 ){
+			status = false;
+		}
+
+		return status;
+	}
+
+	public boolean flightDuration(String arrivalTime,String returnDepartureTime){
+
+		boolean status = true;
+
+		SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+
+		Date arrival = null;
+		Date departureReturn = null;
+
+		try {
+			arrival = parseFormat.parse(arrivalTime);
+			departureReturn = parseFormat.parse(returnDepartureTime);
+		}catch (Exception e){
+		}
+
+		long count60minute = arrival.getTime() - departureReturn.getTime();
+
+		Log.e("abc", Long.toString(TimeUnit.MILLISECONDS.toMinutes(count60minute)));
+
+		if(Math.abs(TimeUnit.MILLISECONDS.toMinutes(count60minute)) <= 60 ){
+			status = false;
+		}
+
+		return status;
+	}
+
 
 	public void blinkText(TextView txt){
 
@@ -137,7 +193,9 @@ public class BaseFragment extends Fragment {
 			arrival = parseFormat.parse(arrivalTime);
 			departureReturn = parseFormat.parse(returnDepartureTime);
 		}catch (Exception e){
+
 		}
+
 		Log.e("xxxxxxxxxxxxxxx", Long.toString(departureReturn.getTime()));
 		Log.e("yyyyyyyyyyyyyy", Long.toString(arrival.getTime()));
 
@@ -147,6 +205,8 @@ public class BaseFragment extends Fragment {
 
 		return status;
 	}
+
+
 
 	public boolean compare90Minute(String arrivalTime,String returnDepartureTime){
 
@@ -512,7 +572,7 @@ public class BaseFragment extends Fragment {
 				.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
 					@Override
 					public void onClick(SweetAlertDialog sDialog) {
-						Intent explicitIntent = new Intent(act, SplashScreenActivity.class);
+						Intent explicitIntent = new Intent(act, TokenActivity.class);
 						act.startActivity(explicitIntent);
 					}
 				})
@@ -609,56 +669,17 @@ public class BaseFragment extends Fragment {
 
 		LayoutInflater li = LayoutInflater.from(act);
 		final View myView = li.inflate(R.layout.loading_screen, null);
-
-
-			Log.e("Hello","OK");
-			/*pDialog = new SweetAlertDialog(act, SweetAlertDialog.PROGRESS_TYPE);
-			pDialog.getProgressHelper().setBarColor(Color.parseColor("#CCff6a4d"));
-			pDialog.setTitleText("Loading");
-			pDialog.setCustomImage(R.drawable.load);
-			pDialog.setCancelable(false);
-			pDialog.show();*/
-
-			//ContextThemeWrapper wrapper = new ContextThemeWrapper(act, R.style.DialogTheme);
-			//final LayoutInflater inflater = (LayoutInflater) wrapper.getSystemService(act.LAYOUT_INFLATER_SERVICE);
-
-
 		AlertDialog.Builder builder = new AlertDialog.Builder(act);
 		builder.setView(myView);
-
-
-
 
 			dialog.setContentView(myView);
 			dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 			dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CCFFFFFF")));
 			dialog.setCancelable(false);
-			//dialog.show();
-
-
-
-
-			/*Dialog dialog2 = new Dialog(getActivity(),R.style.DialogTheme);
-			dialog2.setContentView(myView);
-			dialog2.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-			dialog2.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-			dialog2.show();
-
-
-				//LayoutInflater li = LayoutInflater.from(act);
-				//final View myView = inflater.inflate(R.layout.loading_screen, null);
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(wrapper);
-				builder.setView(myView);
-
-				dialog = builder.create();
-				//dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-			*/
 
 			WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 			lp.copyFrom(dialog.getWindow().getAttributes());
 			lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-			//lp.height = 570;
 			dialog.getWindow().setAttributes(lp);
 			dialog.show();
 

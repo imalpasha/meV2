@@ -25,12 +25,20 @@ import com.fly.firefly.api.obj.ListBookingReceive;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 import com.fly.firefly.ui.adapter.BookingListAdapter;
+import com.fly.firefly.ui.adapter.BookingListAdapter2;
+import com.fly.firefly.ui.adapter.BookingListAdapter3;
 import com.fly.firefly.ui.module.ManageFlightModule;
+import com.fly.firefly.ui.object.DefaultPassengerObj;
+import com.fly.firefly.ui.object.ListBookingObj;
+import com.fly.firefly.ui.object.ListFlight;
+import com.fly.firefly.ui.object.ListFlight2;
 import com.fly.firefly.ui.object.ManageFlightList;
 import com.fly.firefly.ui.object.MobileCheckInList;
 import com.fly.firefly.ui.object.CachedResult;
 import com.fly.firefly.ui.object.ManageFlightObj;
+import com.fly.firefly.ui.object.PassengerInfo;
 import com.fly.firefly.ui.presenter.ManageFlightPrenter;
+import com.fly.firefly.utils.ExpandAbleGridView;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
 import com.google.gson.Gson;
@@ -39,6 +47,10 @@ import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -67,7 +79,16 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
     EditText txtUsername;
 
     @InjectView(R.id.listView)
-    ListView listView;
+    ExpandAbleGridView listView;
+
+    @InjectView(R.id.listViewDepart)
+    ExpandAbleGridView listViewDepart;
+
+    @InjectView(R.id.noUpcomingTrips)
+    LinearLayout noUpcomingTrips;
+
+    @InjectView(R.id.noCompletedTravel)
+    LinearLayout noCompletedTravel;
 
     @InjectView(R.id.pnrLayout)
     LinearLayout pnrLayout;
@@ -90,7 +111,12 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
     private String signature;
     private Validator mValidator;
     private String pnr,email;
-    private BookingListAdapter adapter;
+
+    private BookingListAdapter2 adapter;
+    private BookingListAdapter3 adapter2;
+
+    //private BookingListAdapter2 adapter_depart;
+
     private String storeUsername;
     private String loginStatus;
     private boolean cache_login = false;
@@ -137,8 +163,13 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
         if(loginStatus != null && loginStatus.equals("Y")) {
             SCREEN_LABEL =  "Manage Flight: Login Manage Flight";
             cache_login = true;
+            btnManageFlightContinue.setVisibility(View.GONE);
 
-            RealmResults<ManageFlightList> cachedListResult = RealmObjectController.getManageFlightList(MainFragmentActivity.getContext());
+            //update the list on background
+            initiateLoading(getActivity());
+            presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
+
+           /* RealmResults<ManageFlightList> cachedListResult = RealmObjectController.getManageFlightList(MainFragmentActivity.getContext());
             if(cachedListResult.size() > 0){
                 Gson gson = new Gson();
                 ListBookingReceive obj = gson.fromJson(cachedListResult.get(0).getCachedList(), ListBookingReceive.class);
@@ -160,12 +191,13 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
             }
 
             btnManageFlightContinue.setVisibility(View.GONE);
-
-        }else{
-            cache_login = false;
+*/
+        }
+        cache_login = true;
+        /*else{
             pnrLayout.setVisibility(View.VISIBLE);
             SCREEN_LABEL =  "Manage Flight: Manage Flight";
-        }
+        }*/
 
          /*Set PNR auto caps*/
         InputFilter[] FilterArray = new InputFilter[2];
@@ -232,7 +264,6 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
 
             //Gson gsonUserInfo = new Gson();
             //String userInfo = gsonUserInfo.toJson(obj);
-            Log.e("booking id", obj.getBooking_id());
 
             pref.setBookingID(obj.getBooking_id());
             //pref.setUserID(obj.getObj().getUse());
@@ -276,20 +307,89 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
+            Log.e("SIZE",Integer.toString(obj.getList_booking().size()));
+
+            //need to split departed flight
+            int a = 0;
+            int b = 0;
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+            Date dt = new Date();
+            String currentDateTimeString = dateFormat.format(dt);
+
+
             if(obj.getList_booking().size() == 0){
                 manageFlightNA.setVisibility(View.VISIBLE);
                 listviewLayout.setVisibility(View.GONE);
             }else{
-                adapter = new BookingListAdapter(getActivity(),obj.getList_booking(),"MF");
-                listView.setAdapter(adapter);
+
+
+
+                List<ListFlight> list_booking = new ArrayList<ListFlight>();
+                List<ListFlight2> list_booking_depart = new ArrayList<ListFlight2>();
+
+                //= obj.getList_booking();
+                //list_booking.remove(0);
+
+                for(int v = 0 ; v < obj.getList_booking().size(); v++){
+                    ListFlight test = new ListFlight();
+                    ListFlight2 test2 = new ListFlight2();
+
+                    if(currentDateTimeString.compareTo(obj.getList_booking().get(v).getDeparture_datetime()) < 0){
+                        test.setDate(obj.getList_booking().get(v).getDate());
+                        test.setPnr(obj.getList_booking().get(v).getPnr());
+                        list_booking.add(test);
+                    }else{
+                        test2.setDate(obj.getList_booking().get(v).getDate());
+                        test2.setPnr(obj.getList_booking().get(v).getPnr());
+                        list_booking_depart.add(test2);
+                    }
+                }
+
+                if(list_booking.size() > 0){
+                    noUpcomingTrips.setVisibility(View.GONE);
+                    adapter = new BookingListAdapter2(getActivity(),list_booking,"MF");
+                    listView.setAdapter(adapter);
+                }
+
+                if(list_booking_depart.size() > 0){
+                    noCompletedTravel.setVisibility(View.GONE);
+                    adapter2 = new BookingListAdapter3(getActivity(),list_booking_depart,"MF");
+                    listViewDepart.setAdapter(adapter2);
+                }
+
                 pref.setSignatureToLocalStorage(obj.getSignature());
+
             }
 
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
-                ListBookingReceive.ListBooking selectedFromList = (ListBookingReceive.ListBooking) (listView.getItemAtPosition(myItemInt));
+                ListFlight selectedFromList = (ListFlight) (listView.getItemAtPosition(myItemInt));
+
+                //Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.YOUR_ANIMATION);
+                //view.startAnimation(hyperspaceJumpAnimation);
+
+                Log.e("Selected PNR", selectedFromList.getPnr());
+                Log.e("Username", pref.getUserEmail().toString());
+                initiateLoading(getActivity());
+
+                ManageFlightObj manageFlightObj = new ManageFlightObj();
+                manageFlightObj.setPnr(selectedFromList.getPnr());
+                manageFlightObj.setUsername(storeUsername);
+                manageFlightObj.setUser_id(obj.getUser_id());
+                manageFlightObj.setSignature(obj.getSignature());
+
+                cache_login = false;
+                horizontalProgressBar.setVisibility(View.INVISIBLE);
+                presenter.onSendPNRV1(manageFlightObj);
+            }
+        });
+
+
+        listViewDepart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {
+                ListFlight2 selectedFromList = (ListFlight2) (listViewDepart.getItemAtPosition(myItemInt));
 
                 //Animation hyperspaceJumpAnimation = AnimationUtils.loadAnimation(this, R.anim.YOUR_ANIMATION);
                 //view.startAnimation(hyperspaceJumpAnimation);
@@ -336,8 +436,6 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
         presenter.onResume();
 
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
-        Log.e("Tracker", SCREEN_LABEL);
-
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
 
        if(!cache_login){

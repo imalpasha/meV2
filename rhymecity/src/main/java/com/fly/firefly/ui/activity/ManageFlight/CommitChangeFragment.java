@@ -687,11 +687,11 @@ public class CommitChangeFragment extends BaseFragment implements ManageFlightPr
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);
             txtReturnFlightPriceTotalGuest.setText(returnFlightPriceGuestTotal);
 
-            String returnFlightInfant = obj.getPrice_details().get(0).getInfant();
-            String returnFlightInfantTotal = obj.getPrice_details().get(0).getTotal_infant();
+            String returnFlightInfant = obj.getPrice_details().get(1).getInfant();
+            String returnFlightInfantTotal = obj.getPrice_details().get(1).getTotal_infant();
 
             if(returnFlightInfant != null){
-                txtInfantReturn.setText(goingFlightInfant);
+                txtInfantReturn.setText(returnFlightInfant);
                 txtInfantTotalReturn.setText(returnFlightInfantTotal);
                 infantLayoutReturn.setVisibility(View.VISIBLE);
             }

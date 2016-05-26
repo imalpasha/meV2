@@ -11,9 +11,19 @@ public class FlightInfo{
     private basic_class basic_class;
     private flex_class flex_class;
 
+    private String mh_flight_number;
     //codeshare
     private EconomyPromoClass economy_promo_class;
     private EconomyPromoClass economy_class;
+    
+    public String getMh_flight_number() {
+        return mh_flight_number;
+    }
+
+    public void setMh_flight_number(String mh_flight_number) {
+        this.mh_flight_number = mh_flight_number;
+    }
+
 
     public EconomyPromoClass getBusiness_class() {
         return business_class;
