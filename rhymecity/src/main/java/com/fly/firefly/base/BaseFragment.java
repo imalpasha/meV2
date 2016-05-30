@@ -753,8 +753,8 @@ public class BaseFragment extends Fragment {
 				WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
 				lp.copyFrom(mDialog.getWindow().getAttributes());
 				lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-				lp.height = WindowManager.LayoutParams.WRAP_CONTENT;;
-				//lp.horizontalMargin = 100;
+				lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		//lp.horizontalMargin = 100;
 				//lp.verticalMargin = 100;
 				mDialog.getWindow().setAttributes(lp);
 	}

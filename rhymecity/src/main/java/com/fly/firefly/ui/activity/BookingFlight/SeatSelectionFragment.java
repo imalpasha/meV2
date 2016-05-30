@@ -249,11 +249,7 @@ public class SeatSelectionFragment extends BaseFragment implements BookingPresen
 
                 seatTag2 = new ArrayList<>(1);
 
-                if(myItemInt < passengerSize-1){
-                    next2 = false;
-                }else{
-                    next2 = true;
-                }
+                next2 = myItemInt >= passengerSize - 1;
 
                 passengerNoV2 = myItemInt;
                 //Set selected

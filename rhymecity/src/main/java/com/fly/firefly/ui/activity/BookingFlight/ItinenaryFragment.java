@@ -2,6 +2,7 @@ package com.fly.firefly.ui.activity.BookingFlight;
 
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -101,7 +102,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.txtGoingFlightPriceDetail)
     TextView txtGoingFlightPriceDetail;
 
-    @InjectView(R.id.txtGoingFlightAdminFee)
+   /*@InjectView(R.id.txtGoingFlightAdminFee)
     TextView txtGoingFlightAdminFee;
 
     @InjectView(R.id.txtGoingFlightAirportTax)
@@ -114,7 +115,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     TextView txtGoingFlightGST;
 
     @InjectView(R.id.txtGoingFlightDetailTotal)
-    TextView txtGoingFlightDetailTotal;
+    TextView txtGoingFlightDetailTotal;*/
 
     @InjectView(R.id.txtGoingTotalFee)
     TextView txtGoingTotalFee;
@@ -128,7 +129,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
     @InjectView(R.id.txtReturnFlightPriceDetail)
     TextView txtReturnFlightPriceDetail;
 
-    @InjectView(R.id.txtReturnFlightAdminFee)
+    /*@InjectView(R.id.txtReturnFlightAdminFee)
     TextView txtReturnFlightAdminFee;
 
     @InjectView(R.id.txtReturnFlightAirportTax)
@@ -142,6 +143,7 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
 
     @InjectView(R.id.txtReturnFlightDetailTotal)
     TextView txtReturnFlightDetailTotal;
+    */
 
     @InjectView(R.id.txtReturnTotalFee)
     TextView txtReturnTotalFee;
@@ -321,24 +323,88 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             infantLayout.setVisibility(View.VISIBLE);
         }
 
+
+        //need to modify
+        //Services & Fee
+        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+
+        for(int services = 0 ; services < obj.getPrice_details().get(0).getTaxes_or_fees_array().size() ; services++){
+
+                    LinearLayout servicesRow = new LinearLayout(getActivity());
+                    servicesRow.setOrientation(LinearLayout.HORIZONTAL);
+                    servicesRow.setPadding(2, 2, 2, 2);
+                    servicesRow.setWeightSum(1);
+                    servicesRow.setLayoutParams(matchParent);
+
+                    String servicesName = obj.getPrice_details().get(0).getTaxes_or_fees_array().get(services).getTax_fee_name();
+                    String servicePrice = obj.getPrice_details().get(0).getTaxes_or_fees_array().get(services).getTax_fee_price();
+
+                    TextView txtServicesName = new TextView(getActivity());
+                    txtServicesName.setText(servicesName);
+                    txtServicesName.setLayoutParams(half06);
+
+                    TextView txtServicePrice = new TextView(getActivity());
+                    txtServicePrice.setText(servicePrice);
+                    txtServicePrice.setLayoutParams(half04);
+                    txtServicePrice.setGravity(Gravity.RIGHT);
+                    //txtServicesName.setLayoutParams(param);
+                    servicesRow.addView(txtServicesName);
+                    servicesRow.addView(txtServicePrice);
+
+                    goingFlightPriceDetail.addView(servicesRow);
+
+                    if(services == obj.getPrice_details().get(0).getTaxes_or_fees_array().size()-1){
+
+                        LinearLayout servicesRow2 = new LinearLayout(getActivity());
+                        servicesRow2.setOrientation(LinearLayout.HORIZONTAL);
+                        servicesRow2.setPadding(2, 2, 2, 2);
+                        servicesRow2.setWeightSum(1);
+                        servicesRow2.setLayoutParams(matchParent);
+
+                        TextView txtTotalFEE = new TextView(getActivity());
+                        txtTotalFEE.setText("Total");
+                        txtTotalFEE.setTypeface(null, Typeface.BOLD);
+                        txtTotalFEE.setLayoutParams(half06);
+
+                        TextView txtTotalFeePrice = new TextView(getActivity());
+                        txtTotalFeePrice.setText(obj.getPrice_details().get(0).getTaxes_or_fees().getTotal());
+                        txtTotalFeePrice.setLayoutParams(half04);
+                        txtTotalFeePrice.setTypeface(null, Typeface.BOLD);
+                        txtTotalFeePrice.setGravity(Gravity.RIGHT);
+
+                        servicesRow2.addView(txtTotalFEE);
+                        servicesRow2.addView(txtTotalFeePrice);
+
+                        goingFlightPriceDetail.addView(servicesRow2);
+
+                    }
+            }
+
+        String goingFlightDetailTotal= obj.getPrice_details().get(0).getTaxes_or_fees().getTotal();
+        txtGoingTotalFee.setText(goingFlightDetailTotal);
+
+        //Log.e("COUNT",obj.getPrice_details().get(0).getTaxes_or_fees());
         //Going Flight Price
-        String goingFlightAdminFee = obj.getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
+
+
+        /*String goingFlightAdminFee = obj.getPrice_details().get(0).getTaxes_or_fees().getAdmin_fee();
         String goingFlightAirportTax = obj.getPrice_details().get(0).getTaxes_or_fees().getAirport_tax();
         String goingFlightFuelSurcharge = obj.getPrice_details().get(0).getTaxes_or_fees().getFuel_surcharge();
         String goingFlightGST = obj.getPrice_details().get(0).getTaxes_or_fees().getGoods_and_services_tax();
-        String goingFlightDetailTotal= obj.getPrice_details().get(0).getTaxes_or_fees().getTotal();
+
+
 
         txtGoingFlightAdminFee.setText(goingFlightAdminFee);
         txtGoingFlightAirportTax.setText(goingFlightAirportTax);
         txtGoingFlightFuelSurcharge.setText(goingFlightFuelSurcharge);
         txtGoingFlightGST.setText(goingFlightGST);
-        txtGoingFlightDetailTotal.setText(goingFlightDetailTotal);
-        txtGoingTotalFee.setText(goingFlightDetailTotal);
-
+     */
         //Services & Fee
-        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
-        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
-        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+        //LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+        //LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+        //LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
         for(int services = 0 ; services < obj.getPrice_details().size() ; services++){
             if(obj.getPrice_details().get(services).getStatus().equals("Services and Fees") && obj.getPrice_details().get(services).getServices().size() > 0){
@@ -411,19 +477,61 @@ public class ItinenaryFragment extends BaseFragment implements BookingPresenter.
             txtReturnFlightPriceGuest.setText(returnFlightPriceGuest);
             txtReturnFlightPriceTotalGuest.setText(returnFlightPriceGuestTotal);
 
-            //Going Flight Price
-            String returnFlightAdminFee = obj.getPrice_details().get(1).getTaxes_or_fees().getAdmin_fee();
-            String returnFlightAirportTax = obj.getPrice_details().get(1).getTaxes_or_fees().getAirport_tax();
-            String returnFlightFuelSurcharge = obj.getPrice_details().get(1).getTaxes_or_fees().getFuel_surcharge();
-            String returnFlightGST = obj.getPrice_details().get(1).getTaxes_or_fees().getGoods_and_services_tax();
-            String returnFlightDetailTotal= obj.getPrice_details().get(1).getTaxes_or_fees().getTotal();
+            for(int services = 0 ; services < obj.getPrice_details().get(1).getTaxes_or_fees_array().size() ; services++){
 
-            txtReturnFlightAdminFee.setText(returnFlightAdminFee);
-            txtReturnFlightAirportTax.setText(returnFlightAirportTax);
-            txtReturnFlightFuelSurcharge.setText(returnFlightFuelSurcharge);
-            txtReturnFlightGST.setText(returnFlightGST);
-            txtReturnFlightDetailTotal.setText(returnFlightDetailTotal);
+                LinearLayout servicesRow = new LinearLayout(getActivity());
+                servicesRow.setOrientation(LinearLayout.HORIZONTAL);
+                servicesRow.setPadding(2, 2, 2, 2);
+                servicesRow.setWeightSum(1);
+                servicesRow.setLayoutParams(matchParent);
+
+                String servicesName = obj.getPrice_details().get(1).getTaxes_or_fees_array().get(services).getTax_fee_name();
+                String servicePrice = obj.getPrice_details().get(1).getTaxes_or_fees_array().get(services).getTax_fee_price();
+
+                TextView txtServicesName = new TextView(getActivity());
+                txtServicesName.setText(servicesName);
+                txtServicesName.setLayoutParams(half06);
+
+                TextView txtServicePrice = new TextView(getActivity());
+                txtServicePrice.setText(servicePrice);
+                txtServicePrice.setLayoutParams(half04);
+                txtServicePrice.setGravity(Gravity.RIGHT);
+                servicesRow.addView(txtServicesName);
+                servicesRow.addView(txtServicePrice);
+
+                returnFlightPriceDetail.addView(servicesRow);
+
+                if(services == obj.getPrice_details().get(1).getTaxes_or_fees_array().size()-1){
+
+                    LinearLayout servicesRow2 = new LinearLayout(getActivity());
+                    servicesRow2.setOrientation(LinearLayout.HORIZONTAL);
+                    servicesRow2.setPadding(2, 2, 2, 2);
+                    servicesRow2.setWeightSum(1);
+                    servicesRow2.setLayoutParams(matchParent);
+
+                    TextView txtTotalFEE = new TextView(getActivity());
+                    txtTotalFEE.setText("Total");
+                    txtTotalFEE.setTypeface(null, Typeface.BOLD);
+                    txtTotalFEE.setLayoutParams(half06);
+
+                    TextView txtTotalFeePrice = new TextView(getActivity());
+                    txtTotalFeePrice.setText(obj.getPrice_details().get(1).getTaxes_or_fees().getTotal());
+                    txtTotalFeePrice.setLayoutParams(half04);
+                    txtTotalFeePrice.setTypeface(null, Typeface.BOLD);
+                    txtTotalFeePrice.setGravity(Gravity.RIGHT);
+
+                    servicesRow2.addView(txtTotalFEE);
+                    servicesRow2.addView(txtTotalFeePrice);
+
+                    returnFlightPriceDetail.addView(servicesRow2);
+
+                }
+            }
+
+            String returnFlightDetailTotal= obj.getPrice_details().get(1).getTaxes_or_fees().getTotal();
             txtReturnTotalFee.setText(returnFlightDetailTotal);
+
+
         }
 
     }

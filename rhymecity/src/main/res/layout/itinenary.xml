@@ -392,7 +392,7 @@
                                     android:padding="3dp"
                                     android:visibility="gone">
 
-                                    <LinearLayout
+                              <!--      <LinearLayout
                                         android:orientation="horizontal"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -574,7 +574,11 @@
                                                 android:textSize="13dp"
                                                 android:id="@+id/txtGoingFlightDetailTotal" />
                                         </LinearLayout>
-                                    </LinearLayout>
+                                    </LinearLayout> -->
+
+
+
+
 
                                 </LinearLayout>
 
@@ -739,7 +743,7 @@
                                     android:padding="3dp"
                                     android:visibility="gone" >
 
-                                    <LinearLayout
+                                <!--    <LinearLayout
                                         android:orientation="horizontal"
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
@@ -920,7 +924,8 @@
                                                 android:textSize="13dp"
                                                 android:id="@+id/txtReturnFlightDetailTotal" />
                                         </LinearLayout>
-                                    </LinearLayout>
+                                    </LinearLayout> -->
+
                                 </LinearLayout>
                             </LinearLayout>
 

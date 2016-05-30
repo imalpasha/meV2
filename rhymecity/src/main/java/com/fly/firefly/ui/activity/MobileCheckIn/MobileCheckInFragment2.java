@@ -139,11 +139,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
 
 
         for(int y = 0 ; y < obj.getPassengers().size() ; y++){
-            if(obj.getPassengers().get(y).getStatus().equals("Checked In")){
-                allCheckIn = true;
-            }else{
-                allCheckIn = false;
-            }
+            allCheckIn = obj.getPassengers().get(y).getStatus().equals("Checked In");
         }
         if(allCheckIn){
             mobileCheckInNext2.setVisibility(View.INVISIBLE);

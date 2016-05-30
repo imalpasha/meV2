@@ -4,19 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 
 public final class CommonUtilities {
-	
-	// give your server registration url here
-    //static final String SERVER_URL = "http://192.168.56.1:80/gcm_server_php/register.php";
-    //static final String SERVER_URL = "http://izzatiabdullah.tk/register.php";
-    static final String SERVER_URL = "http://52.23.200.129/izzati/gcmwebapp/insertuser.php";
-
 
     // Google project id
 
-   //static final String SENDER_ID = "350778414071";
-    //static final String SENDER_ID = "12013843051";
+    //com.fly.firefly
     public static final String SENDER_ID = "409451026725";
-//AIzaSyB-7qW3LUNG9KIO5JsIxb8y-Mx7x2LbJ5Y
+
+    //com.metech.firefly
+    //public static final String SENDER_ID = "674726680633";
+
     /**
      * Tag used on log messages.
      */

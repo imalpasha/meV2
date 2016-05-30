@@ -152,7 +152,7 @@ public class TokenActivity extends Activity {
     };
 
     public static void splash(Context act,String regId){
-        Intent home = new Intent(activity, TokenActivity.class);
+        Intent home = new Intent(activity, SplashScreenActivity.class);
         home.putExtra("GCM_KEY", regId);
         //home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(home);

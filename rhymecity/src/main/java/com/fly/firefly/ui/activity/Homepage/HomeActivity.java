@@ -8,6 +8,8 @@ import com.fly.firefly.R;
 import com.fly.firefly.base.BaseFragment;
 import com.fly.firefly.ui.activity.FragmentContainerActivity;
 
+import javax.inject.Singleton;
+
 import butterknife.ButterKnife;
 
 //import android.view.WindowManager;

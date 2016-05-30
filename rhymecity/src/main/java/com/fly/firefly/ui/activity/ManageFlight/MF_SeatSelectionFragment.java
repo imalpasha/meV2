@@ -197,11 +197,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                 }
                 seatTag1 = new ArrayList<>(1);
 
-                if(myItemInt < passengerSize-1){
-                    next1 = false;
-                }else{
-                    next1 = true;
-                }
+                    next1 = myItemInt >= passengerSize - 1;
 
                 passengerNoV1 = myItemInt;
                 //Set selected
@@ -238,11 +234,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
 
                     seatTag2 = new ArrayList<>(1);
 
-                    if (myItemInt < passengerSize - 1) {
-                        next2 = false;
-                    } else {
-                        next2 = true;
-                    }
+                    next2 = myItemInt >= passengerSize - 1;
 
                     passengerNoV2 = myItemInt;
                     //Set selected
@@ -499,11 +491,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                             if(activeSeatType.equals("desired") && (seatType.equals("standard") || seatType.equals("preferred"))){
                                 clickable = false;
                             }else if(activeSeatType.equals("preferred")){
-                                if(seatType.equals("standard")){
-                                    clickable = false;
-                                }else{
-                                    clickable = true;
-                                }
+                                clickable = !seatType.equals("standard");
                             }
 
                             if(originalSeatType != null){
@@ -725,11 +713,7 @@ public class MF_SeatSelectionFragment extends BaseFragment implements ManageFlig
                             if(activeSeatType2.equals("desired") && (seatType.equals("standard") || seatType.equals("preferred"))){
                                 clickable2 = false;
                             }else if(activeSeatType2.equals("preferred")){
-                                if(seatType.equals("standard")){
-                                    clickable2 = false;
-                                }else{
-                                    clickable2 = true;
-                                }
+                                clickable2 = !seatType.equals("standard");
                             }
 
                             if(originalSeatType2 != null){

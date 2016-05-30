@@ -1,6 +1,8 @@
 package com.fly.firefly.ui.activity.SplashScreen;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,6 +31,7 @@ import com.fly.firefly.utils.App;
 import com.fly.firefly.utils.Push;
 import com.fly.firefly.utils.RealmObjectController;
 import com.fly.firefly.utils.SharedPrefManager;
+import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -40,6 +43,8 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.SENDER_ID;
+
 public class SplashScreenFragment extends BaseFragment implements HomePresenter.SplashScreen {
 
     @Inject
@@ -50,10 +55,12 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     private Boolean running = false;
     private static SweetAlertDialog pDialog;
     private boolean proceed = false;
+    private static Activity activity;
 
-    public static SplashScreenFragment newInstance(Bundle bundle) {
+    public static SplashScreenFragment newInstance() {
 
         SplashScreenFragment fragment = new SplashScreenFragment();
+        Bundle bundle = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
 
@@ -63,6 +70,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SplashScreenModule(this)).inject(this);
+
     }
 
     @Override
@@ -74,62 +82,78 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         ButterKnife.inject(this, view);
         pref = new SharedPrefManager(getActivity());
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
+        activity = getActivity();
 
-        Bundle bundle = getArguments();
+        //Bundle bundle = getArguments();
 
-        String gcmKey = bundle.getString("GCM_KEY");
-        if(gcmKey == null){
-            gcmKey = "";
+        //String gcmKey = bundle.getString("GCM_KEY");
+        //if(gcmKey == null){
+        String gcmKey = GCMRegistrar.getRegistrationId(getActivity());
+        if(gcmKey.equals("")){
+            GCMRegistrar.register(getActivity(), SENDER_ID);
+        }else{
+            proceed = true;
         }
 
-        HashMap<String, String> initUserEmail = pref.getUserEmail();
-        String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
+        if(proceed){
+            HashMap<String, String> initUserEmail = pref.getUserEmail();
+            String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
 
-        HashMap<String, String> initUserPassword = pref.getUserPassword();
-        String userPassword = initUserPassword.get(SharedPrefManager.PASSWORD);
-        if( userEmail == null && userPassword == null){
-            userEmail = "";
-            userPassword = "";
+            HashMap<String, String> initUserPassword = pref.getUserPassword();
+            String userPassword = initUserPassword.get(SharedPrefManager.PASSWORD);
+            if( userEmail == null && userPassword == null){
+                userEmail = "";
+                userPassword = "";
+            }
+            //retrieve data
+            String deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
+            String version = android.os.Build.VERSION.RELEASE;
+            int sdkVersion = android.os.Build.VERSION.SDK_INT;
+
+            HashMap<String, String> initLogin = pref.getDataVesion();
+            String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
+            if(localDataVersion == null) {
+                localDataVersion = "0";
+            }
+
+            info = new DeviceInformation();
+            info.setSdkVersion(Integer.toString(sdkVersion));
+            info.setVersion(version);
+            info.setDeviceId(deviceId);
+            info.setBrand(Build.BRAND);
+            info.setModel(Build.MODEL);
+            //info.setModel("test");
+            info.setDataVersion("0");
+            info.setSignature("");
+            info.setUsername(userEmail);
+            info.setPassword(userPassword);
+            info.setGCMKey(gcmKey);
+
+            if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
+                sendDeviceInformationToServer(info);
+               // pref.setAppVersion("0.10");
+            }else if(localDataVersion == null && !Controller.connectionAvailable(getActivity())){
+                connectionRetry("No Internet Connection 2");
+            }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
+                sendDeviceInformationToServer(info);
+            }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
+                goHomepage();
+            }
+
+            running = true;
+            //RealmObjectController.deleteRealmFile(getActivity());
+        }else{
+            //just wait ....
         }
-        //retrieve data
-        String deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-        String version = android.os.Build.VERSION.RELEASE;
-        int sdkVersion = android.os.Build.VERSION.SDK_INT;
-
-        HashMap<String, String> initLogin = pref.getDataVesion();
-        String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
-        if(localDataVersion == null) {
-            localDataVersion = "0";
-        }
-
-        info = new DeviceInformation();
-        info.setSdkVersion(Integer.toString(sdkVersion));
-        info.setVersion(version);
-        info.setDeviceId(deviceId);
-        info.setBrand(Build.BRAND);
-        info.setModel(Build.MODEL);
-        //info.setModel("test");
-        info.setDataVersion("0");
-        info.setSignature("");
-        info.setUsername(userEmail);
-        info.setPassword(userPassword);
-        info.setGCMKey(gcmKey);
-
-        if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
-            sendDeviceInformationToServer(info);
-        }else if(localDataVersion == null && !Controller.connectionAvailable(getActivity())){
-            connectionRetry("No Internet Connection 2");
-        }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
-            sendDeviceInformationToServer(info);
-        }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
-            goHomepage();
-        }
-
-        running = true;
-
-        //RealmObjectController.deleteRealmFile(getActivity());
 
         return view;
+    }
+
+    public static void splash(Context act, String regId){
+        Intent home = new Intent(act, SplashScreenActivity.class);
+        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        activity.startActivity(home);
+        activity.finish();
     }
 
     public void sendDeviceInformationToServer(DeviceInformation info){
@@ -169,6 +193,10 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
             HashMap<String, String> initLogin = pref.getDataVesion();
             String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
+
+            HashMap<String, String> initAppData = pref.getAppVersion();
+            String localAppVersion = initAppData.get(SharedPrefManager.APP_VERSION);
+
             String dataVersion = obj.getObj().getData_version();
             String appVersion = obj.getObj().getData_version_mobile().getVersion();
             String updateStatus = obj.getObj().getData_version_mobile().getForce_update();
@@ -287,4 +315,5 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         presenter.onPause();
         running = false;
     }
+
 }

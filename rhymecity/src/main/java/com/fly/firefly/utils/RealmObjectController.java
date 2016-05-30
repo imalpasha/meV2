@@ -246,7 +246,7 @@ public class RealmObjectController extends BaseFragment {
         try {
             RealmConfiguration config = new RealmConfiguration.Builder(act).deleteRealmIfMigrationNeeded().build();
             Realm realm = Realm.getInstance(config);
-            realm.deleteRealm(config);
+            Realm.deleteRealm(config);
             realm.close();
 
         }catch (Exception e){

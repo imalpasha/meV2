@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.SERVER_URL;
+//import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.SERVER_URL;
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.TAG;
 import static com.fly.firefly.ui.activity.PushNotification.CommonUtilities.displayMessage;
 
@@ -31,7 +31,7 @@ public final class ServerUtilities {
      * Register this account/device pair within the server.
      *
      */
-    public static void register(final Context context, String name, String email, final String regId) {
+    /*public static void register(final Context context, String name, String email, final String regId) {
         Log.i(TAG, "registering device (regId = " + regId + ")");
         String serverUrl = SERVER_URL;
         Map<String, String> params = new HashMap<String, String>();
@@ -77,12 +77,12 @@ public final class ServerUtilities {
         String message = context.getString(R.string.register,
                 MAX_ATTEMPTS);
         CommonUtilities.displayMessage(context, message);
-    }
+    }*/
 
     /**
      * Unregister this account/device pair within the server.
      */
-    public static void unregister(final Context context, final String regId) {
+   /* public static void unregister(final Context context, final String regId) {
         Log.i(TAG, "unregistering device (regId = " + regId + ")");
         String serverUrl = SERVER_URL + "/unregister";
         Map<String, String> params = new HashMap<String, String>();
@@ -102,7 +102,7 @@ public final class ServerUtilities {
                     e.getMessage());
             CommonUtilities.displayMessage(context, message);
         }
-    }
+    }*/
 
     /**
      * Issue a POST request to the server.

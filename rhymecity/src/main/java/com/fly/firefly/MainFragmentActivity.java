@@ -34,20 +34,25 @@ import butterknife.ButterKnife;
 //import com.actionbarsherlock.view.MenuItem;
 
 
-public class MainFragmentActivity extends BaseFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks
-{
+public class MainFragmentActivity extends BaseFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    private static MainFragmentActivity instance;
     /**
      * Fragment managing the behaviors, interactions and presentation of the
      * navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private SharedPrefManager pref;
-    private static MainFragmentActivity instance;
+
+    public static Activity getContext() {
+        //return instance.getApplicationContext();
+        //return ActivityName.this;
+        return instance;
+
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         aq = new AQuery(this);
@@ -91,20 +96,10 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         return result;
     }
 
-
-    public static Activity getContext() {
-        //return instance.getApplicationContext();
-        //return ActivityName.this;
-        return instance;
-
-    }
-
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
-        if (isTaskRoot())
-        {
+        if (isTaskRoot()) {
             // clean the file cache with advance option
             long triggerSize = 3000000; // starts cleaning when cache size is
             // larger than 3M
@@ -114,8 +109,7 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         }
     }
 
-    public void setMenuButton()
-    {
+    public void setMenuButton() {
         View actionBarView = getActionBar().getCustomView();
         aq.recycle(actionBarView);
         aq.id(R.id.menubutton).visible();
@@ -127,55 +121,45 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         });
     }
 
-    public void lockDrawer(){
+    public void lockDrawer() {
         mNavigationDrawerFragment.lockDrawer();
 
     }
 
-    public void unlockDrawer(){
+    public void unlockDrawer() {
         mNavigationDrawerFragment.unlockDrawer();
     }
 
 
-    public void hideMenuButton()
-    {
+    public void hideMenuButton() {
         View actionBarView = getActionBar().getCustomView();
         aq.recycle(actionBarView);
         aq.id(R.id.menubutton).gone();
-        aq.id(R.id.menubutton).clicked(new OnClickListener()
-        {
+        aq.id(R.id.menubutton).clicked(new OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 mNavigationDrawerFragment.openDrawer();
             }
         });
     }
 
     @Override
-    public void onNavigationDrawerItemSelected(int position, DrawerItem item)
-    {
+    public void onNavigationDrawerItemSelected(int position, DrawerItem item) {
         // update the main content by replacing fragments
-        try
-        {
-            if (item.getTag().equals("Home"))
-            {
+        try {
+            if (item.getTag().equals("Home")) {
                 item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent homepage = new Intent(this, HomeActivity.class);
                 homepage.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(homepage);
 
-            }
-            else if (item.getTag().equals("Login"))
-            {
+            } else if (item.getTag().equals("Login")) {
 
                 Intent login = new Intent(this, LoginActivity.class);
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(login);
 
-            }
-            else if (item.getTag().equals("Logout"))
-            {
+            } else if (item.getTag().equals("Logout")) {
                 pref.setLoginStatus("N");
                 Controller.clearAll(this);
                 RealmObjectController.deleteRealmFile(MainFragmentActivity.getContext());
@@ -184,52 +168,39 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
                 login.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(login);
 
-            }
-            else if (item.getTag().equals("Register"))
-            {
+            } else if (item.getTag().equals("Register")) {
                 item.setBackgroundColor(getResources().getColor(R.color.white));
                 Intent register = new Intent(this, RegisterActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(register);
 
-            }
-            else if (item.getTag().equals("Information_Update"))
-            {
+            } else if (item.getTag().equals("Information_Update")) {
                 Intent register = new Intent(this, UpdateProfileActivity.class);
                 register.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(register);
 
-            }
-            else if (item.getTag().equals("About"))
-            {
+            } else if (item.getTag().equals("About")) {
                 Intent about = new Intent(this, AboutUsActivity.class);
                 about.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(about);
-                Log.e("xx",item.getTag().toString());
+                Log.e("xx", item.getTag().toString());
 
-            }
-            else if (item.getTag().equals("FAQ"))
-            {
+            } else if (item.getTag().equals("FAQ")) {
                 Intent terms = new Intent(this, Terms.class);
                 terms.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(terms);
 
-            }
-            else if (item.getTag().equals("HEADER"))
-            {
+            } else if (item.getTag().equals("HEADER")) {
 
             }
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void restoreActionBar()
-    {
+    public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         // actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         // actionBar.setDisplayShowTitleEnabled(true);
@@ -237,16 +208,14 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
         return super.onCreateOptionsMenu(menu);
 
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -261,8 +230,6 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
         }*/
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

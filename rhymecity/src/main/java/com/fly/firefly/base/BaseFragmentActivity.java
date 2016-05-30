@@ -31,6 +31,35 @@ public class BaseFragmentActivity extends FragmentActivity {
     public com.fly.firefly.base.AQuery aq;
     //TabView tabsView;
 
+    public static String getAppStatus(){
+       return appStatus;
+    }
+
+   /* public void tabSearch(View v)
+    {
+        Intent intent = new Intent(BaseFragmentActivity.this, GlobalSearchView.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        BaseFragmentActivity.this.startActivity(intent);
+    }
+
+    public void tabWish(View v)
+    {
+        Intent intent = new Intent(BaseFragmentActivity.this, MyWishListList.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        BaseFragmentActivity.this.startActivity(intent);
+    }
+
+    public void tabCart(View v)
+    {
+        Intent intent = new Intent(BaseFragmentActivity.this, CartsView.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        BaseFragmentActivity.this.startActivity(intent);
+    }*/
+
+    public static void setAppStatus(String status){
+        appStatus = status;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -74,27 +103,6 @@ public class BaseFragmentActivity extends FragmentActivity {
         }
     }
 
-   /* public void tabSearch(View v)
-    {
-        Intent intent = new Intent(BaseFragmentActivity.this, GlobalSearchView.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        BaseFragmentActivity.this.startActivity(intent);
-    }
-
-    public void tabWish(View v)
-    {
-        Intent intent = new Intent(BaseFragmentActivity.this, MyWishListList.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        BaseFragmentActivity.this.startActivity(intent);
-    }
-
-    public void tabCart(View v)
-    {
-        Intent intent = new Intent(BaseFragmentActivity.this, CartsView.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        BaseFragmentActivity.this.startActivity(intent);
-    }*/
-
     @Override
     public void setTitle(CharSequence title)
     {
@@ -117,8 +125,6 @@ public class BaseFragmentActivity extends FragmentActivity {
         aq.recycle(actionBarView);
         aq.id(R.id.btnLogOut).visible();
     }
-
-
 
     public void setARButton()
     {
@@ -175,11 +181,6 @@ public class BaseFragmentActivity extends FragmentActivity {
         });
     }
 
-
-
-
-
-
     @Override
     public void setTitle(int titleId)
     {
@@ -222,6 +223,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void onBackPressed()
     {
         super.onBackPressed();
+        System.gc();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
         RealmObjectController.clearCachedResult(this);
 
@@ -241,32 +243,27 @@ public class BaseFragmentActivity extends FragmentActivity {
 
         super.onResume();
         Log.e("onResume","onResume");
-        if(!this.getClass().getSimpleName().equals("SplashScreenActivity")){
-            if(appStatus != null && appStatus.equals("ready_for_notification")){
-                if(appStatus.equals("ready_for_notification")){
-                    RealmResults<NotificationMessage> result = RealmObjectController.getNotificationMessage(this);
-                    Log.e("result",Integer.toString(result.size()));
-                    if(result.size() > 0){
-                        BaseFragment.setAlertDialog(this,result.get(0).getMessage(),result.get(0).getTitle());
-                        MainFragmentActivity.setAppStatus("not_ready_for_notification");
-                        RealmObjectController.clearNotificationMessage(this);
+
+        try{
+            if(!this.getClass().getSimpleName().equals("SplashScreenActivity")){
+                if(appStatus != null && appStatus.equals("ready_for_notification")){
+                    if(appStatus.equals("ready_for_notification")){
+                        RealmResults<NotificationMessage> result = RealmObjectController.getNotificationMessage(this);
+                        Log.e("result",Integer.toString(result.size()));
+                        if(result.size() > 0){
+                            BaseFragment.setAlertDialog(this,result.get(0).getMessage(),result.get(0).getTitle());
+                            MainFragmentActivity.setAppStatus("not_ready_for_notification");
+                            RealmObjectController.clearNotificationMessage(this);
+                        }
+                    }else{
+                        Log.e("Result?","A"+appStatus);
                     }
                 }else{
-                    Log.e("Result?","A"+appStatus);
+                    appStatus = "not_for_notification";
                 }
-            }else{
-                appStatus = "not_for_notification";
             }
+        }catch (Exception e){
+
         }
-
-
-    }
-
-    public static void setAppStatus(String status){
-        appStatus = status;
-    }
-
-    public static String getAppStatus(){
-       return appStatus;
     }
 }

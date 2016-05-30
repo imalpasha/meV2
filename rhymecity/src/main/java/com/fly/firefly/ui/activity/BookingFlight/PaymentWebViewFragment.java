@@ -92,12 +92,14 @@ public class PaymentWebViewFragment extends BaseFragment  {
                         Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         getActivity().startActivity(intent);
+                        System.gc();
                         getActivity().finish();
                     }else {
                         Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("AlertDialog", "Y");
                         getActivity().startActivity(intent);
+                        System.gc();
                         getActivity().finish();
                     }
                         status = true;

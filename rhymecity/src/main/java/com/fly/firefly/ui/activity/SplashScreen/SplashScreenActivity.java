@@ -27,10 +27,10 @@ public class SplashScreenActivity extends MainFragmentActivity implements Fragme
         //lockDrawer();
         BaseFragment.removeLogoHeader(this);
 
-        Bundle bundle = getIntent().getExtras();
+       // Bundle bundle = getIntent().getExtras();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.splash_content, SplashScreenFragment.newInstance(bundle)).commit();
+        fragmentManager.beginTransaction().replace(R.id.splash_content, SplashScreenFragment.newInstance()).commit();
 
     }
 

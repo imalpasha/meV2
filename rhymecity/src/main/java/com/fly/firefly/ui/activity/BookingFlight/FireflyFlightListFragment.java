@@ -151,7 +151,6 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         ButterKnife.inject(this, view);
 
 
-
           /*Preference Manager*/
         pref = new SharedPrefManager(getActivity());
 

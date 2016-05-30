@@ -14,9 +14,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/imageView8"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_centerInParent="true"
-            android:src="@drawable/splashv2"/>
+            android:src="@drawable/splash_screen_v2"/>
 
         <LinearLayout
             android:orientation="vertical"
@@ -38,12 +38,12 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.4">
 
-                <pl.droidsonroids.gif.GifImageView
+                <!--<pl.droidsonroids.gif.GifImageView
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:layout_gravity="center"
                     android:layout_marginBottom="20dp"
-                    android:src="@drawable/preloader"/>
+                    android:src="@drawable/preloader"/>-->
             </LinearLayout>
         </LinearLayout>
 

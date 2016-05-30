@@ -562,11 +562,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
         Log.e("fullDate", fullDate);
         int currentYear = calendar.get(Calendar.YEAR);
         age = currentYear - year;
-        if(age < 18){
-            limitAge = false;
-        }else{
-            limitAge = true;
-        }
+        limitAge = age >= 18;
 
         /*fullDate = varDay+""+day+ "-" + varMonth+""+month + "-" + year;
         Log.e("fullDate", fullDate);*/

@@ -147,7 +147,7 @@ public class IndexScroller
 			int indexMaxSize = (int) Math.floor(sectionHeight);
 			if (indexMaxSize != 0)
 			{
-				int delta = (int) (mSections.length / indexMaxSize) + 1;
+				int delta = mSections.length / indexMaxSize + 1;
 
 				if (delta < 1)
 				{

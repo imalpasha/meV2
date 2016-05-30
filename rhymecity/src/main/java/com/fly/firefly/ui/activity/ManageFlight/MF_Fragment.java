@@ -166,8 +166,14 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
             btnManageFlightContinue.setVisibility(View.GONE);
 
             //update the list on background
-            initiateLoading(getActivity());
-            presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
+
+            if(Controller.connectionAvailable(getActivity())){
+                initiateLoading(getActivity());
+                presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
+            }else{
+                manageFlightNoInternet.setVisibility(View.VISIBLE);
+            }
+
 
            /* RealmResults<ManageFlightList> cachedListResult = RealmObjectController.getManageFlightList(MainFragmentActivity.getContext());
             if(cachedListResult.size() > 0){
@@ -186,18 +192,18 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                     presenter.onSendPNRV2(storeUsername, storePassword, "manage_booking");
                 }else{
                     //if no connection. display no internet connection message - hide all
-                    manageFlightNoInternet.setVisibility(View.VISIBLE);
                 }
             }
 
             btnManageFlightContinue.setVisibility(View.GONE);
 */
-        }
-        cache_login = true;
-        /*else{
+        }else{
+            listviewLayout.setVisibility(View.GONE);
             pnrLayout.setVisibility(View.VISIBLE);
             SCREEN_LABEL =  "Manage Flight: Manage Flight";
-        }*/
+        }
+        cache_login = true;
+        /*
 
          /*Set PNR auto caps*/
         InputFilter[] FilterArray = new InputFilter[2];
@@ -360,7 +366,6 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                 pref.setSignatureToLocalStorage(obj.getSignature());
 
             }
-
         }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -385,7 +390,6 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
                 presenter.onSendPNRV1(manageFlightObj);
             }
         });
-
 
         listViewDepart.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> myAdapter, View myView, int myItemInt, long mylng) {

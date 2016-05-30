@@ -322,6 +322,52 @@ public class SeatSelectionReveice {
         private taxes_or_fees taxes_or_fees;
         private String total_taxes_or_fees;
         private List<Services> services;
+        private List<TaxOrFee> taxes_or_fees_array;
+
+        public List<TaxOrFee> getTaxes_or_fees_array() {
+            return taxes_or_fees_array;
+        }
+
+        public void setTaxes_or_fees_array(List<TaxOrFee> taxes_or_fees_array) {
+            this.taxes_or_fees_array = taxes_or_fees_array;
+        }
+
+        public class TaxOrFee{
+
+            private String tax_fee_name;
+            private String tax_fee_price;
+
+            public String getTax_fee_price() {
+                return tax_fee_price;
+            }
+
+            public void setTax_fee_price(String tax_fee_price) {
+                this.tax_fee_price = tax_fee_price;
+            }
+
+            public String getTax_fee_name() {
+                return tax_fee_name;
+            }
+
+            public void setTax_fee_name(String tax_fee_name) {
+                this.tax_fee_name = tax_fee_name;
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public String getStatus() {
             return status;

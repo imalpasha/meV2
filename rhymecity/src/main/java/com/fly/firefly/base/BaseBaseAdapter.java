@@ -40,7 +40,7 @@ public class BaseBaseAdapter<T> extends BaseAdapter
 
 	public void setItems(List<T> items)
 	{
-		this.listItems = (List<T>) items;
+		this.listItems = items;
 		notifyDataSetChanged();
 	}
 

@@ -260,53 +260,6 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:clickable="true"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.2"
-                android:gravity="center"
-                android:visibility="gone"
-                android:id="@+id/homeBeacon" >
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.3"
-                    android:layout_height="fill_parent"
-                    android:gravity="right"
-                    android:padding="8dp" >
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/imageView16"
-                        android:src="@drawable/vrsm__ic_social"
-                        android:adjustViewBounds="true" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_weight="0.7"
-                    android:layout_height="fill_parent"
-                    android:gravity="left|center"
-                    android:paddingLeft="8dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Fly Smart-Assist"
-                        android:textSize="18dp"
-                        android:id="@+id/textView91"
-                        android:textStyle="bold|italic"
-                        android:textColor="@color/dark_gray"
-                        />
-                </LinearLayout>
-            </LinearLayout>
-
 
         </LinearLayout>
 

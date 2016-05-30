@@ -147,11 +147,7 @@ public class RotateAnimationClass
 	{
 		if (this.th != null)
 		{
-			if (this.th.isAlive())
-			{
-				return true;
-			}
-			return false;
+			return this.th.isAlive();
 		}
 		return false;
 	}

@@ -21,8 +21,10 @@ public class AnalyticsApplication extends Application {
 
 
     public static void sendScreenView(String screenName) {
-        mTracker.setScreenName(screenName);
-        mTracker.send(new HitBuilders.AppViewBuilder().build());
+        if(mTracker != null){
+            mTracker.setScreenName(screenName);
+            mTracker.send(new HitBuilders.AppViewBuilder().build());
+        }
     }
 
 
@@ -51,4 +53,5 @@ public class AnalyticsApplication extends Application {
         }
         return mTracker;
     }
+
 }

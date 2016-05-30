@@ -77,7 +77,7 @@ public class ForceUpdateFragment extends BaseFragment{
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.supercell.clashroyale" +
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.fly.firefly" +
                         "" +
                         ""));
                 getActivity().startActivity(intent);

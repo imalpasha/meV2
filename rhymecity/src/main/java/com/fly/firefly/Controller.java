@@ -70,11 +70,7 @@ public class Controller extends BaseFragment {
     public static boolean connectionAvailable(Activity act){
 
         Boolean internet;
-        if (!Utils.isNetworkAvailable(act)) {
-            internet = false;
-        }else{
-            internet = true;
-        }
+        internet = Utils.isNetworkAvailable(act);
 
         return internet;
     }

@@ -9,10 +9,9 @@ import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.fly.firefly.ui.activity.PushNotification.RegisterActivity;
 import com.fly.firefly.ui.activity.PushNotification.ServerUtilities;
 import com.fly.firefly.ui.activity.SplashScreen.Pop2NotificationActivity;
-import com.fly.firefly.ui.activity.SplashScreen.TokenActivity;
+import com.fly.firefly.ui.activity.SplashScreen.SplashScreenFragment;
 import com.fly.firefly.utils.RealmObjectController;
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.gson.Gson;
@@ -40,7 +39,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         //back to splash screen
         //BaseFragment.splashScreen(context,registrationId);
-        TokenActivity.splash(context,registrationId);
+        SplashScreenFragment.splash(context,registrationId);
 
     }
 
