@@ -29,11 +29,11 @@ android {
     buildToolsVersion "22.0.0"
 
     defaultConfig {
-        applicationId "com.fly.firefly"
+        applicationId "com.metech.firefly"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 12
+        versionName "2.0"
         multiDexEnabled = true
     }
 

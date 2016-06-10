@@ -195,7 +195,7 @@
 
                         </LinearLayout>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:id="@+id/premierFlightDeparture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -206,9 +206,9 @@
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp"
                             android:visibility="gone">
-                        </com.fly.firefly.utils.ExpandAbleGridView>
+                        </com.metech.firefly.utils.ExpandAbleGridView>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:id="@+id/flightDeparture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -218,9 +218,9 @@
                             android:numColumns="1"
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp">
-                        </com.fly.firefly.utils.ExpandAbleGridView>
+                        </com.metech.firefly.utils.ExpandAbleGridView>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:id="@+id/codeShareDeparture"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -230,7 +230,7 @@
                             android:numColumns="1"
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp">
-                        </com.fly.firefly.utils.ExpandAbleGridView>
+                        </com.metech.firefly.utils.ExpandAbleGridView>
 
                         <LinearLayout
                             android:id="@+id/returnFlightBlock"
@@ -338,7 +338,7 @@
                                 android:layout_gravity="center_horizontal" />
                         </LinearLayout>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:id="@+id/flightArrival"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -348,9 +348,9 @@
                             android:numColumns="1"
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp">
-                        </com.fly.firefly.utils.ExpandAbleGridView>
+                        </com.metech.firefly.utils.ExpandAbleGridView>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:id="@+id/premierFlightArrival"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -361,7 +361,7 @@
                             android:stretchMode="columnWidth"
                             android:verticalSpacing="1dp"
                             android:visibility="gone">
-                        </com.fly.firefly.utils.ExpandAbleGridView>
+                        </com.metech.firefly.utils.ExpandAbleGridView>
 
 
                     </LinearLayout>

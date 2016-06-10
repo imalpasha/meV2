@@ -347,8 +347,7 @@
         android:id="@+id/imageView17"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:src="@drawable/skypark_airport"
         android:alpha=".15"/>
 
-
+<!-- android:src="@drawable/skypark_airport"-->
 </RelativeLayout>

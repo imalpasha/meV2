@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.fly.firefly.ui.activity.Terms.TermsFragment">
+    tools:context="com.metech.firefly.ui.activity.Terms.TermsFragment">
 
 
 </RelativeLayout>

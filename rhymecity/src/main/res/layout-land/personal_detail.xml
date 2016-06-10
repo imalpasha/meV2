@@ -981,8 +981,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1020,7 +1019,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -1029,8 +1027,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1068,7 +1065,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -1077,8 +1073,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1094,8 +1089,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border">
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -1126,7 +1120,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -1173,7 +1166,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -1182,8 +1174,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -1227,7 +1218,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Issuing Country:"
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -1272,7 +1262,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5268,7 +5257,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5277,8 +5265,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5319,7 +5306,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5328,8 +5314,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5337,8 +5322,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5368,7 +5352,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5377,8 +5360,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5386,8 +5368,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5416,7 +5397,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5425,8 +5405,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5464,7 +5443,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
+                                            android:id="@+id/txtLandLastName"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5474,7 +5453,7 @@
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
                                             android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:id="@+id/txtLandPersonalArteris" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5512,7 +5491,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5521,8 +5499,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5538,8 +5515,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border">
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -5570,7 +5546,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5617,7 +5592,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5626,8 +5600,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5671,7 +5644,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Issuing Country:"
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5716,7 +5688,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5834,7 +5805,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5843,8 +5813,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5852,8 +5821,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5885,7 +5853,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5894,8 +5861,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5903,8 +5869,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5934,7 +5899,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5943,8 +5907,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5952,8 +5915,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5982,7 +5944,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5991,8 +5952,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6030,7 +5990,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6039,8 +5998,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6078,7 +6036,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6087,8 +6044,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6104,8 +6060,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border">
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -6136,7 +6091,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6183,7 +6137,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6192,8 +6145,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6237,7 +6189,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Issuing Country:"
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6282,7 +6233,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6416,8 +6366,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6449,7 +6398,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6458,8 +6406,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6467,8 +6414,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6498,7 +6444,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6507,8 +6452,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6516,8 +6460,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6546,7 +6489,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6555,8 +6497,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6594,7 +6535,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6603,8 +6543,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6642,7 +6581,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6651,8 +6589,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6668,8 +6605,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border" >
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -6700,7 +6636,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6747,7 +6682,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6756,8 +6690,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6801,7 +6734,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Issuing Country:"
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6846,7 +6778,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -7250,7 +7181,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView

@@ -1,12 +1,12 @@
-package me.mattlogan.rhymecity;
+package me.firefly.rhymecity;
 
-import me.mattlogan.firefly.AppModule;
+import com.metech.firefly.AppModule;
 
 public final class Modules {
     public static Object[] list(String apiKey) {
         return new Object[] {
                 new AppModule(apiKey),
-                new DebugAppModule()
+                //new DebugAppModule()
         };
     }
 

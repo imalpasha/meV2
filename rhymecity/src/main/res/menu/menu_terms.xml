@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.fly.firefly.ui.activity.Terms.Terms">
+    tools:context="com.metech.firefly.ui.activity.Terms.Terms">
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

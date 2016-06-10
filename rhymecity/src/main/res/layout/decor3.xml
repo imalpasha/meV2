@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/navigation_drawer"
-        android:name="com.fly.firefly.drawer.NavigationDrawerFragment"
+        android:name="com.metech.firefly.drawer.NavigationDrawerFragment"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="fill_parent"
         android:layout_gravity="left"

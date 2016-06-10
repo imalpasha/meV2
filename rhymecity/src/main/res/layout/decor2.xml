@@ -4,7 +4,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fly.firefly.MainFragmentActivity"
+    tools:context="com.metech.firefly.MainFragmentActivity"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout android:id="@+id/main_activity_fragment_container"
@@ -12,7 +12,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"/>
 
-    <fragment android:name="com.fly.firefly.drawer.NavigationDrawerFragment"
+    <fragment android:name="com.metech.firefly.drawer.NavigationDrawerFragment"
     android:layout_gravity="start"
     android:id="@+id/navigation"
     android:layout_width="@dimen/navigation_drawer_width"

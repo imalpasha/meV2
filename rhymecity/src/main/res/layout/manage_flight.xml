@@ -117,7 +117,10 @@
                                         android:padding="5dp"
                                         android:digits="0,1,2,3,4,5,6,7,8,9,ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                                         android:textSize="15dp"
+                                        android:inputType="text"
                                         android:maxLength="6"
+                                        android:singleLine="true"
+                                        android:imeOptions="actionNext"
                                         android:hint="@string/manage_flight_confirmation_number"
                                         android:id="@+id/txtPNR"
                                         android:background="@null" />
@@ -261,9 +264,11 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:horizontalSpacing="1dp"
+                            android:background="#e5e5e5"
                             android:id="@+id/listView" />
 
                         <LinearLayout
@@ -302,7 +307,7 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
-                        <com.fly.firefly.utils.ExpandAbleGridView
+                        <com.metech.firefly.utils.ExpandAbleGridView
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:id="@+id/listViewDepart" />

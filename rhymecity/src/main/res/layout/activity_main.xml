@@ -54,7 +54,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/main_content"
-                tools:context="com.fly.firefly.MainFragmentActivity">
+                tools:context="com.metech.firefly.MainFragmentActivity">
             </FrameLayout>
             </LinearLayout>
         </ScrollView>
@@ -70,7 +70,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/splash_content"
-                tools:context="com.fly.firefly.MainFragmentActivity">
+                tools:context="com.metech.firefly.MainFragmentActivity">
             </FrameLayout>
         </LinearLayout>
     </RelativeLayout>

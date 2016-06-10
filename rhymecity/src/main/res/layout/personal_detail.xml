@@ -212,6 +212,51 @@
                             android:orientation="vertical"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:id="@+id/friendAndFamilyLayout"
+                            android:layout_gravity="center"
+                            android:visibility="gone"
+                            android:gravity="center">
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:background="@color/actionBarColour_default_theme"
+                                android:id="@+id/linearLayout84" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Family &amp; Friend"
+                                    android:tag="txtPassenger1"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+
+                            <Button
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="15dp"
+                                android:text="Manage Family &amp; Friends"
+                                android:id="@+id/btnFamilyFriend"
+                                android:textColor="@color/orange_firefly"
+                                android:paddingLeft="15dp"
+                                android:paddingRight="15dp"
+                                android:gravity="center"
+                                android:background="@drawable/login_register_button_clicked"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/passengerBlock1"
                             android:tag="passengerBlock1"
                             android:visibility="visible">
@@ -223,7 +268,15 @@
                                 android:gravity="center"
                                 android:padding="5dp"
                                 android:background="@color/actionBarColour_default_theme"
-                                android:id="@+id/passengerType">
+                                android:id="@+id/passengerType1">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:tag="txtPassenger1Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -241,6 +294,28 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:id="@+id/passengerInfo">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger1_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger1_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -775,6 +850,28 @@
                                     </LinearLayout>
                                 </LinearLayout>
 
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger1_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger1_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -797,6 +894,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger2Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 2"
                                     android:tag="txtPassenger2"
                                     android:textSize="@dimen/font20sp"
@@ -809,6 +914,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger2_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger2_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -1336,6 +1463,29 @@
                                             android:tag="passenger2_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger2_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger2_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -1359,6 +1509,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger3Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 3"
                                     android:tag="txtPassenger3"
                                     android:textSize="@dimen/font20sp"
@@ -1372,6 +1530,28 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:id="@+id/linearLayout19" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger3_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger3_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -1902,6 +2082,29 @@
                                             android:tag="passenger3_enrich" />
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger3_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger3_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -1925,6 +2128,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger4Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 4"
                                     android:tag="txtPassenger4"
                                     android:textSize="@dimen/font20sp"
@@ -1938,6 +2149,28 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:id="@+id/linearLayout29" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger4_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger4_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -2468,6 +2701,29 @@
                                             android:tag="passenger4_enrich" />
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger4_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger4_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -2491,6 +2747,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger5Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 5"
                                     android:tag="txtPassenger5"
                                     android:textSize="@dimen/font20sp"
@@ -2504,6 +2768,28 @@
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
                                 android:id="@+id/linearLayout39" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger5_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger5_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -3032,6 +3318,29 @@
                                             android:tag="passenger5_enrich" />
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger5_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger5_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -3054,6 +3363,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger6Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 6"
                                     android:tag="txtPassenger6"
                                     android:textSize="@dimen/font20sp"
@@ -3066,6 +3383,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger6_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger6_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -3591,6 +3930,29 @@
                                             android:tag="passenger6_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger6_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger6_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -3614,6 +3976,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger7Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 7"
                                     android:textSize="@dimen/font20sp"
                                     android:tag="txtPassenger7"
@@ -3626,6 +3996,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger7_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger7_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -4140,6 +4532,29 @@
                                             android:tag="passenger7_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger7_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger7_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -4162,6 +4577,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger8Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 8"
                                     android:textSize="@dimen/font20sp"
                                     android:tag="txtPassenger8"
@@ -4174,6 +4597,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger8_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger8_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -4688,6 +5133,29 @@
                                             android:tag="passenger8_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger8_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger8_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -4710,6 +5178,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger9Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 9"
                                     android:tag="txtPassenger9"
                                     android:textSize="@dimen/font20sp"
@@ -4722,6 +5198,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger9_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger9_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -5236,6 +5734,29 @@
                                             android:tag="passenger9_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger9_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger9_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -5258,6 +5779,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger10Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 10"
                                     android:tag="txtPassenger10"
                                     android:textSize="@dimen/font20sp"
@@ -5270,6 +5799,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp" >
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger10_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger10_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -5308,8 +5859,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5447,8 +5997,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5486,7 +6035,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5495,8 +6043,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5534,7 +6081,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5543,8 +6089,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5560,8 +6105,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border" >
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -5593,7 +6137,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5640,7 +6183,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5649,8 +6191,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5694,7 +6235,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Nationality."
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5740,7 +6280,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -5784,7 +6323,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="BonusLink Card No."
-                                        android:id="@+id/textView176"
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -5804,6 +6342,28 @@
                                             android:maxLength="16"
                                             android:tag="passenger10_enrich"/>
                                     </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger10_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger10_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -5827,6 +6387,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger11Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 11"
                                     android:tag="txtPassenger11"
                                     android:textSize="@dimen/font20sp"
@@ -5839,6 +6407,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger11_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger11_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -5859,7 +6449,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travelling With."
-                                            android:id="@+id/textView163"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5868,8 +6457,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView128" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5877,8 +6465,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout6" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5910,7 +6497,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5919,8 +6505,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5928,8 +6513,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp" >
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -5959,7 +6543,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -5968,8 +6551,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -5977,8 +6559,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6007,7 +6588,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6016,8 +6596,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6055,7 +6634,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6064,8 +6642,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6103,7 +6680,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6112,8 +6688,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6129,8 +6704,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border" >
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -6162,7 +6736,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6209,7 +6782,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6218,8 +6790,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6263,7 +6834,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Nationality."
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6309,7 +6879,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6353,7 +6922,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="BonusLink Card No."
-                                        android:id="@+id/textView176"
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -6373,6 +6941,28 @@
                                             android:maxLength="16"
                                             android:tag="passenger11_enrich"/>
                                     </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger11_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger11_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -6396,6 +6986,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger12Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 12"
                                     android:tag="txtPassenger12"
                                     android:textSize="@dimen/font20sp"
@@ -6408,6 +7006,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger12_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger12_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -6477,7 +7097,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Title."
-                                            android:id="@+id/textView167"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6486,8 +7105,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView129" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6495,8 +7113,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout8" >
+                                        android:layout_marginTop="5dp">
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6526,7 +7143,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Gender."
-                                            android:id="@+id/textView165"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6535,8 +7151,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView130" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6544,8 +7159,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="match_parent"
                                         android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout7" >
+                                        android:layout_marginTop="5dp" >
 
                                         <TextView
                                             android:layout_width="match_parent"
@@ -6574,7 +7188,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="First Name"
-                                            android:id="@+id/textView169"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6583,8 +7196,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView131" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6622,7 +7234,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Last Name"
-                                            android:id="@+id/textView170"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6631,8 +7242,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView133" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6670,7 +7280,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Date Of Birth"
-                                            android:id="@+id/textView171"
                                             android:textStyle="bold" />
 
                                         <TextView
@@ -6679,8 +7288,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView134" />
+                                            android:layout_marginLeft="3dp" />
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6696,8 +7304,7 @@
                                             android:layout_weight="1"
                                             android:layout_height="match_parent"
                                             android:padding="5dp"
-                                            android:background="@drawable/block_with_border"
-                                            android:id="@+id/linearLayout9" >
+                                            android:background="@drawable/block_with_border" >
 
                                             <TextView
                                                 android:layout_width="match_parent"
@@ -6729,7 +7336,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Travel Document:"
-                                            android:id="@+id/textView173"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6776,7 +7382,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6785,8 +7390,7 @@
                                             android:text="*"
                                             android:textColor="@color/red"
                                             android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView332" />
+                                            android:layout_marginLeft="3dp"/>
                                     </LinearLayout>
 
                                     <LinearLayout
@@ -6830,7 +7434,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Nationality."
-                                            android:id="@+id/textView174"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6876,7 +7479,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Document No:"
-                                            android:id="@+id/textView175"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -6920,7 +7522,6 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="BonusLink Card No."
-                                        android:id="@+id/textView176"
                                         android:textStyle="bold"/>
 
                                     <LinearLayout
@@ -6941,6 +7542,29 @@
                                             android:tag="passenger12_enrich"/>
                                     </LinearLayout>
                                 </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger12_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger12_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
+                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
 
@@ -6963,6 +7587,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:tag="txtPassenger13Tag"
+                                    android:textSize="@dimen/font20sp"
+                                    android:textColor="@color/white"
+                                    android:visibility="gone"/>
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
                                     android:text="Passenger 13"
                                     android:tag="txtPassenger13"
                                     android:textSize="@dimen/font20sp"
@@ -6975,6 +7607,28 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp">
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger13_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger13_selectFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Select from family &amp; friends" />
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:orientation="vertical"
@@ -7328,7 +7982,6 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="Expiration Date:"
-                                            android:id="@+id/txtExpire"
                                             android:textStyle="bold"/>
 
                                         <TextView
@@ -7488,6 +8141,28 @@
                                             android:maxLength="16"
                                             android:tag="passenger13_enrich"/>
                                     </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_marginTop="5dp"
+                                    android:tag="passenger13_asFF_block"
+                                    android:paddingBottom="5dp"
+                                    android:background="@drawable/drawable_login_bottom_border" >
+
+                                    <CheckBox
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:padding="5dp"
+                                        android:tag="passenger13_checkAsFF" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Save as family &amp; friend." />
+
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>

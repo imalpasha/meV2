@@ -150,9 +150,10 @@
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:clickable="true">
 
-                            <com.fly.firefly.utils.ExpandAbleGridView
+                            <com.metech.firefly.utils.ExpandAbleGridView
                                 android:id="@+id/listPassengerDepart"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -163,7 +164,7 @@
                                 android:stretchMode="columnWidth"
                                 android:verticalSpacing="1dp"
                                 android:visibility="visible">
-                            </com.fly.firefly.utils.ExpandAbleGridView>
+                            </com.metech.firefly.utils.ExpandAbleGridView>
 
                         </LinearLayout>
                     </LinearLayout>
@@ -225,7 +226,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
 
-                            <com.fly.firefly.utils.ExpandAbleGridView
+                            <com.metech.firefly.utils.ExpandAbleGridView
                                 android:id="@+id/listPassengerReturn"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -236,7 +237,7 @@
                                 android:stretchMode="columnWidth"
                                 android:verticalSpacing="1dp"
                                 android:visibility="visible">
-                            </com.fly.firefly.utils.ExpandAbleGridView>
+                            </com.metech.firefly.utils.ExpandAbleGridView>
 
                         </LinearLayout>
                     </LinearLayout>
