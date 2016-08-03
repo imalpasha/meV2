@@ -1,8 +1,11 @@
 package com.metech.firefly.ui.presenter;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.metech.firefly.api.obj.ContactInfoReceive;
+import com.metech.firefly.api.obj.DeleteCCReceive;
+import com.metech.firefly.api.obj.DeleteFFReceive;
 import com.metech.firefly.api.obj.FlightSummaryReceive;
 import com.metech.firefly.api.obj.ForgotPasswordReceive;
 import com.metech.firefly.api.obj.LoginReceive;
@@ -14,9 +17,13 @@ import com.metech.firefly.api.obj.SearchFlightReceive;
 import com.metech.firefly.api.obj.SeatSelectionReveice;
 import com.metech.firefly.api.obj.SelectFlightReceive;
 import com.metech.firefly.ui.object.ContactInfo;
+import com.metech.firefly.ui.object.DefaultPassengerObj;
+import com.metech.firefly.ui.object.DeleteCCRequest;
 import com.metech.firefly.ui.object.FlightSummary;
+import com.metech.firefly.ui.object.FriendFamilyDelete;
 import com.metech.firefly.ui.object.LoginRequest;
 import com.metech.firefly.ui.object.Passenger;
+import com.metech.firefly.ui.object.PassengerInfo;
 import com.metech.firefly.ui.object.PasswordRequest;
 import com.metech.firefly.ui.object.Payment;
 import com.metech.firefly.ui.object.SearchFlightObj;
@@ -28,6 +35,19 @@ import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 public class BookingPresenter {
+
+    public interface RemoveCCView{
+    }
+
+    public interface DeleteFamilyView {
+        //void onBookingDataReceive();
+        void onDeleteFF(DeleteFFReceive obj);
+    }
+
+    public interface EditFamilyFriendView {
+        //void onBookingDataReceive();
+        void onEditFF(SelectFlightReceive obj);
+    }
 
     public interface SearchFlightView {
         //void onBookingDataReceive();
@@ -63,12 +83,12 @@ public class BookingPresenter {
     public interface PaymentFlightView{
        void onPaymentInfoReceive(PaymentInfoReceive obj);
        void onPaymentReceive(PaymentReceive obj);
+       void onRemoveCC(DeleteCCReceive obj);
     }
 
     public interface FlightSummaryView{
         void onFlightSummary(FlightSummaryReceive obj);
     }
-
 
 
     private SearchFlightView view;
@@ -79,8 +99,20 @@ public class BookingPresenter {
     private ItinenaryView view6;
     private PaymentFlightView view7;
     private FlightSummaryView view8;
+    private EditFamilyFriendView view9;
+    private DeleteFamilyView view10;
 
     private final Bus bus;
+
+    public BookingPresenter(DeleteFamilyView view, Bus bus) {
+        this.view10 = view;
+        this.bus = bus;
+    }
+
+    public BookingPresenter(EditFamilyFriendView view, Bus bus) {
+        this.view9 = view;
+        this.bus = bus;
+    }
 
     public BookingPresenter(SearchFlightView view, Bus bus) {
         this.view = view;
@@ -123,9 +155,22 @@ public class BookingPresenter {
         this.bus = bus;
     }
 
+
+    public void onRemoveCC(Signature data) {
+        bus.post(new DeleteCCRequest(data));
+    }
+
+    public void onRequestEditFF(PassengerInfo data) {
+        bus.post(new PassengerInfo(data));
+    }
+
+    /*Forgot Password*/
+    public void onDeleteFF(FriendFamilyDelete deleteID) {
+        bus.post(new FriendFamilyDelete(deleteID));
+    }
+
     /*Forgot Password*/
     public void forgotPassword(PasswordRequest data) {
-        Log.e("xxxx",data.getEmail());
         bus.post(new PasswordRequest(data));
     }
 
@@ -193,12 +238,22 @@ public class BookingPresenter {
 
     }
 
+
+    @Subscribe
+    public void onEditFamilyFriendsReceive(SelectFlightReceive event) {
+        /*Save Session And Redirect To Homepage*/
+        try{
+            view9.onEditFF(event);
+        }catch (Exception e){
+            Log.e("DumpData","True");
+        }
+    }
+
     @Subscribe
     public void onPaymentInfoReceive(PaymentInfoReceive event) {
         /*Save Session And Redirect To Homepage*/
         view7.onPaymentInfoReceive(event);
     }
-
 
     @Subscribe
     public void onSearchFlight(SearchFlightReceive event) {
@@ -208,7 +263,28 @@ public class BookingPresenter {
 
     @Subscribe
     public void onSelectFlight(SelectFlightReceive event) {
-        view2.onSeletFlightReceive(event);
+
+        try{
+            view2.onSeletFlightReceive(event);
+        }catch (Exception e){
+
+        }
+    }
+
+    @Subscribe
+    public void onDeleteFF(DeleteFFReceive event){
+
+        try{
+            view10.onDeleteFF(event);
+        }catch (Exception e){
+
+        }
+    }
+
+
+    @Subscribe
+    public void onDeleteCCReceive(DeleteCCReceive event) {
+        view7.onRemoveCC(event);
     }
 
     @Subscribe

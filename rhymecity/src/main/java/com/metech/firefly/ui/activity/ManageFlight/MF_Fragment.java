@@ -26,6 +26,7 @@ import com.metech.firefly.ui.activity.FragmentContainerActivity;
 import com.metech.firefly.ui.adapter.BookingListAdapter2;
 import com.metech.firefly.ui.adapter.BookingListAdapter3;
 import com.metech.firefly.ui.module.ManageFlightModule;
+import com.metech.firefly.ui.object.FamilyFriendObj;
 import com.metech.firefly.ui.object.ListFlight;
 import com.metech.firefly.ui.object.ListFlight2;
 import com.metech.firefly.ui.object.CachedResult;
@@ -412,6 +413,7 @@ public class MF_Fragment extends BaseFragment implements Validator.ValidationLis
 
 
     public void displayActionSelection(FlightSummaryReceive obj){
+
         Intent actionSelection = new Intent(getActivity(), MF_ActionActivity.class);
         actionSelection.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
         getActivity().startActivity(actionSelection);

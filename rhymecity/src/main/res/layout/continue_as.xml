@@ -115,6 +115,26 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/txtConfirmContinue"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="8dp"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="17dp"
+                            android:textColor="@color/red"
+                            android:textStyle="bold"
+                            android:text="Confirm continue as guest?"
+                            android:id="@+id/textView359" />
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
@@ -150,7 +170,41 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:weightSum="1">
+                        android:weightSum="1"
+                        android:visibility="gone"
+                        android:id="@+id/linearConfirmAsGuest">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+
+                        <Button
+                            android:padding="10dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.9"
+                            android:layout_height="wrap_content"
+                            android:text="Confirm as guest"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:id="@+id/btnConfirmAsGuest"
+                            android:background="@drawable/login_login_button_clicked" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:weightSum="1"
+                        android:id="@+id/linearContinueAsGuest">
 
                         <LinearLayout
                             android:orientation="vertical"
@@ -182,7 +236,41 @@
                         android:orientation="horizontal"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp" >
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/linearBtnCancel"
+                        android:visibility="gone">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+
+                        <Button
+                            android:padding="10dp"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.8"
+                            android:layout_height="wrap_content"
+                            android:text="Cancel"
+                            android:textColor="@color/orange_firefly"
+                            android:textStyle="bold"
+                            android:id="@+id/btnCancel"
+                            android:layout_marginBottom="10dp"
+                            android:background="@drawable/login_register_button_clicked" />
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.05"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:id="@+id/linearClose">
                         <LinearLayout
                             android:orientation="vertical"
                             android:layout_width="0dp"

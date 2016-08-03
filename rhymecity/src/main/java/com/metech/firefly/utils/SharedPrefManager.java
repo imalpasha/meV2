@@ -46,8 +46,13 @@ public class SharedPrefManager {
 
     public static final String CUSTOMER_NUMBER ="CN";
 
+    public static final String PERSON_ID ="PI";
+    public static final String BANNER_REDIRECT_URL ="BRU";
 
     public static final String APP_VERSION = "AV";
+
+    public static final String FORCE_LOGOUT = "N";
+
     int PRIVATE_MODE = 0;
     Context _context;
     private SharedPreferences _sharedPrefs;
@@ -59,6 +64,20 @@ public class SharedPrefManager {
         _prefsEditor = _sharedPrefs.edit();
     }
 
+    /*ForceLogout*/
+    public HashMap<String, String> getForceLogout() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(FORCE_LOGOUT, _sharedPrefs.getString(FORCE_LOGOUT, null));
+        return init;
+    }
+
+    /*PAYMENT*/
+    public HashMap<String, String> getBannerRedirectURL() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(BANNER_REDIRECT_URL, _sharedPrefs.getString(BANNER_REDIRECT_URL, null));
+        return init;
+    }
+
     /*SSR2*/
     public HashMap<String, String> getCustomerNumber() {
         HashMap<String, String> init = new HashMap<String, String>();
@@ -66,6 +85,12 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*SSR2*/
+    public HashMap<String, String> getPersonID() {
+        HashMap<String, String> init = new HashMap<String, String>();
+        init.put(PERSON_ID, _sharedPrefs.getString(PERSON_ID, null));
+        return init;
+    }
 
     /*SSR1*/
     public HashMap<String, String> getSSR1() {
@@ -263,6 +288,11 @@ public class SharedPrefManager {
         return init;
     }
 
+    /*ForceLogout*/
+    public void setForceLogout(String logout) {
+        _prefsEditor.putString(FORCE_LOGOUT, logout);
+        _prefsEditor.apply();
+    }
 
     /*Set SEAT*/
     public void setCustomerNumber(String customerNumber) {
@@ -295,11 +325,16 @@ public class SharedPrefManager {
     }
 
     /*Set Booking ID*/
+    public void setPersonID(String personID) {
+        _prefsEditor.putString(PERSON_ID, personID);
+        _prefsEditor.apply();
+    }
+
+    /*Set Booking ID*/
     public void setAppVersion(String version) {
         _prefsEditor.putString(APP_VERSION, version);
         _prefsEditor.apply();
     }
-
 
     /*Set Booking ID*/
     public void setUserID(String id) {
@@ -410,6 +445,12 @@ public class SharedPrefManager {
     /*Set Signature Value*/
     public void setBannerModule(String module) {
         _prefsEditor.putString(BANNER_MODULE, module);
+        _prefsEditor.apply();
+    }
+
+    /*Set Signature Value*/
+    public void setBannerRedirectURL(String url) {
+        _prefsEditor.putString(BANNER_REDIRECT_URL,url);
         _prefsEditor.apply();
     }
 
@@ -629,6 +670,20 @@ public class SharedPrefManager {
     public void clearBannerModule() {
         // Clearing Selected
         _sharedPrefs.edit().remove(BANNER_MODULE).apply();
+        Log.e("Clear", "True");
+    }
+
+    /*Clear UserInfo Value*/
+    public void clearCustomerNumber() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(CUSTOMER_NUMBER).apply();
+        Log.e("Clear", "True");
+    }
+
+    /*Clear UserInfo Value*/
+    public void clearPersonID() {
+        // Clearing Selected
+        _sharedPrefs.edit().remove(PERSON_ID).apply();
         Log.e("Clear", "True");
     }
 }

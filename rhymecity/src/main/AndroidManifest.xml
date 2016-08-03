@@ -218,6 +218,10 @@
             android:name="com.metech.firefly.ui.activity.BoardingPass.BoardingPassDisplayActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.metech.firefly.ui.activity.GlobalPopup.PopupActivity"
+            android:screenOrientation="portrait" />
+
         <!-- DEMO -->
         <activity
             android:name=".ui.activity.Gate.CurrentGateActivity"

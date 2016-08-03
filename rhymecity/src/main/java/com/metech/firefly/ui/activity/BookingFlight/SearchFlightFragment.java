@@ -520,7 +520,6 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     }
 
     public void searchFlightFragment(SearchFlightObj flightObj){
-
        presenter.searchFlight(flightObj);
     }
 

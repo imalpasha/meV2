@@ -12,6 +12,76 @@ public class PaymentInfoReceive {
     private String message;
     private PaymentInfoReceive obj;
     private String amount_due;
+    private FOP fop;
+
+    public class FOP{
+
+        private String card_number;
+        private String expiration_date_month;
+        private String expiration_date_year;
+        private String card_holder_name;
+        private String account_number_id;
+
+        private String card_type;
+
+        public String getCard_type() {
+            return card_type;
+        }
+
+        public void setCard_type(String card_type) {
+            this.card_type = card_type;
+        }
+
+        public String getCard_number() {
+            return card_number;
+        }
+
+        public void setCard_number(String card_number) {
+            this.card_number = card_number;
+        }
+
+        public String getExpiration_date_month() {
+            return expiration_date_month;
+        }
+
+        public void setExpiration_date_month(String expiration_date_month) {
+            this.expiration_date_month = expiration_date_month;
+        }
+
+        public String getExpiration_date_year() {
+            return expiration_date_year;
+        }
+
+        public void setExpiration_date_year(String expiration_date_year) {
+            this.expiration_date_year = expiration_date_year;
+        }
+
+        public String getCard_holder_name() {
+            return card_holder_name;
+        }
+
+        public void setCard_holder_name(String card_holder_name) {
+            this.card_holder_name = card_holder_name;
+        }
+
+        public String getAccount_number_id() {
+            return account_number_id;
+        }
+
+        public void setAccount_number_id(String account_number_id) {
+            this.account_number_id = account_number_id;
+        }
+
+    }
+
+    public FOP getFop() {
+        return fop;
+    }
+
+    public void setFop(FOP fop) {
+        this.fop = fop;
+    }
+
     private List<PaymentChannel> payment_channel = new ArrayList<PaymentChannel>();
 
     public String getMessage() {
@@ -45,7 +115,7 @@ public class PaymentInfoReceive {
         message = returnObj.getMessage();
         amount_due = returnObj.getAmount_due();
         payment_channel = returnObj.getPayment_channel();
-
+        fop = returnObj.getFop();
     }
 
     public PaymentInfoReceive getObj() {

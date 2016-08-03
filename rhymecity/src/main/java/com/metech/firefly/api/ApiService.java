@@ -6,6 +6,8 @@ import com.metech.firefly.api.obj.ChangeSearchFlightReceive;
 import com.metech.firefly.api.obj.CheckInListReceive;
 import com.metech.firefly.api.obj.ConfirmUpdateReceive;
 import com.metech.firefly.api.obj.ContactInfoReceive;
+import com.metech.firefly.api.obj.DeleteCCReceive;
+import com.metech.firefly.api.obj.DeleteFFReceive;
 import com.metech.firefly.api.obj.DeviceInfoSuccess;
 import com.metech.firefly.api.obj.FlightSummaryReceive;
 import com.metech.firefly.api.obj.ForgotPasswordReceive;
@@ -35,8 +37,11 @@ import com.metech.firefly.ui.object.ChangePasswordRequest;
 import com.metech.firefly.ui.object.ChangeSSR;
 import com.metech.firefly.ui.object.ConfirmUpdateRequest;
 import com.metech.firefly.ui.object.ContactInfo;
+import com.metech.firefly.ui.object.DefaultPassengerObj;
+import com.metech.firefly.ui.object.DeleteCCRequest;
 import com.metech.firefly.ui.object.DeviceInformation;
 import com.metech.firefly.ui.object.FlightSummary;
+import com.metech.firefly.ui.object.FriendFamilyDelete;
 import com.metech.firefly.ui.object.GetChangeFlight;
 import com.metech.firefly.ui.object.GetFlightAvailability;
 import com.metech.firefly.ui.object.GetSSR;
@@ -51,6 +56,7 @@ import com.metech.firefly.ui.object.MobileCheckInPassenger;
 import com.metech.firefly.ui.object.MobileCheckinObj;
 import com.metech.firefly.ui.object.MobileConfirmCheckInPassenger;
 import com.metech.firefly.ui.object.Passenger;
+import com.metech.firefly.ui.object.PassengerInfo;
 import com.metech.firefly.ui.object.PasswordRequest;
 import com.metech.firefly.ui.object.Payment;
 import com.metech.firefly.ui.object.RegisterObj;
@@ -66,6 +72,7 @@ import com.metech.firefly.ui.object.UpdateProfileRequest;
 
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -199,9 +206,18 @@ public interface ApiService {
     @POST("/getMealSSR")
     void onRetrieveSSR(@Body GetSSR obj, Callback<SSRReceive> callback);
 
-
     @POST("/changeSSR")
     void onChangeSSR(@Body ChangeSSR obj, Callback<ManageChangeContactReceive> callback);
+
+    @POST("/editFamilyFriends")
+    void onRequestEditFF(@Body PassengerInfo obj, Callback<SelectFlightReceive> callback);
+
+    @POST("/deleteFamilyFriends")
+    void onRequestDeleteFF(@Body FriendFamilyDelete obj, Callback<DeleteFFReceive> callback);
+
+    @POST("/removeCC")
+    void onRequestDeleteCC(@Body DeleteCCRequest obj, Callback<DeleteCCReceive> callback);
+
 
 
 

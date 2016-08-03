@@ -15,6 +15,9 @@ public class Payment {
     private String issuingBank;
     private String cardHolderName;
     private String bookingId;
+    private String personID;
+    private String accountNumberID;
+
     public Payment(){
 
     }
@@ -31,6 +34,25 @@ public class Payment {
         this.issuingBank = obj.getIssuingBank();
         this.cardHolderName = obj.getCardHolderName();
         this.bookingId = obj.getBookingID();
+        this.personID = obj.getPersonID();
+        this.accountNumberID = obj.getAccountNumberID();
+    }
+
+    public String getAccountNumberID() {
+        return accountNumberID;
+    }
+
+    public void setAccountNumberID(String accountNumberID) {
+        this.accountNumberID = accountNumberID;
+    }
+
+
+    public String getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 
 

@@ -2,6 +2,7 @@ package com.metech.firefly;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 
 import com.metech.firefly.base.BaseFragment;
@@ -35,6 +36,12 @@ public class Controller extends BaseFragment {
         pref.clearSignatureFromLocalStorage();
         pref.clearPassword();
         pref.clearUserEmail();
+        pref.clearBookingID();
+        pref.clearCustomerNumber();
+        pref.clearPersonID();
+        pref.clearFlightType();
+        pref.clearNewsletterStatus();
+        pref.clearPNR();
         pref.setLoginStatus("N");
         Log.e("SUCCESS","ok");
     }
@@ -53,6 +60,21 @@ public class Controller extends BaseFragment {
             act.startActivity(bannerIntent);
         }
     }
+
+    public static void clickableBannerWithURL(Activity act,String url){
+
+        if (!url.startsWith("http://") && !url.startsWith("https://")){
+            url = "http://" + url;
+        }
+
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        act.startActivity(i);
+
+        Log.e("url",url);
+
+    }
+
 
     public static boolean connectionAvailable(Activity act){
 
@@ -73,7 +95,7 @@ public class Controller extends BaseFragment {
 
         } else if (objStatus.equals("error") || objStatus.equals("error_validation")) {
             status = false;
-            setAlertDialog(act, message,"Validation Error");
+            setAlertDialog(act, message,"Error");
 
         } else if (objStatus.equals("401")) {
             status = false;

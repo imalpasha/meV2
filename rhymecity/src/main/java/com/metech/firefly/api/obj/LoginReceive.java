@@ -26,6 +26,7 @@ public class LoginReceive {
 
    public class UserInfo {
 
+       private String personID;
        private String signature;
        private String username;
        private String password;
@@ -50,6 +51,14 @@ public class LoginReceive {
        private String newsletter;
        private String bonuslink;
        private String customer_number;
+
+       public String getPersonID() {
+           return personID;
+       }
+
+       public void setPersonID(String personID) {
+           this.personID = personID;
+       }
 
        public String getCustomer_number() {
            return customer_number;

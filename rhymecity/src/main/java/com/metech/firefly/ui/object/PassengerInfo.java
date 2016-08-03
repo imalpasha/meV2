@@ -33,6 +33,24 @@ public class PassengerInfo {
     private String bonuslink;
     private String friend_and_family_id;
     private String passenger_type;
+    private String booking_id;
+    private String user_email;
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
+    }
+
+    public String getBooking_id() {
+        return booking_id;
+    }
+
+    public void setBooking_id(String booking_id) {
+        this.booking_id = booking_id;
+    }
 
     public String getPassenger_type() {
         return passenger_type;
@@ -155,7 +173,24 @@ public class PassengerInfo {
         this.document_number = document_number;
     }
 
+    public PassengerInfo(){
 
-    // }
+    }
+
+    public PassengerInfo(PassengerInfo data){
+
+        title = data.getTitle();
+        first_name = data.getFirst_name();
+        last_name = data.getLast_name();
+        dob = data.getDob();
+        issuing_country = data.getIssuing_country();
+        bonuslink = data.getBonuslink();
+        friend_and_family_id = data.getFriend_and_family_id();
+        passenger_type = data.getPassenger_type();
+        gender = data.getGender();
+        user_email = data.getUser_email();
+        booking_id = data.getBooking_id();
+
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.metech.firefly.api.obj;
 
+import com.metech.firefly.ui.object.DefaultPassengerObj;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,18 @@ public class PassengerInfoReveice {
     private String message;
     private PassengerInfoReveice obj;
     private insurance insurance;
+    private String ssr_status;
     private List<SSRMeal> meal;
+    private ArrayList<DefaultPassengerObj> family_and_friend;
+
+    public ArrayList<DefaultPassengerObj> getFamily_and_friend() {
+        return family_and_friend;
+    }
+
+    public void setFamily_and_friend(ArrayList<DefaultPassengerObj> family_and_friend) {
+        this.family_and_friend = family_and_friend;
+    }
+
 
     public class SSRMeal{
 
@@ -95,6 +108,16 @@ public class PassengerInfoReveice {
         return meal;
     }
 
+
+    public String getSsr_status() {
+        return ssr_status;
+    }
+
+    public void setSsr_status(String ssr_status) {
+        this.ssr_status = ssr_status;
+    }
+
+
     public void setMeal(List<SSRMeal> meal) {
         this.meal = meal;
     }
@@ -172,7 +195,11 @@ public class PassengerInfoReveice {
         insurance = param_obj.getInsuranceObj();
         this.obj = param_obj;
         meal = param_obj.getMeal();
+        ssr_status = param_obj.getSsr_status();
+        family_and_friend = param_obj.getFamily_and_friend();
+
     }
+
     public PassengerInfoReveice getObj() {
         return obj;
     }

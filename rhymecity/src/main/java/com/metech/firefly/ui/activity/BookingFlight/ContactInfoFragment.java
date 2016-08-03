@@ -280,13 +280,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
 
-        //Bundle xxx = getActivity().getIntent().getExtras();
-        //String insurance = bundle.getString("INSURANCE_STATUS");
+        Bundle xxx = getActivity().getIntent().getExtras();
+        String insurance = bundle.getString("INSURANCE_STATUS");
 
-        HashMap<String, String> init = pref.getSeat();
-        String seatHash = init.get(SharedPrefManager.SEAT);
+        //HashMap<String, String> init = pref.getSeat();
+        //String seatHash = init.get(SharedPrefManager.SEAT);
 
-        String defaultPassenger = "";
+        //String defaultPassenger = "";
         try {
              defaultObj = getActivity().getIntent().getParcelableArrayListExtra("DEFAULT_PASSENGER_INFO");
         }catch (Exception e){
@@ -295,7 +295,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         changeContactInfoBtn.setVisibility(View.GONE);
         Gson gson = new Gson();
 
-        obj= gson.fromJson(seatHash, PassengerInfoReveice.class);
+        obj= gson.fromJson(insurance, PassengerInfoReveice.class);
 
         /* If Passenger Already Login - Auto display necessary data */
         HashMap<String, String> initLogin = pref.getLoginStatus();
@@ -378,17 +378,21 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             }
         });
 
-        insuranceStatus = obj.getInsuranceObj().getStatus();
-        if(insuranceStatus.equals("Y")) {
-            insuranceBlock.setVisibility(View.VISIBLE);
+        try {
+            insuranceStatus = obj.getInsuranceObj().getStatus();
+            if(insuranceStatus != null){
+                if(insuranceStatus.equals("Y")) {
+                    insuranceBlock.setVisibility(View.VISIBLE);
 
-            insuranceTxt1 = obj.getInsuranceObj().getHtml().get(0).toString();
-            insuranceTxt2 = obj.getInsuranceObj().getHtml().get(1).toString();
-            insuranceTxt3 = obj.getInsuranceObj().getHtml().get(2).toString();
-            insuranceTxt4 = obj.getInsuranceObj().getHtml().get(3).toString();
+                    insuranceTxt1 = obj.getInsuranceObj().getHtml().get(0).toString();
+                    insuranceTxt2 = obj.getInsuranceObj().getHtml().get(1).toString();
+                    insuranceTxt3 = obj.getInsuranceObj().getHtml().get(2).toString();
+                    insuranceTxt4 = obj.getInsuranceObj().getHtml().get(3).toString();
 
-            setInsuranceText();
-        }
+                    setInsuranceText();
+                }
+            }
+        }catch(Exception e){}
 
         /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
@@ -470,13 +474,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         HashMap<String, String> initFlightType = pref.getFlightType();
         flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
-        if(flightType.equals("MH")){
+        if(flightType.equals("MH")) {
             btnSeatSelection.setVisibility(View.GONE);
             btnWithoutSeatSelection.setText("Continue");
-            displaySSRMeal();
+        }
 
-        }else{
-
+        if (obj.getSsr_status().equals("Y")) {
+               displaySSRMeal();
         }
 
          /*Onclick Continue*/
@@ -590,93 +594,95 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         if(ssrOffer1.equals("Y") || ssrOffer2.equals("Y")){
 
-        specialMealLayout.setVisibility(View.VISIBLE);
-        mealSSR();
+            if(obj.getMeal().size() > 0){
 
-        //Services & Fee
-        LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
-        LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
-        LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+                specialMealLayout.setVisibility(View.VISIBLE);
+                mealSSR();
 
-        int departLoop = 1;
-        int returnLoop = 1;
+                //Services & Fee
+                LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+                LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+                LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
-        for(int services = 0 ; services < obj.getMeal().size() ; services++){
+                int departLoop = 1;
+                int returnLoop = 1;
 
-            boolean proceed = false;
+                for(int services = 0 ; services < obj.getMeal().size() ; services++){
 
-            if(ssrOffer1.equals("Y") && services == 0){
-                proceed = true;
-            }
+                    boolean proceed = false;
 
-            if(ssrOffer2.equals("Y") && services == 1){
-                proceed = true;
-            }
-
-            if(proceed){
-
-                String ssrFlightDestination = obj.getMeal().get(services).getDestination_name();
-                TextView txtFlightType = new TextView(getActivity());
-                txtFlightType.setText(ssrFlightDestination);
-                txtFlightType.setTypeface(null, Typeface.BOLD);
-                txtFlightType.setGravity(Gravity.LEFT);
-                txtFlightType.setPadding(0, 10, 0, 10);
-
-                passengerSSRMealList.addView(txtFlightType);
-
-                for(int servicesLoop = 0 ; servicesLoop < obj.getMeal().get(services).getPassenger().size() ; servicesLoop++){
-
-                    LinearLayout servicesRow = new LinearLayout(getActivity());
-                    servicesRow.setOrientation(LinearLayout.VERTICAL);
-                    servicesRow.setPadding(2, 2, 2, 2);
-                    servicesRow.setWeightSum(1);
-                    servicesRow.setLayoutParams(matchParent);
-                    servicesRow.setBackgroundResource(R.drawable.drawable_login_bottom_border);
-
-                    String passengerName = obj.getMeal().get(services).getPassenger().get(servicesLoop).getPassenger_name();
-
-                    TextView txtName = new TextView(getActivity());
-                    txtName.setTypeface(null, Typeface.BOLD);
-                    txtName.setText(passengerName);
-                    txtName.setPadding(0, 5, 0, 5);
-
-                    LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    llp.setMargins(0, 5, 0, 5); // llp.setMargins(left, top, right, bottom);
-
-                    final TextView txtMealList = new TextView(getActivity());
-                    txtMealList.setBackgroundResource(R.drawable.block_with_border);
-                    txtMealList.setText("Default Meal");
-                    txtMealList.setPadding(7, 7, 7, 7);
-                    txtMealList.setLayoutParams(llp);
-                    //onclick meal
-                    if(services == 0){
-                        txtMealList.setTag("passenger_depart"+Integer.toString(departLoop));
-                        txtMealList.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupSelection(departMealList, getActivity(), txtMealList, false, view);
-                            }
-                        });
-
-                        departLoop++;
-
-                    }else{
-                        txtMealList.setTag("passenger_return"+Integer.toString(returnLoop));
-
-                        txtMealList.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                popupSelection(returnMealList, getActivity(), txtMealList, false, view);
-                            }
-                        });
-
-                        returnLoop++;
+                    if(ssrOffer1.equals("Y") && services == 0){
+                        proceed = true;
                     }
 
+                    if(ssrOffer2.equals("Y") && services == 1){
+                        proceed = true;
+                    }
 
-                    servicesRow.addView(txtName);
-                    servicesRow.addView(txtMealList);
-                    servicesRow.setPadding(0, 10, 0, 20);
+                    if(proceed){
+
+                        String ssrFlightDestination = obj.getMeal().get(services).getDestination_name();
+                        TextView txtFlightType = new TextView(getActivity());
+                        txtFlightType.setText(ssrFlightDestination);
+                        txtFlightType.setTypeface(null, Typeface.BOLD);
+                        txtFlightType.setGravity(Gravity.LEFT);
+                        txtFlightType.setPadding(0, 10, 0, 10);
+
+                        passengerSSRMealList.addView(txtFlightType);
+
+                        for(int servicesLoop = 0 ; servicesLoop < obj.getMeal().get(services).getPassenger().size() ; servicesLoop++){
+
+                            LinearLayout servicesRow = new LinearLayout(getActivity());
+                            servicesRow.setOrientation(LinearLayout.VERTICAL);
+                            servicesRow.setPadding(2, 2, 2, 2);
+                            servicesRow.setWeightSum(1);
+                            servicesRow.setLayoutParams(matchParent);
+                            servicesRow.setBackgroundResource(R.drawable.drawable_login_bottom_border);
+
+                            String passengerName = obj.getMeal().get(services).getPassenger().get(servicesLoop).getPassenger_name();
+
+                            TextView txtName = new TextView(getActivity());
+                            txtName.setTypeface(null, Typeface.BOLD);
+                            txtName.setText(passengerName);
+                            txtName.setPadding(0, 5, 0, 5);
+
+                            LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                            llp.setMargins(0, 5, 0, 5); // llp.setMargins(left, top, right, bottom);
+
+                            final TextView txtMealList = new TextView(getActivity());
+                            txtMealList.setBackgroundResource(R.drawable.block_with_border);
+                            txtMealList.setText("Default Meal");
+                            txtMealList.setPadding(7, 7, 7, 7);
+                            txtMealList.setLayoutParams(llp);
+                            //onclick meal
+                            if(services == 0){
+                                txtMealList.setTag("passenger_depart"+Integer.toString(departLoop));
+                                txtMealList.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        popupSelection(departMealList, getActivity(), txtMealList, false, view);
+                                    }
+                                });
+
+                                departLoop++;
+
+                            }else{
+                                txtMealList.setTag("passenger_return"+Integer.toString(returnLoop));
+
+                                txtMealList.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        popupSelection(returnMealList, getActivity(), txtMealList, false, view);
+                                    }
+                                });
+
+                                returnLoop++;
+                            }
+
+
+                            servicesRow.addView(txtName);
+                            servicesRow.addView(txtMealList);
+                            servicesRow.setPadding(0, 10, 0, 20);
 
                 /*if(servicesLoop == obj.getMeal().get(services).getPassenger().size() - 1){
                     //margin bottom
@@ -685,12 +691,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     servicesRow.setPadding(0, 10, 0, 10);
                 }*/
 
-                    passengerSSRMealList.addView(servicesRow);
+                            passengerSSRMealList.addView(servicesRow);
+                        }
+                    }
+
                 }
             }
-
             }
-        }
     }
 
     public void setInsuranceText(){
@@ -725,7 +732,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     }
 
-    /*Popup Forgot Password*/
+    /*PopupActivity Forgot Password*/
     public void removeInsurance(){
 
         LayoutInflater li = LayoutInflater.from(getActivity());
@@ -1033,7 +1040,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         contactObj.setContact_email(txtEmailAddress.getText().toString());
 
         //getMealCode
-        if(flightType.equals("MH")){
+        if(flightType.equals("MH") && obj.getSsr_status().equals("Y")){
 
 
             //if meal available

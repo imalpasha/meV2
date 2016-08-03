@@ -230,7 +230,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Family &amp; Friend"
-                                    android:tag="txtPassenger1"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
                                     android:textStyle="bold" />
@@ -281,7 +280,6 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Passenger 1"
                                     android:tag="txtPassenger1"
                                     android:textSize="@dimen/font20sp"
                                     android:textColor="@color/white"
@@ -308,12 +306,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger1_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -855,7 +850,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger1_asFF_block"
+                                    android:tag="passenger1_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -928,12 +923,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger2_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:tag="passenger2_selectFF"
+                                        android:text="Select from family &amp; friends"
+                                        android:textSize="14dp"/>
 
                                 </LinearLayout>
 
@@ -1469,7 +1461,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger2_asFF_block"
+                                    android:tag="passenger2_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -1544,12 +1536,10 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger3_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:textSize="14dp"
+                                        android:tag="passenger3_selectFF"
+                                        android:text="Select from family &amp; friends"
+                                        />
 
                                 </LinearLayout>
 
@@ -2088,7 +2078,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger3_asFF_block"
+                                    android:tag="passenger3_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -2163,12 +2153,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger4_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -2707,7 +2694,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger4_asFF_block"
+                                    android:tag="passenger4_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -2782,12 +2769,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger5_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:textSize="14dp"
+                                        android:tag="passenger5_selectFF"
+                                        android:text="Select from family &amp; friends"/>
 
                                 </LinearLayout>
 
@@ -3324,7 +3308,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger5_asFF_block"
+                                    android:tag="passenger5_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -3397,12 +3381,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger6_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -3936,7 +3917,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger6_asFF_block"
+                                    android:tag="passenger6_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -4010,12 +3991,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger7_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -4538,7 +4516,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger7_asFF_block"
+                                    android:tag="passenger7_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -4611,12 +4589,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger8_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -5139,7 +5114,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger8_asFF_block"
+                                    android:tag="passenger8_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -5212,12 +5187,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger9_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -5740,7 +5712,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger9_asFF_block"
+                                    android:tag="passenger9_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -5813,12 +5785,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"
                                         android:tag="passenger10_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
 
                                 </LinearLayout>
 
@@ -6349,7 +6318,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger10_asFF_block"
+                                    android:tag="passenger10_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -6421,12 +6390,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger11_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:tag="passenger11_selectFF"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"/>
 
                                 </LinearLayout>
 
@@ -6948,7 +6914,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger11_asFF_block"
+                                    android:tag="passenger11_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -7020,12 +6986,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger12_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:tag="passenger12_selectFF"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"/>
 
                                 </LinearLayout>
 
@@ -7548,7 +7511,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger12_asFF_block"
+                                    android:tag="passenger12_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 
@@ -7621,12 +7584,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:padding="5dp"
-                                        android:tag="passenger13_selectFF" />
-
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="Select from family &amp; friends" />
+                                        android:tag="passenger13_selectFF"
+                                        android:textSize="14dp"
+                                        android:text="Select from family &amp; friends"/>
 
                                 </LinearLayout>
 
@@ -8148,7 +8108,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="5dp"
-                                    android:tag="passenger13_asFF_block"
+                                    android:tag="passenger13_saveFF_block"
                                     android:paddingBottom="5dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
 

@@ -78,6 +78,9 @@ public class PaymentWebViewFragment extends BaseFragment  {
         }
 
         if(paymentPopup.equals("Y")){
+
+            Log.e("1",url);
+
             override = false;
             webview.getSettings().setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new PaymentWebViewFragment(), "Android");
@@ -160,10 +163,22 @@ public class PaymentWebViewFragment extends BaseFragment  {
             override = true;
             webview.getSettings().setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new PaymentWebViewFragment(), "Android");
-            webview.loadUrl(url);
+            //webview.loadUrl(url);
+
+
+            Log.e("url1",url);
+
+           /* webview.setWebViewClient(new WebViewClient() {
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    view.loadUrl(url);
+                    return true;
+                }});*/
 
             webview.setWebViewClient(new WebViewClient() {
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                    Log.e("url2",url);
+                    Log.e("paymentCode",paymentCode);
 
                     if (!loadingFinished) {
                         redirect = true;
@@ -171,11 +186,11 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
                     loadingFinished = false;
 
-                    if(url.contains("cimb") || paymentCode.equals("PX")){
+                    /*if(url.contains("cimb") || paymentCode.equals("PX") || paymentCode.equals("MC")){
                         view.setWebChromeClient(new WebChromeClient());
                         view.loadUrl(url);
-
-                    }else{
+                    }else{*/
+                    if(url.equals("http://fyapidev.me-tech.com.my/api/success")){
                         if(paymentFrom.equals("NORMAL")){
                             Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -191,7 +206,12 @@ public class PaymentWebViewFragment extends BaseFragment  {
                             getActivity().finish();
 
                         }
+                    }else{
+                        webview.setWebChromeClient(new WebChromeClient());
+                        webview.loadUrl(url);
                     }
+
+                   // }
 
                     return true ;
                 }

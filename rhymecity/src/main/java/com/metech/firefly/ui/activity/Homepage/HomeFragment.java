@@ -1,12 +1,20 @@
 package com.metech.firefly.ui.activity.Homepage;
 
+import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -20,6 +28,7 @@ import android.widget.TextView;
 import com.metech.firefly.AnalyticsApplication;
 import com.metech.firefly.Controller;
 import com.metech.firefly.FireFlyApplication;
+import com.metech.firefly.GCMIntentService;
 import com.metech.firefly.R;
 import com.metech.firefly.api.obj.DeviceInfoSuccess;
 import com.metech.firefly.base.BaseFragment;
@@ -32,6 +41,7 @@ import com.metech.firefly.ui.activity.Login.LoginActivity;
 import com.metech.firefly.ui.activity.ManageFlight.MF_Activity;
 import com.metech.firefly.ui.activity.MobileCheckIn.MobileCheckInActivity1;
 import com.metech.firefly.ui.activity.PushNotification.PushNotificationActivity;
+import com.metech.firefly.ui.activity.SplashScreen.Pop2NotificationActivity;
 import com.metech.firefly.ui.module.HomeModule;
 import com.metech.firefly.ui.presenter.HomePresenter;
 import com.metech.firefly.utils.RealmObjectController;
@@ -137,7 +147,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         pref = new SharedPrefManager(getActivity());
         aq.recycle(view);
 
-        /*GET PREF DATA*/
         HashMap<String, String> initPromoBanner = pref.getPromoBanner();
         String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
 
@@ -147,20 +156,26 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         }
 
         //put in try catch
-       // try {
+        try {
             aq.id(R.id.bannerImg).image(banner);
-        //}catch (Exception e){
-       // }
+        }catch (Exception e){
+        }
 
         HashMap<String, String> initBannerModule = pref.getBannerModule();
+        HashMap<String, String> initBannerURL = pref.getBannerRedirectURL();
+
         final String bannerModule = initBannerModule.get(SharedPrefManager.BANNER_MODULE);
+        final String bannerRedirectURL = initBannerURL.get(SharedPrefManager.BANNER_REDIRECT_URL);
 
         bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(bannerModule != null || bannerModule != ""){
+                if(!bannerRedirectURL.equals("")){
+                    Controller.clickableBannerWithURL(getActivity(),bannerRedirectURL);
+                }else if(!bannerModule.equals("")){
                     Controller.clickableBanner(getActivity(),bannerModule);
                 }else{
+                    //No Action
                 }
             }
         });
@@ -319,6 +334,9 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     public void getScreenSize(){
 
+
+
+
         int screenSize = getResources().getConfiguration().screenLayout &  Configuration.SCREENLAYOUT_SIZE_MASK;
 
         String toastMsg;
@@ -338,6 +356,38 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     }
 
     // ------------------------------------------------------------------------------------------- //
+
+    private void generateNotification(Activity context) {
+
+        int requestID = (int) System.currentTimeMillis();
+
+
+        Intent notificationIntent = new Intent(context, Pop2NotificationActivity.class);
+        notificationIntent.setAction(Intent.ACTION_MAIN);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), requestID,notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.last_minute);
+        NotificationCompat.BigPictureStyle notiStyle = new NotificationCompat.BigPictureStyle();
+        notiStyle.bigPicture(largeIcon);
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
+        mBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
+        mBuilder
+                .setContentText("Enjoy 20% off when you book your tickets via Firefly mobile on this weekend.")
+                .setContentTitle(String.format("Firefly Weekend Deal"))
+                .setSmallIcon(R.drawable.push_icon)
+                .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
+                //.setLargeIcon(largeIcon)
+                .setStyle(notiStyle)
+                .setTicker("Firefly Ticket 20% off !!");
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder.setContentIntent(contentIntent);
+
+        notificationManager.notify(1, mBuilder.build());
+
+    }
 
     public void gotPushRegistration(){
         Intent loginPage = new Intent(getActivity(), PushNotificationActivity.class);

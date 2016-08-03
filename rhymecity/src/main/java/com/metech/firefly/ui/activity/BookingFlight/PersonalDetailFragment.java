@@ -35,6 +35,8 @@ import com.metech.firefly.ui.activity.Picker.CountryListDialogFragment;
 import com.metech.firefly.ui.module.PersonalDetailModule;
 import com.metech.firefly.ui.object.CachedResult;
 import com.metech.firefly.ui.object.DefaultPassengerObj;
+import com.metech.firefly.ui.object.FamilyFriendList;
+import com.metech.firefly.ui.object.FamilyFriendObj;
 import com.metech.firefly.ui.object.InfantInfo;
 import com.metech.firefly.ui.object.LoginRequest;
 import com.metech.firefly.ui.object.Passenger;
@@ -106,24 +108,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     @InjectView(R.id.btnFamilyFriend)
     Button btnFamilyFriend;
 
-   /* @NotEmpty(sequence = 1)
-    @InjectView(R.id.txtUserId)
-    EditText txtUserId;
-
-    @NotEmpty(sequence = 2)
-    @InjectView(R.id.txtPassword)
-    EditText txtPassword;
-
-    @InjectView(R.id.memberLoginBlock)
-    LinearLayout memberLoginBlock;
-
-    @InjectView(R.id.txtForgotPassword)
-    Button txtForgotPassword;
-
-    @InjectView(R.id.passengerBtnLogin)
-    Button passengerBtnLogin;*/
-
-
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Book Flight: Personal Details(Passenger Details)";
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -161,6 +145,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     private ArrayList<Integer> ageOfTraveller = new ArrayList<Integer>();
     private String flightType;
     private boolean infantLoop;
+    private String loginStatus;
+    private int totalPassenger;
 
     //different object for different field.
     private DatePickerDialog datePickerYear1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -183,6 +169,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         mValidator = new Validator(this);
         mValidator.setValidationListener(this);
         mValidator.setValidationMode(Validator.Mode.BURST);
+
     }
 
     @Override
@@ -195,8 +182,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         Bundle bundle = getArguments();
         adult = bundle.getString(ADULT);
         infant = bundle.getString(INFANT);
-        friendAndFamilyObj = getActivity().getIntent().getParcelableArrayListExtra("FRIEND_AND_FAMILY");
         pref = new SharedPrefManager(getActivity());
+
+        HashMap<String, String> initLoginStatus = pref.getLoginStatus();
+        loginStatus = initLoginStatus.get(SharedPrefManager.ISLOGIN);
 
         autoFill();
 
@@ -204,9 +193,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         /*DatePicker Setup - Failed to make it global*/
 
-        final DatePickerDialog datePickerExpire = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-        datePickerExpire.setYearRange(year, year+20);
+        //final DatePickerDialog datePickerExpire = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        //datePickerExpire.setYearRange(year, year+20);
 
         titleList = new ArrayList<DropDownItem>();
         genderList = new ArrayList<DropDownItem>();
@@ -230,6 +218,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             adultPassengerList.add(itemTitle);
         }
 
+        totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
+
+
+
         /*Display Title Data*/
         titleList = getStaticTitle(getActivity());
         genderList = getGender(getActivity());
@@ -237,7 +229,6 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         countrys = getStaticCountry(getActivity());
 
         //if mh..disable bonuslink
-        int totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
         HashMap<String, String> initFlightType = pref.getFlightType();
         flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
@@ -252,8 +243,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
 
             final int selectedPassenger = adultInc;
-
-                final CheckBox checkFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_selectFF");
+            final CheckBox checkFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_selectFF");
+            if(loginStatus.equals("Y")){
                 checkFF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
@@ -271,9 +262,17 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                                 infantLoop = true;
                             }else{
                                 infantLoop = false;
+                                Log.e("INFANT","FALSE");
                             }
 
-                            if(friendAndFamilyObj.size() > 1){
+                            RealmResults<FamilyFriendList> cachedListResult = RealmObjectController.getFamilyFriends(MainFragmentActivity.getContext());
+                            if(cachedListResult.size() > 0){
+                                Gson gson = new Gson();
+                                FamilyFriendObj obj = gson.fromJson(cachedListResult.get(0).getCachedList(), FamilyFriendObj.class);
+                                friendAndFamilyObj = obj.getFamily_and_friend();
+                            }
+
+                            if(friendAndFamilyObj.size() > 0){
 
                                 ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
 
@@ -281,20 +280,23 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                                 {
                                     DropDownItem itemPurpose = new DropDownItem();
                                     if(infantLoop){
-                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("INFANT")){
+                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("Infant")){
                                             itemPurpose.setText(friendAndFamilyObj.get(i).getTitle()+" "+friendAndFamilyObj.get(i).getFirst_name());
                                             itemPurpose.setCode(Integer.toString(i));
                                             passengerList.add(itemPurpose);
                                         }
                                     }else{
-                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("ADULT")){
+                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("Adult")){
                                             itemPurpose.setText(friendAndFamilyObj.get(i).getTitle()+" "+friendAndFamilyObj.get(i).getFirst_name());
                                             itemPurpose.setCode(Integer.toString(i));
                                             passengerList.add(itemPurpose);
+                                            Log.e("?","1");
+
                                         }
                                     }
                                 }
                                 //popupSelection(passengerList, getActivity());
+                                Log.e("?","2");
                                 customPopupForContactInfo(passengerList, getActivity(),selectedPassenger,splitPassengerType[0]);
 
                             }
@@ -303,6 +305,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         }
                     }
                 });
+            }else{
+                checkFF.setVisibility(View.GONE);
+            }
 
 
             try {
@@ -330,85 +335,84 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             }
 
-               final TextView btnGender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
-                btnGender.setOnClickListener(new View.OnClickListener() {
-                   @Override
-                    public void onClick(View v) {
-                        popupSelection(genderList, getActivity(), btnGender, false, view);
+            final TextView btnGender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
+            btnGender.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupSelection(genderList, getActivity(), btnGender, false, view);
+                }
+            });
+
+            final TextView btnTravelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
+            final LinearLayout txtExpireDateBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date_block");
+
+            btnTravelDoc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"P",null);
+                }
+            });
+
+            final TextView btnCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
+            btnCountry.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showCountrySelector(getActivity(),countrys);
+                    clickedPassenger = selectedPassenger;
+                }
+            });
+
+
+            final TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
+            txtDob.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    //createDatePickerObject(selectedPassenger);
+
+                    String currentDOB = txtDob.getText().toString();
+                    if(!currentDOB.equals("")){
+                        String[] splitReturn = currentDOB.split("/");
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                    }else{
+                        createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     }
-                });
 
-                final TextView btnTravelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
-                final LinearLayout txtExpireDateBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date_block");
+                    clickedPassenger = selectedPassenger;
+                    boolDob = true;
+                    boolExpireDate = false;
 
-                btnTravelDoc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"P",null);
+                }
+            });
+
+            final TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+            txtExpireDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    String currentExpired = txtExpireDate.getText().toString();
+                    if(!currentExpired.equals("")){
+                        String[] splitReturn = currentExpired.split("/");
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
+                    }else{
+                        createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     }
-                });
 
-                final TextView btnCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
-                btnCountry.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        showCountrySelector(getActivity(),countrys);
-                        clickedPassenger = selectedPassenger;
-                    }
-                });
-
-
-                final TextView txtDob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
-                txtDob.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        //createDatePickerObject(selectedPassenger);
-
-                        String currentDOB = txtDob.getText().toString();
-                        if(!currentDOB.equals("")){
-                            String[] splitReturn = currentDOB.split("/");
-                            createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
-                        }else{
-                            createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                        }
-
-                        clickedPassenger = selectedPassenger;
-                        boolDob = true;
-                        boolExpireDate = false;
-
-                    }
-                });
-
-               final TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
-                txtExpireDate.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-
-                        String currentExpired = txtExpireDate.getText().toString();
-                        if(!currentExpired.equals("")){
-                            String[] splitReturn = currentExpired.split("/");
-                            createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
-                        }else{
-                            createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-                        }
-
-                        //creatExpiredDatePickerObject(selectedPassenger);
-                        clickedPassenger = selectedPassenger;
-                        boolDob = false;
-                        boolExpireDate = true;
-                    }
-                });
+                    //creatExpiredDatePickerObject(selectedPassenger);
+                    clickedPassenger = selectedPassenger;
+                    boolDob = false;
+                    boolExpireDate = true;
+                }
+            });
 
         }
 
         //set adult passenger header
-        for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
+        for (int txtAdult = 1; txtAdult < Integer.parseInt(adult) + 1; txtAdult++) {
 
-            TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
-            txtPassengerType.setText("ADULT "+adultInc);
-
+            TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + txtAdult);
+            txtPassengerType.setText("ADULT "+txtAdult);
+            Log.e("123","txtPassenger" + Integer.toString(txtAdult));
         }
         //auto set infant travelling with
         for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
@@ -420,7 +424,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             txtPassengerType.setText("INFANT " +infantInc);
         }
 
-            btnPersonalInfo.setOnClickListener(new View.OnClickListener() {
+        btnPersonalInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int intTotalAdult = 0;
@@ -462,10 +466,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     checkBonuslink(enrich);
 
 
-                  //  if(!validateAdultAge()){
+                    //  if(!validateAdultAge()){
 //
-                  //      formContinue = false;
-                  //  }
+                    //      formContinue = false;
+                    //  }
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
                     if(infantTravelDocCode != null){
@@ -521,202 +525,197 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                 //age validation
                 if(travellerAgeValidation(ageOfTraveller)){
-                        croutonAlert(getActivity(), "There must be at least one(1) passenger above 12 years old at the date(s) of travel");
-                        formContinue = false;
+                    croutonAlert(getActivity(), "There must be at least one(1) passenger above 12 years old at the date(s) of travel");
+                    formContinue = false;
                 }
 
-                    if(formContinue){
+                if(formContinue){
 
-                        DefaultPassengerObj adultDefault = new DefaultPassengerObj();
+                    DefaultPassengerObj adultDefault = new DefaultPassengerObj();
 
-                        int intTotalAdult2 = 0;
-                        //GET ADULT PASSENGER INFO
-                        for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
+                    int intTotalAdult2 = 0;
+                    //GET ADULT PASSENGER INFO
+                    for (int adultInc = 1; adultInc < Integer.parseInt(adult) + 1; adultInc++) {
 
-                            PassengerInfo passengerInfo = new PassengerInfo();
+                        PassengerInfo passengerInfo = new PassengerInfo();
 
-                            intTotalAdult2++;
-                            TextView title = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_title");
-                            TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
-                            EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_first_name");
-                            EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_last_name");
-                            TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
-                            TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
-                            TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
+                        intTotalAdult2++;
+                        TextView title = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_title");
+                        TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender");
+                        EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_first_name");
+                        EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_last_name");
+                        TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_dob");
+                        TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travel_doc");
+                        TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_expire_date");
 
-                            TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
-                            EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
-                            EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
-                            CheckBox checkAsFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_checkAsFF");
-                            TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(adultInc) + "Tag");
+                        TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
+                        EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
+                        EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
+                        CheckBox checkAsFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_checkAsFF");
+                        TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(adultInc) + "Tag");
 
-                            //TITLE
-                            String titleCode = getTitleCode(getActivity(), title.getText().toString(),"code");
-                            passengerInfo.setTitle(titleCode);
+                        //TITLE
+                        String titleCode = getTitleCode(getActivity(), title.getText().toString(),"code");
+                        passengerInfo.setTitle(titleCode);
 
-                            gender.setVisibility(View.GONE);
-                            //Gender
-                            //String genderCode = (getActivity(),);
-                            //passengerInfo.setGender(gender.getText().toString());
+                        gender.setVisibility(View.GONE);
+                        //Gender
+                        //String genderCode = (getActivity(),);
+                        //passengerInfo.setGender(gender.getText().toString());
 
-                            passengerInfo.setFirst_name(firstName.getText().toString());
-                            passengerInfo.setLast_name(lastname.getText().toString());
+                        passengerInfo.setFirst_name(firstName.getText().toString());
+                        passengerInfo.setLast_name(lastname.getText().toString());
 
-                            //DOB
-                            String fullDOB = dob.getText().toString();
-                            String[] splitDOB = fullDOB.split("/");
-                            passengerInfo.setDob(splitDOB[2]+"-"+splitDOB[1]+"-"+splitDOB[0]);
+                        //DOB
+                        String fullDOB = dob.getText().toString();
+                        String[] splitDOB = fullDOB.split("/");
+                        passengerInfo.setDob(splitDOB[2]+"-"+splitDOB[1]+"-"+splitDOB[0]);
 
-                            //Travel Doc
-                            //String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                            //passengerInfo.setDocument_number(docNo.getText().toString());
+                        //Travel Doc
+                        //String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        //passengerInfo.setDocument_number(docNo.getText().toString());
 
-                            String travelDocCode = "NRIC";
+                        String travelDocCode = "NRIC";
 
-                            //auto assign travel doc - new req -  change later
-                            passengerInfo.setTravel_document(travelDocCode);
+                        //auto assign travel doc - new req -  change later
+                        passengerInfo.setTravel_document(travelDocCode);
 
-                            if (travelDocCode.equals("P")) {
-                                //ExpireDate
-                                String fullExpireDate = expireDate.getText().toString();
-                                String[] splitExpireDate = fullExpireDate.split("/");
-                                passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + splitExpireDate[1] + "-" +splitExpireDate[0]);
-                            } else {
-                                passengerInfo.setExpiration_date("");
-                            }
-
-                            passengerInfo.setDocument_number("");
-
-                            //Issuing Country Code
-                            String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
-                            passengerInfo.setIssuing_country(countryCode);
-
-                            passengerInfo.setBonusLink(enrich.getText().toString());
-                            if(checkAsFF.isChecked()){
-                                passengerInfo.setFriend_and_family("Y");
-                                passengerInfo.setPassenger_type("ADULT");
-
-                                if(passengerTag.getText().toString() != ""){
-                                    passengerInfo.setFriend_and_family_id(passengerTag.getText().toString());
-                                }//id is available
-                            }
-
-                            passengerObj.add(passengerInfo);
-
-
-                            adultDefault = new DefaultPassengerObj();
-                            adultDefault.setTitle(passengerObj.get(adultInc-1).getTitle());
-                            adultDefault.setFirstname(passengerObj.get(adultInc-1).getFirst_name());
-                            adultDefault.setLastname(passengerObj.get(adultInc-1).getLast_name());
-                            adultDefault.setIssuingCountry(passengerObj.get(adultInc-1).getIssuing_country());
-                            defaultObj.add(adultDefault);
-
+                        if (travelDocCode.equals("P")) {
+                            //ExpireDate
+                            String fullExpireDate = expireDate.getText().toString();
+                            String[] splitExpireDate = fullExpireDate.split("/");
+                            passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + splitExpireDate[1] + "-" +splitExpireDate[0]);
+                        } else {
+                            passengerInfo.setExpiration_date("");
                         }
 
-                        for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
+                        passengerInfo.setDocument_number("");
 
-                            InfantInfo infantInfo = new InfantInfo();
+                        //Issuing Country Code
+                        String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
+                        passengerInfo.setIssuing_country(countryCode);
 
-                            TextView travellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_travelling_with");
-                            TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_gender");
-                            EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_first_name");
-                            EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_last_name");
-                            TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_dob");
-                            TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_travel_doc");
-                            TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_expire_date");
+                        passengerInfo.setBonusLink(enrich.getText().toString());
+                        if(checkAsFF.isChecked()){
+                            passengerInfo.setFriend_and_family("Y");
+                            passengerInfo.setPassenger_type("Adult");
 
-                            TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_issuing_country");
-                            EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_doc_no");
-                            CheckBox checkAsFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_checkAsFF");
-                            TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + intTotalAdult2) + "Tag");
-
-                            //Gender
-                            infantInfo.setGender(gender.getText().toString());
-
-                            //Travelling With
-                            String travellingWithPassenger = travellingWith.getText().toString();
-                            String[] splitTravelling = travellingWithPassenger.split(" ");
-                            int travellingWithCode = Integer.parseInt(splitTravelling[1]) - 1;
-
-                            Log.e("travellingWithCode",Integer.toString(travellingWithCode));
-
-                            infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
-                            infantInfo.setFirst_name(firstName.getText().toString());
-                            infantInfo.setLast_name(lastname.getText().toString());
-
-                            //DOB
-                            String fullDOB = dob.getText().toString();
-                            String[] splitDOB = fullDOB.split("/");
-                            infantInfo.setDob(splitDOB[2] + "-" +splitDOB[1]+ "-" +splitDOB[0]);
-
-                            //Travel Doc
-                            String travelDocCode = "NRIC";
-                            //getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                            infantInfo.setTravel_document(travelDocCode);
-                            infantInfo.setDocument_number("");
-
-                            if (travelDocCode.equals("P")) {
-
-                                String fullExpireDate = expireDate.getText().toString();
-                                String[] splitExpireDate = fullExpireDate.split("/");
-                                infantInfo.setExpiration_date(splitExpireDate[2] + "-" +splitExpireDate[1]+ "-"+splitExpireDate[0]);
-                            } else {
-                                infantInfo.setExpiration_date("");
-                            }
-
-                            //Issuing Country Code
-                            String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
-                            infantInfo.setIssuing_country(countryCode);
-                            if(checkAsFF.isChecked()){
-                                infantInfo.setFriend_and_family("Y");
-                                infantInfo.setPassenger_type("INFANT");
-
-                                if(passengerTag.getText().toString() != ""){
-                                    infantInfo.setFriend_and_family_id(passengerTag.getText().toString());
-                                }//id is available
-                            }
-
-                            infantObj.add(infantInfo);
-
+                            if(passengerTag.getText().toString() != ""){
+                                passengerInfo.setFriend_and_family_id(passengerTag.getText().toString());
+                            }//id is available
                         }
 
-                        HashMap<String, String> initFlightType = pref.getFlightType();
-                        flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
-
-                        HashMap<String, String> initLoginStatus = pref.getLoginStatus();
-                        String loginStatus = initLoginStatus.get(SharedPrefManager.ISLOGIN);
+                        passengerObj.add(passengerInfo);
 
 
-
-                        Passenger obj = new Passenger();
-                        obj.setSignature(signature);
-                        obj.setFlight_type(flightType);
-                        obj.setBooking_id(bookingID);
-
-                        //FF
-                        if(loginStatus.equals("Y")){
-                            HashMap<String, String> initEmail = pref.getUserEmail();
-                            String userEmail = initEmail.get(SharedPrefManager.USER_EMAIL);
-                            obj.setUser_email(userEmail);
-                        }else{
-                            obj.setUser_email("");
-                        }
-
-                        obj.setPassengers(passengerObj);
-                        obj.setInfant(infantObj);
-
-                        //if((Integer.parseInt(adult) + Integer.parseInt(infant)) == 1){
-
-
-                        //}
-
-                        runPassengerInfo(obj);
-
+                        adultDefault = new DefaultPassengerObj();
+                        adultDefault.setTitle(passengerObj.get(adultInc-1).getTitle());
+                        adultDefault.setFirstname(passengerObj.get(adultInc-1).getFirst_name());
+                        adultDefault.setLastname(passengerObj.get(adultInc-1).getLast_name());
+                        adultDefault.setIssuingCountry(passengerObj.get(adultInc-1).getIssuing_country());
+                        defaultObj.add(adultDefault);
 
                     }
-                    //else{
-                    //    croutonAlert(getActivity(), "Please fill empty field");
+
+                    for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
+
+                        InfantInfo infantInfo = new InfantInfo();
+
+                        TextView travellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_travelling_with");
+                        TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_gender");
+                        EditText firstName = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_first_name");
+                        EditText lastname = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_last_name");
+                        TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_dob");
+                        TextView travelDoc = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_travel_doc");
+                        TextView expireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_expire_date");
+
+                        TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_issuing_country");
+                        EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_doc_no");
+                        CheckBox checkAsFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult2) + "_checkAsFF");
+                        TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + intTotalAdult2) + "Tag");
+
+                        //Gender
+                        infantInfo.setGender(gender.getText().toString());
+
+                        //Travelling With
+                        String travellingWithPassenger = travellingWith.getText().toString();
+                        String[] splitTravelling = travellingWithPassenger.split(" ");
+                        int travellingWithCode = Integer.parseInt(splitTravelling[1]) - 1;
+
+                        Log.e("travellingWithCode",Integer.toString(travellingWithCode));
+
+                        infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
+                        infantInfo.setFirst_name(firstName.getText().toString());
+                        infantInfo.setLast_name(lastname.getText().toString());
+
+                        //DOB
+                        String fullDOB = dob.getText().toString();
+                        String[] splitDOB = fullDOB.split("/");
+                        infantInfo.setDob(splitDOB[2] + "-" +splitDOB[1]+ "-" +splitDOB[0]);
+
+                        //Travel Doc
+                        String travelDocCode = "NRIC";
+                        //getTravelDocCode(getActivity(), travelDoc.getText().toString());
+                        infantInfo.setTravel_document(travelDocCode);
+                        infantInfo.setDocument_number("");
+
+                        if (travelDocCode.equals("P")) {
+
+                            String fullExpireDate = expireDate.getText().toString();
+                            String[] splitExpireDate = fullExpireDate.split("/");
+                            infantInfo.setExpiration_date(splitExpireDate[2] + "-" +splitExpireDate[1]+ "-"+splitExpireDate[0]);
+                        } else {
+                            infantInfo.setExpiration_date("");
+                        }
+
+                        //Issuing Country Code
+                        String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
+                        infantInfo.setIssuing_country(countryCode);
+                        if(checkAsFF.isChecked()){
+                            infantInfo.setFriend_and_family("Y");
+                            infantInfo.setPassenger_type("Infant");
+
+                            if(passengerTag.getText().toString() != ""){
+                                infantInfo.setFriend_and_family_id(passengerTag.getText().toString());
+                            }//id is available
+                        }
+
+                        infantObj.add(infantInfo);
+
+                    }
+
+                    HashMap<String, String> initFlightType = pref.getFlightType();
+                    flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
+
+                    Passenger obj = new Passenger();
+                    obj.setSignature(signature);
+                    obj.setFlight_type(flightType);
+                    obj.setBooking_id(bookingID);
+
+                    //FF
+                    if(loginStatus.equals("Y")){
+                        HashMap<String, String> initEmail = pref.getUserEmail();
+                        String userEmail = initEmail.get(SharedPrefManager.USER_EMAIL);
+                        obj.setUser_email(userEmail);
+                    }else{
+                        obj.setUser_email("");
+                    }
+
+                    obj.setPassengers(passengerObj);
+                    obj.setInfant(infantObj);
+
+                    //if((Integer.parseInt(adult) + Integer.parseInt(infant)) == 1){
+
+
                     //}
+
+                    runPassengerInfo(obj);
+
+
+                }
+                //else{
+                //    croutonAlert(getActivity(), "Please fill empty field");
+                //}
 
             }
         });
@@ -745,7 +744,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             @Override
             public void onScrollChanged() {
-               // view.requestFocus();
+                // view.requestFocus();
             }
         });
 
@@ -776,6 +775,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     /*Global PoPup*/
     public void customPopupForContactInfo(final ArrayList array,Activity act,final int currentPosition,final String type){
 
+
         final ArrayList<DropDownItem> a = array;
         DropMenuAdapter dropState = new DropMenuAdapter(act);
         dropState.setItems(a);
@@ -802,7 +802,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 lastname.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getLast_name());
 
                 //split & rearrange
-                dob.setText(reformatDOB(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getDob()));
+                dob.setText(reformatDOB3(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getDob()));
                 issuingCountry.setText(getCountryName(getActivity(), friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getNationality()));
                 passengerTag.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getId());
                 if(type.equals("INFANT")){
@@ -909,8 +909,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 presenter.passengerInfo(obj);
             }
             else{
-               croutonAlert(getActivity(), "One infant per adult only");
-               dismissLoading();
+                croutonAlert(getActivity(), "One infant per adult only");
+                dismissLoading();
             }
         }
     }
@@ -921,10 +921,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         int totalPassenger = Integer.parseInt(adult) + Integer.parseInt(infant) + 1;
         ArrayList<String> passengerArray = new ArrayList<String>();
         for (int adultInc = totalPassenger-Integer.parseInt(adult); adultInc < totalPassenger; adultInc++) {
-                TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
-                String passengerID = btnTravellingWith.getText().toString();
-                passengerArray.add(passengerID);
-                Log.e("passengerID1",passengerID);
+            TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
+            String passengerID = btnTravellingWith.getText().toString();
+            passengerArray.add(passengerID);
+            Log.e("passengerID1",passengerID);
         }
 
         //check duplicate
@@ -934,7 +934,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             if (usedNames.contains(passengerArray.get(x))){
                 Log.e("passengerID2",passengerArray.get(x));
                 manualValidationStatus = false;
-              }else {
+            }else {
                 usedNames.add(passengerArray.get(x));
                 Log.e("passengerID3",passengerArray.get(x));
             }
@@ -987,9 +987,16 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getStatus(),obj.getMessage() , getActivity());
         if (status) {
-            Gson gsonFlight = new Gson();
-            String seat = gsonFlight.toJson(obj);
-            pref.setSeat(seat);
+
+            //Gson gsonFlight = new Gson();
+            //String seat = gsonFlight.toJson(obj);
+            //pref.setSeat(seat);
+
+            //save into realm object
+            FamilyFriendObj thisObj = new FamilyFriendObj();
+            thisObj.setFamily_and_friend(obj.getFamily_and_friend());
+
+            RealmObjectController.saveFamilyFriends(getActivity(),thisObj);
 
             Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
             intent.putExtra("INSURANCE_STATUS", (new Gson()).toJson(obj));
@@ -1128,11 +1135,14 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             TextView passenger1FirstName = (TextView) view.findViewWithTag("passenger1_first_name");
             TextView passenger1LastName = (TextView) view.findViewWithTag("passenger1_last_name");
             TextView passenger1Dob = (TextView) view.findViewWithTag("passenger1_dob");
+            TextView passenger1IssuingCountry = (TextView) view.findViewWithTag("passenger1_issuing_country");
 
+            passenger1IssuingCountry.setText(getCountryName(getActivity(),loginObj.getContact_country()));
             passenger1Title.setText(getTitleCode(getActivity(), loginObj.getContact_title(), "name"));
             passenger1FirstName.setText(loginObj.getContact_first_name());
             passenger1LastName.setText(loginObj.getContact_last_name());
             passenger1Dob.setText(reformatDOB(loginObj.getDOB()));
+
         }else{
             //memberLoginBlock.setVisibility(View.VISIBLE);
         }
@@ -1174,13 +1184,71 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
         if(result.size() > 0){
-
             Gson gson = new Gson();
             PassengerInfoReveice obj = gson.fromJson(result.get(0).getCachedResult(), PassengerInfoReveice.class);
             onPassengerInfo(obj);
+        }
 
+        //check if ff available or not.. if not disable
+        RealmResults<FamilyFriendList> cachedListResult = RealmObjectController.getFamilyFriends(getActivity());
+        if(cachedListResult.size() > 0){
+            Gson gson = new Gson();
+            FamilyFriendObj obj = gson.fromJson(cachedListResult.get(0).getCachedList(), FamilyFriendObj.class);
+            friendAndFamilyObj = obj.getFamily_and_friend();
+
+            boolean infantAvailable = false;
+            boolean adultAvailable = false;
+
+            //check if adult/infant available
+            for(int g = 0 ; g < friendAndFamilyObj.size() ; g++){
+                if(friendAndFamilyObj.get(g).getPassenger_type().equals("Infant")){
+                    infantAvailable = true;
+                }else{
+                    adultAvailable = true;
+                }
+            }
+            for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
+                final LinearLayout linearCheckFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_asFF_block");
+                final LinearLayout linearSaveAsFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_saveFF_block");
+
+                if(friendAndFamilyObj.size() <= 0){
+                    linearCheckFF.setVisibility(View.GONE);
+                    linearSaveAsFF.setVisibility(View.GONE);
+                    Log.e("HIDE","TRUE");
+                }else{
+
+                    //check what passenger type available
+                    TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
+                    String[] splitPassengerType = txtPassengerType.getText().toString().split(" ");
+                    if(splitPassengerType[0].equals("Infant")){
+                        //check infant
+                        if(infantAvailable){
+                            linearCheckFF.setVisibility(View.VISIBLE);
+                        }else{
+                            linearCheckFF.setVisibility(View.GONE);
+                        }
+                    }else{
+                        //check adult
+                        if(adultAvailable){
+                            linearCheckFF.setVisibility(View.VISIBLE);
+                        }else{
+                            linearCheckFF.setVisibility(View.GONE);
+                        }
+                    }
+
+                    linearSaveAsFF.setVisibility(View.VISIBLE);
+
+                }
+            }
 
         }else{
+            for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
+                final LinearLayout linearCheckFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_asFF_block");
+                final LinearLayout linearSaveAsFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_saveFF_block");
+
+                linearCheckFF.setVisibility(View.GONE);
+                linearSaveAsFF.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -1190,3 +1258,4 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         presenter.onPause();
     }
 }
+

@@ -1,6 +1,7 @@
 package com.metech.firefly.base;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -27,6 +28,8 @@ public class BaseFragmentActivity extends FragmentActivity {
 
     public static String appStatus;
     public com.metech.firefly.base.AQuery aq;
+    private static Activity instance;
+
     //TabView tabsView;
 
     public static String getAppStatus(){
@@ -63,6 +66,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     {
         super.onCreate(savedInstanceState);
         aq = new com.metech.firefly.base.AQuery(this);
+        Log.e("test2","test2");
 
         //SET TO POTRAIT ONLY
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -216,6 +220,7 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void finish()
     {
         super.finish();
+        RealmObjectController.clearCachedResult(this);
         //overridePendingTransition(R.anim.fadeout,R.anim.fadein);
 
     }
@@ -226,8 +231,7 @@ public class BaseFragmentActivity extends FragmentActivity {
         super.onBackPressed();
         System.gc();
         overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.fade_out);
-        RealmObjectController.clearCachedResult(this);
-
+       // RealmObjectController.clearCachedResult(this);
         //setResult(RESULT_CANCELED);
     }
 
@@ -242,14 +246,16 @@ public class BaseFragmentActivity extends FragmentActivity {
     public void onResume(){
 
         super.onResume();
+        MainFragmentActivity.setContext(this);
 
+        //push notification alert
         try{
             if(!this.getClass().getSimpleName().equals("SplashScreenActivity")){
                 if(appStatus != null && appStatus.equals("ready_for_notification")){
                     if(appStatus.equals("ready_for_notification")){
                         RealmResults<NotificationMessage> result = RealmObjectController.getNotificationMessage(this);
                         if(result.size() > 0){
-                            BaseFragment.setAlertDialog(this,result.get(0).getMessage(),result.get(0).getTitle());
+                            BaseFragment.setPushNotificationAlert(this,result.get(0).getMessage(),result.get(0).getTitle());
                             MainFragmentActivity.setAppStatus("not_ready_for_notification");
                             RealmObjectController.clearNotificationMessage(this);
                         }

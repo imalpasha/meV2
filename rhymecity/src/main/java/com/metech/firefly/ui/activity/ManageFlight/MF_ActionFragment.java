@@ -311,6 +311,13 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
           obj = gson.fromJson(flightSummary, FlightSummaryReceive.class);
           setSummary(obj);
 
+          if(obj.getSsr_status() != null) {
+              if (obj.getSsr_status().equals("Y")) {
+                  mfMealRequest.setVisibility(View.VISIBLE);
+              } else {
+                  mfMealRequest.setVisibility(View.GONE);
+              }
+          }
 
         }else if(bundle.containsKey("AlertDialog")){
 
@@ -383,6 +390,8 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
                 goToSentItenary();
             }
         });
+
+
 
         mfMealRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -494,6 +503,13 @@ public class MF_ActionFragment extends BaseFragment implements ManageFlightPrent
         boolean btnHidden2 = false;
         boolean oneFlight = false;
 
+        if(obj.getSsr_status() != null){
+            if(obj.getSsr_status().equals("Y")){
+                mfMealRequest.setVisibility(View.VISIBLE);
+            }else{
+                mfMealRequest.setVisibility(View.GONE);
+            }
+        }
         //hide functiona if flight departed
         if(!obj.getFlight_details().get(0).getFlight_status().equals("available")){
           btnHidden1 = true;

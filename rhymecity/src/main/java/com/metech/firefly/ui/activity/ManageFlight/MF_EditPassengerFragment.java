@@ -286,6 +286,13 @@ public class MF_EditPassengerFragment extends BaseFragment implements DatePicker
         for (int adultInc = 1; adultInc < totalPassenger; adultInc++) {
 
             final int selectedPassenger = adultInc;
+
+            final LinearLayout linearCheckFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_asFF_block");
+            final LinearLayout linearSaveFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_saveFF_block");
+            linearCheckFF.setVisibility(View.GONE);
+            linearSaveFF.setVisibility(View.GONE);
+
+
             try {
                 final TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
                 btnTravellingWith.setOnClickListener(new View.OnClickListener() {

@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -149,17 +151,19 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, requestID,notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
         mBuilder
                 .setContentText(obj.getBody())
                 .setContentTitle(String.format(obj.getTitle()))
-                .setSmallIcon(R.drawable.ic_launcher)
+                .setSmallIcon(R.drawable.push_icon)
                 .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
                 .setTicker(String.format(obj.getTitle()));
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder.setContentIntent(contentIntent);
+
         notificationManager.notify(1, mBuilder.build());
 
     }

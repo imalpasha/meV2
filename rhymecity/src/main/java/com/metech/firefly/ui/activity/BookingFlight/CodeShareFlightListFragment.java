@@ -32,6 +32,7 @@ import com.metech.firefly.ui.activity.ManageFlight.CommitChangeActivity;
 import com.metech.firefly.ui.adapter.CodeShareAdapter;
 import com.metech.firefly.ui.module.CodeShareFlightModule;
 import com.metech.firefly.ui.object.CachedResult;
+import com.metech.firefly.ui.object.FamilyFriendObj;
 import com.metech.firefly.ui.object.LoginRequest;
 import com.metech.firefly.ui.object.SelectChangeFlight;
 import com.metech.firefly.ui.object.SelectFlight;
@@ -290,13 +291,13 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
                         Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
-                    }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
+                    }/*else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
                         Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
                         proceed = false;
                     }else if(departDatePlain.equals(returnDatePlain) && compare90Minute(departFlightArrivalTime,returnFlightDepartureTime)){
                         Utils.toastNotificationLong(getActivity(), " In order to select flights that travel on the same day, you must allow at least 90 minutes between flights. Please select a different pair of flights.!");
                         proceed = false;
-                    }else{
+                    }*/else{
                         proceed = true;
                         Log.e("3","3");
                     }
@@ -463,6 +464,13 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
+            if(obj.getUser_info().getCustomer_number() != null){
+                pref.setCustomerNumber(obj.getUser_info().getCustomer_number());
+            }
+            if(obj.getUser_info().getPersonID() != null){
+                pref.setPersonID(obj.getUser_info().getPersonID());
+            }
+
             pref.setLoginStatus("Y");
             pref.setNewsletterStatus(obj.getUser_info().getNewsletter());
             pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
@@ -531,6 +539,16 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
+
+            if(obj.getFamily_and_friend().size() > 0){
+                //save into realm object
+
+                FamilyFriendObj thisObj = new FamilyFriendObj();
+                thisObj.setFamily_and_friend(obj.getFamily_and_friend());
+
+                RealmObjectController.saveFamilyFriends(getActivity(),thisObj);
+            }
+
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
             passengerInfo.putExtra(ADULT, adult);
             passengerInfo.putExtra(INFANT, infant);

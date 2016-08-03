@@ -37,13 +37,19 @@ import butterknife.ButterKnife;
 
 public class MainFragmentActivity extends BaseFragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static MainFragmentActivity instance;
+    private static Activity instance;
     /**
      * Fragment managing the behaviors, interactions and presentation of the
      * navigation drawer.
      */
     private NavigationDrawerFragment mNavigationDrawerFragment;
     private SharedPrefManager pref;
+
+    public static Activity setContext(Activity act) {
+        instance = act;
+        return instance;
+
+    }
 
     public static Activity getContext() {
         //return instance.getApplicationContext();
@@ -67,6 +73,8 @@ public class MainFragmentActivity extends BaseFragmentActivity implements Naviga
 
         mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        Log.e("test","test");
     }
 
     private void initActionBar() {

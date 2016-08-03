@@ -135,55 +135,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
                                     android:paddingBottom="10dp"
-                                    android:background="@drawable/drawable_login_bottom_border"
-                                    android:id="@+id/ffTravellingWithBlock">
-
-                                    <LinearLayout
-                                        android:orientation="horizontal"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent">
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Travelling With."
-                                            android:id="@+id/textView160"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/red"
-                                            android:textStyle="bold"
-                                            android:layout_marginLeft="3dp"
-                                            android:id="@+id/textView122" />
-
-                                    </LinearLayout>
-
-                                    <LinearLayout
-                                        android:orientation="vertical"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        android:background="@drawable/block_with_border"
-                                        android:layout_marginTop="5dp"
-                                        android:id="@+id/linearLayout3" >
-
-                                        <TextView
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp"
-                                            android:textStyle="bold"
-                                            android:id="@+id/txtFFTravellingWith" />
-                                    </LinearLayout>
-                                </LinearLayout>
-
-                                <LinearLayout
-                                    android:orientation="vertical"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginTop="10dp"
-                                    android:paddingBottom="10dp"
+                                    android:id="@+id/ffTitleBlock"
                                     android:background="@drawable/drawable_login_bottom_border">
 
 
@@ -318,7 +270,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:padding="3dp"
-                                            android:inputType="text"
+                                            android:inputType="textPersonName"
                                             android:id="@+id/txtFFfirstName"
                                             android:background="@drawable/block_with_border"
                                             android:tag="passenger1_first_name"/>
@@ -574,8 +526,7 @@
                                             android:layout_height="wrap_content"
                                             android:padding="5dp"
                                             android:background="@drawable/block_with_border"
-                                            android:id="@+id/txtFFNationality"
-                                            android:tag="passenger1_issuing_country"/>
+                                            android:id="@+id/txtFFNationality"/>
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -631,7 +582,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_marginTop="10dp"
-                                    android:id="@+id/passenger1_enrich_block"
+                                    android:id="@+id/ffBonuslinkBlock"
                                     android:tag="passenger1_enrich_block"
                                     android:paddingBottom="10dp"
                                     android:background="@drawable/drawable_login_bottom_border" >
@@ -696,10 +647,10 @@
                         <Button
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/update_profile_btn"
+                            android:text="@string/register_continue_button"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:id="@+id/btnPersonalInfo"
+                            android:id="@+id/btnUpdateFF"
                             android:background="@drawable/login_login_button_clicked"/>
 
                     </LinearLayout>

@@ -1,5 +1,8 @@
 package com.metech.firefly.api.obj;
 
+import com.metech.firefly.ui.object.DefaultPassengerObj;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,12 +21,14 @@ public class FlightSummaryReceive {
     private List<PriceDetails> price_details;
     private List<PassengerList> passenger_information;
     private List<SpecialServicesRequest> special_services_request;
-
     private String total_price;
     private String total_paid;
     private String total_due;
     private String booking_id;
     private String flight_type;
+
+    private String ssr_status;
+
     private FlightSummaryReceive obj;
 
     public FlightSummaryReceive(FlightSummaryReceive param_obj){
@@ -44,6 +49,17 @@ public class FlightSummaryReceive {
         booking_id = param_obj.getBooking_id();
         flight_type = param_obj.getFlight_type();
         special_services_request = param_obj.getSpecial_services_request();
+        ssr_status = param_obj.getSsr_status();
+    }
+
+
+
+    public String getSsr_status() {
+        return ssr_status;
+    }
+
+    public void setSsr_status(String ssr_status) {
+        this.ssr_status = ssr_status;
     }
 
 

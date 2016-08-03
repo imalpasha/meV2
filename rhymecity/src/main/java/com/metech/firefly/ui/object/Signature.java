@@ -8,6 +8,7 @@ public class Signature {
     String username;
     String signature;
     String deviceType;
+    String personID;
 
     public Signature(){
 
@@ -17,7 +18,15 @@ public class Signature {
         this.username = obj.getUsername();
         this.signature = obj.getSignature();
         this.deviceType = obj.getDeviceType();
+        this.personID = obj.getPersonID();
+    }
 
+    public String getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
     }
 
     public String getDeviceType() {

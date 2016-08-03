@@ -16,6 +16,19 @@
         <item name="android:windowBackground">@color/actionBarColour_default_theme</item>
     </style>
 
+
+    <style name="DialogThemePush" parent="android:Theme.Dialog">
+
+       <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+
+        <!-- No backgrounds, titles or window float -->
+        <!-- <item name="android:windowBackground">@null</item>-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
     <style name="DialogTheme" parent="android:Theme.Dialog">
 
         <item name="android:layout_width">fill_parent</item>

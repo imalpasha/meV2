@@ -22,7 +22,7 @@ public class App extends Application {
 	public static final String IV = "owNLfnLjPvwbQH3h";
 
 
-	public static final String APP_VERSION = "0.11";
+	public static final String APP_VERSION = "0.12";
 
 
 

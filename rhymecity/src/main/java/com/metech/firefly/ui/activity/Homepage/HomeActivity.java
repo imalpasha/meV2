@@ -28,7 +28,7 @@ public class HomeActivity extends MainFragmentActivity implements FragmentContai
         fragmentManager.beginTransaction().replace(R.id.main_content, HomeFragment.newInstance(),"Home").commit();
 
         setMenuButton();
-        setTitleImage(R.drawable.flyfirefly_logo_text);
+        setTitleImage(R.drawable.firefly_text_only);
         hideTitle();
         unlockDrawer();
         BaseFragment.removeLogoHeader(this);

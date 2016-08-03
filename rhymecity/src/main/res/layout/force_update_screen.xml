@@ -94,11 +94,19 @@
                         android:layout_height="match_parent"
                         android:gravity="center|top">
 
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView11"
+                            android:src="@drawable/update_engine"
+                            android:scaleType="centerInside"/>
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="20dp"
                             android:padding="15dp"
+                            android:layout_marginTop="5dp"
                             android:text="There is a newer version available for download! Please update the app by visiting the Google Play Store."
                             android:id="@+id/txtMessage"/>
                     </LinearLayout>

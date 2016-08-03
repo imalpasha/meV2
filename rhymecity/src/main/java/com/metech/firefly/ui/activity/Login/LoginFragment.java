@@ -190,8 +190,12 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         if (status) {
 
             RealmObjectController.deleteRealmFile(getActivity());
-
-            pref.setCustomerNumber(obj.getUser_info().getCustomer_number());
+            if(obj.getUser_info().getCustomer_number() != null){
+                pref.setCustomerNumber(obj.getUser_info().getCustomer_number());
+            }
+            if(obj.getUser_info().getPersonID() != null){
+                pref.setPersonID(obj.getUser_info().getPersonID());
+            }
 
             pref.setLoginStatus("Y");
             pref.setNewsletterStatus(obj.getUser_info().getNewsletter());
@@ -254,7 +258,7 @@ public class LoginFragment extends BaseFragment implements LoginPresenter.LoginV
         }
     }
 
-    /*Popup Forgot Password*/
+    /*PopupActivity Forgot Password*/
     public void forgotPassword(){
 
         LayoutInflater li = LayoutInflater.from(getActivity());

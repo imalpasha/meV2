@@ -3,11 +3,16 @@ package com.metech.firefly.ui.activity.BookingFlight;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +28,7 @@ import com.metech.firefly.Controller;
 import com.metech.firefly.FireFlyApplication;
 import com.metech.firefly.MainFragmentActivity;
 import com.metech.firefly.R;
+import com.metech.firefly.api.obj.DeleteCCReceive;
 import com.metech.firefly.api.obj.PaymentInfoReceive;
 import com.metech.firefly.api.obj.PaymentReceive;
 import com.metech.firefly.base.BaseFragment;
@@ -94,6 +100,15 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     @InjectView(R.id.txtTotalDue)
     TextView txtTotalDue;
 
+    @InjectView(R.id.checkToSaveCC)
+    CheckBox checkToSaveCC;
+
+    @InjectView(R.id.txtCheckBoxCC)
+    TextView txtCheckBoxCC;
+
+    @InjectView(R.id.saveCCLayout)
+    LinearLayout saveCCLayout;
+
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Book Flight: Payment Details(Add Payment)";
     private static final String SCREEN_LABEL_MANAGE = "Manage Flight: Payment Details(Add Payment)";
@@ -116,6 +131,9 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     private boolean getPayment;
     private boolean paymentVendorGenerated = false;
     private String paymentCode;
+    private String personID;
+    private String accountNumberID;
+    private boolean saveCreditCardInfo = false;
 
     public static PaymentFlightFragment newInstance(Bundle bundle) {
 
@@ -146,25 +164,32 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
 
         Bundle bundle = getArguments();
         paymentFrom = bundle.getString("PAYMENT_FROM");
+        //paymentFrom = "NORMAL";
+
         try {
             totalDue = bundle.getString("TOTAL_DUE");
             txtTotalDue.setText("TOTAL DUE: " +totalDue);
         }catch (Exception e){
         }
-
-        //paymentFrom = "NORMAL";
+        HashMap<String, String> initPersonID = pref.getPersonID();
+        personID = initPersonID.get(SharedPrefManager.PERSON_ID);
 
         HashMap<String, String> initSignature = pref.getSignatureFromLocalStorage();
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
-        HashMap<String, String> init = pref.getPaymentDummy();
-        String paymentDummy = init.get(SharedPrefManager.PAYMENT_DUMMY);
+        HashMap<String, String> initLogin = pref.getLoginStatus();
+        String loginStatus = initLogin.get(SharedPrefManager.ISLOGIN);
+        if(!loginStatus.equals("Y")){
+            saveCCLayout.setVisibility(View.GONE);
+        }
 
         HashMap<String, String> initBookingID = pref.getBookingID();
         bookingId = initBookingID.get(SharedPrefManager.BOOKING_ID);
         Signature baseObj = new Signature();
         baseObj.setSignature(signature);
-        //baseObj.setSignature("RkRnUkg5UDM1S0k9fEJzSGJxdGhYOGZ0MEE0azdPdkhhaC9sc2ltcUtNbHpWV2tHMDVpZnFUZE4wZDlLaStFN0tQSGt2blZodFdnVDNLUnFBcjF0Vmk5VHRDUk9LTzd0UkM4NHpaNkdleWIrOVlEa1pIMEt6NWE4SlRTSER3V1VRK0k1Y2M4T2ZWQ2hPcTdjeXZrRm81aWc9");
+        baseObj.setPersonID(personID);
+
+        //baseObj.setSignature("V3BZc1EzcnU5MEU9fGcyK1dkbEtnR1J0c1V3d2k0M1d2eFFsVVlFdlcySjBNdW1xU0xuWlg2TXJsSzlFVkxmOEs3OUI1MklOanB0VWQzY0JFVFFvKytRcDBvbktoYnZGZ3dLSmNLYkdxeThRZU5KNVU2M3E1KzlsVkVhci9xOElteFNYajBkdUYxcFFsUC9XcFBLVXVBcEk9");
         getPaymentInfo(baseObj);
 
         //Gson gson = new Gson();
@@ -212,6 +237,22 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
                 Utils.hideKeyboard(getActivity(), v);
             }
         });
+
+
+        checkToSaveCC.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                if(isChecked)
+                {
+                    saveCreditCardInfo = true;
+                }else{
+                    saveCreditCardInfo = false;
+                }
+            }
+        });
+
         return view;
     }
 
@@ -248,6 +289,14 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
         //paymentObj.setIssuingBank(txtIssuingBank.getText().toString());
         paymentObj.setIssuingBank(txtCardType.getText().toString());
         paymentObj.setBookingID(bookingId);
+
+        if(accountNumberID != null){
+            paymentObj.setAccountNumberID(accountNumberID);
+        }
+
+        if(saveCreditCardInfo){
+            paymentObj.setPersonID(personID);
+        }
 
         getPaymentList = false;
         paymentCode = txtCardType.getTag().toString();
@@ -303,7 +352,7 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
             intent.putExtra("PAYMENT_FROM", paymentFrom);
             intent.putExtra("PAYMENT_POPUP", popupWindow);
             intent.putExtra("PAYMENT_CODE", paymentCode);
-
+            Log.e("url",url);
             getActivity().startActivity(intent);
 
         }
@@ -314,14 +363,112 @@ public class PaymentFlightFragment extends BaseFragment implements BookingPresen
     public void onPaymentInfoReceive(PaymentInfoReceive obj) {
 
         dismissLoading();
-
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
             generatePaymentVendorList(obj);
-            RealmObjectController.clearCachedResult(getActivity());
+            if(obj.getFop() != null){
+                autoFillPayment(obj.getFop());
+            }
         }
+        RealmObjectController.clearCachedResult(getActivity());
+    }
+
+    @Override
+    public void onRemoveCC(DeleteCCReceive obj) {
+
+        dismissLoading();
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
+        if (status) {
+
+            setNormalDialog(getActivity(),obj.getMessage(),"Success!");
+
+            //remove all autofill info
+            accountNumberID = null;
+            txtCardType.setText("");
+            //txtCardType.setFocusableInTouchMode(true);
+            txtCardType.setEnabled(true);
+
+            txtCardHolderName.setText("");
+            //txtCardHolderName.setFocusableInTouchMode(true);
+            txtCardHolderName.setEnabled(true);
+
+            txtCardNumber.setText("");
+            //txtCardNumber.setFocusableInTouchMode(true);
+            txtCardNumber.setEnabled(true);
+
+            txtPaymentMonth.setText("");
+            //txtPaymentMonth.setFocusableInTouchMode(true);
+            txtPaymentMonth.setEnabled(true);
+
+            txtPaymentYear.setText("");
+            //txtPaymentYear.setFocusableInTouchMode(true);
+            txtPaymentYear.setEnabled(true);
+
+            checkToSaveCC.setChecked(false);
+            txtCheckBoxCC.setText("Add this credit card to your account for faster booking.");
+        }
+        RealmObjectController.clearCachedResult(getActivity());
+    }
+
+    public void autoFillPayment(PaymentInfoReceive.FOP fopObj){
+
+        //get card name from cardlist - need global function?
+        String cardName = "";
+        for (int i = 0; i < cardType.size(); i++) {
+            if (cardType.get(i).getCode().equals(fopObj.getCard_type())){
+                cardName = cardType.get(i).getText();
+            }
+        }
+        accountNumberID = fopObj.getAccount_number_id();
+        txtCardType.setText(cardName);
+        txtCardType.setTag(fopObj.getCard_type());
+        //txtCardType.setFocusableInTouchMode(false);
+        txtCardType.setEnabled(false);
+
+        txtCardHolderName.setText(fopObj.getCard_holder_name());
+        //txtCardHolderName.setFocusableInTouchMode(false);
+        txtCardHolderName.setEnabled(false);
+
+        txtCardNumber.setText(fopObj.getCard_number());
+        //txtCardNumber.setFocusableInTouchMode(false);
+        txtCardNumber.setEnabled(false);
+
+        txtPaymentMonth.setText(fopObj.getExpiration_date_month());
+        //txtPaymentMonth.setFocusableInTouchMode(false);
+        txtPaymentMonth.setEnabled(false);
+
+        txtPaymentYear.setText(fopObj.getExpiration_date_year());
+        //txtPaymentYear.setFocusableInTouchMode(false);
+        txtPaymentYear.setEnabled(false);
+
+        checkToSaveCC.setChecked(true);
+
+        String removeCCtext = "<html>Add this credit card to your account for faster booking.Click <b>[HERE]</b> to remove this card information from your account</html>";
+        txtCheckBoxCC.setText(Html.fromHtml(removeCCtext),TextView.BufferType.SPANNABLE);
+
+        String filterRemoveCC = txtCheckBoxCC.getText().toString();
+        int i1 = filterRemoveCC.indexOf("[H");
+        int i2 = filterRemoveCC.indexOf("E]");
+
+        Spannable mySpannable = (Spannable)txtCheckBoxCC.getText();
+        ClickableSpan myClickableSpan = new ClickableSpan()
+        {
+            @Override
+            public void onClick(View widget) {
+
+                Signature signatureObj = new Signature();
+                signatureObj.setPersonID(personID);
+                signatureObj.setSignature(signature);
+
+                initiateLoading(getActivity());
+                presenter.onRemoveCC(signatureObj);
+            }
+        };
+        mySpannable.setSpan(myClickableSpan, i1, i2 + 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        txtCheckBoxCC.setMovementMethod(LinkMovementMethod.getInstance());
 
     }
+
 
     public void generatePaymentVendorList(final PaymentInfoReceive obj){
 

@@ -71,7 +71,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         Controller.setHomeStatus();
 
@@ -84,25 +84,26 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         //2JUN - COMMENT
         //String gcmKey = bundle.getString("GCM_KEY");
 
-        //String gcmKey = GCMRegistrar.getRegistrationId(getActivity());
-        //if(gcmKey.equals("")){
-        //    GCMRegistrar.register(getActivity(), SENDER_ID);
-        //}else{
-         //   proceed = true;
-       // }
+       /*String gcmKey = GCMRegistrar.getRegistrationId(getActivity());
+       if (gcmKey.equals("")) {
+          GCMRegistrar.register(getActivity(), SENDER_ID);
+       } else {
+           proceed = true;
+       }*/
 
         String gcmKey = "";
         proceed = true;
 
-        if(proceed){
+        if (proceed) {
             HashMap<String, String> initUserEmail = pref.getUserEmail();
             String userEmail = initUserEmail.get(SharedPrefManager.USER_EMAIL);
 
             HashMap<String, String> initUserPassword = pref.getUserPassword();
             String userPassword = initUserPassword.get(SharedPrefManager.PASSWORD);
-            if( userEmail == null && userPassword == null){
+            if (userEmail == null && userPassword == null) {
                 userEmail = "";
                 userPassword = "";
+                pref.setLoginStatus("N");
             }
             //retrieve data
             String deviceId = Settings.Secure.getString(getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -112,8 +113,8 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             //HashMap<String, String> initLogin = pref.getDataVesion();
             //String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
             //if(localDataVersion == null) {
-           //     localDataVersion = "0.01";
-           /// }
+            //     localDataVersion = "0.01";
+            /// }
 
             localDataVersion = "0.01";
 
@@ -130,45 +131,52 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             info.setPassword(userPassword);
             info.setGCMKey(gcmKey);
 
-            if(localDataVersion == null && Controller.connectionAvailable(getActivity())){
+            if (localDataVersion == null && Controller.connectionAvailable(getActivity())) {
                 sendDeviceInformationToServer(info);
-               // pref.setAppVersion("0.10");
-            }else if(localDataVersion == null && !Controller.connectionAvailable(getActivity())){
+                // pref.setAppVersion("0.10");
+            } else if (localDataVersion == null && !Controller.connectionAvailable(getActivity())) {
                 connectionRetry("No Internet Connection");
-            }else if(localDataVersion != null && Controller.connectionAvailable(getActivity())){
+            } else if (localDataVersion != null && Controller.connectionAvailable(getActivity())) {
                 sendDeviceInformationToServer(info);
-            }else if(localDataVersion != null && !Controller.connectionAvailable(getActivity())){
-                goHomepage();
+            } else if (localDataVersion != null && !Controller.connectionAvailable(getActivity())) {
+
+                HashMap<String, String> initApp = pref.getAppVersion();
+                String localAppVersion = initApp.get(SharedPrefManager.APP_VERSION);
+                if(localAppVersion == null){
+                    connectionRetry("No Internet Connection");
+                }else{
+                    goHomepage();
+                }
             }
 
             running = true;
             //RealmObjectController.deleteRealmFile(getActivity());
-        }else{
+        } else {
             //just wait ....
         }
 
         return view;
     }
 
-    public static void splash(Context act, String regId){
+    public static void splash(Context act, String regId) {
         Intent home = new Intent(act, SplashScreenActivity.class);
-        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+        home.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         act.startActivity(home);
     }
 
-    public void sendDeviceInformationToServer(DeviceInformation info){
-        if(pDialog.isShowing()){
+    public void sendDeviceInformationToServer(DeviceInformation info) {
+        if (pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        if(Controller.connectionAvailable(getActivity())){
+        if (Controller.connectionAvailable(getActivity())) {
             presenter.deviceInformation(info);
 
-        }else{
+        } else {
             connectionRetry("No Internet Connection");
         }
     }
 
-    public void connectionRetry(String msg){
+    public void connectionRetry(String msg) {
 
         pDialog.setTitleText("Connection Error");
         pDialog.setCancelable(false);
@@ -180,7 +188,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
                 sendDeviceInformationToServer(info);
             }
         })
-         .show();
+                .show();
 
     }
 
@@ -189,6 +197,19 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
+
+            //forceLogout
+            HashMap<String, String> initForceLogout = pref.getForceLogout();
+            String forceLogout = initForceLogout.get(SharedPrefManager.FORCE_LOGOUT);
+
+            if(forceLogout == null){
+                //if(!forceLogout.equals("Y")){
+                    pref.setLoginStatus("N");
+                    Controller.clearAll(getActivity());
+                    RealmObjectController.deleteRealmFile(MainFragmentActivity.getContext());
+                    pref.setForceLogout("Y");
+                //}
+            }
 
             //HashMap<String, String> initLogin = pref.getDataVesion();
             //String localDataVersion = initLogin.get(SharedPrefManager.DATA_VERSION);
@@ -202,6 +223,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
             // forceUpdate() update app if needed
             // update() - update data in app if needed
+            //forceUpdate();
 
             //Check App Version. Update if needed
             if (!App.APP_VERSION.equals(appVersion) && updateStatus.equals("Y")) {
@@ -221,7 +243,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
     }
 
-    public void update(DeviceInfoSuccess obj){
+    public void update(DeviceInfoSuccess obj) {
 
         String signature = obj.getObj().getSignature();
         String bannerUrl = obj.getObj().getBanner_default();
@@ -229,6 +251,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         String bannerModule = obj.getObj().getBanner_module();
         String dataVersion = obj.getObj().getData_version();
         String appVersion = obj.getObj().getData_version_mobile().getVersion();
+        String bannerRedirectURL = obj.getObj().getBanner_redirect_url();
 
         DeviceInfoSuccess.SocialMedia socialMediaObj = obj.getObj().getSocial_media();
 
@@ -255,6 +278,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         pref.setBannerUrl(bannerUrl);
         pref.setPromoBannerUrl(promoBannerUrl);
         pref.setBannerModule(bannerModule);
+        pref.setBannerRedirectURL(bannerRedirectURL);
         pref.setDataVersion(dataVersion);
         pref.setAppVersion(appVersion);
 
@@ -267,15 +291,14 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
     }
 
-    public void goHomepage(){
+    public void goHomepage() {
         Controller.setHomeStatus();
-
         Intent home = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(home);
         getActivity().finish();
     }
 
-    public void forceUpdate(){
+    public void forceUpdate() {
         Intent home = new Intent(getActivity(), ForceUpdateActivity.class);
         getActivity().startActivity(home);
         getActivity().finish();

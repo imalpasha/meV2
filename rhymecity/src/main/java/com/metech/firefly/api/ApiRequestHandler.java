@@ -12,6 +12,8 @@ import com.metech.firefly.api.obj.ChangeSearchFlightReceive;
 import com.metech.firefly.api.obj.CheckInListReceive;
 import com.metech.firefly.api.obj.ConfirmUpdateReceive;
 import com.metech.firefly.api.obj.ContactInfoReceive;
+import com.metech.firefly.api.obj.DeleteCCReceive;
+import com.metech.firefly.api.obj.DeleteFFReceive;
 import com.metech.firefly.api.obj.DeviceInfoSuccess;
 import com.metech.firefly.api.obj.FlightSummaryReceive;
 import com.metech.firefly.api.obj.ListBookingReceive;
@@ -42,8 +44,11 @@ import com.metech.firefly.ui.object.ChangePasswordRequest;
 import com.metech.firefly.ui.object.ChangeSSR;
 import com.metech.firefly.ui.object.ConfirmUpdateRequest;
 import com.metech.firefly.ui.object.ContactInfo;
+import com.metech.firefly.ui.object.DefaultPassengerObj;
+import com.metech.firefly.ui.object.DeleteCCRequest;
 import com.metech.firefly.ui.object.DeviceInformation;
 import com.metech.firefly.ui.object.FlightSummary;
+import com.metech.firefly.ui.object.FriendFamilyDelete;
 import com.metech.firefly.ui.object.GetChangeFlight;
 import com.metech.firefly.ui.object.GetFlightAvailability;
 import com.metech.firefly.ui.object.GetSSR;
@@ -59,6 +64,7 @@ import com.metech.firefly.ui.object.MobileCheckInPassenger;
 import com.metech.firefly.ui.object.MobileCheckinObj;
 import com.metech.firefly.ui.object.MobileConfirmCheckInPassenger;
 import com.metech.firefly.ui.object.Passenger;
+import com.metech.firefly.ui.object.PassengerInfo;
 import com.metech.firefly.ui.object.PasswordRequest;
 import com.metech.firefly.ui.object.Payment;
 import com.metech.firefly.ui.object.PushNotificationObj;
@@ -1099,18 +1105,88 @@ public class ApiRequestHandler {
     }
 
 
-    public void resetInc(){
-        inc = 0;
-        retry = false;
+    @Subscribe
+    public void onEditFF(final PassengerInfo event) {
+
+        apiService.onRequestEditFF(event, new Callback<SelectFlightReceive>() {
+
+            @Override
+            public void success(SelectFlightReceive retroResponse, Response response) {
+
+                if(retroResponse != null) {
+                    bus.post(new SelectFlightReceive(retroResponse));
+                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                }else{
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                Log.e("error",error.getMessage());
+            }
+
+        });
     }
 
-    public void loop(){
-        inc++;
-        if(inc > 4){
-            retry = false;
-        }else{
-            retry = false;
-        }
+    @Subscribe
+    public void onDeleteFF(final FriendFamilyDelete event) {
+
+        apiService.onRequestDeleteFF(event, new Callback<DeleteFFReceive>() {
+
+            @Override
+            public void success(DeleteFFReceive retroResponse, Response response) {
+
+                if(retroResponse != null) {
+                    bus.post(new DeleteFFReceive(retroResponse));
+                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                }else{
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+
+            }
+
+        });
     }
+
+
+    @Subscribe
+    public void onDeleteCC(final DeleteCCRequest event) {
+
+        apiService.onRequestDeleteCC(event, new Callback<DeleteCCReceive>() {
+
+            @Override
+            public void success(DeleteCCReceive retroResponse, Response response) {
+
+                if(retroResponse != null) {
+                    bus.post(new DeleteCCReceive(retroResponse));
+                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                }else{
+                    BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
+
+            }
+
+        });
+    }
+
+
 
 }

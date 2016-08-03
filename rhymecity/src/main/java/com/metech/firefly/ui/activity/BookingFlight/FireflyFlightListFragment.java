@@ -32,6 +32,7 @@ import com.metech.firefly.ui.activity.ManageFlight.CommitChangeActivity;
 import com.metech.firefly.ui.adapter.FlightDetailAdapter;
 import com.metech.firefly.ui.module.SelectFlightModule;
 import com.metech.firefly.ui.object.CachedResult;
+import com.metech.firefly.ui.object.FamilyFriendObj;
 import com.metech.firefly.ui.object.LoginRequest;
 import com.metech.firefly.ui.object.SelectChangeFlight;
 import com.metech.firefly.ui.object.SelectFlight;
@@ -300,14 +301,14 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
                         Utils.toastNotification(getActivity(),"Please select a fare for your going flight.");
                     }else if(returnFlightNumber == null){
                         Utils.toastNotification(getActivity(),"Please select a fare for your return flight.");
-                    }else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
+                    }/*else if(departDatePlain.equals(returnDatePlain) && timeCompare(departFlightArrivalTime,returnFlightDepartureTime)){
                             Utils.toastNotificationLong(getActivity(), "Please recheck the flights you selected. Your second flight leaves before your first flight arrives!");
                             proceed = false;
                             minute90 = false;
                     }else if(departDatePlain.equals(returnDatePlain) && compare90Minute(departFlightArrivalTime,returnFlightDepartureTime)){
                             Utils.toastNotificationLong(getActivity(), " In order to select flights that travel on the same day, you must allow at least 90 minutes between flights. Please select a different pair of flights.!");
                             proceed = false;
-                    }else{
+                    }*/else{
                         proceed = true;
                     }
                 }else{
@@ -393,17 +394,26 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
     public void continueAs(){
 
         //popup = 1;
-        //SCREEN_NAME = "Book FLight: Flight Details(Login Popup)";
+        //SCREEN_NAME = "Book FLight: Flight Details(Login PopupActivity)";
 
         LayoutInflater li = LayoutInflater.from(getActivity());
         final View myView = li.inflate(R.layout.continue_as, null);
 
-        Button cont = (Button)myView.findViewById(R.id.btnContinue);
-        Button close = (Button)myView.findViewById(R.id.btnClose);
-        Button login = (Button)myView.findViewById(R.id.btnLogin);
+        final Button cont = (Button)myView.findViewById(R.id.btnContinue);
+        final Button close = (Button)myView.findViewById(R.id.btnClose);
+        final Button login = (Button)myView.findViewById(R.id.btnLogin);
+        final Button btnConfirmAsGuest = (Button)myView.findViewById(R.id.btnConfirmAsGuest);
+        final LinearLayout txtConfirmContinue = (LinearLayout)myView.findViewById(R.id.txtConfirmContinue);
+        final LinearLayout linearBtnCancel = (LinearLayout)myView.findViewById(R.id.linearBtnCancel);
+        final LinearLayout linearClose = (LinearLayout)myView.findViewById(R.id.linearClose);
+        final LinearLayout linearConfirmAsGuest = (LinearLayout)myView.findViewById(R.id.linearConfirmAsGuest);
+        final LinearLayout linearContinueAsGuest = (LinearLayout)myView.findViewById(R.id.linearContinueAsGuest);
+        final Button btnCancel = (Button)myView.findViewById(R.id.btnCancel);
         final EditText userId = (EditText)myView.findViewById(R.id.txtUserId);
         final EditText password = (EditText)myView.findViewById(R.id.txtPassword);
         password.setTransformationMethod(new PasswordTransformationMethod());
+
+
 
         final EditText editEmail = (EditText)myView.findViewById(R.id.editTextemail_login);
         final String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -412,9 +422,37 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             @Override
             public void onClick(View v) {
 
+                if(!userId.getText().toString().equals("") && !password.getText().toString().equals("")){
+                    txtConfirmContinue.setVisibility(View.VISIBLE);
+                    linearConfirmAsGuest.setVisibility(View.VISIBLE);
+                    linearBtnCancel.setVisibility(View.VISIBLE);
+                    linearClose.setVisibility(View.GONE);
+                    linearContinueAsGuest.setVisibility(View.GONE);
+                }else{
+                    goPersonalDetail();
+                    dialog.dismiss();
+                }
+            }
+
+        });
+
+        btnConfirmAsGuest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 goPersonalDetail();
                 dialog.dismiss();
+            }
 
+        });
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                txtConfirmContinue.setVisibility(View.GONE);
+                cont.setText("Continue as guest");
+                linearConfirmAsGuest.setVisibility(View.GONE);
+                linearBtnCancel.setVisibility(View.GONE);
+                linearClose.setVisibility(View.VISIBLE);
+                linearContinueAsGuest.setVisibility(View.VISIBLE);
             }
 
         });
@@ -432,9 +470,12 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
             @Override
             public void onClick(View v) {
 
-                if (userId.getText().toString().equals("") || password.getText().toString().equals("")) {
-                    Toast.makeText(getActivity(), "User ID is required", Toast.LENGTH_LONG).show();
-                }else {
+                if (userId.getText().toString().equals("")) {
+                    Toast.makeText(getActivity(), "User ID required", Toast.LENGTH_LONG).show();
+                }else if(password.getText().toString().equals("")){
+                    Toast.makeText(getActivity(), "Password required", Toast.LENGTH_LONG).show();
+                }
+                else {
                     loginFragment(userId.getText().toString(), AESCBC.encrypt(App.KEY, App.IV, password.getText().toString()));
                 }
             }
@@ -478,6 +519,13 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
+            if(obj.getUser_info().getCustomer_number() != null){
+                pref.setCustomerNumber(obj.getUser_info().getCustomer_number());
+            }
+            if(obj.getUser_info().getPersonID() != null){
+                pref.setPersonID(obj.getUser_info().getPersonID());
+            }
+
             pref.setLoginStatus("Y");
             pref.setNewsletterStatus(obj.getUser_info().getNewsletter());
             pref.setSignatureToLocalStorage(obj.getUser_info().getSignature());
@@ -519,6 +567,7 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         }
 
         selectFlightObj.setUsername(userEmail); //Get Username from Pref manager
+        //selectFlightObj.setUsername("nadzri11"); //Get Username from Pref manager
 
         selectFlightObj.setFlight_number_1(departFlightNumber);
         selectFlightObj.setDeparture_time_1(departFlightDepartureTime);
@@ -593,8 +642,20 @@ public class FireflyFlightListFragment extends BaseFragment implements BookingPr
         dismissLoading();
         pref.setBookingID(obj.getBookingId());
 
+
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
+
+            if(obj.getFamily_and_friend().size() > 0){
+                //save into realm object
+
+                FamilyFriendObj thisObj = new FamilyFriendObj();
+                thisObj.setFamily_and_friend(obj.getFamily_and_friend());
+
+                RealmObjectController.saveFamilyFriends(getActivity(),thisObj);
+            }
+
             Intent passengerInfo = new Intent(getActivity(), PersonalDetailActivity.class);
             passengerInfo.putExtra(ADULT, adult);
             passengerInfo.putExtra(INFANT, infant);

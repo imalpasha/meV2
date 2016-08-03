@@ -22,16 +22,17 @@ import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.DatePicker;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.metech.firefly.Controller;
-import com.metech.firefly.MainFragmentActivity;
+import com.metech.firefly.FireFlyApplication;
 import com.metech.firefly.R;
 import com.metech.firefly.ui.activity.BookingFlight.SearchFlightFragment;
+import com.metech.firefly.ui.activity.GlobalPopup.PopupActivity;
 import com.metech.firefly.ui.activity.SplashScreen.SplashScreenActivity;
 //import com.fly.firefly.ui.adapter.CheckInPassengerListAdapter;
 import com.metech.firefly.ui.activity.SplashScreen.TokenActivity;
@@ -77,16 +78,18 @@ public class BaseFragment extends Fragment {
     private static Boolean status;
     Boolean manualValidationStatus = true;
     private static int staticIndex = -1;
+    private Activity activityContext;
+
 
     //check added fragment
-    public boolean checkFragmentAdded(){
+    public boolean checkFragmentAdded() {
 
         boolean addFragment = false;
 
         Fragment fragment = getFragmentManager().findFragmentByTag("DATEPICKER_TAG");
-        if(fragment != null){
+        if (fragment != null) {
             addFragment = false;
-        }else{
+        } else {
             addFragment = true;
         }
 
@@ -196,15 +199,19 @@ public class BaseFragment extends Fragment {
         boolean status = false;
 
         SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
-
+        arrivalTime = "8:40 PM";
+        returnDepartureTime = "1:40 PM";
         Date arrival = null;
         Date departureReturn = null;
 
         try {
             arrival = parseFormat.parse(arrivalTime);
             departureReturn = parseFormat.parse(returnDepartureTime);
-        } catch (Exception e) {
 
+            Log.e(arrival.toString(),departureReturn.toString());
+
+        } catch (Exception e) {
+            Log.e("Exception", e.getMessage());
         }
 
         if (arrival.getTime() > departureReturn.getTime()) {
@@ -500,12 +507,46 @@ public class BaseFragment extends Fragment {
                             explicitIntent.putExtra("AlertDialog", "Y");
                             act.startActivity(explicitIntent);
                             act.finish();
-
+                            sDialog.dismiss();
                         }
                     })
                     .show();
         }
     }
+
+    public static void setSuccessDialogNoClear(final Activity act, String msg, final Class<?> cls, String message) {
+
+        if (cls == null) {
+            new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(message)
+                    .setContentText(msg)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            act.finish();
+                            sDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+
+    public static void setSuccessDialogNoFinish(final Activity act, String msg, final Class<?> cls, String message) {
+
+        if (cls == null) {
+            new SweetAlertDialog(act, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText(message)
+                    .setContentText(msg)
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismiss();
+                        }
+                    })
+                    .show();
+        }
+    }
+
 
     public static void setAlertMaintance(final Activity act, String msg, final Class<?> cls, String message) {
 
@@ -531,13 +572,27 @@ public class BaseFragment extends Fragment {
     public static void setAlertDialog(Activity act, String msg, String title) {
 
         if (act != null) {
-            new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText(title)
-                    .setContentText(msg)
-                    .show();
+            if (!((Activity) act).isFinishing()) {
+                new SweetAlertDialog(act, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText(title)
+                        .setContentText(msg)
+                        .show();
+            }else{
+
+            }
         }
     }
 
+    public static void setNotificationDialog(Activity act, String msg, String title) {
+
+        if (act != null) {
+            new SweetAlertDialog(FireFlyApplication.getContext(), SweetAlertDialog.CUSTOM_IMAGE_TYPE)
+                    .setTitleText(title)
+                    .setContentText(msg)
+                    .setCustomImage(R.drawable.notification_logo)
+                    .show();
+        }
+    }
 
     public static void setNormalDialog(Context act, String msg, String title) {
         new SweetAlertDialog(act, SweetAlertDialog.NORMAL_TYPE)
@@ -855,7 +910,7 @@ public class BaseFragment extends Fragment {
     }
 
     public String getTravelDocCode(Activity act, String travelDocData) {
-		/*Travel Doc*/
+        /*Travel Doc*/
         String travelDocCode = null;
         final String[] doc = getResources().getStringArray(R.array.travel_doc);
         for (int i = 0; i < doc.length; i++) {
@@ -990,7 +1045,7 @@ public class BaseFragment extends Fragment {
         return json;
 
 		/*Locale[] locales = Locale.getAvailableLocales();
-		ArrayList<String> countries = new ArrayList<String>();
+        ArrayList<String> countries = new ArrayList<String>();
 
 		for (Locale locale : locales) {
 			String country = locale.getDisplayCountry();
@@ -1041,6 +1096,26 @@ public class BaseFragment extends Fragment {
         return date;
     }
 
+
+    public static String reformatDOB3(String dob) {
+        String date;
+
+        if (dob != "") {
+            String string = dob;
+            String[] parts = string.split("-");
+
+            String year = parts[2];
+            Log.e(dob,year);
+
+            String month = parts[1];
+            String day = parts[0];
+            date = day + "/" + (month) + "/" + year;
+        } else {
+            date = "";
+        }
+        return date;
+    }
+
     public String reformatDOB2(String dob) {
         String date;
         String string = dob;
@@ -1052,6 +1127,19 @@ public class BaseFragment extends Fragment {
 
         return date;
     }
+
+    public String reformatDOB4(String dob) {
+        String date;
+        String string = dob;
+        String[] parts = string.split("/");
+        String day = parts[0];
+        String month = parts[1];
+        String year = parts[2];
+        date =  day + "-" + month + "-" + year;
+
+        return date;
+    }
+
 
     /*Get All User Info From OS*/
     public JSONObject getCheckinInfo(Activity act) {
@@ -1168,6 +1256,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.e("create basefragment","true");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -1269,4 +1358,80 @@ public class BaseFragment extends Fragment {
 
     }
 
+    public static void setPushNotificationAlert(Activity act, String message, String title) {
+
+        LayoutInflater li = LayoutInflater.from(act);
+        final View myView = li.inflate(R.layout.push_notification_alert, null);
+        Button cont = (Button) myView.findViewById(R.id.push_close_btn);
+        TextView pushTitle = (TextView) myView.findViewById(R.id.push_content);
+        TextView pushMessage = (TextView) myView.findViewById(R.id.push_title);
+
+        pushTitle.setText(message);
+        pushMessage.setText(title);
+
+
+        //AlertDialog.Builder builder = new AlertDialog.Builder(act);
+        //builder.setView(myView);
+        dialog = new Dialog(act, R.style.DialogThemePush);
+        //dialog = builder.create();
+        dialog.setContentView(myView);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
+        //dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        //lp.height = 570;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+
+        });
+
+    }
+
+    /*public static void setPushNotificationAlert(Activity act, String message, String title) {
+
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+
+        dialog = new Dialog(act, R.style.DialogThemePush);
+
+        LayoutInflater li = LayoutInflater.from(act);
+        final View myView = li.inflate(R.layout.push_notification_alert, null);
+        Button cont = (Button) myView.findViewById(R.id.push_close_btn);
+        TextView pushTitle = (TextView) myView.findViewById(R.id.push_content);
+        TextView pushMessage = (TextView) myView.findViewById(R.id.push_title);
+
+        pushTitle.setText(title);
+        pushMessage.setText(message);
+
+        dialog.setContentView(myView);
+        //dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#80000000")));
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+        cont.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                dialog.dismiss();
+            }
+
+        });
+
+    }*/
 }

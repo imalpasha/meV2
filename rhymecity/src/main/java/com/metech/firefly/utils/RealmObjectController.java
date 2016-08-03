@@ -8,9 +8,12 @@ import com.metech.firefly.api.obj.FlightSummaryReceive;
 import com.metech.firefly.api.obj.ListBookingReceive;
 import com.metech.firefly.api.obj.MobileConfirmCheckInPassengerReceive;
 import com.metech.firefly.api.obj.RetrieveBoardingPassReceive;
+import com.metech.firefly.api.obj.SelectFlightReceive;
 import com.metech.firefly.base.BaseFragment;
 import com.metech.firefly.ui.object.BoardingPassObj;
 import com.metech.firefly.ui.object.BoardingPassPNRList;
+import com.metech.firefly.ui.object.FamilyFriendList;
+import com.metech.firefly.ui.object.FamilyFriendObj;
 import com.metech.firefly.ui.object.ManageFlightList;
 import com.metech.firefly.ui.object.MobileCheckInList;
 import com.metech.firefly.ui.object.CachedResult;
@@ -66,7 +69,6 @@ public class RealmObjectController extends BaseFragment {
             }
         }
     }
-
 
     public static void cachedResult(Activity act, String cachedResult) {
 
@@ -124,6 +126,28 @@ public class RealmObjectController extends BaseFragment {
         result.clear();
         realm.commitTransaction();
 
+    }
+
+
+    /*Save Family and Friends*/
+    public static void saveFamilyFriends(Activity act, FamilyFriendObj obj) {
+
+        Realm realm = getRealmInstance(act);
+
+        final RealmResults<FamilyFriendList> result = realm.where(FamilyFriendList.class).findAll();
+        realm.beginTransaction();
+        result.clear();
+        realm.commitTransaction();
+        Log.e("Clear Result First", "Y");
+
+        //Convert MobileConfirmCheckIn Receive Obj to Gson
+        Gson gsonFlight = new Gson();
+        String stringfyObj = gsonFlight.toJson(obj);
+
+        realm.beginTransaction();
+        FamilyFriendList realmObject = realm.createObject(FamilyFriendList.class);
+        realmObject.setCachedList(stringfyObj);
+        realm.commitTransaction();
     }
 
     /*Save List*/
@@ -215,6 +239,14 @@ public class RealmObjectController extends BaseFragment {
         return result;
     }
 
+    public static RealmResults<FamilyFriendList> getFamilyFriends(Activity act) {
+
+        Realm realm = getRealmInstance(act);
+        final RealmResults<FamilyFriendList> result = realm.where(FamilyFriendList.class).findAll();
+
+        return result;
+    }
+
     public static RealmResults<BoardingPassPNRList> getBoardingPassPNRList(Activity act) {
 
         Realm realm = getRealmInstance(act);
@@ -246,6 +278,7 @@ public class RealmObjectController extends BaseFragment {
         realm.clear(MobileCheckInList.class);
         realm.clear(BoardingPassObj.class);
         realm.clear(BoardingPassPNRList.class);
+        realm.clear(FamilyFriendList.class);
         realm.commitTransaction();
 
         realm.close();
@@ -420,7 +453,6 @@ public class RealmObjectController extends BaseFragment {
             @Override
             public void onError(Exception e) {
                 // transaction is automatically rolled-back, do any cleanup here
-                Log.e("Exception",e.getMessage());
             }
 
         });

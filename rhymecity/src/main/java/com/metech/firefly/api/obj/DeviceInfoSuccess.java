@@ -21,6 +21,7 @@ public class DeviceInfoSuccess{
     private String banner_default;
     private String banner_promo;
     private String banner_module;
+    private String banner_url;
     private List<TitleObj> data_title = new ArrayList<TitleObj>();
     private List<Country> data_country = new ArrayList<Country>();
     private List<State> data_state = new ArrayList<State>();
@@ -57,6 +58,14 @@ public class DeviceInfoSuccess{
 
     public void setData_version_mobile(AppVersion data_version_mobile) {
         this.data_version_mobile = data_version_mobile;
+    }
+
+    public String getBanner_redirect_url() {
+        return banner_url;
+    }
+
+    public void setBanner_redirect_url(String banner_url) {
+        this.banner_url = banner_url;
     }
 
     public SocialMedia getSocial_media() {

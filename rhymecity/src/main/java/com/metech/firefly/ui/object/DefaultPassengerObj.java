@@ -20,6 +20,24 @@ public class DefaultPassengerObj implements Parcelable {
     private String nationality;
     private String id;
     private String type;
+    private String status;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getPassenger_type() {
         return type;
@@ -164,4 +182,21 @@ public class DefaultPassengerObj implements Parcelable {
             return new DefaultPassengerObj[size];
         }
     };
+
+    public DefaultPassengerObj(DefaultPassengerObj param_obj){
+
+        title = param_obj.getTitle();
+        first_name = param_obj.getFirst_name();
+        gender = param_obj.getGender();
+        last_name = param_obj.getLast_name();
+        issuingCountry = param_obj.getIssuingCountry();
+        dob = param_obj.getDob();
+        nationality = param_obj.getNationality();
+        id = param_obj.getId();
+        type = param_obj.getPassenger_type();
+        status = param_obj.getStatus();
+        message = param_obj.getMessage();
+
+    }
+
 }
