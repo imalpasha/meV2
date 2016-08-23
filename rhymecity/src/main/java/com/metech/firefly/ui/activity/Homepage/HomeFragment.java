@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.metech.firefly.AnalyticsApplication;
 import com.metech.firefly.Controller;
 import com.metech.firefly.FireFlyApplication;
@@ -146,6 +147,8 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         ButterKnife.inject(this, view);
         pref = new SharedPrefManager(getActivity());
         aq.recycle(view);
+
+        setUserEmailForCrashLytics();
 
         HashMap<String, String> initPromoBanner = pref.getPromoBanner();
         String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
@@ -313,7 +316,21 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         return view;
     }
 
-    public void forceCrash(View view) {
+    public void setUserEmailForCrashLytics(){
+        //set user email for crashlitics report
+        HashMap<String, String> initLoginStatus = pref.getLoginStatus();
+        String loginStatus = initLoginStatus.get(SharedPrefManager.ISLOGIN);
+        if(loginStatus.equals("Y"))
+        {
+            HashMap<String, String> initEmail = pref.getUserEmail();
+            String userEmail = initEmail.get(SharedPrefManager.USER_EMAIL);
+            Crashlytics.setUserEmail(userEmail);
+        }else{
+            Crashlytics.setUserEmail("Anonymous");
+        }
+    }
+
+    public void forceCrash() {
         throw new RuntimeException("This is a crash");
     }
 

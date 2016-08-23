@@ -63,6 +63,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import io.realm.RealmResults;
 
 public class RegisterFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,RegisterPresenter.RegisterView,Validator.ValidationListener {
@@ -154,6 +155,11 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
     @InjectView(R.id.registerContinueButton)
     Button registerContinueButton;
+
+    @InjectView(R.id.linearRegisterContinueButton)
+    LinearLayout linearRegisterContinueButton;
+
+
 
     @InjectView(R.id.txtBonusLink)
     EditText txtBonusLink;
@@ -269,7 +275,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Edit", "Date");
                 datePickerDialog.setYearRange(year - 80, year);
-                datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                if(checkFragmentAdded()){
+                    datePickerDialog.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
+                }
             }
         });
 
@@ -311,7 +319,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
                 //get mobile phone dialing code
                 //if(dialingCode != null || dialingCode != ""){
-                    if(!editTextMobilePhone.getText().toString().equals("")){
+                    if(!editTextMobilePhone.getText().toString().equals("") && dialingCode != null){
                         if(validateDialingCode(dialingCode,editTextMobilePhone.getText().toString())){
                             editTextMobilePhone.setError("Mobile phone must start with country code.");
                             validateStatus = false;
@@ -320,7 +328,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                         }
                     }
 
-                    if(!txtAlternatePhoneNumber.getText().toString().equals("")){
+                    if(!txtAlternatePhoneNumber.getText().toString().equals("") && dialingCode != null){
                         if(validateDialingCode(dialingCode,txtAlternatePhoneNumber.getText().toString())){
                             txtAlternatePhoneNumber.setError("Mobile phone must start with country code.");
                             validateStatus = false;
@@ -328,7 +336,7 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
                         }
                     }
 
-                    if(!txtFaqNumber.getText().toString().equals("")){
+                    if(!txtFaqNumber.getText().toString().equals("") && dialingCode != null){
                         if(validateDialingCode(dialingCode,txtFaqNumber.getText().toString())){
                             txtFaqNumber.setError("Mobile phone must start with country code.");
                             validateStatus = false;
@@ -508,7 +516,9 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
 
             View view = error.getView();
             view.setFocusable(true);
-
+            if(firstView){
+                view.requestFocus();
+            }
             setShake(view);
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
@@ -521,20 +531,12 @@ public class RegisterFragment extends BaseFragment implements DatePickerDialog.O
             {
                 ((TextView) view).setError(splitErrorMsg[0]);
             }
-
-            if(firstView){
-
-                view.requestFocus();
-            }
             firstView = false;
         }
 
-
-
-        //if(fieldError){
-        //    croutonAlert(getActivity(), errorMessage);
-        //}
-
+        //focus back on first edittext
+        croutonAlert(getActivity(), getResources().getString(R.string.empty_fields));
+        setShake(linearRegisterContinueButton);
 
     }
 

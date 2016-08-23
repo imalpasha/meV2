@@ -777,6 +777,7 @@ select another date or station and try again.</string>
     <string name="bonuslink_hint">e.g. 6018XXXXXXXXXXXX</string>
     <string name="yes_proceed">Yes, I want to be protected during my trip</string>
     <string name="no_thank">No, Thank You.</string>
+    <string name="empty_fields">Fill in empty fields</string>
 
 
 

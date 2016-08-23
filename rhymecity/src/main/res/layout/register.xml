@@ -316,7 +316,6 @@
                                             android:background="@null"
                                             android:paddingBottom="8dp"
                                             android:hint="@string/register_title"
-                                            android:focusable="true"
                                             android:clickable="true"
                                             android:textSize="@dimen/font16sp"
                                             android:textColorHint="@color/loginFontTxt"
@@ -782,6 +781,7 @@
                             </LinearLayout>
 
                             <LinearLayout
+                                android:id="@+id/linearRegisterContinueButton"
                                 android:orientation="vertical"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"

@@ -107,8 +107,10 @@ public class CodeShareFlightListFragment extends BaseFragment implements Booking
     private final String BUSINESS = "BUSINESS";
 
     private final String PREMIER = "PREMIER";
-    private static final String SCREEN_LABEL = "Book Flight: Flight Details(MH)";
-    private static final String SCREEN_LABEL_MANAGE = "Edit MH Flight Detail";
+
+    private static final String SCREEN_LABEL = "Book Flight: Flight Details";
+    private static final String SCREEN_LABEL_MANAGE = "Edit Flight Detail";
+
     private final String FLIGHT_TYPE = "FLIGHT_TYPE";
     private final String ADULT = "ADULT";
     private final String INFANT = "INFANT";
