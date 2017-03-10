@@ -104,9 +104,9 @@ public class ProductImagesFragment extends BaseFragment {
 
         //listProductImages = args.getStringArrayList("imgUrls");
 
-        if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_PRODUCTIMAGE)) {
-            boardingObj = savedInstanceState.getParcelable(KEY_PRODUCTIMAGE);
-        }
+        //if ((savedInstanceState != null) && savedInstanceState.containsKey(KEY_PRODUCTIMAGE)) {
+        //    boardingObj = savedInstanceState.getParcelable(KEY_PRODUCTIMAGE);
+        //}
 
 
     }

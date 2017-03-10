@@ -72,12 +72,13 @@ import butterknife.InjectView;
 import butterknife.Optional;
 import io.realm.RealmResults;
 
-public class ContactInfoFragment extends BaseFragment implements Validator.ValidationListener,DatePickerDialog.OnDateSetListener,BookingPresenter.ContactInfoView {
+public class ContactInfoFragment extends BaseFragment implements Validator.ValidationListener, DatePickerDialog.OnDateSetListener, BookingPresenter.ContactInfoView {
 
     @Inject
     BookingPresenter presenter;
 
-    @Order(1) @NotEmpty
+    @Order(1)
+    @NotEmpty
     @InjectView(R.id.txtPurpose)
     TextView txtPurpose;
 
@@ -97,7 +98,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.txtCompanyAddress3)
     EditText txtCompanyAddress3;
 
-    @Order(2) @NotEmpty
+    @Order(2)
+    @NotEmpty
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
 
@@ -140,18 +142,18 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     @NotEmpty
     @Order(9)
-    @Length(min = 4,max = 8, message = "Invalid postcode number")
+    @Length(min = 4, max = 8, message = "Invalid postcode number")
     @InjectView(R.id.txtPostCode)
     TextView txtPostCode;
 
     @NotEmpty
-    @Length(min = 7,max = 14, message = "Invalid phone number")
+    @Length(min = 7, max = 14, message = "Invalid phone number")
     @Order(10)
     @InjectView(R.id.txtPhone)
     TextView txtPhone;
 
     @NotEmpty
-    @Length(min = 7,max = 14, message = "Invalid phone number")
+    @Length(min = 7, max = 14, message = "Invalid phone number")
     @Order(11)
     @InjectView(R.id.txtAlternatePhone)
     TextView txtAlternatePhone;
@@ -210,6 +212,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     @InjectView(R.id.specialMealLayout)
     LinearLayout specialMealLayout;
 
+    @InjectView(R.id.contactInfoContinueBtn)
+    LinearLayout contactInfoContinueBtn;
+
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Book Flight: Personal Details(Contact Details)";
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -219,9 +224,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     private final String ADULT = "ADULT";
     private final String INFANT = "INFANT";
-    private String adult,infant;
+    private String adult, infant;
     private SharedPrefManager pref;
-    private String bookingID,signature;
+    private String bookingID, signature;
     private int clickedPassenger;
     private Boolean boolDob = false;
     private Boolean boolExpireDate = false;
@@ -234,7 +239,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private String dialingCode;
     private String selectedState;
     private Validator mValidator;
-    private String insuranceTxt1,insuranceTxt2,insuranceTxt3,insuranceTxt4;
+    private String insuranceTxt1, insuranceTxt2, insuranceTxt3, insuranceTxt4;
     private boolean withSeat = false;
     private View view;
     private LoginReceive.UserInfo loginObj;
@@ -248,8 +253,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     private ArrayList<DropDownItem> departMealList = new ArrayList<DropDownItem>();
     private ArrayList<DropDownItem> returnMealList = new ArrayList<DropDownItem>();
     private String flightType;
-
-    private String ssrOffer1,ssrOffer2;
+    private Boolean send;
+    private String ssrOffer1, ssrOffer2;
 
     public static ContactInfoFragment newInstance(Bundle bundle) {
 
@@ -273,12 +278,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.passenger_contact_info, container, false);
         ButterKnife.inject(this, view);
         pref = new SharedPrefManager(getActivity());
         Bundle bundle = getArguments();
+        send = true;
 
         Bundle xxx = getActivity().getIntent().getExtras();
         String insurance = bundle.getString("INSURANCE_STATUS");
@@ -288,20 +294,20 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         //String defaultPassenger = "";
         try {
-             defaultObj = getActivity().getIntent().getParcelableArrayListExtra("DEFAULT_PASSENGER_INFO");
-        }catch (Exception e){
+            defaultObj = getActivity().getIntent().getParcelableArrayListExtra("DEFAULT_PASSENGER_INFO");
+        } catch (Exception e) {
         }
 
         changeContactInfoBtn.setVisibility(View.GONE);
         Gson gson = new Gson();
 
-        obj= gson.fromJson(insurance, PassengerInfoReveice.class);
+        obj = gson.fromJson(insurance, PassengerInfoReveice.class);
 
         /* If Passenger Already Login - Auto display necessary data */
         HashMap<String, String> initLogin = pref.getLoginStatus();
         String loginStatus = initLogin.get(SharedPrefManager.ISLOGIN);
 
-        if(loginStatus != null && loginStatus.equals("Y")) {
+        if (loginStatus != null && loginStatus.equals("Y")) {
 
             String userInfo = getUserInfoCached(getActivity());
             loginObj = gson.fromJson(userInfo, LoginReceive.UserInfo.class);
@@ -326,7 +332,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             txtCountryBusiness.setText(getCountryName(getActivity(), loginObj.getContact_country()));
 
             txtPostCode.setText(loginObj.getContact_postcode());
-            dialingCode = getDialingCode(loginObj.getContact_country(),getActivity());
+            dialingCode = getDialingCode(loginObj.getContact_country(), getActivity());
         }
         /* ---------------------------------------------------------- */
 
@@ -335,22 +341,20 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                if(isChecked)
-                {
-                    if(defaultObj.size() > 1){
+                if (isChecked) {
+                    if (defaultObj.size() > 1) {
                         ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
 
-                        for(int i = 0;i<defaultObj.size(); i++)
-                        {
+                        for (int i = 0; i < defaultObj.size(); i++) {
                             DropDownItem itemPurpose = new DropDownItem();
-                            itemPurpose.setText(defaultObj.get(i).getTitle()+" "+defaultObj.get(i).getFirstname());
+                            itemPurpose.setText(defaultObj.get(i).getTitle() + " " + defaultObj.get(i).getFirstname());
                             itemPurpose.setCode(Integer.toString(i));
                             passengerList.add(itemPurpose);
                         }
                         //popupSelection(passengerList, getActivity());
                         customPopupForContactInfo(passengerList, getActivity());
 
-                    }else{
+                    } else {
                         txtTitle.setText(getTitleCode(getActivity(), defaultObj.get(0).getTitle(), "name"));
                         txtTitle.setTag(defaultObj.get(0).getTitle());
                         txtFirstName.setText(defaultObj.get(0).getFirstname());
@@ -360,11 +364,11 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                         selectedCountryCode = defaultObj.get(0).getIssuingCountry();
                         txtCountryBusiness.setTag(defaultObj.get(0).getIssuingCountry());
                         txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(0).getIssuingCountry()));
-                        dialingCode = getDialingCode(defaultObj.get(0).getIssuingCountry(),getActivity());
+                        dialingCode = getDialingCode(defaultObj.get(0).getIssuingCountry(), getActivity());
                         setState(selectedCountryCode);
 
                     }
-                }else{
+                } else {
                     txtTitle.setText("");
                     txtTitle.setTag("");
                     txtFirstName.setText("");
@@ -380,8 +384,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         try {
             insuranceStatus = obj.getInsuranceObj().getStatus();
-            if(insuranceStatus != null){
-                if(insuranceStatus.equals("Y")) {
+            if (insuranceStatus != null) {
+                if (insuranceStatus.equals("Y")) {
                     insuranceBlock.setVisibility(View.VISIBLE);
 
                     insuranceTxt1 = obj.getInsuranceObj().getHtml().get(0).toString();
@@ -392,7 +396,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     setInsuranceText();
                 }
             }
-        }catch(Exception e){}
+        } catch (Exception e) {
+        }
 
         /*Booking Id*/
         HashMap<String, String> initBookingID = pref.getBookingID();
@@ -422,8 +427,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtCountry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.hideKeyboard(getActivity(),view);
-                showCountrySelector(getActivity(), countrysList,"country");
+                Utils.hideKeyboard(getActivity(), view);
+                showCountrySelector(getActivity(), countrysList, "country");
 
             }
         });
@@ -433,7 +438,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             @Override
             public void onClick(View v) {
                 Utils.hideKeyboard(getActivity(), view);
-                showCountrySelector(getActivity(),countrysList,"country");
+                showCountrySelector(getActivity(), countrysList, "country");
 
             }
         });
@@ -443,8 +448,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         txtState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.hideKeyboard(getActivity(),view);
-                showCountrySelector(getActivity(), stateList,"state");
+                Utils.hideKeyboard(getActivity(), view);
+                showCountrySelector(getActivity(), stateList, "state");
 
             }
         });
@@ -474,13 +479,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         HashMap<String, String> initFlightType = pref.getFlightType();
         flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
-        if(flightType.equals("MH")) {
+        if (flightType.equals("MH")) {
             btnSeatSelection.setVisibility(View.GONE);
             btnWithoutSeatSelection.setText("Continue");
         }
 
         if (obj.getSsr_status().equals("Y")) {
-               displaySSRMeal();
+            displaySSRMeal();
         }
 
          /*Onclick Continue*/
@@ -523,19 +528,18 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         contactInfoScrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-               // view.requestFocus();
+                // view.requestFocus();
             }
         });
 
         return view;
     }
 
-    public void mealSSR(){
+    public void mealSSR() {
 
 		/*Depart Meal*/
 
-        for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++)
-        {
+        for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++) {
             DropDownItem itemCountry = new DropDownItem();
             itemCountry.setText(obj.getMeal().get(0).getList_meal().get(i).getName());
             itemCountry.setCode(obj.getMeal().get(0).getList_meal().get(i).getMeal_code());
@@ -545,9 +549,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         }
 
         /*Return Meal*/
-        if(obj.getMeal().size() > 1){
-            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++)
-            {
+        if (obj.getMeal().size() > 1) {
+            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++) {
                 DropDownItem itemCountry = new DropDownItem();
                 itemCountry.setText(obj.getMeal().get(1).getList_meal().get(i).getName());
                 itemCountry.setCode(obj.getMeal().get(1).getList_meal().get(i).getMeal_code());
@@ -558,21 +561,19 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         }
     }
 
-    public String getMealCode(String mealName,String type){
+    public String getMealCode(String mealName, String type) {
         String mealCode = "";
 
-        if(type.equals("Depart")){
-            for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++)
-            {
-                if(mealName.equals(obj.getMeal().get(0).getList_meal().get(i).getName())){
+        if (type.equals("Depart")) {
+            for (int i = 0; i < obj.getMeal().get(0).getList_meal().size(); i++) {
+                if (mealName.equals(obj.getMeal().get(0).getList_meal().get(i).getName())) {
                     mealCode = obj.getMeal().get(0).getList_meal().get(i).getMeal_code();
                     break;
                 }
             }
-        }else{
-            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++)
-            {
-                if(mealName.equals(obj.getMeal().get(1).getList_meal().get(i).getName())){
+        } else {
+            for (int i = 0; i < obj.getMeal().get(1).getList_meal().size(); i++) {
+                if (mealName.equals(obj.getMeal().get(1).getList_meal().get(i).getName())) {
                     mealCode = obj.getMeal().get(1).getList_meal().get(i).getMeal_code();
                     break;
                 }
@@ -582,7 +583,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         return mealCode;
     }
 
-    public void displaySSRMeal(){
+    public void displaySSRMeal() {
 
            /*Booking Id*/
         HashMap<String, String> SS1 = pref.getSSR1();
@@ -592,34 +593,34 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         HashMap<String, String> SS2 = pref.getSSR2();
         ssrOffer2 = SS2.get(SharedPrefManager.OFFERSSR2);
 
-        if(ssrOffer1.equals("Y") || ssrOffer2.equals("Y")){
+        if (ssrOffer1.equals("Y") || ssrOffer2.equals("Y")) {
 
-            if(obj.getMeal().size() > 0){
+            if (obj.getMeal().size() > 0) {
 
                 specialMealLayout.setVisibility(View.VISIBLE);
                 mealSSR();
 
                 //Services & Fee
-                LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
-                LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
-                LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT, 1f);
+                LinearLayout.LayoutParams half06 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0.4f);
+                LinearLayout.LayoutParams half04 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 0.6f);
+                LinearLayout.LayoutParams matchParent = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 1f);
 
                 int departLoop = 1;
                 int returnLoop = 1;
 
-                for(int services = 0 ; services < obj.getMeal().size() ; services++){
+                for (int services = 0; services < obj.getMeal().size(); services++) {
 
                     boolean proceed = false;
 
-                    if(ssrOffer1.equals("Y") && services == 0){
+                    if (ssrOffer1.equals("Y") && services == 0) {
                         proceed = true;
                     }
 
-                    if(ssrOffer2.equals("Y") && services == 1){
+                    if (ssrOffer2.equals("Y") && services == 1) {
                         proceed = true;
                     }
 
-                    if(proceed){
+                    if (proceed) {
 
                         String ssrFlightDestination = obj.getMeal().get(services).getDestination_name();
                         TextView txtFlightType = new TextView(getActivity());
@@ -630,7 +631,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
                         passengerSSRMealList.addView(txtFlightType);
 
-                        for(int servicesLoop = 0 ; servicesLoop < obj.getMeal().get(services).getPassenger().size() ; servicesLoop++){
+                        for (int servicesLoop = 0; servicesLoop < obj.getMeal().get(services).getPassenger().size(); servicesLoop++) {
 
                             LinearLayout servicesRow = new LinearLayout(getActivity());
                             servicesRow.setOrientation(LinearLayout.VERTICAL);
@@ -655,8 +656,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                             txtMealList.setPadding(7, 7, 7, 7);
                             txtMealList.setLayoutParams(llp);
                             //onclick meal
-                            if(services == 0){
-                                txtMealList.setTag("passenger_depart"+Integer.toString(departLoop));
+                            if (services == 0) {
+                                txtMealList.setTag("passenger_depart" + Integer.toString(departLoop));
                                 txtMealList.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
@@ -666,8 +667,8 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
                                 departLoop++;
 
-                            }else{
-                                txtMealList.setTag("passenger_return"+Integer.toString(returnLoop));
+                            } else {
+                                txtMealList.setTag("passenger_return" + Integer.toString(returnLoop));
 
                                 txtMealList.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -697,23 +698,22 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
                 }
             }
-            }
+        }
     }
 
-    public void setInsuranceText(){
+    public void setInsuranceText() {
 
         txtInsurance1.setText(Html.fromHtml(insuranceTxt1));
         txtInsurance2.setMovementMethod(LinkMovementMethod.getInstance());
         txtInsurance2.setText(Html.fromHtml(insuranceTxt2.replaceAll("</br>", "<p>")), TextView.BufferType.SPANNABLE);
-        txtInsurance3.setText(Html.fromHtml(insuranceTxt3),TextView.BufferType.SPANNABLE);
+        txtInsurance3.setText(Html.fromHtml(insuranceTxt3), TextView.BufferType.SPANNABLE);
 
         String insurance3 = txtInsurance3.getText().toString();
         int i1 = insurance3.indexOf("[R");
         int i2 = insurance3.indexOf("e]");
 
-        Spannable mySpannable = (Spannable)txtInsurance3.getText();
-        ClickableSpan myClickableSpan = new ClickableSpan()
-        {
+        Spannable mySpannable = (Spannable) txtInsurance3.getText();
+        ClickableSpan myClickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
                     /* do something */
@@ -733,12 +733,12 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     }
 
     /*PopupActivity Forgot Password*/
-    public void removeInsurance(){
+    public void removeInsurance() {
 
         LayoutInflater li = LayoutInflater.from(getActivity());
         final View myView = li.inflate(R.layout.remove_insurance_opt, null);
-        Button confirmRemove = (Button)myView.findViewById(R.id.confirmRemove);
-        Button continueRemove = (Button)myView.findViewById(R.id.continueInsurance);
+        Button confirmRemove = (Button) myView.findViewById(R.id.confirmRemove);
+        Button continueRemove = (Button) myView.findViewById(R.id.continueInsurance);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(myView);
@@ -780,62 +780,61 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
     }
 
-     /*Global PoPup*/
-     public void customPopupForContactInfo(final ArrayList array,Activity act){
+    /*Global PoPup*/
+    public void customPopupForContactInfo(final ArrayList array, Activity act) {
 
 
-            final ArrayList<DropDownItem> a = array;
-            DropMenuAdapter dropState = new DropMenuAdapter(act);
-            dropState.setItems(a);
+        final ArrayList<DropDownItem> a = array;
+        DropMenuAdapter dropState = new DropMenuAdapter(act);
+        dropState.setItems(a);
 
-            AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
+        AlertDialog.Builder alertStateCode = new AlertDialog.Builder(act);
 
-            alertStateCode.setSingleChoiceItems(dropState, index, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
+        alertStateCode.setSingleChoiceItems(dropState, index, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
-                    String selectedCode = a.get(which).getCode();
+                String selectedCode = a.get(which).getCode();
 
-                    txtTitle.setText(getTitleCode(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getTitle(), "name"));
-                    txtTitle.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getTitle());
-                    txtFirstName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getFirstname());
-                    txtLastName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getLastname());
-                    txtCountry.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
-                    txtCountry.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
-                    txtCountryBusiness.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
-                    txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
-                    selectedCountryCode = defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry();
-                    dialingCode = getDialingCode(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry(), getActivity());
-                    setState(selectedCountryCode);
+                txtTitle.setText(getTitleCode(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getTitle(), "name"));
+                txtTitle.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getTitle());
+                txtFirstName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getFirstname());
+                txtLastName.setText(defaultObj.get(Integer.parseInt(selectedCode)).getLastname());
+                txtCountry.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
+                txtCountry.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
+                txtCountryBusiness.setTag(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry());
+                txtCountryBusiness.setText(getCountryName(getActivity(), defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry()));
+                selectedCountryCode = defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry();
+                dialingCode = getDialingCode(defaultObj.get(Integer.parseInt(selectedCode)).getIssuingCountry(), getActivity());
+                setState(selectedCountryCode);
 
-                    index = which;
-                    dialog.dismiss();
-                }
-            });
+                index = which;
+                dialog.dismiss();
+            }
+        });
 
 
-            AlertDialog mDialog = alertStateCode.create();
-            mDialog.show();
+        AlertDialog mDialog = alertStateCode.create();
+        mDialog.show();
 
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(mDialog.getWindow().getAttributes());
-            lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-            lp.height = 600;
-            mDialog.getWindow().setAttributes(lp);
-        }
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(mDialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = 600;
+        mDialog.getWindow().setAttributes(lp);
+    }
 
     /*Country selector - > need to move to main activity*/
-    public void showCountrySelector(Activity act,ArrayList constParam,String data)
-    {
-        if(act != null) {
+    public void showCountrySelector(Activity act, ArrayList constParam, String data) {
+        if (act != null) {
             try {
 
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
-                if(data.equals("state")){
+                if (data.equals("state")) {
                     StateListDialogFragment countryListDialogFragment = StateListDialogFragment.newInstance(constParam);
                     countryListDialogFragment.setTargetFragment(ContactInfoFragment.this, 0);
                     countryListDialogFragment.show(fm, "countryListDialogFragment");
-                }else{
+                } else {
                     CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
                     countryListDialogFragment.setTargetFragment(ContactInfoFragment.this, 0);
                     countryListDialogFragment.show(fm, "countryListDialogFragment");
@@ -860,7 +859,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                     txtCountryBusiness.setText(selectedCountry.getText());
 
                     //split country code with dialing code
-                    String toCountryCode =  selectedCountry.getCode();
+                    String toCountryCode = selectedCountry.getCode();
                     String[] splitCountryCode = toCountryCode.split("/");
                     selectedCountryCode = splitCountryCode[0];
                     dialingCode = splitCountryCode[1];
@@ -879,17 +878,17 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         }
     }
 
-    public void setState(String selectedCode){
+    public void setState(String selectedCode) {
 
         /*Each country click - reset state obj*/
         stateList = new ArrayList<DropDownItem>();
 
                     /* Set state from selected Country Code*/
         JSONArray jsonState = getState(getActivity());
-        for(int x = 0 ; x < jsonState.length() ; x++) {
+        for (int x = 0; x < jsonState.length(); x++) {
 
             JSONObject row = (JSONObject) jsonState.opt(x);
-            if(selectedCode.equals(row.optString("country_code"))) {
+            if (selectedCode.equals(row.optString("country_code"))) {
                 DropDownItem itemCountry = new DropDownItem();
                 itemCountry.setText(row.optString("state_name"));
                 itemCountry.setCode(row.optString("state_code"));
@@ -900,12 +899,14 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     }
 
     @Override
-    public void onContactInfo(ContactInfoReceive obj){
+    public void onContactInfo(ContactInfoReceive obj) {
         dismissLoading();
+        send = true;
+
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
-            if(withSeat){
+            if (withSeat) {
                 Gson gsonFlight = new Gson();
                 String seat = gsonFlight.toJson(obj);
                 pref.setSeat(seat);
@@ -913,7 +914,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
                 Intent intent = new Intent(getActivity(), SeatSelectionActivity.class);
                 intent.putExtra("SEAT_INFORMATION", (new Gson()).toJson(obj));
                 getActivity().startActivity(intent);
-            }else{
+            } else {
 
                 Intent intent = new Intent(getActivity(), ItinenaryActivity.class);
                 intent.putExtra("ITINENARY_INFORMATION", (new Gson()).toJson(obj));
@@ -931,10 +932,10 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         String varMonth = "";
         String varDay = "";
 
-        if(month < 10) {
+        if (month < 10) {
             varMonth = "0";
         }
-        if(day < 10){
+        if (day < 10) {
             varDay = "0";
         }
 
@@ -945,26 +946,29 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
         //checkDialingCode
         boolean cont = true;
-        if(!txtPhone.getText().toString().equals("")){
-            if(validateDialingCode(dialingCode, txtPhone.getText().toString())) {
-                txtPhone.setError("Mobile phone must start with country code.");
+        if (!txtPhone.getText().toString().equals("")) {
+            if (validateDialingCode(dialingCode, txtPhone.getText().toString())) {
+                send = true;
+                txtPhone.setError("Invalid mobile phone country code.");
                 setShake(txtPhone);
                 cont = false;
             }
         }
-        if(!txtAlternatePhone.getText().toString().equals("")) {
+        if (!txtAlternatePhone.getText().toString().equals("")) {
             if (validateDialingCode(dialingCode, txtAlternatePhone.getText().toString())) {
-                txtAlternatePhone.setError("Alternate phone must start with country code.");
+                send = true;
+                txtAlternatePhone.setError("Invalid alternate phone country code.");
                 setShake(txtAlternatePhone);
                 cont = false;
             }
         }
 
-        if(cont){
-            if(insuranceStatus.equals("Y") && !insuranceCheckBox.isChecked()){
-                setAlertDialog(getActivity(),"To proceed, you need to agree with the Insurance Declaration.","Insurance Declaration");
+        if (cont) {
+            if (insuranceStatus.equals("Y") && !insuranceCheckBox.isChecked()) {
+                send = true;
+                setAlertDialog(getActivity(), "To proceed, you need to agree with the Insurance Declaration.", "Insurance Declaration");
                 cont = false;
-            }else{
+            } else {
                 requestContacInfo();
             }
         }
@@ -980,8 +984,9 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
             View view = error.getView();
             view.setFocusable(true);
-
+            send = true;
             setShake(view);
+
 
              /* Split Error Message. Display first sequence only */
             String message = error.getCollatedErrorMessage(getActivity());
@@ -991,32 +996,34 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             if (view instanceof EditText) {
                 ((EditText) view).setError(splitErrorMsg[0]);
 
-            }else if(view instanceof TextView){
+            } else if (view instanceof TextView) {
                 ((TextView) view).setError(splitErrorMsg[0]);
-            }
-            else if (view instanceof CheckBox){
+            } else if (view instanceof CheckBox) {
                 ((CheckBox) view).setError(splitErrorMsg[0]);
-               // croutonAlert(getActivity(), splitErrorMsg[0]);
+                // croutonAlert(getActivity(), splitErrorMsg[0]);
             }
 
-            if(firstView){
+            if (firstView) {
                 view.requestFocus();
             }
             firstView = false;
         }
 
+        setShake(contactInfoContinueBtn);
+        croutonAlert(getActivity(), "Something went wrong.Please fill in all blank field");
+
     }
 
-    public void requestContacInfo(){
+    public void requestContacInfo() {
 
         String seatSelectionStatus;
 
         initiateLoading(getActivity());
         ContactInfo contactObj = new ContactInfo();
 
-        if(withSeat){
+        if (withSeat) {
             seatSelectionStatus = "Y";
-        }else{
+        } else {
             seatSelectionStatus = "N";
         }
         HashMap<String, String> initFlightType = pref.getFlightType();
@@ -1026,7 +1033,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         String customerNumber = initCustomerNumber.get(SharedPrefManager.CUSTOMER_NUMBER);
 
         contactObj.setBooking_id(bookingID);
-        if(customerNumber == null){
+        if (customerNumber == null) {
             customerNumber = "";
         }
         contactObj.setCustomer_number(customerNumber);
@@ -1040,14 +1047,14 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
         contactObj.setContact_email(txtEmailAddress.getText().toString());
 
         //getMealCode
-        if(flightType.equals("MH") && obj.getSsr_status().equals("Y")){
+        if (flightType.equals("MH") && obj.getSsr_status().equals("Y")) {
 
 
             //if meal available
 
             ArrayList<PassengerMeal> departMeal = new ArrayList<PassengerMeal>();
 
-            if(ssrOffer1.equals("Y")) {
+            if (ssrOffer1.equals("Y")) {
 
                 for (int y = 0; y < obj.getMeal().get(0).getPassenger().size(); y++) {
 
@@ -1068,13 +1075,13 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             ArrayList<PassengerMeal> returnMeal = new ArrayList<PassengerMeal>();
 
 
-                if(obj.getMeal().size() > 1){
-                    if(ssrOffer2.equals("Y")) {
-                    for(int x = 0; x < obj.getMeal().get(1).getPassenger().size(); x++){
+            if (obj.getMeal().size() > 1) {
+                if (ssrOffer2.equals("Y")) {
+                    for (int x = 0; x < obj.getMeal().get(1).getPassenger().size(); x++) {
 
                         //getMealCode
                         TextView mealCodePerPassenger2 = (TextView) view.findViewWithTag("passenger_return" + Integer.toString(x + 1));
-                        String returnMealCode = getMealCode(mealCodePerPassenger2.getText().toString(),"Return");
+                        String returnMealCode = getMealCode(mealCodePerPassenger2.getText().toString(), "Return");
 
                         PassengerMeal passengerMeal = new PassengerMeal();
                         passengerMeal.setPassenger_number(Integer.toString(x));
@@ -1093,7 +1100,7 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
 
 
         /*Exception*/
-        if(txtPurpose.getTag().toString().equals("2")){
+        if (txtPurpose.getTag().toString().equals("2")) {
             contactObj.setContact_state(txtState.getTag().toString());
             contactObj.setContact_city(txtCity.getText().toString());
             contactObj.setContact_postcode(txtPostCode.getText().toString());
@@ -1104,16 +1111,19 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
             contactObj.setContact_address3(txtCompanyAddress3.getText().toString());
         }
 
-        if(insuranceCheckBox.isChecked()){
+        if (insuranceCheckBox.isChecked()) {
             contactObj.setInsurance("1");
-        }else{
+        } else {
             contactObj.setInsurance("0");
         }
         contactObj.setContact_country(selectedCountryCode);
         contactObj.setContact_mobile_phone(txtPhone.getText().toString());
         contactObj.setContact_alternate_phone(txtAlternatePhone.getText().toString());
 
-        presenter.contactInfo(contactObj);
+        if(send){
+            presenter.contactInfo(contactObj);
+            send = false;
+        }
 
     }
 
@@ -1127,15 +1137,16 @@ public class ContactInfoFragment extends BaseFragment implements Validator.Valid
     public void onResume() {
         super.onResume();
         presenter.onResume();
+        send = true;
 
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
+        if (result.size() > 0) {
             Gson gson = new Gson();
             ContactInfoReceive obj = gson.fromJson(result.get(0).getCachedResult(), ContactInfoReceive.class);
             onContactInfo(obj);
-        }else{
+        } else {
         }
     }
 

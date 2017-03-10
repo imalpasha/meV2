@@ -276,15 +276,15 @@ public class BoardingPassDisplayFragment extends BaseFragment implements Boardin
 
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
 
-        if(boardingPassPagePause){
+        if (boardingPassPagePause) {
             //reload after pause
-            if(!offline){
+            if (!offline) {
                 boardingPassPagePause = false;
                 retrieveBoardingPass(bundle);
-            }else{
+            } else {
                 //do nothing
             }
-        }else{
+        } else {
             //offline boarding pass
         }
         //onresume reload page

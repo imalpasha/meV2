@@ -55,8 +55,6 @@ public class ForceUpdateFragment extends BaseFragment{
         View view = inflater.inflate(R.layout.force_update_screen, container, false);
         ButterKnife.inject(this, view);
 
-
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.metech.firefly" +

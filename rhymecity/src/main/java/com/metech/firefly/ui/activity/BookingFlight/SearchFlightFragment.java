@@ -51,29 +51,42 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.realm.RealmResults;
 
-public class SearchFlightFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener,BookingPresenter.SearchFlightView {
+public class SearchFlightFragment extends BaseFragment implements DatePickerDialog.OnDateSetListener, BookingPresenter.SearchFlightView {
 
     @Inject
     BookingPresenter presenter;
 
-    @InjectView(R.id.btnReturn) LinearLayout btnReturn;
-    @InjectView(R.id.btnOneWay) LinearLayout btnOneWay;
-    @InjectView(R.id.returnDateBlock) LinearLayout returnDateBlock;
+    @InjectView(R.id.btnReturn)
+    LinearLayout btnReturn;
+    @InjectView(R.id.btnOneWay)
+    LinearLayout btnOneWay;
+    @InjectView(R.id.returnDateBlock)
+    LinearLayout returnDateBlock;
 
-    @InjectView(R.id.btnAdultIncrease) LinearLayout btnAdultIncrease;
-    @InjectView(R.id.btnAdultDecrease) LinearLayout btnAdultDecrease;
+    @InjectView(R.id.btnAdultIncrease)
+    LinearLayout btnAdultIncrease;
+    @InjectView(R.id.btnAdultDecrease)
+    LinearLayout btnAdultDecrease;
 
-    @InjectView(R.id.btnChildIncrease) ImageView btnChildIncrease;
-    @InjectView(R.id.btnChildDecrease) ImageView btnChildDecrease;
+    @InjectView(R.id.btnChildIncrease)
+    ImageView btnChildIncrease;
+    @InjectView(R.id.btnChildDecrease)
+    ImageView btnChildDecrease;
 
-    @InjectView(R.id.btnInfantIncrease) LinearLayout btnInfantIncrease;
-    @InjectView(R.id.btnInfantDecrease) LinearLayout btnInfantDecrease;
+    @InjectView(R.id.btnInfantIncrease)
+    LinearLayout btnInfantIncrease;
+    @InjectView(R.id.btnInfantDecrease)
+    LinearLayout btnInfantDecrease;
 
-    @InjectView(R.id.txtAdultTotal) TextView txtAdultTotal;
-    @InjectView(R.id.txtChildTotal) TextView txtChildTotal;
-    @InjectView(R.id.txtInfantTotal) TextView txtInfantTotal;
+    @InjectView(R.id.txtAdultTotal)
+    TextView txtAdultTotal;
+    @InjectView(R.id.txtChildTotal)
+    TextView txtChildTotal;
+    @InjectView(R.id.txtInfantTotal)
+    TextView txtInfantTotal;
 
-    @InjectView(R.id.btnSearchFlight) Button btnSearchFlight;
+    @InjectView(R.id.btnSearchFlight)
+    Button btnSearchFlight;
 
     @InjectView(R.id.btnDepartureFlight)
     LinearLayout btnDepartureFlight;
@@ -121,7 +134,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private ArrayList<DropDownItem> dataFlightDeparture;
     private static ArrayList<DropDownItem> dataFlightArrival;
     private DatePickerObj date;
-    private int a,b,c,d = 0;
+    private int a, b, c, d = 0;
 
     private String DEPARTURE_FLIGHT = "Please choose your departure airport";
     private String ARRIVAL_FLIGHT = "Please choose your arrival airport";
@@ -137,7 +150,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     private Validator mValidator;
     private DatePickerDialog datePickerDialog2;
 
-    private int departureDay,departureMonth,departureYear = 0;
+    private int departureDay, departureMonth, departureYear = 0;
 
     private SearchFlightObj flightObj;
 
@@ -159,10 +172,11 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.search_flight, container, false);
         ButterKnife.inject(this, view);
+        btnSearchFlight.setEnabled(true);
 
         /*DatePicker Setup - Failed to make it global*/
         final Calendar calendar = Calendar.getInstance();
@@ -192,8 +206,8 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         Set<String> hs = new LinkedHashSet<>();
         for (int i = 0; i < jsonFlight.length(); i++) {
             JSONObject row = (JSONObject) jsonFlight.opt(i);
-            if(!row.optString("status").equals("N")){
-                al.add(row.optString("location")+"/-"+row.optString("location_code"));
+            if (!row.optString("status").equals("N")) {
+                al.add(row.optString("location") + "/-" + row.optString("location_code"));
             }
         }
         hs.addAll(al);
@@ -201,15 +215,14 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         al.addAll(hs);
 
         /*Display Airport*/
-        for (int i = 0; i < al.size(); i++)
-        {
+        for (int i = 0; i < al.size(); i++) {
             String flightSplit = al.get(i).toString();
             String[] str1 = flightSplit.split("/-");
             String p1 = str1[0];
             String p2 = str1[1];
 
             DropDownItem itemFlight = new DropDownItem();
-            itemFlight.setText(p1+ " ("+p2+")");
+            itemFlight.setText(p1 + " (" + p2 + ")");
             itemFlight.setCode(p2);
             itemFlight.setTag("FLIGHT");
             dataFlightDeparture.add(itemFlight);
@@ -221,7 +234,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnDepartureFlight");
-                popupSelection(dataFlightDeparture, getActivity(), txtDepartureFlight,true,view);
+                popupSelection(dataFlightDeparture, getActivity(), txtDepartureFlight, true, view);
                 txtArrivalFlight.setText("ARRIVAL AIRPORT");
             }
         });
@@ -231,11 +244,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnArrivalFlight");
-                if(txtDepartureFlight.getTag().toString().equals("NOT SELECTED"))
-                {
+                if (txtDepartureFlight.getTag().toString().equals("NOT SELECTED")) {
                     popupAlert("Select Departure Airport First");
-                }else{
-                    popupSelection(dataFlightArrival, getActivity(), txtArrivalFlight,true,view);
+                } else {
+                    popupSelection(dataFlightArrival, getActivity(), txtArrivalFlight, true, view);
                 }
             }
         });
@@ -247,7 +259,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
                 AnalyticsApplication.sendEvent("Click", "departureBlock");
 
                 datePickerDialog1.setYearRange(year, year + 1);
-                if(checkFragmentAdded()){
+                if (checkFragmentAdded()) {
                     datePickerDialog1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                 }
                 PICKER = DEPARTURE_DATE_PICKER;
@@ -260,12 +272,12 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
 
-                if(departureYear == 0){
-                    Utils.toastNotification(getActivity(),"Please select departure date first");
-                }else{
-                    datePickerDialog2 = DatePickerDialog.newInstance(SearchFlightFragment.this,departureYear, departureMonth, departureDay);
-                    datePickerDialog2.setYearRange(departureYear, departureYear+1);
-                    if(checkFragmentAdded()){
+                if (departureYear == 0) {
+                    Utils.toastNotification(getActivity(), "Please select departure date first");
+                } else {
+                    datePickerDialog2 = DatePickerDialog.newInstance(SearchFlightFragment.this, departureYear, departureMonth, departureDay);
+                    datePickerDialog2.setYearRange(departureYear, departureYear + 1);
+                    if (checkFragmentAdded()) {
                         datePickerDialog2.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
                     }
 
@@ -306,10 +318,10 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnAdultIncrease");
-                if(!blockAdult && totalAdult < 9){
-                   totalAdult++;
-                   setPassengerTotal(ADULT);
-               }else{
+                if (!blockAdult && totalAdult < 9) {
+                    totalAdult++;
+                    setPassengerTotal(ADULT);
+                } else {
                     Utils.toastNotification(getActivity(), "Adult limit is 9");
                 }
             }
@@ -319,23 +331,22 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnAdultDecrease");
-                if(totalAdult == 1){
+                if (totalAdult == 1) {
                     blockAdultNumber = true;
                 }
 
-                if((totalAdult-1) < totalInfant){
-                    Utils.toastNotification(getActivity(),"Adult cannot be less than infant");
-                }else{
-                    if(!blockAdultNumber){
+                if ((totalAdult - 1) < totalInfant) {
+                    Utils.toastNotification(getActivity(), "Adult cannot be less than infant");
+                } else {
+                    if (!blockAdultNumber) {
                         totalAdult--;
                         setPassengerTotal(ADULT);
-                    }else if(blockAdultNumber && totalAdult > 9){
+                    } else if (blockAdultNumber && totalAdult > 9) {
                         totalAdult--;
                         totalAdult--;
                         setPassengerTotal(ADULT);
                     }
                 }
-
 
             }
         });
@@ -347,7 +358,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnChildIncrease");
-                if(!blockChild && totalChildren <= 9){
+                if (!blockChild && totalChildren <= 9) {
                     totalChildren++;
                     setPassengerTotal(CHILDREN);
                 }
@@ -359,16 +370,16 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnChildDecrease");
 
-                if(totalChildren == 0){
+                if (totalChildren == 0) {
                     blockChildNumber = true;
                 }
 
-                if(!blockChildNumber){
+                if (!blockChildNumber) {
 
                     totalChildren--;
                     setPassengerTotal(CHILDREN);
 
-                }else if(blockChildNumber && totalChildren > 9){
+                } else if (blockChildNumber && totalChildren > 9) {
                     totalChildren--;
                     totalChildren--;
                     setPassengerTotal(CHILDREN);
@@ -386,17 +397,16 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnInfantIncrease");
 
-                if(totalInfant < totalAdult ){
-                    if(!blockInfant && totalInfant < 4){
+                if (totalInfant < totalAdult) {
+                    if (!blockInfant && totalInfant < 4) {
                         totalInfant++;
                         setPassengerTotal(INFANT);
-                    }else{
-                        Utils.toastNotification(getActivity(),"Infant limit is 4");
+                    } else {
+                        Utils.toastNotification(getActivity(), "Infant limit is 4");
                     }
-                }else{
-                    Utils.toastNotification(getActivity(),"Infant cannot be more than adult");
+                } else {
+                    Utils.toastNotification(getActivity(), "Infant cannot be more than adult");
                 }
-
 
 
             }
@@ -406,13 +416,13 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnInfantDecrease");
-                if(totalInfant == 0){
+                if (totalInfant == 0) {
                     blockInfantNumber = true;
                 }
-                if(!blockInfantNumber){
+                if (!blockInfantNumber) {
                     totalInfant--;
                     setPassengerTotal(INFANT);
-                }else if(blockInfantNumber && totalInfant > 9){
+                } else if (blockInfantNumber && totalInfant > 9) {
                     totalInfant--;
                     totalInfant--;
                     setPassengerTotal(INFANT);
@@ -427,39 +437,51 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
             @Override
             public void onClick(View v) {
                 AnalyticsApplication.sendEvent("Click", "btnSearchFlight");
+                btnSearchFlight.setEnabled(false);
+
                 String df = txtDepartureFlight.getTag().toString();
                 String af = txtArrivalFlight.getTag().toString();
 
                 String d1 = bookFlightDepartureDate.getTag().toString();
                 String d2 = bookFlightReturnDate.getTag().toString();
 
-                if(df.equals(DEPARTURE_FLIGHT)){
+                if (df.equals(DEPARTURE_FLIGHT)) {
 
                     popupAlert(DEPARTURE_FLIGHT);
+                    btnSearchFlight.setEnabled(true);
 
-                }else if (af.equals(ARRIVAL_FLIGHT )){
+                } else if (af.equals(ARRIVAL_FLIGHT)) {
 
                     popupAlert(ARRIVAL_FLIGHT);
+                    btnSearchFlight.setEnabled(true);
 
-                }else if (d1.equals(DEPARTURE_FLIGHT_DATE)){
+                } else if (d1.equals(DEPARTURE_FLIGHT_DATE)) {
 
                     popupAlert(DEPARTURE_FLIGHT_DATE);
+                    btnSearchFlight.setEnabled(true);
 
-                }else if (d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")){
+                } else if (d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")) {
 
                     popupAlert(ARRIVAL_FLIGHT_DATE);
+                    btnSearchFlight.setEnabled(true);
 
-                }else if(LocalNotification.dateCompare(d1)){
+                } else if (LocalNotification.dateCompare(d1)) {
                     Utils.toastNotification(getActivity(), "Departure date should not be earlier than today.");
-                }else if(!d2.equals(ARRIVAL_FLIGHT_DATE) && LocalNotification.dateCompare(d2) && flightType.equals("1")){
-                        Utils.toastNotification(getActivity(), "Return date should not be earlier than today.");
-                }else if(!d1.equals(DEPARTURE_FLIGHT_DATE) && !d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")){
-                    if(LocalNotification.compare(d1,d2)){
+                    btnSearchFlight.setEnabled(true);
+
+                } else if (!d2.equals(ARRIVAL_FLIGHT_DATE) && LocalNotification.dateCompare(d2) && flightType.equals("1")) {
+                    Utils.toastNotification(getActivity(), "Return date should not be earlier than today.");
+                    btnSearchFlight.setEnabled(true);
+
+                } else if (!d1.equals(DEPARTURE_FLIGHT_DATE) && !d2.equals(ARRIVAL_FLIGHT_DATE) && flightType.equals("1")) {
+                    if (LocalNotification.compare(d1, d2)) {
                         Utils.toastNotification(getActivity(), "Return date cannot be earlier than departure date");
-                    }else{
+                        btnSearchFlight.setEnabled(true);
+
+                    } else {
                         searchFlight();
                     }
-                }else{
+                } else {
                     searchFlight();
                 }
 
@@ -470,7 +492,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         return view;
     }
 
-    public void searchFlight(){
+    public void searchFlight() {
 
         initiateLoading(getActivity());
 
@@ -491,7 +513,7 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         flightObj.setDeparture_station(txtDepartureFlight.getTag().toString());
         flightObj.setDeparture_date(bookFlightDepartureDate.getTag().toString());
         flightObj.setArrival_station(txtArrivalFlight.getTag().toString());
-        if( userEmail == null && userPassword == null){
+        if (userEmail == null && userPassword == null) {
             userEmail = "";
             userPassword = "";
         }
@@ -500,9 +522,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
         /*Return Flight*/
         String returnDate;
-        if(flightType.equals("1")){
+        if (flightType.equals("1")) {
             returnDate = bookFlightReturnDate.getTag().toString();
-        }else{
+        } else {
             returnDate = "";
         }
         //String returnDate = flightType.equals("1") ? bookFlightReturnDate.getTag().toString() : "";
@@ -519,10 +541,9 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
     }
 
-    public void searchFlightFragment(SearchFlightObj flightObj){
-       presenter.searchFlight(flightObj);
+    public void searchFlightFragment(SearchFlightObj flightObj) {
+        presenter.searchFlight(flightObj);
     }
-
 
     /*Filter Arrival Airport*/
     public static void filterArrivalAirport(String code) {
@@ -531,20 +552,19 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         dataFlightArrival = new ArrayList<>();
 
             /*Display Arrival*/
-            for (int i = 0; i < jsonFlight.length(); i++)
-            {
-                JSONObject row = (JSONObject) jsonFlight.opt(i);
+        for (int i = 0; i < jsonFlight.length(); i++) {
+            JSONObject row = (JSONObject) jsonFlight.opt(i);
 
-                if(code.equals(row.optString("location_code")) && row.optString("status").equals("Y")) {
+            if (code.equals(row.optString("location_code")) && row.optString("status").equals("Y")) {
 
-                    DropDownItem itemFlight = new DropDownItem();
-                    itemFlight.setText(row.optString("travel_location")+" ("+row.optString("travel_location_code")+")");
-                    itemFlight.setCode(row.optString("travel_location_code" +""));
-                    itemFlight.setTag("FLIGHT_DEPARTURE");
-                    dataFlightArrival.add(itemFlight);
+                DropDownItem itemFlight = new DropDownItem();
+                itemFlight.setText(row.optString("travel_location") + " (" + row.optString("travel_location_code") + ")");
+                itemFlight.setCode(row.optString("travel_location_code" + ""));
+                itemFlight.setTag("FLIGHT_DEPARTURE");
+                dataFlightArrival.add(itemFlight);
 
-                }
             }
+        }
 
     }
 
@@ -561,13 +581,13 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
     //Switch Flight Type
     public void switchWay(String way) {
-        if(way == RETURN) {
+        if (way == RETURN) {
             returnDateBlock.setVisibility(View.VISIBLE);
             btnReturn.setBackgroundColor(getResources().getColor(R.color.white));
             btnOneWay.setBackgroundColor(getResources().getColor(R.color.grey));
 
             flightType = "1";
-        }else {
+        } else {
             returnDateBlock.setVisibility(View.GONE);
             btnReturn.setBackgroundColor(getResources().getColor(R.color.grey));
             btnOneWay.setBackgroundColor(getResources().getColor(R.color.white));
@@ -578,64 +598,56 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
     public void setPassengerTotal(String passenger) {
 
-        int totalPassenger = totalAdult+totalChildren+totalInfant;
+        int totalPassenger = totalAdult + totalChildren + totalInfant;
 
-        if(totalPassenger > 14){
+        if (totalPassenger > 14) {
 
 
-            if(passenger == ADULT){ totalAdult--; }
-            else if(passenger == CHILDREN){ totalChildren--; }
-            else{ totalInfant--; }
+            if (passenger == ADULT) {
+                totalAdult--;
+            } else if (passenger == CHILDREN) {
+                totalChildren--;
+            } else {
+                totalInfant--;
+            }
 
             Utils.toastNotification(getActivity(), "13" + " Passenger Per Booking");
 
-        }else{
+        } else {
 
             if (passenger == ADULT) {
-                if(totalAdult < 10 && totalAdult > 0) {
+                if (totalAdult < 10 && totalAdult > 0) {
                     txtAdultTotal.setText(Integer.toString(totalAdult));
                     blockAdult = false;
                     blockAdultNumber = false;
-                }
-                else if(totalAdult == 9) {
+                } else if (totalAdult == 9) {
                     Utils.toastNotification(getActivity(), "Limit is 9");
                     blockAdult = true;
-                }
-                else
-                {
+                } else {
                     blockAdultNumber = true;
                 }
 
-            }
-            else if(passenger == CHILDREN)
-            {
-                if(totalChildren < 10 && totalChildren >= 0) {
+            } else if (passenger == CHILDREN) {
+                if (totalChildren < 10 && totalChildren >= 0) {
                     txtChildTotal.setText(Integer.toString(totalChildren));
                     blockChild = false;
                     blockChildNumber = false;
-                }else if(totalChildren == 9) {
+                } else if (totalChildren == 9) {
                     Utils.toastNotification(getActivity(), "Limit is 9");
                     blockChild = true;
-                }
-                else
-                {
+                } else {
                     blockChildNumber = true;
                 }
-            }
-            else if(passenger == INFANT)
-            {
-                if(totalInfant <= 4  && totalInfant >= 0) {
+            } else if (passenger == INFANT) {
+                if (totalInfant <= 4 && totalInfant >= 0) {
                     txtInfantTotal.setText(Integer.toString(totalInfant));
                     blockInfant = false;
                     blockInfantNumber = false;
 
-                }
-                else if(totalInfant == 5) {
+                } else if (totalInfant == 5) {
                     Utils.toastNotification(getActivity(), "Infant limit is 4");
                     blockInfant = true;
-                }
-                else
-                {
+                } else {
                     blockInfantNumber = true;
                 }
             }
@@ -656,21 +668,21 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
 
             pref.setSignatureToLocalStorage(obj.getSignature());
             Intent flight = null;
-            if(obj.getType().equals("MH")){
-                   flight = new Intent(getActivity(), CodeShareFlightListActivity.class);
+            if (obj.getType().equals("MH")) {
+                flight = new Intent(getActivity(), CodeShareFlightListActivity.class);
 
-            }else{
-               flight = new Intent(getActivity(), FireflyFlightListActivity.class);
+            } else {
+                flight = new Intent(getActivity(), FireflyFlightListActivity.class);
             }
             flight.putExtra("FLIGHT_OBJ", (new Gson()).toJson(obj));
-            flight.putExtra("FLIGHT_TYPE", flightType );
-            flight.putExtra("ADULT", txtAdultTotal.getText().toString() );
+            flight.putExtra("FLIGHT_TYPE", flightType);
+            flight.putExtra("ADULT", txtAdultTotal.getText().toString());
             flight.putExtra("INFANT", txtInfantTotal.getText().toString());
             flight.putExtra("DEPARTURE_DATE", bookFlightDepartureDate.getTag().toString());
             String date;
-            if(flightType.equals("0")){
+            if (flightType.equals("0")) {
                 date = "";
-            }else{
+            } else {
                 date = bookFlightReturnDate.getTag().toString();
             }
             flight.putExtra("RETURN_DATE", date);
@@ -692,13 +704,14 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         presenter.onResume();
 
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        btnSearchFlight.setEnabled(true);
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
+        if (result.size() > 0) {
             Gson gson = new Gson();
             SearchFlightReceive obj = gson.fromJson(result.get(0).getCachedResult(), SearchFlightReceive.class);
             onBookingDataReceive(obj);
-        }else{
+        } else {
         }
     }
 
@@ -720,24 +733,24 @@ public class SearchFlightFragment extends BaseFragment implements DatePickerDial
         String varMonth = "";
         String varDay = "";
 
-        if(month < 9) {
+        if (month < 9) {
             varMonth = "0";
         }
-        if(day < 10){
+        if (day < 10) {
             varDay = "0";
         }
-        if(PICKER.equals(DEPARTURE_DATE_PICKER)) {
+        if (PICKER.equals(DEPARTURE_DATE_PICKER)) {
 
             departureDay = day;
             departureMonth = month;
             departureYear = year;
 
-            bookFlightDepartureDate.setText(day + "/"+varMonth + "" + (month+1)+ "/" + year);
-            bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);
-        }else if(PICKER.equals(RETURN_DATE_PICKER)){
-            bookFlightReturnDate.setText(day + "/"+varMonth + "" + (month+1)+ "/" + year);
-            bookFlightReturnDate.setTag(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);
-        }else{
+            bookFlightDepartureDate.setText(day + "/" + varMonth + "" + (month + 1) + "/" + year);
+            bookFlightDepartureDate.setTag(year + "-" + varMonth + "" + (month + 1) + "-" + varDay + "" + day);
+        } else if (PICKER.equals(RETURN_DATE_PICKER)) {
+            bookFlightReturnDate.setText(day + "/" + varMonth + "" + (month + 1) + "/" + year);
+            bookFlightReturnDate.setTag(year + "-" + varMonth + "" + (month + 1) + "-" + varDay + "" + day);
+        } else {
             //DeadBlock
         }
     }

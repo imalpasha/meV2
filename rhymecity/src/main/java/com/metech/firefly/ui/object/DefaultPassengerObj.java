@@ -22,6 +22,15 @@ public class DefaultPassengerObj implements Parcelable {
     private String type;
     private String status;
     private String message;
+    private String enrich;
+
+    public String getEnrich() {
+        return enrich;
+    }
+
+    public void setEnrich(String enrich) {
+        this.enrich = enrich;
+    }
 
     public String getMessage() {
         return message;
@@ -152,6 +161,7 @@ public class DefaultPassengerObj implements Parcelable {
         last_name = in.readString();
         type = in.readString();
         gender = in.readString();
+        enrich = in.readString();
     }
 
     public int describeContents() {
@@ -171,6 +181,7 @@ public class DefaultPassengerObj implements Parcelable {
         out.writeString(last_name);
         out.writeString(type);
         out.writeString(gender);
+        out.writeString(enrich);
     }
 
     public static final Parcelable.Creator<DefaultPassengerObj> CREATOR = new Parcelable.Creator<DefaultPassengerObj>() {
@@ -183,7 +194,7 @@ public class DefaultPassengerObj implements Parcelable {
         }
     };
 
-    public DefaultPassengerObj(DefaultPassengerObj param_obj){
+    public DefaultPassengerObj(DefaultPassengerObj param_obj) {
 
         title = param_obj.getTitle();
         first_name = param_obj.getFirst_name();
@@ -196,6 +207,7 @@ public class DefaultPassengerObj implements Parcelable {
         type = param_obj.getPassenger_type();
         status = param_obj.getStatus();
         message = param_obj.getMessage();
+        enrich = param_obj.getEnrich();
 
     }
 

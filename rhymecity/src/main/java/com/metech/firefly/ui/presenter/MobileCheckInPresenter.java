@@ -1,5 +1,7 @@
 package com.metech.firefly.ui.presenter;
 
+import android.util.Log;
+
 import com.metech.firefly.api.obj.ListBookingReceive;
 import com.metech.firefly.api.obj.MobileCheckInPassengerReceive;
 import com.metech.firefly.api.obj.MobileCheckinReceive;
@@ -15,6 +17,7 @@ public class MobileCheckInPresenter {
 
     public interface MobileCheckInView {
         void onCheckindataReceive(MobileCheckinReceive obj);
+
         void onUserPnrList(ListBookingReceive event);
 
     }
@@ -49,8 +52,8 @@ public class MobileCheckInPresenter {
         this.bus = bus;
     }
 
-    public void getUserPNR(String username,String password,String module,String customerNumber) {
-        bus.post(new ManageFlightObjV2(username,password,module,customerNumber));
+    public void getUserPNR(String username, String password, String module, String customerNumber) {
+        bus.post(new ManageFlightObjV2(username, password, module, customerNumber));
 
     }
 
@@ -79,11 +82,14 @@ public class MobileCheckInPresenter {
         view2.onCheckInPassenger(event);
     }
 
-
     @Subscribe
     public void onUserPnrList(ListBookingReceive event) {
-        if(event != null){
-            view.onUserPnrList(event);
+        if (event != null) {
+            try {
+                view.onUserPnrList(event);
+            } catch (Exception e) {
+                Log.e("No need to proceed", "Y");
+            }
         }
     }
 

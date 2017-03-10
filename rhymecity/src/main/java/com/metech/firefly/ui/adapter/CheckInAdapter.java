@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class CheckInAdapter extends BaseExpandableListAdapter implements DatePickerDialog.OnDateSetListener{
+public class CheckInAdapter extends BaseExpandableListAdapter implements DatePickerDialog.OnDateSetListener {
 
     private AQuery aq;
     private Activity _context;
@@ -50,7 +51,8 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
     private FragmentManager fm;
     private ViewHolderHeader vh;
     private ViewHolderContent v2;
-    private Boolean bonusLinkNeedUpdate,docNoNeedUpdate;
+    private Boolean bonusLinkNeedUpdate, docNoNeedUpdate;
+    private String countryCode;
 
     private int selectedPosition;
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -60,29 +62,42 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
     final DatePickerDialog datePickerExpire = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
     static class ViewHolderHeader {
-        @InjectView(R.id.txtPassengerName) TextView txtPassengerName;
-        @InjectView(R.id.txtSeat) TextView txtSeat;
-        @InjectView(R.id.passengerCheckInCheckBox)CheckBox passengerCheckInCheckBox;
-        @InjectView(R.id.txtCheckInStatus)TextView txtCheckInStatus;
+        @InjectView(R.id.txtPassengerName)
+        TextView txtPassengerName;
+        @InjectView(R.id.txtSeat)
+        TextView txtSeat;
+        @InjectView(R.id.passengerCheckInCheckBox)
+        CheckBox passengerCheckInCheckBox;
+        @InjectView(R.id.txtCheckInStatus)
+        TextView txtCheckInStatus;
     }
 
     static class ViewHolderContent {
-        @InjectView(R.id.checkInPassenger) LinearLayout checkInPassenger;
-        @InjectView(R.id.checkInPassengerIssuingCountry) TextView checkInPassengerIssuingCountry;
-        @InjectView(R.id.checkInPassengerTravelDoc) TextView checkInPassengerTravelDoc;
-        @InjectView(R.id.checkInPassengerDocNo)EditText checkInPassengerDocNo;
-        @InjectView(R.id.linearCheckInExpireDate) LinearLayout linearCheckInExpireDate;
-        @InjectView(R.id.checkInExpireDate) TextView checkInExpireDate;
-        @InjectView(R.id.checkInPassengerBonuslink)EditText checkInPassengerBonuslink;
+        @InjectView(R.id.checkInPassenger)
+        LinearLayout checkInPassenger;
+        @InjectView(R.id.checkInPassengerIssuingCountry)
+        TextView checkInPassengerIssuingCountry;
+        @InjectView(R.id.checkInPassengerTravelDoc)
+        TextView checkInPassengerTravelDoc;
+        @InjectView(R.id.checkInPassengerDocNo)
+        EditText checkInPassengerDocNo;
+        @InjectView(R.id.linearCheckInExpireDate)
+        LinearLayout linearCheckInExpireDate;
+        @InjectView(R.id.checkInExpireDate)
+        TextView checkInExpireDate;
+        @InjectView(R.id.checkInPassengerBonuslink)
+        EditText checkInPassengerBonuslink;
+        @InjectView(R.id.checkInPassengerEnrich)
+        EditText checkInPassengerEnrich;
 
     }
 
-    public CheckInAdapter(Activity context, List<MobileCheckinReceive.Passenger> paramObj,MobileCheckInFragment2 frag,FragmentManager passFM) {
+    public CheckInAdapter(Activity context, List<MobileCheckinReceive.Passenger> paramObj, MobileCheckInFragment2 frag, FragmentManager passFM) {
         this.context = context;
         this.obj = paramObj;
         this.fragment = frag;
         fm = passFM;
-        datePickerExpire.setYearRange(year, year+20);
+        datePickerExpire.setYearRange(year, year + 20);
     }
 
     @Override
@@ -104,17 +119,17 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-       // if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_child, parent, false);
-            v2 = new ViewHolderContent();
-            ButterKnife.inject(v2, convertView);
-            convertView.setTag(v2);
-       // }
-       // else {
-       //     v2 = (ViewHolderContent) convertView.getTag();
-       // }
-        if(obj.get(groupPosition).getTravel_document() != null){
-            if(!obj.get(groupPosition).getTravel_document().equals("NRIC")){
+        // if (convertView == null) {
+        convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_child, parent, false);
+        v2 = new ViewHolderContent();
+        ButterKnife.inject(v2, convertView);
+        convertView.setTag(v2);
+        // }
+        // else {
+        //     v2 = (ViewHolderContent) convertView.getTag();
+        // }
+        if (obj.get(groupPosition).getTravel_document() != null) {
+            if (!obj.get(groupPosition).getTravel_document().equals("NRIC")) {
                 v2.linearCheckInExpireDate.setVisibility(View.VISIBLE);
                 v2.checkInExpireDate.setText(BaseFragment.reformatDOB(obj.get(groupPosition).getExpiration_date()));
             }
@@ -144,6 +159,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
                 selectedPosition = groupPosition;
             }
         });
+
 
         /* Document No Update */
         final EditText editCheckInPassengerDocNo = (EditText) convertView.findViewById(R.id.checkInPassengerDocNo);
@@ -191,6 +207,34 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
 
         });
 
+                /* Document No Update */
+        final EditText editCheckInPassengerEnrich = (EditText) convertView.findViewById(R.id.checkInPassengerEnrich);
+        v2.checkInPassengerEnrich.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+                obj.get(groupPosition).setEnrich(editCheckInPassengerEnrich.getText().toString());
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+                // TODO Auto-generated method stub
+            }
+
+        });
+
+        InputFilter[] filterArray = new InputFilter[2];
+        filterArray[0] = new InputFilter.LengthFilter(11);
+        filterArray[1] = new InputFilter.AllCaps();
+        editCheckInPassengerEnrich.setFilters(filterArray);
+
         /*BonusLink Update on loss focus*/
         /*v2.checkInPassengerBonuslink.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean gainFocus) {
@@ -210,11 +254,18 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
             }
         });*/
 
-        v2.checkInPassengerIssuingCountry.setText(BaseFragment.getCountryName(context, obj.get(groupPosition).getIssuing_country()));
+        if (obj.get(groupPosition).getIssuing_country() == null) {
+            countryCode = "MY";
+        } else {
+            countryCode = obj.get(groupPosition).getIssuing_country();
+        }
+
+        v2.checkInPassengerIssuingCountry.setText(BaseFragment.getCountryName(context, countryCode));
         v2.checkInPassengerTravelDoc.setText(BaseFragment.getTravelDocument(context, obj.get(groupPosition).getTravel_document()));
         v2.checkInPassengerDocNo.setText(obj.get(groupPosition).getDocument_number());
         //v2.checkInPassengerTravelDoc.setText("");
         //v2.checkInPassengerDocNo.setText("");
+        v2.checkInPassengerEnrich.setText(obj.get(groupPosition).getEnrich());
         v2.checkInPassengerBonuslink.setText(obj.get(groupPosition).getBonuslink());
         //convertView.setTag(v2);
 
@@ -223,8 +274,8 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
 
     @Override
     public int getChildrenCount(int groupPosition) {
-       // List<Product> chList = obj.get(groupPosition).getItems();
-       // return chList.size();
+        // List<Product> chList = obj.get(groupPosition).getItems();
+        // return chList.size();
         return 1;
     }
 
@@ -249,14 +300,14 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         //LayoutInflater li = LayoutInflater.from(context);
         //convertView = li.inflate(R.layout.check_in_passenger_list, null);
         //convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
-       // vh = new ViewHolder();
+        // vh = new ViewHolder();
         final ExpandableListView eLV = (ExpandableListView) parent;
 
         //if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
-            vh = new ViewHolderHeader();
-            ButterKnife.inject(vh, convertView);
-            convertView.setTag(vh);
+        convertView = LayoutInflater.from(context).inflate(R.layout.check_in_passenger_list, parent, false);
+        vh = new ViewHolderHeader();
+        ButterKnife.inject(vh, convertView);
+        convertView.setTag(vh);
         //}
         //else {
         //    vh = (ViewHolderHeader) convertView.getTag();
@@ -264,11 +315,11 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         //}
 
 
-        if(obj.get(groupPosition).getStatus().equals("Checked In")){
+        if (obj.get(groupPosition).getStatus().equals("Checked In")) {
             vh.passengerCheckInCheckBox.setVisibility(View.GONE);
             vh.txtCheckInStatus.setVisibility(View.VISIBLE);
             vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
-        }else{
+        } else {
             vh.passengerCheckInCheckBox.setVisibility(View.VISIBLE);
             vh.txtCheckInStatus.setVisibility(View.GONE);
             //vh.txtCheckInStatus.setText(obj.get(groupPosition).getStatus());
@@ -317,16 +368,15 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         vh.txtPassengerName.setText(obj.get(groupPosition).getTitle() + " " + obj.get(groupPosition).getFirst_name() + " " + obj.get(groupPosition).getLast_name());
         vh.txtSeat.setText(obj.get(groupPosition).getSeat());
 
-        if(isExpanded){
+        if (isExpanded) {
             vh.passengerCheckInCheckBox.setChecked(true);
         }
 
         return convertView;
     }
 
-    public void showCountrySelector(Activity act,ArrayList constParam)
-    {
-        if(act != null) {
+    public void showCountrySelector(Activity act, ArrayList constParam) {
+        if (act != null) {
             try {
 
                 CountryListDialogFragment countryListDialogFragment = CountryListDialogFragment.newInstance(constParam);
@@ -355,14 +405,18 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         String varMonth = "";
         String varDay = "";
 
-        if(month < 9) { varMonth = "0";}
-        if (day < 10) { varDay = "0";}
+        if (month < 9) {
+            varMonth = "0";
+        }
+        if (day < 10) {
+            varDay = "0";
+        }
 
-        obj.get(selectedPosition).setExpiration_date(year + "-" + varMonth + "" + (month+1) + "-" + varDay + "" + day);
+        obj.get(selectedPosition).setExpiration_date(year + "-" + varMonth + "" + (month + 1) + "-" + varDay + "" + day);
         notifyDataSetChanged();
     }
 
-    public void setSelectedCountry(String selectedCountry, String selectedCountryCode){
+    public void setSelectedCountry(String selectedCountry, String selectedCountryCode) {
         String[] splitCountryCode = selectedCountryCode.split("/");
         String splitedCountryCode = splitCountryCode[0];
 
@@ -371,7 +425,7 @@ public class CheckInAdapter extends BaseExpandableListAdapter implements DatePic
         notifyDataSetChanged();
     }
 
-    public void returnNotifyDataChanged(String selected){
+    public void returnNotifyDataChanged(String selected) {
         obj.get(selectedPosition).setTravel_document(selected);
         notifyDataSetChanged();
     }

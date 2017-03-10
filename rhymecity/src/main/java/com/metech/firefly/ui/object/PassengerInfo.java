@@ -35,6 +35,15 @@ public class PassengerInfo {
     private String passenger_type;
     private String booking_id;
     private String user_email;
+    private String enrich;
+
+    public String getEnrich() {
+        return enrich;
+    }
+
+    public void setEnrich(String enrich) {
+        this.enrich = enrich;
+    }
 
     public String getUser_email() {
         return user_email;
@@ -190,6 +199,7 @@ public class PassengerInfo {
         gender = data.getGender();
         user_email = data.getUser_email();
         booking_id = data.getBooking_id();
+        enrich = data.getEnrich();
 
     }
 

@@ -84,15 +84,15 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
         //2JUN - COMMENT
         //String gcmKey = bundle.getString("GCM_KEY");
 
-       /*String gcmKey = GCMRegistrar.getRegistrationId(getActivity());
-       if (gcmKey.equals("")) {
-          GCMRegistrar.register(getActivity(), SENDER_ID);
-       } else {
-           proceed = true;
-       }*/
+        String gcmKey = GCMRegistrar.getRegistrationId(getActivity());
+        if (gcmKey.equals("")) {
+            GCMRegistrar.register(getActivity(), SENDER_ID);
+        } else {
+            proceed = true;
+        }
 
-        String gcmKey = "";
-        proceed = true;
+//        String gcmKey = "";
+        //       proceed = true;
 
         if (proceed) {
             HashMap<String, String> initUserEmail = pref.getUserEmail();
@@ -131,6 +131,8 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             info.setPassword(userPassword);
             info.setGCMKey(gcmKey);
 
+            Log.e("GCM KEY", gcmKey);
+
             if (localDataVersion == null && Controller.connectionAvailable(getActivity())) {
                 sendDeviceInformationToServer(info);
                 // pref.setAppVersion("0.10");
@@ -142,9 +144,9 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
 
                 HashMap<String, String> initApp = pref.getAppVersion();
                 String localAppVersion = initApp.get(SharedPrefManager.APP_VERSION);
-                if(localAppVersion == null){
+                if (localAppVersion == null) {
                     connectionRetry("No Internet Connection");
-                }else{
+                } else {
                     goHomepage();
                 }
             }
@@ -202,12 +204,12 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
             HashMap<String, String> initForceLogout = pref.getForceLogout();
             String forceLogout = initForceLogout.get(SharedPrefManager.FORCE_LOGOUT);
 
-            if(forceLogout == null){
+            if (forceLogout == null) {
                 //if(!forceLogout.equals("Y")){
-                    pref.setLoginStatus("N");
-                    Controller.clearAll(getActivity());
-                    RealmObjectController.deleteRealmFile(MainFragmentActivity.getContext());
-                    pref.setForceLogout("Y");
+                pref.setLoginStatus("N");
+                Controller.clearAll(getActivity());
+                RealmObjectController.deleteRealmFile(MainFragmentActivity.getContext());
+                pref.setForceLogout("Y");
                 //}
             }
 

@@ -592,6 +592,16 @@ public class FlightSummaryReceive {
         private String gender;
         private String traveling_with;
         private String bonuslink;
+        private String enrich;
+
+        public String getEnrich() {
+            return enrich;
+        }
+
+        public void setEnrich(String enrich) {
+            this.enrich = enrich;
+        }
+
 
         public String getBonuslink() {
             return bonuslink;

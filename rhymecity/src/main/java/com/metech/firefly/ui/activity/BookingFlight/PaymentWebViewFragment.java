@@ -1,14 +1,21 @@
 package com.metech.firefly.ui.activity.BookingFlight;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -25,11 +32,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class PaymentWebViewFragment extends BaseFragment  {
+public class PaymentWebViewFragment extends BaseFragment {
 
     //@Inject
     //BookingPresenter presenter;
-    @InjectView(R.id.webView)WebView webview;
+    @InjectView(R.id.webView)
+    WebView webview;
 
 
     private int fragmentContainerId;
@@ -41,6 +49,8 @@ public class PaymentWebViewFragment extends BaseFragment  {
     boolean redirect = false;
     private String paymentPopup;
     private boolean override = true;
+    private Activity act;
+    private Dialog dialog;
 
     public static PaymentWebViewFragment newInstance(Bundle bundle) {
 
@@ -53,10 +63,11 @@ public class PaymentWebViewFragment extends BaseFragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        act = getActivity();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.payment_webview, container, false);
         ButterKnife.inject(this, view);
@@ -72,14 +83,14 @@ public class PaymentWebViewFragment extends BaseFragment  {
         webview.loadUrl(url);
 
         try {
-             paymentPopup = bundle.getString("PAYMENT_POPUP");
-        }catch (Exception e){
+            paymentPopup = bundle.getString("PAYMENT_POPUP");
+        } catch (Exception e) {
 
         }
 
-        if(paymentPopup.equals("Y")){
+        if (paymentPopup.equals("Y")) {
 
-            Log.e("1",url);
+            Log.e("1", url);
 
             override = false;
             webview.getSettings().setJavaScriptEnabled(true);
@@ -99,20 +110,20 @@ public class PaymentWebViewFragment extends BaseFragment  {
 
                     //String[] parts = url.split("//");
                     //String part1 = parts[0]; // 004
-                    if(url.contains("maybank2u")){
+                    if (url.contains("maybank2u")) {
                         //open url in new browser
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(browserIntent);
                         //webview.setWebChromeClient(new WebChromeClient());
                         //view.loadUrl(url);
-                    }else{
-                        if(paymentFrom.equals("NORMAL")){
+                    } else {
+                        if (paymentFrom.equals("NORMAL")) {
                             Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             getActivity().startActivity(intent);
                             System.gc();
                             getActivity().finish();
-                        }else {
+                        } else {
                             Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("AlertDialog", "Y");
@@ -134,51 +145,38 @@ public class PaymentWebViewFragment extends BaseFragment  {
                 }else{ */
 
 
-                    return true ;
+                    return true;
                 }
 
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap facIcon) {
                     //SHOW LOADING IF IT ISNT ALREADY VISIBLE
                     loadingFinished = false;
-                    initiateLoading(getActivity());
+                    initiateLoadingPayment(act);
                 }
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                    if(!redirect){
+                    if (!redirect) {
                         loadingFinished = true;
                     }
 
-                    if(loadingFinished && !redirect){
-                        dismissLoading();
-                    } else{
+                    if (loadingFinished && !redirect) {
+                        dismissLoadingPayment();
+                    } else {
                         redirect = false;
                     }
                 }
 
             });
 
-        }else {
+        } else {
             override = true;
             webview.getSettings().setJavaScriptEnabled(true);
             webview.addJavascriptInterface(new PaymentWebViewFragment(), "Android");
-            //webview.loadUrl(url);
-
-
-            Log.e("url1",url);
-
-           /* webview.setWebViewClient(new WebViewClient() {
-                public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                    view.loadUrl(url);
-                    return true;
-                }});*/
 
             webview.setWebViewClient(new WebViewClient() {
                 public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
-                    Log.e("url2",url);
-                    Log.e("paymentCode",paymentCode);
 
                     if (!loadingFinished) {
                         redirect = true;
@@ -190,14 +188,17 @@ public class PaymentWebViewFragment extends BaseFragment  {
                         view.setWebChromeClient(new WebChromeClient());
                         view.loadUrl(url);
                     }else{*/
-                    if(url.equals("http://fyapidev.me-tech.com.my/api/success")){
-                        if(paymentFrom.equals("NORMAL")){
+
+                    //https://m.fireflyz.com.my/api/paymentCCProcess
+
+                    if (url.equals("https://m.fireflyz.com.my/api/success")) {
+                        if (paymentFrom.equals("NORMAL")) {
                             Intent intent = new Intent(getActivity(), FlightSummaryActivity2.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             getActivity().startActivity(intent);
                             System.gc();
                             getActivity().finish();
-                        }else {
+                        } else {
                             Intent intent = new Intent(getActivity(), MF_ActionActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("AlertDialog", "Y");
@@ -206,32 +207,32 @@ public class PaymentWebViewFragment extends BaseFragment  {
                             getActivity().finish();
 
                         }
-                    }else{
+                    } else {
                         webview.setWebChromeClient(new WebChromeClient());
                         webview.loadUrl(url);
                     }
 
-                   // }
+                    // }
 
-                    return true ;
+                    return true;
                 }
 
                 @Override
                 public void onPageStarted(WebView view, String url, Bitmap facIcon) {
                     //SHOW LOADING IF IT ISNT ALREADY VISIBLE
                     loadingFinished = false;
-                    initiateLoading(getActivity());
+                    initiateLoadingPayment(act);
                 }
 
                 @Override
                 public void onPageFinished(WebView view, String url) {
-                    if(!redirect){
+                    if (!redirect) {
                         loadingFinished = true;
                     }
 
-                    if(loadingFinished && !redirect){
-                        dismissLoading();
-                    } else{
+                    if (loadingFinished && !redirect) {
+                        dismissLoadingPayment();
+                    } else {
                         redirect = false;
                     }
                 }
@@ -247,7 +248,7 @@ public class PaymentWebViewFragment extends BaseFragment  {
         newIntent();
     }
 
-    public void newIntent(){
+    public void newIntent() {
 
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         getActivity().startActivity(intent);
@@ -264,9 +265,9 @@ public class PaymentWebViewFragment extends BaseFragment  {
     public void onResume() {
         super.onResume();
 
-        if (paymentFrom.equals("CHANGE") ) {
+        if (paymentFrom.equals("CHANGE")) {
             AnalyticsApplication.sendScreenView(SCREEN_LABEL_MANAGE);
-        }else {
+        } else {
             AnalyticsApplication.sendScreenView(SCREEN_LABEL);
         }
     }
@@ -304,5 +305,41 @@ public class PaymentWebViewFragment extends BaseFragment  {
                 })
                 .show();
 
+    }
+
+    public void initiateLoadingPayment(Activity act) {
+
+        if (dialog != null) {
+            dialog.dismiss();
+        }
+
+        dialog = new Dialog(act, R.style.DialogTheme);
+
+        LayoutInflater li = LayoutInflater.from(act);
+        final View myView = li.inflate(R.layout.loading_screen, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(act);
+        builder.setView(myView);
+
+        dialog.setContentView(myView);
+        dialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CCFFFFFF")));
+        dialog.setCancelable(false);
+
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.copyFrom(dialog.getWindow().getAttributes());
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+        dialog.getWindow().setAttributes(lp);
+        dialog.show();
+
+    }
+
+    public void dismissLoadingPayment() {
+
+        if (dialog != null) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+                Log.e("Dismiss", "Y");
+            }
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
@@ -36,16 +37,19 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckInPresenter.MobileCheckInView2 {
 
     @Inject
     MobileCheckInPresenter presenter;
 
-    @InjectView(R.id.mobileCheckInNext2) Button mobileCheckInNext2;
+    @InjectView(R.id.mobileCheckInNext2)
+    Button mobileCheckInNext2;
 
     //@InjectView(R.id.listview)ExpandAbleGridView listview;
-    @InjectView(R.id.listview)ExpandableListView listview;
+    @InjectView(R.id.listview)
+    ExpandableListView listview;
 
     //@InjectView(R.id.btnLogin) Button btnLogin;
 
@@ -53,11 +57,14 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     private static final String SCREEN_LABEL = "Mobile Check In Detail";
     private MobileCheckinReceive obj;
     private String PNR;
-    private String arrivalCode,departureCode;
+    private String arrivalCode, departureCode;
     //private CheckInPassengerListAdapter adapter;
     private CheckInAdapter adapter;
     private Boolean allCheckIn = true;
     private View header;
+    private Boolean formContinue = true;
+    private Boolean bonuslinkError = false;
+    private Boolean documentNumberError = false;
 
     public static MobileCheckInFragment2 newInstance(Bundle bundle) {
 
@@ -75,7 +82,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.mobile_checkin_2, container, false);
         ButterKnife.inject(this, view);
@@ -85,7 +92,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         listview.addHeaderView(header, null, false);
 
         Bundle bundle = getArguments();
-        if(bundle.containsKey("FLIGHT_OBJ")){
+        if (bundle.containsKey("FLIGHT_OBJ")) {
             String flightSummary = bundle.getString("FLIGHT_OBJ");
 
             Gson gson = new Gson();
@@ -108,7 +115,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         }
 
         //adapter = new CheckInPassengerListAdapter(getActivity(),obj.getObj().getPassengers(),this,getActivity().getSupportFragmentManager());
-        adapter = new CheckInAdapter(getActivity(),obj.getPassengers(),this,getActivity().getSupportFragmentManager());
+        adapter = new CheckInAdapter(getActivity(), obj.getPassengers(), this, getActivity().getSupportFragmentManager());
         listview.setAdapter(adapter);
         listview.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
         listview.setGroupIndicator(null);
@@ -120,29 +127,29 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
 
                 mobileCheckInNext2.requestFocus();
                 //validate atleast one passenger is selected
-                for(int i = 0 ; i < obj.getPassengers().size() ; i++) {
-                    if(obj.getPassengers().get(i).getChecked() != null){
+                for (int i = 0; i < obj.getPassengers().size(); i++) {
+                    if (obj.getPassengers().get(i).getChecked() != null) {
                         goNext = true;
                     }
                 }
 
-                if(goNext){
+                if (goNext) {
                     next();
-                }else{
-                    setAlertDialog(getActivity(),"Atleast one passenger selected","Check - In.");
+                } else {
+                    setAlertDialog(getActivity(), "Atleast one passenger selected", "Check - In.");
                 }
 
             }
         });
 
 
-        for(int y = 0 ; y < obj.getPassengers().size() ; y++){
+        for (int y = 0; y < obj.getPassengers().size(); y++) {
 
-            if(!obj.getPassengers().get(y).getStatus().equals("Checked In")) {
+            if (!obj.getPassengers().get(y).getStatus().equals("Checked In")) {
                 allCheckIn = false;
             }
         }
-        if(allCheckIn){
+        if (allCheckIn) {
             mobileCheckInNext2.setVisibility(View.INVISIBLE);
         }
         return view;
@@ -150,10 +157,14 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
 
     /*Public-Inner Func*/
     public void next() {
+
+        formContinue = true;
+        bonuslinkError = false;
+        documentNumberError = false;
+
         ArrayList<PassengerInfo> mainObj = new ArrayList<PassengerInfo>();
 
-        initiateLoading(getActivity());
-        for(int i = 0 ; i < obj.getPassengers().size() ; i++){
+        for (int i = 0; i < obj.getPassengers().size(); i++) {
 
             PassengerInfo passengerObj = new PassengerInfo();
             passengerObj.setExpiration_date(obj.getPassengers().get(i).getExpiration_date());
@@ -163,31 +174,153 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
             passengerObj.setPassenger_number(obj.getPassengers().get(i).getPassenger_number());
 
             String bonuslink;
-            if(obj.getPassengers().get(i).getBonuslink() == null){
-                bonuslink = null;
-            }else{
+            if (obj.getPassengers().get(i).getBonuslink() == null) {
+                bonuslink = "";
+            } else {
                 bonuslink = obj.getPassengers().get(i).getBonuslink();
             }
             passengerObj.setBonusLink(bonuslink);
 
-            if(obj.getPassengers().get(i).getChecked() == null){
+            String enrich;
+            if (obj.getPassengers().get(i).getEnrich() == null) {
+                enrich = "";
+            } else {
+                enrich = obj.getPassengers().get(i).getEnrich();
+            }
+
+            String docNumber;
+            if (obj.getPassengers().get(i).getDocument_number() == null) {
+                docNumber = "";
+            } else {
+                docNumber = obj.getPassengers().get(i).getDocument_number();
+            }
+
+            passengerObj.setEnrich(enrich);
+
+            if (obj.getPassengers().get(i).getChecked() == null) {
                 passengerObj.setStatus("N");
-            }else{
+            } else {
                 passengerObj.setStatus(obj.getPassengers().get(i).getChecked());
             }
+
+            if (obj.getPassengers().get(i).getChecked() != null && obj.getPassengers().get(i).getChecked().equals("Y")) {
+                checkDocumentNumber(docNumber);
+                checkEnrich(enrich);
+                checkBonuslink(bonuslink);
+            }
+
             mainObj.add(passengerObj);
 
         }
 
-        MobileCheckInPassenger obj2 = new MobileCheckInPassenger();
+        /*MobileCheckInPassenger obj2 = new MobileCheckInPassenger();
         obj2.setPassengers(mainObj);
         obj2.setPnr(PNR);
         obj2.setDeparture_station_code(departureCode);
         obj2.setArrival_station_code(arrivalCode);
         obj2.setSignature(obj.getSignature());
+        presenter.checkInPassenger(obj2);*/
 
-        presenter.checkInPassenger(obj2);
+        //validate enrich here
+        if (formContinue) {
 
+            initiateLoading(getActivity());
+
+            MobileCheckInPassenger obj2 = new MobileCheckInPassenger();
+            obj2.setPassengers(mainObj);
+            obj2.setPnr(PNR);
+            obj2.setDeparture_station_code(departureCode);
+            obj2.setArrival_station_code(arrivalCode);
+            obj2.setSignature(obj.getSignature());
+            presenter.checkInPassenger(obj2);
+
+        } else {
+            if (documentNumberError) {
+                croutonAlert(getActivity(), "Document no is required");
+            } else if (bonuslinkError) {
+                croutonAlert(getActivity(), "Invalid bonuslink number");
+            } else {
+                croutonAlert(getActivity(), "Invalid enrich number");
+            }
+        }
+
+    }
+
+    public void checkDocumentNumber(String no) {
+        if (no.equals("")) {
+            Log.e("Document No", "Doc" + no);
+            documentNumberError = true;
+            formContinue = false;
+        } else {
+            Log.e("Document No", "Doc" + no);
+        }
+    }
+
+    public void checkEnrich(String enrich) {
+
+        String enrich2 = enrich;
+        if (!enrich2.toString().matches("")) {
+
+            if (enrich2.length() == 11) {
+                if (!Character.toString(enrich2.charAt(0)).equals("M")) {
+                    formContinue = false;
+                }
+
+                if (!Character.toString(enrich2.charAt(1)).equals("H")) {
+                    formContinue = false;
+                }
+
+                //check the rest - must be digit
+                for (int f = 2; f < 11; f++) {
+                    if (Character.isDigit(enrich2.charAt(f))) {
+                        //ok
+                    } else {
+                        formContinue = false;
+                    }
+                }
+
+                int c = 0;
+                int j = 0;
+                int k = 0;
+
+                if (!enrich2.matches("")) {
+                    try {
+                        j = Integer.parseInt(enrich2.toString().substring(2, 10));
+                    } catch (Exception e) {
+                        formContinue = false;
+                    }
+
+                    try {
+                        k = Integer.parseInt(enrich2.toString().substring(enrich2.toString().length() - 1));
+                    } catch (Exception e) {
+                        formContinue = false;
+                    }
+
+                    c = j % 7;
+
+                    if (c != k) {
+                        Log.e("Invalid", "Y");
+                        formContinue = false;
+                    }
+                }
+            } else {
+                formContinue = false;
+            }
+        } else {
+            Log.e("Null", "Y");
+        }
+    }
+
+    public void checkBonuslink(String bonuslink) {
+
+        if (!bonuslink.matches("")) {
+            if (bonuslink.length() < 16 || bonuslink.length() > 16) {
+                formContinue = false;
+                bonuslinkError = true;
+            } else {
+                Log.e("Y", "y");
+            }
+        }
     }
 
     @Override
@@ -197,7 +330,7 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         } else {
             if (requestCode == 1) {
                 DropDownItem selectedCountry = data.getParcelableExtra(CountryListDialogFragment.EXTRA_COUNTRY);
-                adapter.setSelectedCountry(selectedCountry.getText(),selectedCountry.getCode());
+                adapter.setSelectedCountry(selectedCountry.getText(), selectedCountry.getCode());
             }
         }
     }
@@ -208,9 +341,9 @@ public class MobileCheckInFragment2 extends BaseFragment implements MobileCheckI
         dismissLoading();
         Boolean status = Controller.getRequestStatus(obj.getObj().getStatus(), obj.getObj().getMessage(), getActivity());
         if (status) {
-          Intent next = new Intent(getActivity(), MobileCheckInActivity3.class);
-          next.putExtra("MOBILE_CHECK_IN", (new Gson()).toJson(obj));
-          getActivity().startActivity(next);
+            Intent next = new Intent(getActivity(), MobileCheckInActivity3.class);
+            next.putExtra("MOBILE_CHECK_IN", (new Gson()).toJson(obj));
+            getActivity().startActivity(next);
         }
     }
 

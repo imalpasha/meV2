@@ -135,6 +135,15 @@ public class MobileCheckinReceive {
         private String checked = "N";
         private String status;
         private String bonuslink;
+        private String enrich;
+
+        public String getEnrich() {
+            return enrich;
+        }
+
+        public void setEnrich(String enrich) {
+            this.enrich = enrich;
+        }
 
         public String getBonuslink() {
             return bonuslink;

@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,7 +64,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.realm.RealmResults;
 
-public class PersonalDetailFragment extends BaseFragment implements Validator.ValidationListener,DatePickerDialog.OnDateSetListener,BookingPresenter.PassengerInfoView {
+public class PersonalDetailFragment extends BaseFragment implements Validator.ValidationListener, DatePickerDialog.OnDateSetListener, BookingPresenter.PassengerInfoView {
 
     @Inject
     BookingPresenter presenter;
@@ -108,6 +109,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     @InjectView(R.id.btnFamilyFriend)
     Button btnFamilyFriend;
 
+    @InjectView(R.id.btnLayoutPersonalInfo)
+    LinearLayout btnLayoutPersonalInfo;
+
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Book Flight: Personal Details(Passenger Details)";
     private String DATEPICKER_TAG = "DATEPICKER_TAG";
@@ -119,9 +123,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
     private final String ADULT = "ADULT";
     private final String INFANT = "INFANT";
-    private String adult,infant;
+    private String adult, infant;
     private SharedPrefManager pref;
-    private String bookingID,signature;
+    private String bookingID, signature;
     private int clickedPassenger;
     private Boolean boolDob = false;
     private Boolean boolExpireDate = false;
@@ -147,6 +151,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     private boolean infantLoop;
     private String loginStatus;
     private int totalPassenger;
+    private Boolean send = true;
 
     //different object for different field.
     private DatePickerDialog datePickerYear1 = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
@@ -173,7 +178,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.personal_detail, container, false);
         ButterKnife.inject(this, view);
@@ -210,15 +215,14 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         signature = initSignature.get(SharedPrefManager.SIGNATURE);
 
         /*Adult Passenger Data For Selection*/
-        for (int i = 1; i < Integer.parseInt(adult)+1 ; i++)
-        {
+        for (int i = 1; i < Integer.parseInt(adult) + 1; i++) {
             DropDownItem itemTitle = new DropDownItem();
             itemTitle.setText("Adult" + " " + i);
             itemTitle.setCode(Integer.toString(i));
             adultPassengerList.add(itemTitle);
         }
 
-        totalPassenger = Integer.parseInt(adult)+Integer.parseInt(infant)+1;
+        totalPassenger = Integer.parseInt(adult) + Integer.parseInt(infant) + 1;
 
 
 
@@ -232,10 +236,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         HashMap<String, String> initFlightType = pref.getFlightType();
         flightType = initFlightType.get(SharedPrefManager.FLIGHT_TYPE);
 
-        if(flightType.equals("MH")){
+        if (flightType.equals("MH")) {
             for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
-                LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc)+"_enrich_block");
+                LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich_block");
                 enrichBlock.setVisibility(View.GONE);
+
+                LinearLayout enrichNoBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich_no_block");
+                enrichNoBlock.setVisibility(View.GONE);
             }
         }
 
@@ -244,68 +251,66 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             final int selectedPassenger = adultInc;
             final CheckBox checkFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_selectFF");
-            if(loginStatus.equals("Y")){
+            if (loginStatus.equals("Y")) {
                 checkFF.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                        if(isChecked)
-                        {
-                            Log.e("selectedPassenger",Integer.toString(selectedPassenger));
+                        if (isChecked) {
+                            Log.e("selectedPassenger", Integer.toString(selectedPassenger));
 
                             //check selected infant or adult//
                             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + selectedPassenger);
                             String[] splitPassengerType = txtPassengerType.getText().toString().split(" ");
-                            Log.e("splitPassengerType[0]",splitPassengerType[0]);
-                            if(splitPassengerType[0].equals("INFANT")){
+                            Log.e("splitPassengerType[0]", splitPassengerType[0]);
+                            if (splitPassengerType[0].equals("INFANT")) {
                                 infantLoop = true;
-                            }else{
+                            } else {
                                 infantLoop = false;
-                                Log.e("INFANT","FALSE");
+                                Log.e("INFANT", "FALSE");
                             }
 
                             RealmResults<FamilyFriendList> cachedListResult = RealmObjectController.getFamilyFriends(MainFragmentActivity.getContext());
-                            if(cachedListResult.size() > 0){
+                            if (cachedListResult.size() > 0) {
                                 Gson gson = new Gson();
                                 FamilyFriendObj obj = gson.fromJson(cachedListResult.get(0).getCachedList(), FamilyFriendObj.class);
                                 friendAndFamilyObj = obj.getFamily_and_friend();
                             }
 
-                            if(friendAndFamilyObj.size() > 0){
+                            if (friendAndFamilyObj.size() > 0) {
 
                                 ArrayList<DropDownItem> passengerList = new ArrayList<DropDownItem>();
 
-                                for(int i = 0;i<friendAndFamilyObj.size(); i++)
-                                {
+                                for (int i = 0; i < friendAndFamilyObj.size(); i++) {
                                     DropDownItem itemPurpose = new DropDownItem();
-                                    if(infantLoop){
-                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("Infant")){
-                                            itemPurpose.setText(friendAndFamilyObj.get(i).getTitle()+" "+friendAndFamilyObj.get(i).getFirst_name());
+                                    if (infantLoop) {
+                                        if (friendAndFamilyObj.get(i).getPassenger_type().equals("Infant")) {
+                                            itemPurpose.setText(friendAndFamilyObj.get(i).getTitle() + " " + friendAndFamilyObj.get(i).getFirst_name());
                                             itemPurpose.setCode(Integer.toString(i));
                                             passengerList.add(itemPurpose);
                                         }
-                                    }else{
-                                        if(friendAndFamilyObj.get(i).getPassenger_type().equals("Adult")){
-                                            itemPurpose.setText(friendAndFamilyObj.get(i).getTitle()+" "+friendAndFamilyObj.get(i).getFirst_name());
+                                    } else {
+                                        if (friendAndFamilyObj.get(i).getPassenger_type().equals("Adult")) {
+                                            itemPurpose.setText(friendAndFamilyObj.get(i).getTitle() + " " + friendAndFamilyObj.get(i).getFirst_name());
                                             itemPurpose.setCode(Integer.toString(i));
                                             passengerList.add(itemPurpose);
-                                            Log.e("?","1");
+                                            Log.e("?", "1");
 
                                         }
                                     }
                                 }
                                 //popupSelection(passengerList, getActivity());
-                                Log.e("?","2");
-                                customPopupForContactInfo(passengerList, getActivity(),selectedPassenger,splitPassengerType[0]);
+                                Log.e("?", "2");
+                                customPopupForContactInfo(passengerList, getActivity(), selectedPassenger, splitPassengerType[0]);
 
                             }
-                        }else{
+                        } else {
                             clearSelectedFF(selectedPassenger);
                         }
                     }
                 });
-            }else{
+            } else {
                 checkFF.setVisibility(View.GONE);
             }
 
@@ -315,11 +320,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 btnTravellingWith.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupSelection(adultPassengerList, getActivity(), btnTravellingWith, false,view);
+                        popupSelection(adultPassengerList, getActivity(), btnTravellingWith, false, view);
                     }
                 });
-            }
-            catch(Exception e){
+            } catch (Exception e) {
 
             }
 
@@ -328,10 +332,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 btnTitle.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        popupSelection(titleList, getActivity(), btnTitle, false,view);
+                        popupSelection(titleList, getActivity(), btnTitle, false, view);
                     }
                 });
-            }catch (Exception e) {
+            } catch (Exception e) {
 
             }
 
@@ -349,7 +353,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             btnTravelDoc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock,"P",null);
+                    popupSelectionExtra(travelDocList, getActivity(), btnTravelDoc, false, txtExpireDateBlock, "P", null);
                 }
             });
 
@@ -357,7 +361,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             btnCountry.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showCountrySelector(getActivity(),countrys);
+                    showCountrySelector(getActivity(), countrys);
                     clickedPassenger = selectedPassenger;
                 }
             });
@@ -371,10 +375,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     //createDatePickerObject(selectedPassenger);
 
                     String currentDOB = txtDob.getText().toString();
-                    if(!currentDOB.equals("")){
+                    if (!currentDOB.equals("")) {
                         String[] splitReturn = currentDOB.split("/");
-                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
-                    }else{
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1]) - 1, Integer.parseInt(splitReturn[0]));
+                    } else {
                         createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     }
 
@@ -391,10 +395,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 public void onClick(View v) {
 
                     String currentExpired = txtExpireDate.getText().toString();
-                    if(!currentExpired.equals("")){
+                    if (!currentExpired.equals("")) {
                         String[] splitReturn = currentExpired.split("/");
-                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1])-1, Integer.parseInt(splitReturn[0]));
-                    }else{
+                        createDateObj(Integer.parseInt(splitReturn[2]), Integer.parseInt(splitReturn[1]) - 1, Integer.parseInt(splitReturn[0]));
+                    } else {
                         createDateObj(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     }
 
@@ -411,8 +415,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         for (int txtAdult = 1; txtAdult < Integer.parseInt(adult) + 1; txtAdult++) {
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + txtAdult);
-            txtPassengerType.setText("ADULT "+txtAdult);
-            Log.e("123","txtPassenger" + Integer.toString(txtAdult));
+            txtPassengerType.setText("ADULT " + txtAdult);
+            Log.e("123", "txtPassenger" + Integer.toString(txtAdult));
         }
         //auto set infant travelling with
         for (int infantInc = 1; infantInc < Integer.parseInt(infant) + 1; infantInc++) {
@@ -421,7 +425,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             travellingWith.setText(adultPassengerList.get(infantInc - 1).getText());
 
             TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(infantInc + Integer.parseInt(adult)));
-            txtPassengerType.setText("INFANT " +infantInc);
+            txtPassengerType.setText("INFANT " + infantInc);
         }
 
         btnPersonalInfo.setOnClickListener(new View.OnClickListener() {
@@ -450,34 +454,26 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
                     EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
                     EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
+                    EditText enrichNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich_no");
 
                     title.setFocusable(true);
 
                     checkTextViewNull(title);
                     checkTextViewNull(dob);
-
-                    //checkTextViewNull(travelDoc);
-                    //checkEditTextNull(docNo);
-
                     checkTextViewNull(issuingCountry);
                     checkEditTextNull(firstName);
                     checkEditTextNull(lastname);
-                    //checkEditTextNull(docNo);
                     checkBonuslink(enrich);
+                    checkEnrich(enrichNo);
 
-
-                    //  if(!validateAdultAge()){
-//
-                    //      formContinue = false;
-                    //  }
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                    if(infantTravelDocCode != null){
-                        if(infantTravelDocCode.equals("P")){
+                    if (infantTravelDocCode != null) {
+                        if (infantTravelDocCode.equals("P")) {
                             checkTextViewNull(expireDate);
                         }
                     }
-                    if(!dob.getText().toString().equals("")){
+                    if (!dob.getText().toString().equals("")) {
                         ageOfTraveller.add(travellerAge(dob.getText().toString()));
                     }
 
@@ -509,13 +505,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     checkEditTextNull(lastname);
 
                     String infantTravelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
-                    if(infantTravelDocCode != null){
-                        if(infantTravelDocCode.equals("P")){
+                    if (infantTravelDocCode != null) {
+                        if (infantTravelDocCode.equals("P")) {
                             checkTextViewNull(expireDate);
                         }
                     }
 
-                    if(!dob.getText().toString().equals("")){
+                    if (!dob.getText().toString().equals("")) {
                         ageOfTraveller.add(travellerAge(dob.getText().toString()));
                     }
 
@@ -524,12 +520,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 }
 
                 //age validation
-                if(travellerAgeValidation(ageOfTraveller)){
+                if (travellerAgeValidation(ageOfTraveller)) {
                     croutonAlert(getActivity(), "There must be at least one(1) passenger above 12 years old at the date(s) of travel");
                     formContinue = false;
                 }
 
-                if(formContinue){
+                if (formContinue) {
 
                     DefaultPassengerObj adultDefault = new DefaultPassengerObj();
 
@@ -551,11 +547,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_issuing_country");
                         EditText docNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_doc_no");
                         EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich");
+                        EditText enrichNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich_no");
                         CheckBox checkAsFF = (CheckBox) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_checkAsFF");
                         TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(adultInc) + "Tag");
 
                         //TITLE
-                        String titleCode = getTitleCode(getActivity(), title.getText().toString(),"code");
+                        String titleCode = getTitleCode(getActivity(), title.getText().toString(), "code");
                         passengerInfo.setTitle(titleCode);
 
                         gender.setVisibility(View.GONE);
@@ -569,7 +566,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         //DOB
                         String fullDOB = dob.getText().toString();
                         String[] splitDOB = fullDOB.split("/");
-                        passengerInfo.setDob(splitDOB[2]+"-"+splitDOB[1]+"-"+splitDOB[0]);
+                        passengerInfo.setDob(splitDOB[2] + "-" + splitDOB[1] + "-" + splitDOB[0]);
 
                         //Travel Doc
                         //String travelDocCode = getTravelDocCode(getActivity(), travelDoc.getText().toString());
@@ -584,7 +581,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                             //ExpireDate
                             String fullExpireDate = expireDate.getText().toString();
                             String[] splitExpireDate = fullExpireDate.split("/");
-                            passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + splitExpireDate[1] + "-" +splitExpireDate[0]);
+                            passengerInfo.setExpiration_date(splitExpireDate[2] + "-" + splitExpireDate[1] + "-" + splitExpireDate[0]);
                         } else {
                             passengerInfo.setExpiration_date("");
                         }
@@ -594,13 +591,14 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         //Issuing Country Code
                         String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                         passengerInfo.setIssuing_country(countryCode);
-
                         passengerInfo.setBonusLink(enrich.getText().toString());
-                        if(checkAsFF.isChecked()){
+                        passengerInfo.setEnrich(enrichNo.getText().toString());
+
+                        if (checkAsFF.isChecked()) {
                             passengerInfo.setFriend_and_family("Y");
                             passengerInfo.setPassenger_type("Adult");
 
-                            if(passengerTag.getText().toString() != ""){
+                            if (passengerTag.getText().toString() != "") {
                                 passengerInfo.setFriend_and_family_id(passengerTag.getText().toString());
                             }//id is available
                         }
@@ -609,10 +607,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
 
                         adultDefault = new DefaultPassengerObj();
-                        adultDefault.setTitle(passengerObj.get(adultInc-1).getTitle());
-                        adultDefault.setFirstname(passengerObj.get(adultInc-1).getFirst_name());
-                        adultDefault.setLastname(passengerObj.get(adultInc-1).getLast_name());
-                        adultDefault.setIssuingCountry(passengerObj.get(adultInc-1).getIssuing_country());
+                        adultDefault.setTitle(passengerObj.get(adultInc - 1).getTitle());
+                        adultDefault.setFirstname(passengerObj.get(adultInc - 1).getFirst_name());
+                        adultDefault.setLastname(passengerObj.get(adultInc - 1).getLast_name());
+                        adultDefault.setIssuingCountry(passengerObj.get(adultInc - 1).getIssuing_country());
                         defaultObj.add(adultDefault);
 
                     }
@@ -642,7 +640,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         String[] splitTravelling = travellingWithPassenger.split(" ");
                         int travellingWithCode = Integer.parseInt(splitTravelling[1]) - 1;
 
-                        Log.e("travellingWithCode",Integer.toString(travellingWithCode));
+                        Log.e("travellingWithCode", Integer.toString(travellingWithCode));
 
                         infantInfo.setTraveling_with(Integer.toString(travellingWithCode));
                         infantInfo.setFirst_name(firstName.getText().toString());
@@ -651,7 +649,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         //DOB
                         String fullDOB = dob.getText().toString();
                         String[] splitDOB = fullDOB.split("/");
-                        infantInfo.setDob(splitDOB[2] + "-" +splitDOB[1]+ "-" +splitDOB[0]);
+                        infantInfo.setDob(splitDOB[2] + "-" + splitDOB[1] + "-" + splitDOB[0]);
 
                         //Travel Doc
                         String travelDocCode = "NRIC";
@@ -663,7 +661,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
                             String fullExpireDate = expireDate.getText().toString();
                             String[] splitExpireDate = fullExpireDate.split("/");
-                            infantInfo.setExpiration_date(splitExpireDate[2] + "-" +splitExpireDate[1]+ "-"+splitExpireDate[0]);
+                            infantInfo.setExpiration_date(splitExpireDate[2] + "-" + splitExpireDate[1] + "-" + splitExpireDate[0]);
                         } else {
                             infantInfo.setExpiration_date("");
                         }
@@ -671,11 +669,11 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                         //Issuing Country Code
                         String countryCode = getCountryCode(getActivity(), issuingCountry.getText().toString());
                         infantInfo.setIssuing_country(countryCode);
-                        if(checkAsFF.isChecked()){
+                        if (checkAsFF.isChecked()) {
                             infantInfo.setFriend_and_family("Y");
                             infantInfo.setPassenger_type("Infant");
 
-                            if(passengerTag.getText().toString() != ""){
+                            if (passengerTag.getText().toString() != "") {
                                 infantInfo.setFriend_and_family_id(passengerTag.getText().toString());
                             }//id is available
                         }
@@ -693,11 +691,11 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     obj.setBooking_id(bookingID);
 
                     //FF
-                    if(loginStatus.equals("Y")){
+                    if (loginStatus.equals("Y")) {
                         HashMap<String, String> initEmail = pref.getUserEmail();
                         String userEmail = initEmail.get(SharedPrefManager.USER_EMAIL);
                         obj.setUser_email(userEmail);
-                    }else{
+                    } else {
                         obj.setUser_email("");
                     }
 
@@ -712,10 +710,9 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                     runPassengerInfo(obj);
 
 
+                } else {
+                    croutonAlert(getActivity(), "Something went wrong.Please fix all error before continue");
                 }
-                //else{
-                //    croutonAlert(getActivity(), "Please fill empty field");
-                //}
 
             }
         });
@@ -758,22 +755,23 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
             }
         });
+
         return view;
     }
 
-    public void createDateObj(Integer year , Integer month , Integer day){
+    public void createDateObj(Integer year, Integer month, Integer day) {
 
-        datePickerYear1 = DatePickerDialog.newInstance(this,year,month,day);
+        datePickerYear1 = DatePickerDialog.newInstance(this, year, month, day);
         datePickerYear1.setYearRange(calendar.get(Calendar.YEAR) - 80, calendar.get(Calendar.YEAR));
 
-        if(checkFragmentAdded()){
+        if (checkFragmentAdded()) {
             datePickerYear1.show(getActivity().getSupportFragmentManager(), DATEPICKER_TAG);
         }
     }
 
 
     /*Global PoPup*/
-    public void customPopupForContactInfo(final ArrayList array,Activity act,final int currentPosition,final String type){
+    public void customPopupForContactInfo(final ArrayList array, Activity act, final int currentPosition, final String type) {
 
 
         final ArrayList<DropDownItem> a = array;
@@ -795,6 +793,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_dob");
                 TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_issuing_country");
                 EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_enrich");
+                EditText enrichNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_enrich_no");
+
                 TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(currentPosition) + "Tag");
 
                 title.setText(getTitleCode(getActivity(), friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getTitle(), "name"));
@@ -805,11 +805,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 dob.setText(reformatDOB3(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getDob()));
                 issuingCountry.setText(getCountryName(getActivity(), friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getNationality()));
                 passengerTag.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getId());
-                if(type.equals("INFANT")){
+                if (type.equals("INFANT")) {
                     gender.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getGender());
-                }else{
+                } else {
                     enrich.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getBonuslink_card());
+                    enrichNo.setText(friendAndFamilyObj.get(Integer.parseInt(selectedCode)).getEnrich());
                 }
+
                 dialog.dismiss();
             }
         });
@@ -825,7 +827,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         mDialog.getWindow().setAttributes(lp);
     }
 
-    public void clearSelectedFF(int currentPosition){
+    public void clearSelectedFF(int currentPosition) {
 
         TextView title = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_title");
         TextView gender = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_gender");
@@ -834,6 +836,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         TextView dob = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_dob");
         TextView issuingCountry = (TextView) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_issuing_country");
         EditText enrich = (EditText) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_enrich");
+        EditText enrichNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(currentPosition) + "_enrich_no");
         TextView passengerTag = (TextView) view.findViewWithTag("txtPassenger" + Integer.toString(currentPosition) + "Tag");
 
         title.setText("");
@@ -842,11 +845,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         dob.setText("");
         issuingCountry.setText("");
         enrich.setText("");
+        enrichNo.setText("");
         passengerTag.setText("");
         gender.setText("");
     }
 
-    public void requestForgotPassword(String username,String signature){
+    public void requestForgotPassword(String username, String signature) {
         initiateLoading(getActivity());
         PasswordRequest data = new PasswordRequest();
         data.setEmail(username);
@@ -860,13 +864,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
-            setSuccessDialog(getActivity(), obj.getMessage(),null,"Success!");
+            setSuccessDialog(getActivity(), obj.getMessage(), null, "Success!");
         }
 
     }
 
-    public void checkTextViewNull(TextView txtView){
-        if(txtView.getText().toString() == "") {
+    public void checkTextViewNull(TextView txtView) {
+        if (txtView.getText().toString() == "") {
             txtView.setError("Field Required");
             setShake(txtView);
             txtView.requestFocus();
@@ -874,7 +878,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         }
     }
 
-    public void checkEditTextNull(EditText editText){
+    public void checkEditTextNull(EditText editText) {
 
         if (editText.getText().toString().matches("")) {
             editText.setError("Field Required");
@@ -885,30 +889,112 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
     }
 
-    public void checkBonuslink(EditText bonuslink){
+    public void checkBonuslink(EditText bonuslink) {
 
         if (!bonuslink.getText().toString().matches("")) {
-            if(bonuslink.length() < 16 || bonuslink.length() > 16){
+            if (bonuslink.length() < 16 || bonuslink.length() > 16) {
                 bonuslink.setError("Invalid bonuslink card number");
                 setShake(bonuslink);
                 bonuslink.requestFocus();
+                formContinue = false;
+            } else {
+                Log.e("Y", "y");
             }
-            formContinue = false;
         }
-
     }
 
-    public void runPassengerInfo(Passenger obj){
+    public void checkEnrich(EditText enrich) {
 
-        if(infant.equals("0")){
-            initiateLoading(getActivity());
-            presenter.passengerInfo(obj);
-        }else{
-            if(manualValidation()){
-                initiateLoading(getActivity());
-                presenter.passengerInfo(obj);
+        String enrich2 = enrich.getText().toString();
+        if (!enrich2.equals("")) {
+
+            if (enrich2.length() == 11) {
+                if (!Character.toString(enrich2.charAt(0)).equals("M")) {
+                    formContinue = false;
+                    setShake(enrich);
+                    enrich.requestFocus();
+                    enrich.setError("Invalid enrich number");
+                }
+
+                if (!Character.toString(enrich2.charAt(1)).equals("H")) {
+                    formContinue = false;
+                    setShake(enrich);
+                    enrich.requestFocus();
+                    enrich.setError("Invalid enrich number");
+                }
+
+                //check the rest - must be digit
+                for (int f = 2; f < 11; f++) {
+                    if (Character.isDigit(enrich2.charAt(f))) {
+                        //ok
+                    } else {
+                        formContinue = false;
+                        setShake(enrich);
+                        enrich.requestFocus();
+                        enrich.setError("Invalid enrich number");
+                    }
+                }
+
+                int c = 0;
+                int j = 0;
+                int k = 0;
+
+                if (!enrich.getText().toString().matches("")) {
+                    try {
+                        j = Integer.parseInt(enrich.getText().toString().substring(2, 10));
+                    } catch (Exception e) {
+                        formContinue = false;
+                        setShake(enrich);
+                        enrich.requestFocus();
+                        enrich.setError("Invalid enrich number");
+                    }
+
+                    try {
+                        k = Integer.parseInt(enrich.getText().toString().substring(enrich.getText().toString().length() - 1));
+                    } catch (Exception e) {
+                        formContinue = false;
+                        setShake(enrich);
+                        enrich.requestFocus();
+                        enrich.setError("Invalid enrich number");
+                    }
+
+                    c = j % 7;
+
+                    if (c != k) {
+                        Log.e("Invalid", "Y");
+                        formContinue = false;
+                        setShake(enrich);
+                        enrich.requestFocus();
+                        enrich.setError("Invalid enrich number");
+                    }
+                }
+            } else {
+                formContinue = false;
+                setShake(enrich);
+                enrich.requestFocus();
+                enrich.setError("Invalid enrich number");
             }
-            else{
+        }
+    }
+
+
+    public void runPassengerInfo(Passenger obj) {
+
+        if (infant.equals("0")) {
+            initiateLoading(getActivity());
+            //if (send) {
+                presenter.passengerInfo(obj);
+                send = false;
+            //}
+        } else {
+            if (manualValidation()) {
+                initiateLoading(getActivity());
+
+              //  if (send) {
+                    presenter.passengerInfo(obj);
+                    send = false;
+               // }
+            } else {
                 croutonAlert(getActivity(), "One infant per adult only");
                 dismissLoading();
             }
@@ -920,23 +1006,23 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         boolean manualValidationStatus = true;
         int totalPassenger = Integer.parseInt(adult) + Integer.parseInt(infant) + 1;
         ArrayList<String> passengerArray = new ArrayList<String>();
-        for (int adultInc = totalPassenger-Integer.parseInt(adult); adultInc < totalPassenger; adultInc++) {
+        for (int adultInc = totalPassenger - Integer.parseInt(adult); adultInc < totalPassenger; adultInc++) {
             TextView btnTravellingWith = (TextView) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_travelling_with");
             String passengerID = btnTravellingWith.getText().toString();
             passengerArray.add(passengerID);
-            Log.e("passengerID1",passengerID);
+            Log.e("passengerID1", passengerID);
         }
 
         //check duplicate
         List<String> usedNames = new ArrayList<String>();
-        for(int x = 0 ; x < passengerArray.size() ;x++){
+        for (int x = 0; x < passengerArray.size(); x++) {
 
-            if (usedNames.contains(passengerArray.get(x))){
-                Log.e("passengerID2",passengerArray.get(x));
+            if (usedNames.contains(passengerArray.get(x))) {
+                Log.e("passengerID2", passengerArray.get(x));
                 manualValidationStatus = false;
-            }else {
+            } else {
                 usedNames.add(passengerArray.get(x));
-                Log.e("passengerID3",passengerArray.get(x));
+                Log.e("passengerID3", passengerArray.get(x));
             }
         }
 
@@ -945,9 +1031,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     }
 
     /*Country selector - > need to move to main activity*/
-    public void showCountrySelector(Activity act,ArrayList constParam)
-    {
-        if(act != null) {
+    public void showCountrySelector(Activity act, ArrayList constParam) {
+        if (act != null) {
             try {
 
                 android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
@@ -975,8 +1060,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         }
     }
 
-    public void goSeatSelectionPage()
-    {
+    public void goSeatSelectionPage() {
         Intent seatSelection = new Intent(getActivity(), SeatSelectionActivity.class);
         getActivity().startActivity(seatSelection);
     }
@@ -985,18 +1069,23 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     public void onPassengerInfo(PassengerInfoReveice obj) {
 //
         dismissLoading();
-        Boolean status = Controller.getRequestStatus(obj.getStatus(),obj.getMessage() , getActivity());
+        send = true;
+
+        Boolean status = Controller.getRequestStatus(obj.getStatus(), obj.getMessage(), getActivity());
         if (status) {
 
             //Gson gsonFlight = new Gson();
             //String seat = gsonFlight.toJson(obj);
             //pref.setSeat(seat);
 
+
+            Log.e("XXX", "YYYY");
+
             //save into realm object
             FamilyFriendObj thisObj = new FamilyFriendObj();
             thisObj.setFamily_and_friend(obj.getFamily_and_friend());
 
-            RealmObjectController.saveFamilyFriends(getActivity(),thisObj);
+            RealmObjectController.saveFamilyFriends(getActivity(), thisObj);
 
             Intent intent = new Intent(getActivity(), ContactInfoActivity.class);
             intent.putExtra("INSURANCE_STATUS", (new Gson()).toJson(obj));
@@ -1014,30 +1103,30 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         String varMonth = "";
         String varDay = "";
 
-        if(month < 9) {
+        if (month < 9) {
             varMonth = "0";
 
         }
-        if(day < 10){
+        if (day < 10) {
             varDay = "0";
         }
 
-        if(boolExpireDate){
+        if (boolExpireDate) {
             TextView txtExpireDate = (TextView) view.findViewWithTag("passenger" + Integer.toString(clickedPassenger) + "_expire_date");
-            txtExpireDate.setText(varDay+""+day + "/"+varMonth + "" + (month+1)+ "/" + year);
+            txtExpireDate.setText(varDay + "" + day + "/" + varMonth + "" + (month + 1) + "/" + year);
 
-        }else if(boolDob){
+        } else if (boolDob) {
             TextView txtDOB = (TextView) view.findViewWithTag("passenger" + Integer.toString(clickedPassenger) + "_dob");
-            txtDOB.setText(varDay+""+day + "/"+varMonth + "" + (month+1)+ "/" + year);
+            txtDOB.setText(varDay + "" + day + "/" + varMonth + "" + (month + 1) + "/" + year);
         }
 
     }
 
-    public void setupPassengerBlock(String totalAdult, String totalInfant){
+    public void setupPassengerBlock(String totalAdult, String totalInfant) {
         /*Setup Adult Passenger Box (not a proper way - just to suit with validator )*/
 
         int intTotalAdult = 0;
-        for(int adultInc = 1 ; adultInc < Integer.parseInt(totalAdult) + 1 ; adultInc++) {
+        for (int adultInc = 1; adultInc < Integer.parseInt(totalAdult) + 1; adultInc++) {
             intTotalAdult++;
             LinearLayout passengerBlock = (LinearLayout) view.findViewWithTag("passengerBlock" + Integer.toString(adultInc));
             passengerBlock.setVisibility(View.VISIBLE);
@@ -1048,19 +1137,28 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             LinearLayout genderBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_gender_block");
             genderBlock.setVisibility(View.GONE);
 
+            EditText enrichNo = (EditText) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_enrich_no");
+
+            InputFilter[] filterArray = new InputFilter[2];
+            filterArray[0] = new InputFilter.LengthFilter(11);
+            filterArray[1] = new InputFilter.AllCaps();
+            enrichNo.setFilters(filterArray);
+
         }
 
-        for(int infantInc = 1 ; infantInc < Integer.parseInt(totalInfant) + 1 ; infantInc++){
+        for (int infantInc = 1; infantInc < Integer.parseInt(totalInfant) + 1; infantInc++) {
 
-            LinearLayout passengerBlock = (LinearLayout) view.findViewWithTag("passengerBlock" + Integer.toString(infantInc+intTotalAdult));
+            LinearLayout passengerBlock = (LinearLayout) view.findViewWithTag("passengerBlock" + Integer.toString(infantInc + intTotalAdult));
             passengerBlock.setVisibility(View.VISIBLE);
 
-            LinearLayout titleBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult)+"_title_with_block");
+            LinearLayout titleBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_title_with_block");
             titleBlock.setVisibility(View.GONE);
 
-            LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(infantInc+intTotalAdult)+"_enrich_block");
+            LinearLayout enrichBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_enrich_block");
             enrichBlock.setVisibility(View.GONE);
 
+            LinearLayout enrichNoBlock = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(infantInc + intTotalAdult) + "_enrich_no_block");
+            enrichNoBlock.setVisibility(View.GONE);
         }
     }
 
@@ -1071,7 +1169,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     }
 
     /* SENT REQUEST TO LOGIN API*/
-    public void loginFragment(String username,String password){
+    public void loginFragment(String username, String password) {
         /*Start Loading*/
         initiateLoading(getActivity());
         LoginRequest data = new LoginRequest();
@@ -1109,13 +1207,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         }
     }
 
-    public void autoFill(){
+    public void autoFill() {
 
         /* If Passenger Already Login - Auto display necessary data */
         HashMap<String, String> initLogin = pref.getLoginStatus();
         String loginStatus = initLogin.get(SharedPrefManager.ISLOGIN);
 
-        if(loginStatus != null && loginStatus.equals("Y")) {
+        if (loginStatus != null && loginStatus.equals("Y")) {
             //memberLoginBlock.setVisibility(View.GONE);
             friendAndFamilyLayout.setVisibility(View.VISIBLE);
 
@@ -1127,8 +1225,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             String dob = reformatDOB(loginObj.getDOB());
             String[] splitDate = dob.split("/");
 
-            datePickerYear1 = DatePickerDialog.newInstance(this, Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1])-1, Integer.parseInt(splitDate[0]));
-            datePickerYear1.setYearRange(year - 100, year);
+            datePickerYear1 = DatePickerDialog.newInstance(this, Integer.parseInt(splitDate[2]), Integer.parseInt(splitDate[1]) - 1, Integer.parseInt(splitDate[0]));
+            datePickerYear1.setYearRange(year - 100, 2017);
 
             txtTitle.setText(loginObj.getContact_title());
             TextView passenger1Title = (TextView) view.findViewWithTag("passenger1_title");
@@ -1137,13 +1235,13 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             TextView passenger1Dob = (TextView) view.findViewWithTag("passenger1_dob");
             TextView passenger1IssuingCountry = (TextView) view.findViewWithTag("passenger1_issuing_country");
 
-            passenger1IssuingCountry.setText(getCountryName(getActivity(),loginObj.getContact_country()));
+            passenger1IssuingCountry.setText(getCountryName(getActivity(), loginObj.getContact_country()));
             passenger1Title.setText(getTitleCode(getActivity(), loginObj.getContact_title(), "name"));
             passenger1FirstName.setText(loginObj.getContact_first_name());
             passenger1LastName.setText(loginObj.getContact_last_name());
             passenger1Dob.setText(reformatDOB(loginObj.getDOB()));
 
-        }else{
+        } else {
             //memberLoginBlock.setVisibility(View.VISIBLE);
         }
 
@@ -1152,6 +1250,8 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
     /* Validation Failed - Toast Error */
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
+
+        boolean firstView = true;
         for (ValidationError error : errors) {
             View view = error.getView();
             setShake(view);
@@ -1163,10 +1263,17 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             // Display error messages
             if (view instanceof EditText) {
                 ((EditText) view).setError(splitErrorMsg[0]);
-                croutonAlert(getActivity(), splitErrorMsg[0]);
+                //croutonAlert(getActivity(), splitErrorMsg[0]);
             }
 
+            if (firstView) {
+                view.requestFocus();
+            }
+            firstView = false;
+
         }
+        setShake(btnLayoutPersonalInfo);
+        croutonAlert(getActivity(), "Something went wrong.Please fill in all blank field");
     }
 
     @Override
@@ -1181,9 +1288,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         presenter.onResume();
 
         AnalyticsApplication.sendScreenView(SCREEN_LABEL);
+        send = true;
 
         RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
-        if(result.size() > 0){
+        if (result.size() > 0) {
             Gson gson = new Gson();
             PassengerInfoReveice obj = gson.fromJson(result.get(0).getCachedResult(), PassengerInfoReveice.class);
             onPassengerInfo(obj);
@@ -1191,7 +1299,7 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
         //check if ff available or not.. if not disable
         RealmResults<FamilyFriendList> cachedListResult = RealmObjectController.getFamilyFriends(getActivity());
-        if(cachedListResult.size() > 0){
+        if (cachedListResult.size() > 0) {
             Gson gson = new Gson();
             FamilyFriendObj obj = gson.fromJson(cachedListResult.get(0).getCachedList(), FamilyFriendObj.class);
             friendAndFamilyObj = obj.getFamily_and_friend();
@@ -1200,10 +1308,10 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
             boolean adultAvailable = false;
 
             //check if adult/infant available
-            for(int g = 0 ; g < friendAndFamilyObj.size() ; g++){
-                if(friendAndFamilyObj.get(g).getPassenger_type().equals("Infant")){
+            for (int g = 0; g < friendAndFamilyObj.size(); g++) {
+                if (friendAndFamilyObj.get(g).getPassenger_type().equals("Infant")) {
                     infantAvailable = true;
-                }else{
+                } else {
                     adultAvailable = true;
                 }
             }
@@ -1211,37 +1319,43 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
                 final LinearLayout linearCheckFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_asFF_block");
                 final LinearLayout linearSaveAsFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_saveFF_block");
 
-                if(friendAndFamilyObj.size() <= 0){
+                if (friendAndFamilyObj.size() <= 0) {
                     linearCheckFF.setVisibility(View.GONE);
                     linearSaveAsFF.setVisibility(View.GONE);
-                    Log.e("HIDE","TRUE");
-                }else{
+                    Log.e("HIDE", "TRUE");
+                } else {
 
                     //check what passenger type available
                     TextView txtPassengerType = (TextView) view.findViewWithTag("txtPassenger" + adultInc);
                     String[] splitPassengerType = txtPassengerType.getText().toString().split(" ");
-                    if(splitPassengerType[0].equals("Infant")){
+                    if (splitPassengerType[0].equals("Infant")) {
                         //check infant
-                        if(infantAvailable){
-                            linearCheckFF.setVisibility(View.VISIBLE);
-                        }else{
+                        if (infantAvailable) {
+                            if (loginStatus.equals("Y")) {
+                                linearCheckFF.setVisibility(View.VISIBLE);
+                            }
+                        } else {
                             linearCheckFF.setVisibility(View.GONE);
                         }
-                    }else{
+                    } else {
                         //check adult
-                        if(adultAvailable){
-                            linearCheckFF.setVisibility(View.VISIBLE);
-                        }else{
+                        if (adultAvailable) {
+                            if (loginStatus.equals("Y")) {
+                                linearCheckFF.setVisibility(View.VISIBLE);
+                            }
+                        } else {
                             linearCheckFF.setVisibility(View.GONE);
                         }
                     }
 
-                    linearSaveAsFF.setVisibility(View.VISIBLE);
+                    if (loginStatus.equals("Y")) {
+                        linearSaveAsFF.setVisibility(View.VISIBLE);
+                    }
 
                 }
             }
 
-        }else{
+        } else {
             for (adultInc = 1; adultInc < totalPassenger; adultInc++) {
                 final LinearLayout linearCheckFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_asFF_block");
                 final LinearLayout linearSaveAsFF = (LinearLayout) view.findViewWithTag("passenger" + Integer.toString(adultInc) + "_saveFF_block");

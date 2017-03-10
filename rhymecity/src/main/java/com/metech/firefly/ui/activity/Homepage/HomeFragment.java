@@ -60,10 +60,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 //import com.estimote.sdk.BeaconManager;
 
-public class HomeFragment extends BaseFragment implements HomePresenter.HomeView{
+public class HomeFragment extends BaseFragment implements HomePresenter.HomeView {
 
     // --------------------------------------------------------------------------------//
-
 
 
     // --------------------------------------------------------------------------------//
@@ -102,7 +101,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     @InjectView(R.id.bookFlightBtn)
     TextView bookFlightBtn;
 
-    private String facebookUrl,twitterUrl,instagramUrl;
+    private String facebookUrl, twitterUrl, instagramUrl;
     private int fragmentContainerId;
     private static final String SCREEN_LABEL = "Home";
 
@@ -141,7 +140,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.home, container, false);
         ButterKnife.inject(this, view);
@@ -153,7 +152,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         HashMap<String, String> initPromoBanner = pref.getPromoBanner();
         String banner = initPromoBanner.get(SharedPrefManager.PROMO_BANNER);
 
-        if(banner == null || banner == ""){
+        if (banner == null || banner == "") {
             HashMap<String, String> initDefaultBanner = pref.getDefaultBanner();
             banner = initDefaultBanner.get(SharedPrefManager.DEFAULT_BANNER);
         }
@@ -161,7 +160,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //put in try catch
         try {
             aq.id(R.id.bannerImg).image(banner);
-        }catch (Exception e){
+        } catch (Exception e) {
         }
 
         HashMap<String, String> initBannerModule = pref.getBannerModule();
@@ -173,11 +172,11 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         bannerImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!bannerRedirectURL.equals("")){
-                    Controller.clickableBannerWithURL(getActivity(),bannerRedirectURL);
-                }else if(!bannerModule.equals("")){
-                    Controller.clickableBanner(getActivity(),bannerModule);
-                }else{
+                if (!bannerRedirectURL.equals("")) {
+                    Controller.clickableBannerWithURL(getActivity(), bannerRedirectURL);
+                } else if (!bannerModule.equals("")) {
+                    Controller.clickableBanner(getActivity(), bannerModule);
+                } else {
                     //No Action
                 }
             }
@@ -193,7 +192,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             facebookUrl = socialMediaObj.getFacebook();
             twitterUrl = socialMediaObj.getTwitter();
             instagramUrl = socialMediaObj.getInstagram();
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
 
@@ -214,7 +213,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
         mobileCheckIn.setOnClickListener(new View.OnClickListener() {
             @Override
-           public void onClick(View v) {
+            public void onClick(View v) {
                 //AnalyticsApplication.sendEvent("Click", "mobileCheckIn");
                 goToMobileCheckIn();
             }
@@ -261,11 +260,11 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             public void onClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("fb://page/"+facebookUrl)));
+                            Uri.parse("fb://page/" + facebookUrl)));
 
-                } catch(Exception e) {
+                } catch (Exception e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://www.facebook.com/"+facebookUrl)));
+                            Uri.parse("https://www.facebook.com/" + facebookUrl)));
                 }
             }
         });
@@ -276,11 +275,11 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             public void onClick(View v) {
                 try {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("twitter://user?screen_name="+twitterUrl)));
+                            Uri.parse("twitter://user?screen_name=" + twitterUrl)));
 
                 } catch (Exception e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://twitter.com/"+twitterUrl)));
+                            Uri.parse("https://twitter.com/" + twitterUrl)));
                 }
             }
         });
@@ -290,7 +289,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
             @Override
             public void onClick(View v) {
 
-                Uri uri = Uri.parse("http://instagram.com/_u/"+instagramUrl);
+                Uri uri = Uri.parse("http://instagram.com/_u/" + instagramUrl);
                 Intent likeIng = new Intent(Intent.ACTION_VIEW, uri);
 
                 likeIng.setPackage("com.instagram.android");
@@ -300,7 +299,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
                 } catch (Exception e) {
                     startActivity(new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("https://www.instagram.com/"+instagramUrl)));
+                            Uri.parse("https://www.instagram.com/" + instagramUrl)));
                 }
             }
         });
@@ -309,23 +308,22 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //trySetAlarm();
         //LocalNotification.convert(getActivity());
 
-       // screenSize();
+        // screenSize();
 
 
-       // forceCrash(view);
+        // forceCrash(view);
         return view;
     }
 
-    public void setUserEmailForCrashLytics(){
+    public void setUserEmailForCrashLytics() {
         //set user email for crashlitics report
         HashMap<String, String> initLoginStatus = pref.getLoginStatus();
         String loginStatus = initLoginStatus.get(SharedPrefManager.ISLOGIN);
-        if(loginStatus.equals("Y"))
-        {
+        if (loginStatus.equals("Y")) {
             HashMap<String, String> initEmail = pref.getUserEmail();
             String userEmail = initEmail.get(SharedPrefManager.USER_EMAIL);
             Crashlytics.setUserEmail(userEmail);
-        }else{
+        } else {
             Crashlytics.setUserEmail("Anonymous");
         }
     }
@@ -335,7 +333,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     }
 
 
-    public void screenSize(){
+    public void screenSize() {
 
         WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
@@ -348,16 +346,13 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
     }
 
 
-
-    public void getScreenSize(){
-
+    public void getScreenSize() {
 
 
-
-        int screenSize = getResources().getConfiguration().screenLayout &  Configuration.SCREENLAYOUT_SIZE_MASK;
+        int screenSize = getResources().getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK;
 
         String toastMsg;
-        switch(screenSize) {
+        switch (screenSize) {
             case Configuration.SCREENLAYOUT_SIZE_LARGE:
                 toastMsg = "Large screen";
                 break;
@@ -382,7 +377,7 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         Intent notificationIntent = new Intent(context, Pop2NotificationActivity.class);
         notificationIntent.setAction(Intent.ACTION_MAIN);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), requestID,notificationIntent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent contentIntent = PendingIntent.getActivity(getActivity(), requestID, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.last_minute);
         NotificationCompat.BigPictureStyle notiStyle = new NotificationCompat.BigPictureStyle();
@@ -406,17 +401,17 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
 
     }
 
-    public void gotPushRegistration(){
+    public void gotPushRegistration() {
         Intent loginPage = new Intent(getActivity(), PushNotificationActivity.class);
         getActivity().startActivity(loginPage);
     }
 
     /*Public-Inner Func*/
-    public void goToLoginPage(){
-       Intent loginPage = new Intent(getActivity(), LoginActivity.class);
-       // Intent loginPage = new Intent(getActivity(), SensorActivity.class);
-       //Intent loginPage = new Intent(getActivity(), Touch.class);
-       // Intent loginPage = new Intent(getActivity(), RelativeFragment.class);
+    public void goToLoginPage() {
+        Intent loginPage = new Intent(getActivity(), LoginActivity.class);
+        // Intent loginPage = new Intent(getActivity(), SensorActivity.class);
+        //Intent loginPage = new Intent(getActivity(), Touch.class);
+        // Intent loginPage = new Intent(getActivity(), RelativeFragment.class);
         getActivity().startActivity(loginPage);
 
     }
@@ -446,7 +441,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
         //Intent loginPage = new Intent(getActivity(), AutoCamera.class);
 
         getActivity().startActivity(loginPage);
-
 
 
     }
@@ -511,33 +505,6 @@ public class HomeFragment extends BaseFragment implements HomePresenter.HomeView
                 .show();
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.metech.firefly.ui.activity.SplashScreen.Pop2NotificationActivity;
@@ -22,7 +23,7 @@ import static com.metech.firefly.ui.activity.PushNotification.CommonUtilities.di
 
 public class GCMIntentService extends GCMBaseIntentService {
 
-	private static final String TAG = "GCMIntentService";
+    private static final String TAG = "GCMIntentService";
 
     public GCMIntentService() {
         super(SENDER_ID);
@@ -40,13 +41,13 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         //back to splash screen
         //BaseFragment.splashScreen(context,registrationId);
-        SplashScreenFragment.splash(context,registrationId);
+        SplashScreenFragment.splash(context, registrationId);
 
     }
 
     /**
      * Method called on device un registred
-     * */
+     */
     @Override
     protected void onUnregistered(Context context, String registrationId) {
         Log.i(TAG, "Device unregistered");
@@ -56,36 +57,38 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     /**
      * Method called on Receiving a new message
-     * */
+     */
     @Override
     protected void onMessage(Context context, Intent intent) {
-        Log.i(TAG, "Received message");
-        Log.e("intent", intent.getClass().getCanonicalName());
+        //Log.i(TAG, "Received message");
+        //Log.e("intent", intent.getClass().getCanonicalName());
         String message = intent.getExtras().getString("message");
-        
+
         displayMessage(context, message);
-        // notifies user
         generateNotification(context, message);
+
+        //Log.e("Message", message.toString());
+
         //BaseFragmentActivity.setAppStatus(true);
-       // Log.e("CheckAppStatus", Boolean.toString(BaseFragmentActivity.getAppStatus()));
+        // Log.e("CheckAppStatus", Boolean.toString(BaseFragmentActivity.getAppStatus()));
 
     }
 
     /**
      * Method called on receiving a deleted message
-     * */
+     */
     @Override
     protected void onDeletedMessages(Context context, int total) {
         Log.i(TAG, "Received deleted messages notification");
         String message = "Register";
         displayMessage(context, message);
         // notifies user
-        generateNotification(context, message);
+        //generateNotification(context, message);
     }
 
     /**
      * Method called on Error
-     * */
+     */
     @Override
     public void onError(Context context, String errorId) {
         Log.i(TAG, "Received error: " + errorId);
@@ -98,7 +101,7 @@ public class GCMIntentService extends GCMBaseIntentService {
     protected boolean onRecoverableError(Context context, String errorId) {
         // log message
         Log.i(TAG, "Received recoverable error: " + errorId);
-        displayMessage(context, getString(R.string.register,errorId));
+        displayMessage(context, getString(R.string.register, errorId));
         return super.onRecoverableError(context, errorId);
     }
 
@@ -128,38 +131,32 @@ public class GCMIntentService extends GCMBaseIntentService {
         }
     }
 
-    private void generateNotification(Context context,String notificationMessage) {
+    private void generateNotification(Context context, String notificationMessage) {
 
         int requestID = (int) System.currentTimeMillis();
 
         Gson gson = new Gson();
         GCMClass obj = gson.fromJson(notificationMessage, GCMClass.class);
+        //Log.e("A", "B");
+        //Log.e("Body: " + obj.getTitle(), "Title: " + obj.getTitle());
 
         Intent notificationIntent = new Intent(context, Pop2NotificationActivity.class);
         notificationIntent.setAction(Intent.ACTION_MAIN);
 
-        //notificationIntent.setFlags(Intent.FLAG_ONE_SHOT);
-        Log.e("Visibile","true");
-
-        //notificationIntent.setAction("android.intent.action.MAIN");
-        //notificationIntent.addCategory("android.intent.category.LAUNCHER");
-        //notificationIntent.putExtra("MESSAGE", notificationMessage);
-
         //save message to realm object
         RealmObjectController.clearNotificationMessage(context);
-        RealmObjectController.saveNotificationMessage(context,obj.getBody(),obj.getTitle());
+        RealmObjectController.saveNotificationMessage(context, obj.getBody(), obj.getTitle());
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID,notificationIntent, PendingIntent.FLAG_ONE_SHOT);
-
+        PendingIntent contentIntent = PendingIntent.getActivity(this, requestID, notificationIntent, PendingIntent.FLAG_ONE_SHOT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setAutoCancel(true).setDefaults(Notification.DEFAULT_ALL);
         mBuilder
                 .setContentText(obj.getBody())
-                .setContentTitle(String.format(obj.getTitle()))
+                .setContentTitle(obj.getTitle())
                 .setSmallIcon(R.drawable.push_icon)
-                .setColor(Color.argb(0x55, 0x00, 0x00, 0xff))
-                .setTicker(String.format(obj.getTitle()));
+                .setColor(getResources().getColor(R.color.white))
+                .setTicker(obj.getTitle());
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder.setContentIntent(contentIntent);
@@ -168,7 +165,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     }
 
-
     private void generateNotification2(Context context, String message) {
 
         Gson gson = new Gson();
@@ -176,7 +172,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
         //convert string to json
         Intent viewIntent = new Intent(context, Pop2NotificationActivity.class);
-        Log.e("Visibile","true");
+        Log.e("Visibile", "true");
         viewIntent.setAction("android.intent.action.MAIN");
         viewIntent.addCategory("android.intent.category.LAUNCHER");
         viewIntent.putExtra("MESSAGE", message);
@@ -199,7 +195,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 
     }
 
-    public void test(){
+    public void test() {
         BeaconController.startRangeDeparture(this);
     }
 
