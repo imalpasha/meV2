@@ -167,7 +167,7 @@ dependencies {
 
     //pager indicator
     //compile 'com.commit451:inkpageindicator:1.0.2'
-    //compile 'com.pacioianu.david:ink-page-indicator:1.1.0'
+    //compile 'com.pacioianu.david:ink-page-indicator:1.1.0'asd
     //
     // compile 'com.github.LyndonChin:AndroidRubberIndicator:a89d1ecd68'
     //compile 'com.github.THEONE10211024:CircleIndicator:fcb4b63608'
