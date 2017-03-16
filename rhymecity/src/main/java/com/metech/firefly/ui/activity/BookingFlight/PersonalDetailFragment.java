@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,6 +78,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
 
     @InjectView(R.id.txtTitle)
     TextView txtTitle;
+
+    @InjectView(R.id.info1)
+    TextView info1;
+
+    @InjectView(R.id.info2)
+    TextView info2;
 
     @InjectView(R.id.passengerBlock1)
     LinearLayout passengerBlock1;
@@ -188,6 +195,12 @@ public class PersonalDetailFragment extends BaseFragment implements Validator.Va
         adult = bundle.getString(ADULT);
         infant = bundle.getString(INFANT);
         pref = new SharedPrefManager(getActivity());
+
+        String info_1 = getResources().getString(R.string.important_info1);
+        String info_2 = getResources().getString(R.string.important_info2);
+
+        info1.setText(Html.fromHtml(info_1));
+        info2.setText(Html.fromHtml(info_2));
 
         HashMap<String, String> initLoginStatus = pref.getLoginStatus();
         loginStatus = initLoginStatus.get(SharedPrefManager.ISLOGIN);
