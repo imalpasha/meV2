@@ -87,6 +87,23 @@ public class RealmObjectController extends BaseFragment {
 
     }
 
+    public static void cachedResultWithType(Activity act, String cachedResult,String cachedApi) {
+
+        Realm realm = getRealmInstance(act);
+
+        final RealmResults<CachedResult> result = realm.where(CachedResult.class).findAll();
+        realm.beginTransaction();
+        result.clear();
+        realm.commitTransaction();
+
+        realm.beginTransaction();
+        CachedResult realmObject = realm.createObject(CachedResult.class);
+        realmObject.setCachedAPI(cachedApi);
+        realmObject.setCachedResult(cachedResult);
+        realm.commitTransaction();
+
+    }
+
     public static RealmResults<CachedResult> getCachedResult(Activity act) {
 
         Realm realm = getRealmInstance(act);

@@ -144,7 +144,9 @@ public class ApiRequestHandler {
 
                 if(retroResponse != null) {
                     bus.post(new DeviceInfoSuccess(retroResponse));
-                    RealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                    //ealmObjectController.cachedResult(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse));
+                    RealmObjectController.cachedResultWithType(MainFragmentActivity.getContext(), (new Gson()).toJson(retroResponse),"SplashInfo");
+
                 }else{
                     BaseFragment.setAlertNotification(MainFragmentActivity.getContext());
                 }

@@ -55,17 +55,16 @@ public class AppModule {
 
         //okHttpClient.setWriteTimeout(60, TimeUnit.SECONDS);
         //okHttpClient.setConnectionPool(new com.squareup.okhttp.ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS));
-
+        //.setLogLevel(RestAdapter.LogLevel.FULL).setLog(new RestAdapter.Log() {
+        //    public void log(String msg) {
+        //        Log.i("retrofit", msg);
+        //    }
+        //})
 
         return new RestAdapter.Builder()
                 .setEndpoint(endpoint)
                 .setRequestInterceptor(requestInterceptor)
                 .setClient(new OkClient(okHttpClient))
-                .setLogLevel(RestAdapter.LogLevel.FULL).setLog(new RestAdapter.Log() {
-                    public void log(String msg) {
-                        Log.i("retrofit", msg);
-                    }
-                })
                 .build()
                 .create(ApiService.class);
     }

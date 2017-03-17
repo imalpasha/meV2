@@ -67,6 +67,7 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FireFlyApplication.get(getActivity()).createScopedGraph(new SplashScreenModule(this)).inject(this);
+        RealmObjectController.clearCachedResult(getActivity());
 
     }
 
@@ -321,6 +322,21 @@ public class SplashScreenFragment extends BaseFragment implements HomePresenter.
     public void onResume() {
         super.onResume();
         presenter.onResume();
+
+        RealmResults<CachedResult> result = RealmObjectController.getCachedResult(MainFragmentActivity.getContext());
+        if (result.size() > 0) {
+
+            Gson gson = new Gson();
+            if (result.get(0).getCachedAPI() != null) {
+                if (result.get(0).getCachedAPI().equals("SplashInfo")) {
+
+                    sendDeviceInformationToServer(info);
+                    //DeviceInfoSuccess obj = gson.fromJson(result.get(0).getCachedResult(), DeviceInfoSuccess.class);
+                    //loadingSuccess(obj);
+
+                }
+            }
+        }
     }
 
     @Override
