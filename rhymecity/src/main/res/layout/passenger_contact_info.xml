@@ -152,7 +152,9 @@
                                             android:textSize="@dimen/font20sp"
                                             android:textColor="@color/white"
                                             android:textStyle="bold" />
+
                                     </LinearLayout>
+
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -1086,21 +1088,22 @@
                             <Button
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Continue without seat selection"
-                                android:id="@+id/btnWithoutSeatSelection"
-                                android:textColor="@color/white"
-                                android:textStyle="bold"
-                                android:background="@drawable/login_login_button_clicked"
-                                android:layout_marginBottom="10dp"/>
-
-                            <Button
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
                                 android:text="Choose seat selection"
                                 android:id="@+id/btnSeatSelection"
                                 android:textColor="@color/orange_firefly"
                                 android:textStyle="bold"
+                                android:layout_marginBottom="10dp"
                                 android:background="@drawable/login_register_button_clicked"/>
+
+                            <Button
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Continue without seat selection"
+                                android:id="@+id/btnWithoutSeatSelection"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:background="@drawable/login_login_button_clicked"/>
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -1153,12 +1156,14 @@
                             android:layout_height="match_parent" />
 
                     </LinearLayout>
+
                 </LinearLayout>
 
 
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </ScrollView>
